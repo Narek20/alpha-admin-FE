@@ -1,10 +1,7 @@
-import { Routes } from "react-router"
+import { Routes } from 'react-router'
 
-const Routers = ({}) => {
-  return (
-    <Routes>
-    </Routes>
-  )
+const Routers = () => {
+  return <Routes></Routes>
 }
 
 export default Routers
