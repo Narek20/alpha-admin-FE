@@ -1,18 +1,18 @@
 export const navlinks = [
   {
+    title: 'Ապրանքներ',
+    link: '/products',
+  },
+  {
     title: 'Պահեստ',
     link: '/storage',
   },
   {
-    title: 'Պահեստ1',
-    link: '/storage1',
+    title: 'Մարկետպլեյս',
+    link: '/marketplace',
   },
   {
-    title: 'Պահեստ2',
-    link: '/storage2',
-  },
-  {
-    title: 'Պահեստ3',
-    link: '/storage3',
+    title: 'Անալիտիկա',
+    link: '/analytics',
   },
 ]

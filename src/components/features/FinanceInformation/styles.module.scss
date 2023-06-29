@@ -1,0 +1,79 @@
+.financeInformation {
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px;
+  margin-top: 20px;
+
+  .duration {
+    color: black;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .infoContainer {
+    .infoTitle {
+      margin-top: 20px;
+      color: #676767;
+      font-size: 14px;
+    }
+
+    .totalInfo {
+      margin-top: 2px;
+      font-size: 18px;
+    }
+
+    .difference {
+      margin-top: 8px;
+      color: #067b00;
+      font-size: 12px;
+      margin-top: 10px;
+    }
+
+    .negativeDifference {
+      margin-top: 8px;
+      color: #f96666;
+      font-size: 12px;
+      margin-top: 10px;
+    }
+
+    .differenceTitle {
+      color: #676767;
+      margin-top: 2px;
+      font-size: 12px;
+    }
+  }
+
+  .colorContainers {
+    margin-top: 50px;
+
+    .colorContainer {
+      display: flex;
+      align-items: center;
+
+      .firstColor {
+        background-color: rgb(75, 192, 192);
+        border-radius: 50%;
+        width: 10px;
+        height: 10px;
+      }
+
+      .secondColor {
+        background-color: #fbe8c4;
+        border-radius: 50%;
+        width: 10px;
+        height: 10px;
+      }
+
+      .colorTitle {
+        margin-left: 10px;
+        font-size: 12px;
+      }
+    }
+  }
+
+  .refreshed {
+    color: #676767;
+    font-size: 10px;
+    margin-top: 20px;
+  }
+}
