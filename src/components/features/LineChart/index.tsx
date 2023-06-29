@@ -37,7 +37,7 @@ const options = {
   },
 }
 
-const LineChart: FC<IProps> = ({}) => {
+const LineChart: FC<IProps> = () => {
   return (
     <Box className={styles.chart}>
       <Line data={data} options={options} />

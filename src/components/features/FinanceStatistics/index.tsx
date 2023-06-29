@@ -1,5 +1,5 @@
 import { FC, useState } from 'react'
-import { Box, Button } from '@mui/material'
+import { Box } from '@mui/material'
 import LineChart from '@features/LineChart'
 import FinanceTabs from '@features/FinanceTabs'
 import FinanceInformation from '@features/FinanceInformation'
