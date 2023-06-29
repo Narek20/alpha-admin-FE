@@ -4,8 +4,10 @@ module.exports = {
   webpack: {
     alias: {
       '@': path.resolve(__dirname, 'src/'),
-      '@Features': path.resolve(__dirname, 'src/components/features'),
-      '@Shared': path.resolve(__dirname, 'src/components/shared'),
+      '@features': path.resolve(__dirname, 'src/components/features'),
+      '@shared': path.resolve(__dirname, 'src/components/shared'),
+      '@assets': path.resolve(__dirname, 'src/assets'),
+      '@utils': path.resolve(__dirname, 'src/utils'),
     },
   },
 }

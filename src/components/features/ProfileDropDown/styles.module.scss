@@ -1,0 +1,64 @@
+.dropDown {
+  background-color: white;
+  border-radius: 10px;
+  width: auto;
+  height: auto;
+  position: absolute;
+  top: 57px;
+  right: 20px;
+  border: 1px solid #f0f0f3;
+  padding-top: 10px;
+
+  .header {
+    background-color: #f0f0f3;
+    display: flex;
+    // border-top-left-radius: 10px;
+    // border-top-right-radius: 10px;
+    width: 300px;
+    height: 30px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+
+    .profileTitle {
+      color: black;
+      font-weight: 600;
+    }
+
+    .settings {
+      color: rgb(72, 72, 247);
+      font-weight: 500px;
+    }
+  }
+
+  .content {
+    padding: 10px;
+    width: 300px;
+
+    .select {
+      width: 100%;
+
+      div {
+        display: flex !important;
+      }
+
+      input {
+        display: flex !important;
+      }
+    }
+
+    .exit {
+      color: black;
+    }
+  }
+
+  img {
+    margin-right: 10px;
+    width: 30px !important;
+    height: 30px !important;
+  }
+}
+
+.hidden {
+  display: none;
+}
