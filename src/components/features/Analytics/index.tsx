@@ -6,12 +6,12 @@ import styles from './styles.module.scss'
 
 interface IProps {}
 
-const CommonStatistics: FC<IProps> = () => {
+const Analytics: FC<IProps> = () => {
   return (
-    <Box className={styles.statistics}>
-      <SectionHeader title="Ընդհանուր Ստատիստիկա" />
+    <Box className={styles.analytics}>
+      <SectionHeader title="Անալիտիկա" />
     </Box>
   )
 }
 
-export default CommonStatistics
+export default Analytics

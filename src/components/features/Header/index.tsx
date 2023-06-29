@@ -3,13 +3,11 @@ import { NavLink } from 'react-router-dom'
 import { Box, IconButton, Typography } from '@mui/material'
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined'
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined'
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
+import ProfileDropDown from '@features/ProfileDropDown'
 import logo from '@assets/images/alpha-logo.jpg'
 import { navlinks } from '@utils/navbar/constants'
 
 import styles from './styles.module.scss'
-import DrawerComponent from '@shared/Drawer'
-import ProfileDropDown from '@features/ProfileDropDown'
 
 const iconStyles = { color: 'black', width: 30, height: 30 }
 

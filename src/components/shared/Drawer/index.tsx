@@ -19,13 +19,13 @@ const DrawerComponent: FC<IProps> = ({
   variant,
   children,
 }) => {
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflowY = 'hidden'
-    } else {
-      document.body.style.overflowY = 'scroll'
-    }
-  }, [isOpen])
+  // useEffect(() => {
+  //   if (isOpen) {
+  //     document.body.style.overflowY = 'hidden'
+  //   } else {
+  //     document.body.style.overflowY = 'scroll'
+  //   }
+  // }, [isOpen])
 
   return (
     <Drawer
