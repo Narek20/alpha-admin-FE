@@ -1,0 +1,61 @@
+.header {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  position: relative;
+
+  .leftSection {
+    display: flex;
+    align-items: center;
+
+    .logo {
+      width: 50px;
+      height: 50px;
+    }
+
+    .links {
+      margin-left: 20px;
+      display: flex;
+
+      .link {
+        color: black;
+        text-decoration: none;
+        padding: 10px;
+        font-weight: 600;
+        border-radius: 10px;
+      }
+
+      .active {
+        text-decoration: none;
+        padding: 10px;
+        background-color: #f9f8f0;
+        color: #f6c71e;
+        font-weight: 600;
+        border-radius: 10px;
+      }
+    }
+  }
+
+  .rightSection {
+    display: flex;
+    height: 100%;
+    align-items: center;
+
+    .icon {
+    
+    }
+
+    .accountIcon {
+      padding: 10px;
+      border-radius: 10px;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+
+    .accountIcon:hover {
+      background-color: #f0f0f3;
+    }
+  }
+}

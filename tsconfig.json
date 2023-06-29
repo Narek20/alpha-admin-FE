@@ -18,8 +18,10 @@
     "baseUrl": "./src",
     "paths": {
       "@/*": ["src/*"],
-      "@Features/*": ["components/features/*"],
-      "@Shared/*": ["components/shared/*"]
+      "@features/*": ["components/features/*"],
+      "@shared/*": ["components/shared/*"],
+      "@assets/*": ["assets/*"],
+      "@utils/*": ["utils/*"],
     }
   },
   "include": ["src"]
