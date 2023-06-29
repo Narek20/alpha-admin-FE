@@ -1,0 +1,41 @@
+.tabs {
+  display: flex;
+  margin: 10px 0px;
+
+  .purchaseTypes {
+    display: flex;
+
+    .chartBtn {
+      background-color: #f0f0f3;
+      color: black;
+      height: 40px;
+      border-radius: 0px;
+    }
+
+    .selectedChartBtn {
+      background-color: #f6c71e;
+      color: black;
+      height: 40px;
+      border-radius: 0px;
+    }
+  }
+
+  .durations {
+    display: flex;
+    margin-left: 20px;
+
+    .chartBtn {
+      background-color: #f0f0f3;
+      color: black;
+      height: 40px;
+      border-radius: 0px;
+    }
+
+    .selectedChartBtn {
+      background-color: #f6c71e;
+      color: black;
+      height: 40px;
+      border-radius: 0px;
+    }
+  }
+}

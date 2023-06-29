@@ -21,6 +21,7 @@
       "@features/*": ["components/features/*"],
       "@shared/*": ["components/shared/*"],
       "@assets/*": ["assets/*"],
+      "@types/*": ["types/*"],
       "@utils/*": ["utils/*"],
     }
   },
