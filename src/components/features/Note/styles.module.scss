@@ -1,0 +1,36 @@
+.noteContainer {
+  width: 100%;
+  border-bottom: 1px solid rgb(186, 186, 186);
+  padding: 10px 0px;
+
+  .title {
+    color: black;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .date {
+    color: rgb(182, 182, 182);
+    margin-top: 8px;
+  }
+
+  .note {
+    color: black;
+    margin-top: 10px;
+  }
+
+  .actions {
+    display: flex;
+    width: 100%;
+    justify-content: end;
+    align-items: center;
+    margin-top: 20px;
+
+    .edit {
+    }
+
+    .remove {
+      margin-left: 10px;
+    }
+  }
+}
