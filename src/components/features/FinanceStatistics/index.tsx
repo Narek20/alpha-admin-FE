@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { useState } from 'react'
 import { Box } from '@mui/material'
 import LineChart from '@features/LineChart'
 import FinanceTabs from '@features/FinanceTabs'
@@ -8,9 +8,35 @@ import { Durations, PurchaseTypes } from 'types/Finances/types'
 
 import styles from './styles.module.scss'
 
-interface IProps {}
+const data = {
+  labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+  datasets: [
+    {
+      label: 'Example1 Chart',
+      data: [65, 59, 80, 81, 56, 55],
+      fill: false,
+      borderColor: 'rgb(75, 192, 192)',
+      tension: 0.5,
+    },
+    {
+      label: 'Example2 Chart',
+      data: [1, 100, 12, 13, 20, 60],
+      fill: false,
+      borderColor: '#FBE8C4',
+      tension: 0.5,
+    },
+  ],
+}
 
-const FinanceStatistics: FC<IProps> = () => {
+const options = {
+  scales: {
+    y: {
+      beginAtZero: true,
+    },
+  },
+}
+
+const FinanceStatistics = () => {
   const [purchaseType, setPurchaseType] = useState<PurchaseTypes>(
     PurchaseTypes.ORDERED
   )
@@ -33,7 +59,7 @@ const FinanceStatistics: FC<IProps> = () => {
           amountDifference={12}
           priceDifference={-1012321}
         />
-        <LineChart />
+        <LineChart data={data} options={options} />
       </Box>
     </Box>
   )

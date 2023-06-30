@@ -20,10 +20,10 @@ const Home = () => {
       <FinanceStatistics />
       <StorageLoad />
       <MarketPlace />
-      <Notes />
+      <Analytics />
       <Feedbacks />
       <Questions />
-      <Analytics />
+      <Notes />
       <Turnover />
       <StorageWaitingTime />
       <Supplies />

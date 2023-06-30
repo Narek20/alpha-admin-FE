@@ -1,0 +1,70 @@
+.waitingTimeInformation {
+  margin-top: 20px;
+
+  .duration {
+    color: black;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .waitingTimesContainer {
+    margin-top: 40px;
+
+    .waitingTime {
+      display: flex;
+      align-items: center;
+
+      .todayColor {
+        background-color: #3a0078;
+        border-radius: 50%;
+        width: 10px;
+        height: 10px;
+      }
+
+      .yesterdayColor {
+        background-color: #067b00;
+        border-radius: 50%;
+        width: 10px;
+        height: 10px;
+      }
+
+      .lastWeekColor {
+        background-color: #ff773c;
+        border-radius: 50%;
+        width: 10px;
+        height: 10px;
+      }
+
+      .todayTitle {
+        color: #3a0078;
+        margin-left: 5px;
+        font-size: 12px;
+      }
+
+      .yesterdayTitle {
+        color: #067b00;
+        margin-left: 5px;
+        font-size: 12px;
+      }
+
+      .lastWeekTitle {
+        color: #ff773c;
+        margin-left: 5px;
+        font-size: 12px;
+      }
+    }
+
+    .time {
+      color: black;
+      font-size: 20px;
+      margin-top: 5px;
+      font-weight: 600;
+    }
+  }
+
+  .refreshed {
+    color: #676767;
+    font-size: 10px;
+    margin-top: 100px;
+  }
+}

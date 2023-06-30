@@ -1,0 +1,15 @@
+.linkContainer {
+  text-decoration: none;
+  width: 150px;
+  height: 150px;
+  display: flex;
+  padding: 15px;
+  border-radius: 10px;
+  align-items: flex-end;
+
+  .title {
+    font-size: 13px;
+    color: black;
+    font-weight: 600;
+  }
+}
