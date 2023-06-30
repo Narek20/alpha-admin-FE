@@ -1,15 +1,42 @@
-import { FC } from 'react'
-import { Box } from '@mui/material'
+import { Box, Button } from '@mui/material'
 import SectionHeader from '@shared/SectionTitle'
+import AnalyticLinkCard from '@features/AnalyticLinkCard'
 
 import styles from './styles.module.scss'
 
-interface IProps {}
+const analyticsLinks = [
+  {
+    title: 'Ամենօրյա դինամիկա և վաճառքի անալիտիկա',
+    link: 'analytics/',
+    color: '#FEE0E0',
+  },
+  {
+    title: 'Հաշվետվություն պահեստի մնացորդներով',
+    link: 'analytics/warehouse-remains',
+    color: '#DCEFDB',
+  },
+  {
+    title: 'Վաճառք',
+    link: 'analytics/sales',
+    color: '#E4EAFF',
+  },
+  {
+    title: 'ամփոփում վաճառողի կողմից',
+    link: 'analytics/summary-report',
+    color: '#FFECC7',
+  },
+]
 
-const Analytics: FC<IProps> = () => {
+const Analytics = () => {
   return (
     <Box className={styles.analytics}>
       <SectionHeader title="Անալիտիկա" />
+      <Box className={styles.links}>
+        {analyticsLinks.map((analyticsLink) => (
+          <AnalyticLinkCard key={analyticsLink.title} {...analyticsLink} />
+        ))}
+      </Box>
+      <Button>Բոլոր Հաշվետվությունները</Button>
     </Box>
   )
 }
