@@ -48,7 +48,7 @@ const MarketPlace: FC<IProps> = () => {
 
   return (
     <Box className={styles.marketPlace}>
-      <SectionHeader title="Մարկետպլեյս" />
+      <SectionHeader title="Մարկետփլեյս" />
       <Typography className={styles.averageTimeTitle}>
         Առաքման միջին ժամանակը
       </Typography>
