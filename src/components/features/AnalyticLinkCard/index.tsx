@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { Link } from 'react-router-dom'
-import { Box, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined'
 
 import styles from './styles.module.scss'
