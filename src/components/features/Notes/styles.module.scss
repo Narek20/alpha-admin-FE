@@ -4,4 +4,29 @@
   border-radius: 10px;
   padding: 20px;
   width: calc(30% - 20px);
+
+  .notesContainer {
+    height: 480px;
+    overflow-y: scroll;
+    padding: 0px 10px;
+    margin-top: 15px;
+  }
+
+  .actions {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    margin-top: 20px;
+
+    .addNote {
+      display: flex;
+      color: #067b00;
+      border-radius: 0px;
+
+      .addText {
+        color: #067b00;
+        margin-left: 5px;
+      }
+    }
+  }
 }
