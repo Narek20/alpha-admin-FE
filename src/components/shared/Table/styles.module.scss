@@ -1,0 +1,20 @@
+.table {
+  width: 100%;
+
+  tr {
+  }
+
+  th {
+    padding: 20px;
+
+    .data {
+      // width: 100px;
+      // text-overflow: ellipsis;
+      // display: -webkit-box;
+      // overflow-wrap: break-word;
+      // -webkit-line-clamp: 1;
+      // -webkit-box-orient: vertical;
+      // overflow: hidden;
+    }
+  }
+}

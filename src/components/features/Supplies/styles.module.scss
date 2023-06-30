@@ -4,4 +4,11 @@
   border-radius: 10px;
   padding: 20px;
   width: 60%;
+
+  .tableContainer {
+    margin-top: 40px;
+    overflow-y: scroll;
+    height: 500px;
+    width: 100%;
+  }
 }
