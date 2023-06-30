@@ -44,8 +44,7 @@ const MarketPlace: FC<IProps> = () => {
         (+shippingRef.current?.offsetWidth / 100) * marketPlaceData.averageTime
       )
     }
-  }, [shippingRef.current, shippingRef.current?.offsetWidth])
-  
+  }, [shippingRef.current?.offsetWidth])
 
   return (
     <Box className={styles.marketPlace}>
