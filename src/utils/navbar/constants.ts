@@ -8,7 +8,7 @@ export const navlinks = [
     link: '/storage',
   },
   {
-    title: 'Մարկետպլեյս',
+    title: 'Մարկետփլեյս',
     link: '/marketplace',
   },
   {

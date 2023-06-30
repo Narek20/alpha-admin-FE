@@ -6,7 +6,7 @@ import {
   pastDurations,
   pastDurationsByColors,
 } from '@utils/finances/constants'
-import { Durations } from 'types/Finances/types'
+import { Durations } from 'types/finances.types'
 
 import styles from './styles.module.scss'
 

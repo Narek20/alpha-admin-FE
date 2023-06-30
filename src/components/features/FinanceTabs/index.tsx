@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { Box, Button } from '@mui/material'
-import { Durations, PurchaseTypes } from 'types/Finances/types'
+import { Durations, PurchaseTypes } from 'types/finances.types'
 
 import styles from './styles.module.scss'
 

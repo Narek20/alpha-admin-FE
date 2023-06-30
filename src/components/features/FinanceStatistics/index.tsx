@@ -4,7 +4,7 @@ import LineChart from '@features/LineChart'
 import FinanceTabs from '@features/FinanceTabs'
 import FinanceInformation from '@features/FinanceInformation'
 import SectionHeader from '@shared/SectionTitle'
-import { Durations, PurchaseTypes } from 'types/Finances/types'
+import { Durations, PurchaseTypes } from 'types/finances.types'
 
 import styles from './styles.module.scss'
 
