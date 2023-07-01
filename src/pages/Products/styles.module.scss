@@ -1,0 +1,9 @@
+.productsPage {
+  box-sizing: border-box;
+  width: 100%;
+
+  .content {
+    display: flex;
+    gap: 20;
+  }
+}

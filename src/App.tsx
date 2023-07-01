@@ -1,12 +1,15 @@
 import { Box } from '@mui/material'
 import Routers from './routes/index'
 import Header from '@features/Header'
+import './index.css'
 
 const App = () => {
   return (
-    <Box>
+    <Box className="App">
       <Header />
-      <Routers />
+      <Box className="pages">
+        <Routers />
+      </Box>
     </Box>
   )
 }
