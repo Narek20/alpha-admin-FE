@@ -1,0 +1,27 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+  height: 300px;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+
+  .img {
+    width: 200px;
+    height: 200px;
+  }
+
+  .brand {
+    margin-top: 20px;
+    color: rgb(74, 74, 74);
+  }
+
+  .title {
+  }
+}
+
+.card:hover {
+  box-shadow: 2px 2px 5px 2px gray;
+}

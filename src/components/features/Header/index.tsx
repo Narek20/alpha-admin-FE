@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 import { Box, IconButton, Typography } from '@mui/material'
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined'
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined'
@@ -17,7 +17,9 @@ const Header = () => {
   return (
     <Box className={styles.header}>
       <Box className={styles.leftSection}>
-        <img className={styles.logo} src={logo} alt="logo" />
+        <Link to="/">
+          <img className={styles.logo} src={logo} alt="logo" />
+        </Link>
         <Box className={styles.links}>
           {navlinks.map(({ link, title }) => (
             <NavLink

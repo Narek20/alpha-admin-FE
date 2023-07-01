@@ -14,6 +14,14 @@ code {
     monospace;
 }
 
+.App {
+  background-color: rgb(221, 221, 221);
+}
+
+.pages {
+  padding: 20px;
+}
+
 ::-webkit-scrollbar {
   width: 5px;
   background-color: rgb(207, 207, 207);

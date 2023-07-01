@@ -1,0 +1,30 @@
+.filterSkillet {
+  border-bottom: 1px solid gray;
+  padding: 10px 0px;
+
+  .header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+
+    .title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .arrow {
+      transition: transform 0.3s ease;
+      transform: rotate(90deg);
+    }
+
+    .bottomArrow {
+      transition: transform 0.3s ease;
+      transform: rotate(270deg);
+    }
+  }
+
+  .filter {
+    margin: 20px 0px;
+  }
+}

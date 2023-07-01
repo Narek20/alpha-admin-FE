@@ -1,0 +1,17 @@
+.toolbar {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+
+  .leftBar {
+    display: flex;
+  }
+
+  .rightBar {
+    display: flex;
+
+    .button {
+      color: #f6c71e;
+    }
+  }
+}

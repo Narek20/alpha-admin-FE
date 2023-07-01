@@ -1,0 +1,30 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 150px;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+
+  .img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .brand {
+    margin-top: 20px;
+    font-size: 14px;
+    color: rgb(74, 74, 74);
+  }
+
+  .title {
+    font-size: 14px;
+  }
+}
+
+.card:hover {
+  box-shadow: 2px 2px 5px 2px gray;
+}
