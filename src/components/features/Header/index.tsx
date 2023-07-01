@@ -3,7 +3,7 @@ import { NavLink, Link } from 'react-router-dom'
 import { Box, IconButton, Typography } from '@mui/material'
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined'
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined'
-import ProfileDropDown from '@features/ProfileDropDown'
+import ProfileDropDown from '@features/ProductComponents/ProfileDropDown'
 import logo from '@assets/images/alpha-logo.jpg'
 import { navlinks } from '@utils/navbar/constants'
 

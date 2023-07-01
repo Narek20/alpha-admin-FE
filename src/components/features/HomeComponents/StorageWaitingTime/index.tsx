@@ -1,7 +1,7 @@
 import { Box } from '@mui/material'
-import LineChart from '@features/LineChart'
-import WaitingTimeInformation from '@features/WaitingTimeInformation'
+import LineChart from '@shared/LineChart'
 import SectionHeader from '@shared/SectionTitle'
+import WaitingTimeInformation from '../WaitingTimeInformation'
 
 import styles from './styles.module.scss'
 

@@ -4,7 +4,7 @@ import NameFilter from '@features/Filters/NameFilter'
 import PriceFilter from '@features/Filters/PriceFilter'
 import BrandFilter from '@features/Filters/BrandFilter'
 import CategoryFilter from '@features/Filters/CategoryFilter'
-import SidebarFilterSkillet from '@features/SidebarFiilterSkillet'
+import SidebarFilterSkillet from '../SidebarFiilterSkillet'
 
 import styles from './styles.module.scss'
 

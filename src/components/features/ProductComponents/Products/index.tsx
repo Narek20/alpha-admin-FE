@@ -1,9 +1,9 @@
 import { useContext, useState } from 'react'
 import { Box, Stack, Pagination } from '@mui/material'
-import BigProductCard from '@features/BigProductCard'
-import ProductsToolbar from '@features/ProductsToolbar'
-import SmallProductCard from '@features/SmallProductCard'
 import { ProductsContext } from 'contexts/products.context'
+import BigProductCard from '../BigProductCard'
+import ProductsToolbar from '../ProductsToolbar'
+import SmallProductCard from '../SmallProductCard'
 
 import styles from './styles.module.scss'
 

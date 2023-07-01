@@ -1,5 +1,5 @@
 import { Box, Button } from '@mui/material'
-import Feedback from '@features/Feedback'
+import Feedback from '@features/HomeComponents/Feedback'
 import SectionHeader from '@shared/SectionTitle'
 import koshik from '@assets/images/koshik.jpg'
 

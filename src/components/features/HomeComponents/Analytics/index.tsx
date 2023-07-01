@@ -1,6 +1,6 @@
 import { Box, Button } from '@mui/material'
 import SectionHeader from '@shared/SectionTitle'
-import AnalyticLinkCard from '@features/AnalyticLinkCard'
+import AnalyticLinkCard from '../AnalyticLinkCard'
 
 import styles from './styles.module.scss'
 

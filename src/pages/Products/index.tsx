@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
-import ProductsSidebar from '@features/ProductsSidebar'
-import Products from '@features/Products'
+import Products from '@features/ProductComponents/Products'
+import ProductsSidebar from '@features/ProductComponents/ProductsSidebar'
 
 import styles from './styles.module.scss'
 

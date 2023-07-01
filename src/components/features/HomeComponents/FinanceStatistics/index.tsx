@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { Box } from '@mui/material'
-import LineChart from '@features/LineChart'
-import FinanceTabs from '@features/FinanceTabs'
-import FinanceInformation from '@features/FinanceInformation'
+import LineChart from '@shared/LineChart'
 import SectionHeader from '@shared/SectionTitle'
+import FinanceTabs from '../FinanceTabs'
+import FinanceInformation from '../FinanceInformation'
 import { Durations, PurchaseTypes } from 'types/finances.types'
 
 import styles from './styles.module.scss'

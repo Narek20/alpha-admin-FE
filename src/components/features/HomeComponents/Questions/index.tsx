@@ -1,7 +1,7 @@
 import { Box, Button } from '@mui/material'
 import SectionHeader from '@shared/SectionTitle'
 import koshik from '@assets/images/koshik.jpg'
-import Question from '@features/Question'
+import Question from '../Question'
 
 import styles from './styles.module.scss'
 

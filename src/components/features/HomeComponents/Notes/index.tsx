@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Box, Typography, IconButton } from '@mui/material'
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined'
-import Note from '@features/Note'
+import Note from '../Note'
 import NotesModal from '@shared/NotesModal'
 import SectionHeader from '@shared/SectionTitle'
 
