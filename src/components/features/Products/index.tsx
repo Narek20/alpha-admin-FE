@@ -1,4 +1,4 @@
-import { FC, useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 import { Box, Stack, Pagination } from '@mui/material'
 import BigProductCard from '@features/BigProductCard'
 import ProductsToolbar from '@features/ProductsToolbar'
@@ -7,9 +7,7 @@ import { ProductsContext } from 'contexts/products.context'
 
 import styles from './styles.module.scss'
 
-interface IProps {}
-
-const Products: FC<IProps> = ({}) => {
+const Products = () => {
   const [isBig, setIsBig] = useState(true)
 
   const { products } = useContext(ProductsContext)

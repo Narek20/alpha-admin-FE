@@ -1,5 +1,5 @@
 export interface IProductsContext {
-  products: ProductType[]
+  products: ProductType[] | []
 }
 
 export type ProductType = {
