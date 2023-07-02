@@ -11,18 +11,23 @@ import {
 import SearchIcon from '@mui/icons-material/Search'
 import SettingsIcon from '@mui/icons-material/Settings'
 import SectionHeader from '@shared/SectionTitle'
+import OrderAddModal from '@shared/AddOrderModal'
 import { productStatuses } from '@utils/product/constants'
 
 import styles from './styles.module.scss'
 
 const OrderToolbar = () => {
+  const [isOpen, setIsOpen] = useState(false)
   const [ordersType, setOrderType] = useState('all')
+
   console.log(ordersType)
   return (
     <Box className={styles.orderToolbar}>
       <Box className={styles.header}>
         <SectionHeader title="Պատվերներ" />
-        <Button className={styles.addBtn}>Ավելացնել Պատվեր</Button>
+        <Button className={styles.addBtn} onClick={() => setIsOpen(true)}>
+          Ավելացնել Պատվեր
+        </Button>
       </Box>
       <Box className={styles.topBar}>
         <Button className={styles.button} onClick={() => setOrderType('all')}>
@@ -59,6 +64,7 @@ const OrderToolbar = () => {
           <SettingsIcon />
         </IconButton>
       </Box>
+      <OrderAddModal open={isOpen} onClose={() => setIsOpen(false)} />
     </Box>
   )
 }
