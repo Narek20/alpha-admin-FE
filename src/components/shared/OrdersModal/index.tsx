@@ -29,7 +29,7 @@ const OrdersModal: FC<IProps> = ({ open, isComplete, isEdit, onClose }) => {
       <Box className={styles.modalContent}>
         <Box className={styles.header}>
           <Typography className={styles.title}>
-            {modalTitle()} պատվերը
+            {modalTitle()} {!isEdit && 'պատվերը'}
           </Typography>
           <IconButton onClick={onClose}>
             <CloseOutlinedIcon />
