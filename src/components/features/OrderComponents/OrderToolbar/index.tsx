@@ -17,7 +17,7 @@ import styles from './styles.module.scss'
 
 const OrderToolbar = () => {
   const [ordersType, setOrderType] = useState('all')
-
+  console.log(ordersType)
   return (
     <Box className={styles.orderToolbar}>
       <Box className={styles.header}>
