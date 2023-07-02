@@ -1,0 +1,67 @@
+.tableContainer {
+  .table {
+    th {
+      padding: 20px;
+      text-wrap: nowrap;
+
+      .headCell {
+        text-wrap: nowrap;
+      }
+
+      .completed {
+        color: white;
+        background-color: #067b00;
+        font-size: 14px;
+        padding: 7px;
+        border-radius: 5px;
+        width: fit-content;
+        text-wrap: nowrap;
+      }
+
+      .canceled {
+        color: white;
+        background-color: #f96666;
+        font-size: 14px;
+        padding: 7px;
+        border-radius: 5px;
+        width: fit-content;
+        text-wrap: nowrap;
+      }
+
+      .delivery {
+        color: white;
+        background-color: #dac400;
+        font-size: 14px;
+        padding: 7px;
+        border-radius: 5px;
+        width: fit-content;
+        text-wrap: nowrap;
+      }
+
+      .packing {
+        color: white;
+        background-color: #881ad7;
+        font-size: 14px;
+        padding: 7px;
+        border-radius: 5px;
+        width: fit-content;
+        text-wrap: nowrap;
+      }
+
+      .received {
+        color: white;
+        background-color: rgb(68, 68, 255);
+        font-size: 14px;
+        padding: 7px;
+        border-radius: 5px;
+        width: fit-content;
+        text-wrap: nowrap;
+      }
+
+      .actions {
+        display: flex;
+        gap: 10px;
+      }
+    }
+  }
+}

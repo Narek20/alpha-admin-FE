@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { Box, Typography } from '@mui/material'
-import { ProductType } from 'types/products.types'
+import { ProductType } from 'types/product.types'
 
 import styles from './styles.module.scss'
 

@@ -4,8 +4,8 @@ export const navlinks = [
     link: '/products',
   },
   {
-    title: 'Պահեստ',
-    link: '/storage',
+    title: 'Պատվերներ',
+    link: '/orders',
   },
   {
     title: 'Մարկետփլեյս',
