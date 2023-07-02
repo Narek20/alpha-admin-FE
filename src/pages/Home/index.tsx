@@ -16,16 +16,24 @@ import styles from './styles.module.scss'
 const Home = () => {
   return (
     <Box className={styles.home}>
-      <CommonStatistics />
-      <FinanceStatistics />
-      <StorageLoad />
-      <MarketPlace />
-      <Analytics />
-      <Feedbacks />
-      <Questions />
-      <Notes />
-      <Turnover />
-      <StorageWaitingTime />
+      <Box className={styles.row}>
+        <CommonStatistics />
+        <FinanceStatistics />
+      </Box>
+      <Box className={styles.row}>
+        <StorageLoad />
+        <MarketPlace />
+        <Analytics />
+      </Box>
+      <Box className={styles.row}>
+        <Feedbacks />
+        <Questions />
+        <Notes />
+      </Box>
+      <Box className={styles.row}>
+        <Turnover />
+        <StorageWaitingTime />
+      </Box>
       <Supplies />
     </Box>
   )

@@ -1,7 +1,13 @@
 .home {
   box-sizing: border-box;
   display: flex;
+  flex-direction: column;
   gap: 20px;
-  flex-wrap: wrap;
   width: 100%;
+
+  .row {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+  }
 }
