@@ -5,7 +5,7 @@ import {
   useState,
   useEffect,
 } from 'react'
-import { ProductType, IProductsContext } from 'types/products.types'
+import { ProductType, IProductsContext } from 'types/product.types'
 import koshik from '@assets/images/koshik.jpg'
 
 // Create a ProductsContext

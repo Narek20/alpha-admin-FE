@@ -1,0 +1,60 @@
+.modal {
+  width: 100%;
+  height: 100%;
+
+  .modalContent {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    width: 400px;
+    height: auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+
+    .header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+
+      .title {
+        font-size: 25px;
+        color: black;
+        font-weight: 600;
+      }
+    }
+
+    .editContainer {
+      width: 100%;
+      margin-top: 30px;
+
+      .editTitle {
+        width: 100%;
+        height: 30px;
+      }
+
+      .editNote {
+        width: 100%;
+        margin-top: 50px;
+        max-height: 300px;
+      }
+    }
+
+    .actions {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 30px;
+
+      .removeBtn {
+        font-weight: 600;
+      }
+
+      .cancelBtn {
+        margin-left: 10px;
+        font-weight: 600;
+      }
+    }
+  }
+}

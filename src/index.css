@@ -16,11 +16,31 @@ code {
 
 .App {
   background-color: rgb(221, 221, 221);
+
 }
+
+/* p {
+  font-family: ,arial,sans-serif !important;
+}
+
+a {
+  font-family: latobold,arial,sans-serif !important;
+}
+
+
+span {
+  font-family: latobold,arial,sans-serif !important;
+}
+
+button {
+  font-family: latobold,arial,sans-serif !important;
+} */
 
 .pages {
   padding: 20px;
 }
+
+
 
 ::-webkit-scrollbar {
   width: 5px;

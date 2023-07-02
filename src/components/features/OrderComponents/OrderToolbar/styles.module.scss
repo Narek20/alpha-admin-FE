@@ -1,0 +1,56 @@
+.orderToolbar {
+  width: 100%;
+
+  .header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    .addBtn {
+      color: white;
+      border-radius: 5px;
+      font-size: 16px;
+      font-weight: 600;
+      background-color: #f6c71e;
+    }
+  }
+
+  .topBar {
+    display: flex;
+    margin: 20px 0px;
+    width: 100%;
+
+    .button {
+      padding: 15px;
+      border-bottom: 1px solid #000000;
+      border-radius: 0px;
+      color: black;
+    }
+
+    .button:hover {
+      border-bottom: 1px solid #f6c71e;
+      background-color: #fffdf5;
+    }
+  }
+
+  .bottomBar {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    gap: 20px;
+
+    .search {
+      flex: 3;
+    }
+
+    .select {
+      flex: 1;
+    }
+
+    .settings {
+      border-radius: 5px;
+      border: 1px solid rgb(191, 191, 191);
+      padding: 10px;
+    }
+  }
+}

@@ -16,7 +16,9 @@ const AnalyticLinkCard: FC<IProps> = ({ title, link, color }) => {
     <Link
       className={styles.linkContainer}
       to={link}
-      style={{ background: color }}
+      style={{
+        background: color,
+      }}
     >
       <Typography className={styles.title}>
         {title}
