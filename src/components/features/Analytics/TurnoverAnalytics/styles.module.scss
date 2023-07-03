@@ -1,0 +1,61 @@
+.turnover {
+  width: 100%;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: white;
+
+  .description {
+    margin-top: 20px;
+    width: 50%;
+    color: rgb(136, 136, 136);
+  }
+
+  .formulaBox {
+    display: flex;
+    align-items: center;
+    margin-top: 50px;
+
+    .formula {
+      font-weight: 600;
+    }
+
+    .equality {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-left: 5px;
+
+      .divider {
+        border-bottom: 2px solid gray;
+        font-weight: 600;
+      }
+
+      .quotient {
+        font-weight: 600;
+      }
+    }
+  }
+
+  .chartBox {
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .purchaseTypes {
+    display: flex;
+
+    .chartBtn {
+      background-color: #f0f0f3;
+      color: black;
+      height: 40px;
+      border-radius: 0px;
+    }
+
+    .selectedChartBtn {
+      background-color: #f6c71e;
+      color: black;
+      height: 40px;
+      border-radius: 0px;
+    }
+  }
+}

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Box } from '@mui/material'
-import LineChart from '@shared/LineChart'
+import Chart from '@shared/Chart'
 import SectionHeader from '@shared/SectionTitle'
 import FinanceTabs from '../FinanceTabs'
 import FinanceInformation from '../FinanceInformation'
@@ -12,28 +12,14 @@ const data = {
   labels: ['January', 'February', 'March', 'April', 'May', 'June'],
   datasets: [
     {
-      label: 'Example1 Chart',
+      name: 'Example1 Chart',
       data: [65, 59, 80, 81, 56, 55],
-      fill: false,
-      borderColor: 'rgb(75, 192, 192)',
-      tension: 0.5,
     },
     {
-      label: 'Example2 Chart',
+      name: 'Example2 Chart',
       data: [1, 100, 12, 13, 20, 60],
-      fill: false,
-      borderColor: '#FBE8C4',
-      tension: 0.5,
     },
   ],
-}
-
-const options = {
-  scales: {
-    y: {
-      beginAtZero: true,
-    },
-  },
 }
 
 const FinanceStatistics = () => {
@@ -59,7 +45,12 @@ const FinanceStatistics = () => {
           amountDifference={12}
           priceDifference={-1012321}
         />
-        <LineChart data={data} options={options} />
+        <Chart
+          series={data.datasets}
+          labels={data.labels}
+          colors={['rgb(75, 192, 192)', '#FBE8C4']}
+          type="line"
+        />
       </Box>
     </Box>
   )

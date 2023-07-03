@@ -1,5 +1,5 @@
 import { Box } from '@mui/material'
-import LineChart from '@shared/LineChart'
+import Chart from '@shared/Chart'
 import SectionHeader from '@shared/SectionTitle'
 import WaitingTimeInformation from '../WaitingTimeInformation'
 
@@ -9,35 +9,18 @@ const data = {
   labels: ['January', 'February', 'March', 'April', 'May', 'June'],
   datasets: [
     {
-      label: 'Example1 Chart',
+      name: 'Example1 Chart',
       data: [12, 34, 45, 66, 0, 100],
-      fill: false,
-      borderColor: '#3A0078',
-      tension: 0.5,
     },
     {
-      label: 'Example2 Chart',
+      name: 'Example2 Chart',
       data: [100, 80, 60, 40, 20, 0],
-      fill: false,
-      borderColor: '#067B00',
-      tension: 0.5,
     },
     {
-      label: 'Example3 Chart',
+      name: 'Example3 Chart',
       data: [1, 100, 12, 13, 20, 60],
-      fill: false,
-      borderColor: '#FF773C',
-      tension: 0.5,
     },
   ],
-}
-
-const options = {
-  scales: {
-    y: {
-      beginAtZero: true,
-    },
-  },
 }
 
 const StorageWaitingTime = () => {
@@ -50,7 +33,12 @@ const StorageWaitingTime = () => {
           lastWeekTime="40 րոպե"
           yesterdaysTime="20 րոպե"
         />
-        <LineChart data={data} options={options} />
+        <Chart
+          series={data.datasets}
+          colors={['#3A0078', '#067B00', '#FF773C']}
+          labels={data.labels}
+          type="line"
+        />
       </Box>
     </Box>
   )
