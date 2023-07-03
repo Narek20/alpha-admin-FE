@@ -5,7 +5,7 @@ import styles from './styles.module.scss'
 
 const SummaryReport = () => {
   return (
-    <Box>
+    <Box className={styles.summaryReport}>
       <SectionHeader title='6.Ամփոփում վաճառողի կողմից'/>
     </Box>
   )

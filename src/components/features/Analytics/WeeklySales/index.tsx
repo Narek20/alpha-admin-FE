@@ -5,7 +5,7 @@ import styles from './styles.module.scss'
 
 const WeeklySales = () => {
   return (
-    <Box>
+    <Box className={styles.weeklySales}>
       <SectionHeader title="2.Շաբաթական դինամիկա և վաճառքի վերլուծություն" />
       <Typography>
         Շրջանառությունը այն ժամանակահատվածն է, որի ընթացքում վաճառվում է

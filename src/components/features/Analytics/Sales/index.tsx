@@ -5,7 +5,7 @@ import styles from './styles.module.scss'
 
 const Sales = () => {
   return (
-    <Box>
+    <Box className={styles.sales}>
       <SectionHeader title='3.Վաճառք'/>
     </Box>
   )
