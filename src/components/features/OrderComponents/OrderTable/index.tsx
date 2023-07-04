@@ -22,9 +22,9 @@ import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutli
 import OrdersModal from '@shared/OrdersModal'
 import { OrdersContext } from 'contexts/order.context'
 import {
-  OrderStatuses,
   OrderTableColumns,
   OrderTableKeys,
+  orderRowColor,
   orderStatusStyles,
 } from '@utils/order/constants'
 import Pagination from '@shared/Pagination'
@@ -82,7 +82,7 @@ const OrderTable = () => {
           <TableHead>
             <TableRow>
               {OrderTableColumns.map((key) => (
-                <TableCell align="left">
+                <TableCell align="center">
                   <Typography className={styles.headCell}>{key}</Typography>
                 </TableCell>
               ))}
@@ -92,58 +92,41 @@ const OrderTable = () => {
             {orders.map((order, index) => (
               <TableRow
                 key={order.title}
-                sx={{ padding: 20 }}
-                className={styles.bodyRow}
+                sx={{
+                  padding: 20,
+                  backgroundColor: orderRowColor(order.status),
+                  border: `1px solid gray`,
+                }}
+                className={styles[orderStatusStyles(order.status)]}
               >
-                {OrderTableKeys.map((key: OrderTableKeysType) => (
+                {OrderTableKeys.map((key: OrderTableKeysType, ind) => (
                   <TableCell
                     key={key}
                     className={styles.bodyCell}
                     component="th"
                     scope="row"
-                    align="left"
+                    align="center"
                   >
-                    <TextField
-                      defaultValue={order[key]}
-                      className={styles.data}
-                      disabled={!isEdit || index !== editRow}
-                      onChange={(evt) => handleChange(key, evt.target.value)}
-                    />
+                    {ind === 0 ? (
+                      <Typography className={styles.index}>
+                        {order[key]}
+                      </Typography>
+                    ) : (
+                      <TextField
+                        defaultValue={order[key]}
+                        size="small"
+                        className={styles.data}
+                        disabled={!isEdit || index !== editRow}
+                        onChange={(evt) => handleChange(key, evt.target.value)}
+                      />
+                    )}
                   </TableCell>
                 ))}
                 <TableCell
                   className={styles.bodyCell}
                   component="th"
                   scope="row"
-                  align="left"
-                >
-                  <Select
-                    defaultValue={order.status}
-                    value={
-                      rowChanges?.status ? rowChanges?.status : order.status
-                    }
-                    className={
-                      styles[
-                        orderStatusStyles(
-                          rowChanges?.status ? rowChanges.status : order.status
-                        )
-                      ]
-                    }
-                    disabled={!isEdit || index !== editRow}
-                    onChange={(evt) =>
-                      handleChange(OrderTableKeysType.STATUS, evt.target.value)
-                    }
-                  >
-                    {OrderStatuses.map((status) => (
-                      <MenuItem value={status}>{status}</MenuItem>
-                    ))}
-                  </Select>
-                </TableCell>
-                <TableCell
-                  className={styles.bodyCell}
-                  component="th"
-                  scope="row"
-                  align="left"
+                  align="center"
                 >
                   <Box className={styles.actions}>
                     <IconButton

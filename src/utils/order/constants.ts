@@ -4,14 +4,8 @@ export const OrderTableColumns = [
   'Համարը',
   'Պատվիրատու',
   'Հեռախոսահամար',
-  'Ապրանքը',
-  'Տիպը',
   'Հասցեն',
   'Ստեղծման օրը',
-  'Քանակը',
-  'Պահեստ',
-  'Գինը',
-  'Կարգավիճակը',
   'Գործողություններ',
 ]
 
@@ -19,13 +13,8 @@ export const OrderTableKeys = [
   OrderTableKeysType.ID,
   OrderTableKeysType.CUSTOMER_NAME,
   OrderTableKeysType.CUSTOMER_PHONE,
-  OrderTableKeysType.TITLE,
-  OrderTableKeysType.CATEGORY,
   OrderTableKeysType.ADDRESS,
   OrderTableKeysType.CREATED_AT,
-  OrderTableKeysType.QUANTITY,
-  OrderTableKeysType.STORAGE,
-  OrderTableKeysType.PRICE,
 ]
 
 export const OrderStatuses = [
@@ -48,5 +37,20 @@ export const orderStatusStyles = (status: OrderStatus): string => {
       return 'completed'
     default:
       return 'received'
+  }
+}
+
+export const orderRowColor = (status: OrderStatus) : string => {
+  switch (status) {
+    case OrderStatus.CANCELED:
+      return '#FF0000'
+    case OrderStatus.PACKING:
+      return '#881AD7'
+    case OrderStatus.DELIVERY:
+      return '#067B00'
+    case OrderStatus.COMPLETED:
+      return '#CCCCCC'
+    default:
+      return '#4984E5'
   }
 }
