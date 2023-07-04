@@ -1,5 +1,5 @@
-import { Box, Tooltip, Typography } from '@mui/material'
-import QuestionMarkOutlinedIcon from '@mui/icons-material/QuestionMarkOutlined'
+import { Box, Typography } from '@mui/material'
+import CommonSearch from '@shared/CommonSearch'
 import SectionHeader from '@shared/SectionTitle'
 import { commonStatistics } from '@utils/statistics/constants'
 
@@ -10,13 +10,7 @@ const CommonStatistics = () => {
     <Box className={styles.statistics}>
       <SectionHeader title="Ընդհանուր Ստատիստիկա" />
       <Box className={styles.statisticContainer}>
-        <Typography className={styles.totalPrice}>2340230դր․</Typography>
-        <Tooltip
-          className={styles.tooltip}
-          title="Ընդհանուր եկամուտը շաբաթվա կտրվածքով"
-        >
-          <QuestionMarkOutlinedIcon />
-        </Tooltip>
+        <CommonSearch />
       </Box>
       <hr />
       {commonStatistics.map((statistic) => (

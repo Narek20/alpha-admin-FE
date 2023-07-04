@@ -1,11 +1,11 @@
 export const navlinks = [
   {
-    title: 'Ապրանքներ',
-    link: '/products',
-  },
-  {
     title: 'Պատվերներ',
     link: '/orders',
+  },
+  {
+    title: 'Ապրանքներ',
+    link: '/products',
   },
   {
     title: 'Մարկետփլեյս',
