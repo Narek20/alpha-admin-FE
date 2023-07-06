@@ -5,12 +5,13 @@ import {
   useState,
   useEffect,
 } from 'react'
-import { ProductType, IProductsContext } from 'types/product.types'
-import koshik from '@assets/images/koshik.jpg'
+import { IProduct, IProductsContext } from 'types/product.types'
+import { getAllProducts } from 'services/products.service'
 
 // Create a ProductsContext
 export const ProductsContext = createContext<IProductsContext>({
   products: [],
+  getProducts: () => {}
 })
 
 // Custom hook to access the ProductsContext
@@ -18,145 +19,22 @@ export const useProducts = () => useContext(ProductsContext)
 
 // ProductsProvider component that wraps your app
 export const ProductsProvider = ({ children }: { children: ReactNode }) => {
-  const [products, setProducts] = useState<ProductType[] | []>([])
+  const [products, setProducts] = useState<IProduct[] | []>([])
+
+  const getProducts = async () => {
+    const data = await getAllProducts()
+
+    if (data.success) {
+      setProducts(data.data)
+    }
+  }
 
   useEffect(() => {
-    setProducts([
-      {
-        id: 1,
-        title: 'Կայֆոտ կոշիկ',
-        category: 'Կաշիկ',
-        brand: 'Alpha',
-        updatedAt: '23.06.23',
-        createdAt: '23.06.23',
-        color: 'black',
-        img: [koshik, koshik, koshik],
-        sizes: ['46', '47', '48'],
-        barcode: '2334524235',
-        quantity: 12,
-      },
-      {
-        id: 1,
-        title: 'Կայֆոտ կոշիկ',
-        category: 'Կաշիկ',
-        brand: 'Alpha',
-        updatedAt: '23.06.23',
-        createdAt: '23.06.23',
-        color: 'black',
-        img: [koshik],
-        sizes: ['46', '47', '48'],
-        barcode: '2334524235',
-        quantity: 12,
-      },
-      {
-        id: 1,
-        title: 'Կայֆոտ կոշիկ',
-        category: 'Կաշիկ',
-        brand: 'Alpha',
-        updatedAt: '23.06.23',
-        createdAt: '23.06.23',
-        color: 'black',
-        img: [koshik],
-        sizes: ['46', '47', '48'],
-        barcode: '2334524235',
-        quantity: 12,
-      },
-      {
-        id: 1,
-        title: 'Կայֆոտ կոշիկ',
-        category: 'Կաշիկ',
-        brand: 'Alpha',
-        updatedAt: '23.06.23',
-        createdAt: '23.06.23',
-        color: 'black',
-        img: [koshik],
-        sizes: ['46', '47', '48'],
-        barcode: '2334524235',
-        quantity: 12,
-      },
-      {
-        id: 1,
-        title: 'Կայֆոտ կոշիկ',
-        category: 'Կաշիկ',
-        brand: 'Alpha',
-        updatedAt: '23.06.23',
-        createdAt: '23.06.23',
-        color: 'black',
-        img: [koshik, koshik],
-        sizes: ['46', '47', '48'],
-        barcode: '2334524235',
-        quantity: 12,
-      },
-      {
-        id: 1,
-        title: 'Կայֆոտ կոշիկ',
-        category: 'Կաշիկ',
-        brand: 'Alpha',
-        updatedAt: '23.06.23',
-        createdAt: '23.06.23',
-        color: 'black',
-        img: [koshik],
-        sizes: ['46', '47', '48'],
-        barcode: '2334524235',
-        quantity: 12,
-      },
-      {
-        id: 2,
-        title: 'Կայֆոտ կոշիկ',
-        category: 'Կաշիկ',
-        brand: 'Alpha',
-        updatedAt: '23.06.23',
-        createdAt: '23.06.23',
-        color: 'black',
-        img: [koshik],
-        sizes: ['46', '47', '48'],
-        barcode: '2334524235',
-        quantity: 12,
-      },
-      {
-        id: 3,
-        title: 'Կայֆոտ կոշիկ',
-        category: 'Կաշիկ',
-        brand: 'Alpha',
-        updatedAt: '23.06.23',
-        createdAt: '23.06.23',
-        color: 'black',
-        img: [koshik],
-        sizes: ['46', '47', '48'],
-        barcode: '2334524235',
-        quantity: 12,
-      },
-      {
-        id: 4,
-        title: 'Կայֆոտ կոշիկ',
-        category: 'Կաշիկ',
-        brand: 'Alpha',
-        updatedAt: '23.06.23',
-        createdAt: '23.06.23',
-        color: 'black',
-        img: [koshik],
-        sizes: ['46', '47', '48'],
-        barcode: '2334524235',
-        quantity: 12,
-      },
-      {
-        id: 5,
-        title: 'Կայֆոտ կոշիկ',
-        category: 'Կաշիկ',
-        brand: 'Alpha',
-        updatedAt: '23.06.23',
-        createdAt: '23.06.23',
-        color: 'black',
-        img: [koshik],
-        sizes: ['46', '47', '48'],
-        barcode: '2334524235',
-        quantity: 12,
-      },
-    ])
+    getProducts()
   }, [])
 
   return (
-    <ProductsContext.Provider value={{ products }}>
+    <ProductsContext.Provider value={{ products, getProducts }}>
       {children}
     </ProductsContext.Provider>
   )

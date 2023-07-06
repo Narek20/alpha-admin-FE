@@ -28,7 +28,7 @@ import {
   orderStatusStyles,
 } from '@utils/order/constants'
 import Pagination from '@shared/Pagination'
-import { OrderTableKeysType, OrderType } from 'types/order.types'
+import { OrderTableKeysType, IOrder } from 'types/order.types'
 
 import styles from './styles.module.scss'
 
@@ -37,7 +37,7 @@ const OrderTable = () => {
   const [isEdit, setIsEdit] = useState(false)
   const [editRow, setEditRow] = useState(0)
   const [isComplete, setIsComplete] = useState(false)
-  const [rowChanges, setRowChanges] = useState<OrderType | null>(null)
+  const [rowChanges, setRowChanges] = useState<IOrder | null>(null)
 
   const { orders } = useContext(OrdersContext)
 

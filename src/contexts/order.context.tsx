@@ -6,7 +6,7 @@ import {
   useEffect,
 } from 'react'
 import koshik from '@assets/images/koshik.jpg'
-import { IOrdersContext, OrderStatus, OrderType } from 'types/order.types'
+import { IOrdersContext, OrderStatus, IOrder } from 'types/order.types'
 
 // Create a OrdersContext
 export const OrdersContext = createContext<IOrdersContext>({
@@ -18,7 +18,7 @@ export const useOrders = () => useContext(OrdersContext)
 
 // OrdersProvider component that wraps your app
 export const OrdersProvider = ({ children }: { children: ReactNode }) => {
-  const [orders, setOrders] = useState<OrderType[] | []>([])
+  const [orders, setOrders] = useState<IOrder[] | []>([])
 
   useEffect(() => {
     setOrders([

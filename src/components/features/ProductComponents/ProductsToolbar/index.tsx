@@ -1,7 +1,8 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { Box, Button, IconButton } from '@mui/material'
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined'
 import ViewCompactOutlinedIcon from '@mui/icons-material/ViewCompactOutlined'
+import ProductAddModal from '@shared/AddProductModal'
 
 import styles from './styles.module.scss'
 
@@ -11,6 +12,12 @@ interface IProps {
 }
 
 const ProductsToolbar: FC<IProps> = ({ isBig, changeDisplay }) => {
+  const [isOpen, setIsOpen] = useState(false)
+
+  const handleAdd = () => {
+    setIsOpen(true)
+  }
+
   return (
     <Box className={styles.toolbar}>
       <Box className={styles.leftBar}>
@@ -24,11 +31,14 @@ const ProductsToolbar: FC<IProps> = ({ isBig, changeDisplay }) => {
         </IconButton>
       </Box>
       <Box className={styles.rightBar}>
-        <Button className={styles.button}>Ավելացնել</Button>
+        <Button className={styles.button} onClick={handleAdd}>
+          Ավելացնել
+        </Button>
         <Button className={styles.button}>Բոլոր ապրանքները</Button>
         <Button className={styles.button}>Առանց նկարի</Button>
         <Button className={styles.button}>նախագծեր</Button>
       </Box>
+      <ProductAddModal open={isOpen} onClose={() => setIsOpen(false)} />
     </Box>
   )
 }

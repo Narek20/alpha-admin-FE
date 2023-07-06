@@ -3,7 +3,7 @@ import { Box } from '@mui/material'
 import SizeSelect from '@shared/SizeSelect'
 
 const SizeFilter = () => {
-  const [size, setSize] = useState('')
+  const [size, setSize] = useState<string | string[]>([])
 
   return (
     <Box>

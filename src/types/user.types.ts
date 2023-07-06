@@ -1,4 +1,9 @@
-export type UserType = {
+export type IUser = {
   name: string
-  status: string
+  status: UserStatus
+}
+
+export enum UserStatus {
+  ADMIN = 'admin',
+  USER = 'user'
 }
