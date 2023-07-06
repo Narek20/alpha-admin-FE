@@ -12,7 +12,7 @@ interface IProps {
 
 const SizeSelect: FC<IProps> = ({ size, onChange }) => {
   return (
-    <FormControl>
+    <FormControl className={styles.form}>
       <InputLabel id="size-label">Չափսերը</InputLabel>
       <Select
         labelId="size-label"

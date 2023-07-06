@@ -1,8 +1,9 @@
-import { FC, useState } from 'react'
+import { FC, useState, useContext } from 'react'
 import { Box, Button, IconButton } from '@mui/material'
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined'
 import ViewCompactOutlinedIcon from '@mui/icons-material/ViewCompactOutlined'
 import ProductAddModal from '@shared/AddProductModal'
+import { ProductsContext } from 'contexts/products.context'
 
 import styles from './styles.module.scss'
 
@@ -13,6 +14,8 @@ interface IProps {
 
 const ProductsToolbar: FC<IProps> = ({ isBig, changeDisplay }) => {
   const [isOpen, setIsOpen] = useState(false)
+
+  const { getProducts } = useContext(ProductsContext)
 
   const handleAdd = () => {
     setIsOpen(true)
@@ -34,9 +37,9 @@ const ProductsToolbar: FC<IProps> = ({ isBig, changeDisplay }) => {
         <Button className={styles.button} onClick={handleAdd}>
           Ավելացնել
         </Button>
-        <Button className={styles.button}>Բոլոր ապրանքները</Button>
-        <Button className={styles.button}>Առանց նկարի</Button>
-        <Button className={styles.button}>նախագծեր</Button>
+        <Button className={styles.button} onClick={() => getProducts()}>
+          Բոլոր ապրանքները
+        </Button>
       </Box>
       <ProductAddModal open={isOpen} onClose={() => setIsOpen(false)} />
     </Box>

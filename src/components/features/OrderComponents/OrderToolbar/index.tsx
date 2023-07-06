@@ -20,7 +20,6 @@ const OrderToolbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [ordersType, setOrderType] = useState('all')
 
-  console.log(ordersType)
   return (
     <Box className={styles.orderToolbar}>
       <Box className={styles.header}>

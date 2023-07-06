@@ -1,11 +1,14 @@
 import { axiosInstance } from './axios.service'
-import { ICreateProduct, IProduct } from 'types/product.types'
 import { IResponse } from 'types/response.types'
 import { ProductEndpoints } from 'types/endpoints.types'
 
-export const getAllProducts = async (): Promise<IResponse> => {
+export const getAllProducts = async (params?: {
+  [query: string]: string | string[] | number[]
+}): Promise<IResponse> => {
   try {
-    const data = await axiosInstance.get(ProductEndpoints.GET_PRODUCTS)
+    const data = await axiosInstance.get(ProductEndpoints.GET_PRODUCTS, {
+      params
+    })
 
     return data.data
   } catch (err: any) {
