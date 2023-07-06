@@ -1,6 +1,5 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import { Box, Button, Typography } from '@mui/material'
-import SizeFilter from '@features/Filters/SizeFilter'
 import NameFilter from '@features/Filters/NameFilter'
 import PriceFilter from '@features/Filters/PriceFilter'
 import BrandFilter from '@features/Filters/BrandFilter'

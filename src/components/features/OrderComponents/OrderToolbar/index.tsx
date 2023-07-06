@@ -19,6 +19,7 @@ import styles from './styles.module.scss'
 const OrderToolbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [ordersType, setOrderType] = useState('all')
+  console.log(ordersType) // for eslint
 
   return (
     <Box className={styles.orderToolbar}>

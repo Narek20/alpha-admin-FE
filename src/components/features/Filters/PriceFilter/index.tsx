@@ -21,7 +21,7 @@ const PriceFilter: FC<IProps> = ({ onChange }) => {
 
   useEffect(() => {
     if (value.length && onChange) onChange(ProductKeys.PRICE, value as number[])
-  }, [value])
+  }, [value, onChange])
 
   return (
     <Box className={styles.priceFilter}>

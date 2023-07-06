@@ -5,7 +5,7 @@ import styles from './styles.module.scss'
 
 interface IProps {}
 
-const Loading: FC<IProps> = ({}) => {
+const Loading: FC<IProps> = () => {
   return (
     <Box className={styles.loading}>
       <CircularProgress color='warning'/>

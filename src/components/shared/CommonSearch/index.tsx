@@ -1,17 +1,11 @@
 import { FC } from 'react'
-import {
-  Autocomplete,
-  InputAdornment,
-  MenuItem,
-  Select,
-  TextField,
-} from '@mui/material'
+import { Autocomplete, TextField } from '@mui/material'
 
 import styles from './styles.module.scss'
 
 interface IProps {}
 
-const CommonSearch: FC<IProps> = ({}) => {
+const CommonSearch: FC<IProps> = () => {
   return (
     <Autocomplete
       disablePortal
