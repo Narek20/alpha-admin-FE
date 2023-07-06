@@ -1,38 +1,35 @@
 import { FC } from 'react'
-import { MenuItem, Select } from '@mui/material'
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material'
 
 import styles from './styles.module.scss'
 
-const sizes = [
-  {
-    size: 'Макс-Кар',
-  },
-  {
-    size: 'Alpha Milit',
-  },
-  {
-    size: 'Pahest',
-  },
-]
+const sizes = Array.from({ length: 31 }, (_, index) => index + 30 + '')
 
 interface IProps {
-  size: string
-  onChange: (size: string) => void
+  size: string[] | string
+  onChange: (size: string[] | string) => void
 }
 
 const SizeSelect: FC<IProps> = ({ size, onChange }) => {
   return (
-    <Select
-      className={styles.select}
-      value={size}
-      onChange={(evt) => onChange(evt.target.value)}
-    >
-      {sizes.map(({ size }) => (
-        <MenuItem key={size} value={size}>
-          {size}
-        </MenuItem>
-      ))}
-    </Select>
+    <FormControl>
+      <InputLabel id="size-label">Չափսերը</InputLabel>
+      <Select
+        labelId="size-label"
+        label="Չափսերը"
+        className={styles.select}
+        value={size}
+        multiple
+        onChange={(evt) => onChange(evt.target.value)}
+        MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}
+      >
+        {sizes.map((size) => (
+          <MenuItem key={size} value={size}>
+            {size}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
   )
 }
 

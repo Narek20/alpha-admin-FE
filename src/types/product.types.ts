@@ -1,19 +1,37 @@
 export interface IProductsContext {
-  products: ProductType[] | []
+  products: IProduct[] | []
+  getProducts: () => void
 }
 
-export type ProductType = {
+export interface IProduct {
   id: number
   title: string
   category: string
   brand: string
-  img: string[]
+  images: string[]
   rating?: number
   updatedAt: string
   createdAt: string
-  color: string
-  sizes: string[]
-  barcode: string
-  quantity: number
+  price: number
+  color?: string
+  sizes: string[] | string
   isBest?: boolean
+}
+
+export type ICreateProduct = {
+  title: string
+  category: string
+  brand: string
+  price: number;
+  color?: string
+  sizes: string[] | string
+}
+
+export enum ProductKeys {
+  TITLE = 'title',
+  CATEGORY = 'category',
+  BRAND = 'brand',
+  PRICE = 'price',
+  COLOR = 'color',
+  SIZES = 'sizes',
 }

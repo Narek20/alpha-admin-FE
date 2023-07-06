@@ -2,7 +2,7 @@ import localStorageKeys from '@utils/localStorageKeys';
 import axios, { AxiosRequestConfig } from 'axios';
 
 export const axiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+  baseURL: process.env.REACT_APP_BASE_URL,
   timeout: 20000,
 });
 

@@ -1,8 +1,8 @@
 export interface IOrdersContext {
-  orders: OrderType[] | []
+  orders: IOrder[] | []
 }
 
-export type OrderType = {
+export interface IOrder {
   id: number
   title: string
   category: string
