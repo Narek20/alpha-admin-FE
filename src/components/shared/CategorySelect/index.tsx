@@ -22,7 +22,7 @@ interface IProps {
 
 const CategorySelect: FC<IProps> = ({ category, onChange }) => {
   return (
-    <FormControl>
+    <FormControl className={styles.form}>
       <InputLabel id="type-label">Տիպը</InputLabel>
       <Select
         labelId="type-label"

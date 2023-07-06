@@ -1,6 +1,10 @@
 export interface IProductsContext {
   products: IProduct[] | []
+  isLoading: boolean
   getProducts: () => void
+  filterProducts: (params: {
+    [query: string]: string | string[] | number[]
+  }) => void
 }
 
 export interface IProduct {
@@ -22,7 +26,7 @@ export type ICreateProduct = {
   title: string
   category: string
   brand: string
-  price: number;
+  price: number
   color?: string
   sizes: string[] | string
 }

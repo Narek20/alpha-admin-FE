@@ -7,4 +7,14 @@
   width: 300px;
   background-color: white;
   border-radius: 10px;
+
+  .header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    .filterBtn {
+      color: #f6c71e;
+    }
+  }
 }
