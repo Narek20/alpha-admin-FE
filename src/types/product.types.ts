@@ -18,7 +18,7 @@ export interface IProduct {
   createdAt: string
   price: number
   color?: string
-  sizes: string[] | string
+  sizes: string
   isBest?: boolean
 }
 

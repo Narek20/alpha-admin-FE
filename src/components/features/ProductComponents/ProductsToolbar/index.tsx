@@ -2,7 +2,7 @@ import { FC, useState, useContext } from 'react'
 import { Box, Button, IconButton } from '@mui/material'
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined'
 import ViewCompactOutlinedIcon from '@mui/icons-material/ViewCompactOutlined'
-import ProductAddModal from '@shared/AddProductModal'
+import ProductAddModal from '@features/ProductComponents/AddProductModal'
 import { ProductsContext } from 'contexts/products.context'
 
 import styles from './styles.module.scss'
