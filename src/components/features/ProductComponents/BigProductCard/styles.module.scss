@@ -1,24 +1,42 @@
 .card {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 300px;
-  height: 300px;
+  gap: 10px;
   padding: 10px;
   border-radius: 10px;
   cursor: pointer;
 
   .img {
-    width: 200px;
-    height: 200px;
+    width: 250px;
+    height: 250px;
   }
 
-  .brand {
-    margin-top: 20px;
-    color: rgb(74, 74, 74);
+  .price {
+    font-weight: 600;
   }
 
-  .title {
+  .titleContainer {
+    display: flex;
+
+    .category {
+      color: rgb(149, 149, 149);
+      font-size: 14px;
+      margin-left: 2px;
+    }
+
+    .title {
+      font-size: 14px;
+    }
+  }
+
+  .fastView {
+    background-color: rgb(255, 255, 255);
+    color: black;
+  }
+
+  .fastView:hover {
+    background-color: rgb(221, 221, 221);
+    color: white;
   }
 }
 

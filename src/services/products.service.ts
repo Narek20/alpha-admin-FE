@@ -1,4 +1,5 @@
 import { axiosInstance } from './axios.service'
+import { IProduct } from 'types/product.types'
 import { IResponse } from 'types/response.types'
 import { ProductEndpoints } from 'types/endpoints.types'
 
@@ -7,7 +8,7 @@ export const getAllProducts = async (params?: {
 }): Promise<IResponse> => {
   try {
     const data = await axiosInstance.get(ProductEndpoints.GET_PRODUCTS, {
-      params
+      params,
     })
 
     return data.data
@@ -45,6 +46,24 @@ export const createProduct = async (formData: FormData): Promise<IResponse> => {
           'Content-Type': 'multipart/form-data',
         },
       }
+    )
+
+    return data.data
+  } catch (err: any) {
+    return {
+      success: false,
+      message: err.message,
+    }
+  }
+}
+
+export const updateProduct = async (
+  productData: IProduct
+): Promise<IResponse> => {
+  try {
+    const data = await axiosInstance.put(
+      ProductEndpoints.UPDATE_PRODUCT + productData.id,
+      productData
     )
 
     return data.data
