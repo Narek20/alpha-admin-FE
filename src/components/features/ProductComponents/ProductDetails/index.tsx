@@ -10,6 +10,7 @@ import styles from './styles.module.scss'
 const sizeOptions = Array.from({ length: 10 }, (_, index) => index + 36 + '')
 
 const ProductDetails: FC<IProduct & { onClose: () => void }> = ({
+  id,
   title,
   color,
   rating,
@@ -18,11 +19,14 @@ const ProductDetails: FC<IProduct & { onClose: () => void }> = ({
   sizes,
   onClose,
 }) => {
-  const [selectedSizes, setSelectedSizes] = useState(sizes.split(','))
+  const [selectedSizes, setSelectedSizes] = useState(
+    sizes?.length ? sizes.split(',') : []
+  )
   const { getProducts } = useContext(ProductsContext)
 
   const handleSave = async () => {
     const data = await updateProduct({
+      id,
       sizes: selectedSizes.join(','),
     } as IProduct)
 

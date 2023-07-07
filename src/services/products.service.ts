@@ -7,7 +7,7 @@ export const getAllProducts = async (params?: {
   [query: string]: string | string[] | number[]
 }): Promise<IResponse> => {
   try {
-    const data = await axiosInstance.get(ProductEndpoints.GET_PRODUCTS, {
+    const data = await axiosInstance.get(ProductEndpoints.PRODUCTS, {
       params,
     })
 
@@ -22,9 +22,7 @@ export const getAllProducts = async (params?: {
 
 export const getProductById = async (orderId: string): Promise<IResponse> => {
   try {
-    const data = await axiosInstance.get(
-      ProductEndpoints.GET_PRODUCTS_BY_ID + orderId
-    )
+    const data = await axiosInstance.get(ProductEndpoints.PRODUCTS + orderId)
 
     return data.data
   } catch (err: any) {
@@ -62,7 +60,7 @@ export const updateProduct = async (
 ): Promise<IResponse> => {
   try {
     const data = await axiosInstance.put(
-      ProductEndpoints.UPDATE_PRODUCT + productData.id,
+      ProductEndpoints.PRODUCTS + productData.id,
       productData
     )
 
@@ -77,9 +75,7 @@ export const updateProduct = async (
 
 export const removeProduct = async (orderId: string): Promise<IResponse> => {
   try {
-    const data = await axiosInstance.delete(
-      ProductEndpoints.DELETE_PRODUCT + orderId
-    )
+    const data = await axiosInstance.delete(ProductEndpoints.PRODUCTS + orderId)
 
     return data.data
   } catch (err: any) {
