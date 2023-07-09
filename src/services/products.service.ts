@@ -50,7 +50,7 @@ export const createProduct = async (formData: FormData): Promise<IResponse> => {
   } catch (err: any) {
     return {
       success: false,
-      message: err.message,
+      message: "Պարամետրերը բացակայում են",
     }
   }
 }

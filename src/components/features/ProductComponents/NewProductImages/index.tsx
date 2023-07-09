@@ -7,9 +7,9 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import styles from './styles.module.scss'
 
 interface IProps {
-  color: string
+  color?: string
   images: File[]
-  changeImages: (color: string, images: File[]) => void
+  changeImages: (images: File[], color?: string) => void
 }
 
 const NewProductImages: FC<IProps> = ({ color, images, changeImages }) => {
@@ -18,15 +18,15 @@ const NewProductImages: FC<IProps> = ({ color, images, changeImages }) => {
   const handleImageUpload = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0]
-      changeImages(color, [...images, file])
+      changeImages([...images, file], color)
       setImageUrls([...imageUrls, URL.createObjectURL(file)])
     }
   }
 
   const removeImage = (index: number) => {
     changeImages(
-      color,
-      images.filter((_, ind) => ind !== index)
+      images.filter((_, ind) => ind !== index),
+      color
     )
     setImageUrls(imageUrls.filter((_, ind) => ind !== index))
   }
@@ -35,7 +35,11 @@ const NewProductImages: FC<IProps> = ({ color, images, changeImages }) => {
     const imageUrls: string[] = []
 
     images.forEach((image) => {
-      imageUrls.push(URL.createObjectURL(image))
+      if (typeof image === 'string') {
+        imageUrls.push(image)
+      } else {
+        imageUrls.push(URL.createObjectURL(image))
+      }
     })
 
     setImageUrls(imageUrls)

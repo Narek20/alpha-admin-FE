@@ -6,11 +6,11 @@ import SectionHeader from '@shared/SectionTitle'
 import styles from './styles.module.scss'
 
 interface IProps {
-  color: string
+  color?: string
   sizes: string[]
   smSizes: string[]
-  addSize: (color: string) => void
-  handleSizeChange: (color: string, sizes: string[], smSizes: string[]) => void
+  addSize: (color?: string) => void
+  handleSizeChange: (sizes: string[], smSizes: string[], color?: string) => void
 }
 
 const NewProductSizes: FC<IProps> = ({
@@ -23,24 +23,24 @@ const NewProductSizes: FC<IProps> = ({
   const handleChange = (sizeType: string, index: number, value: string) => {
     if (sizeType === 'sizes') {
       handleSizeChange(
-        color,
         sizes.map((size, ind) => (ind === index ? value : size)),
-        smSizes
+        smSizes,
+        color
       )
     } else {
       handleSizeChange(
-        color,
         sizes,
-        smSizes.map((size, ind) => (ind === index ? value : size))
+        smSizes.map((size, ind) => (ind === index ? value : size)),
+        color
       )
     }
   }
 
   const removeSize = (index: number) => {
     handleSizeChange(
-      color,
       sizes.filter((_, i) => i !== index),
-      smSizes.filter((_, i) => i !== index)
+      smSizes.filter((_, i) => i !== index),
+      color
     )
   }
 
