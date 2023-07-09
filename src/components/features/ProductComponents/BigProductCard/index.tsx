@@ -1,5 +1,6 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import { Box, Button, Typography } from '@mui/material'
+import Loading from '@shared/Loading'
 import ProductModal from '../ProductModal'
 import { IProduct } from 'types/product.types'
 
@@ -11,10 +12,30 @@ interface IProps {
 
 const BigProductCard: FC<IProps> = ({ product }) => {
   const [isOpen, setIsOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+
+  const handleImageLoad = () => {
+    setIsLoading(false)
+  }
+
+  useEffect(() => {
+    const image = new Image()
+    image.src = product.images[0]
+    image.addEventListener('load', handleImageLoad)
+    return () => {
+      image.removeEventListener('load', handleImageLoad)
+    }
+  }, [product.images[0]])
 
   return (
     <Box className={styles.card}>
-      <img className={styles.img} src={product.images[0]} alt="Ապրանք" />
+      {isLoading ? (
+        <Box className={styles.img}>
+          <Loading />
+        </Box>
+      ) : (
+        <img className={styles.img} src={product.images[0]} alt="Ապրանք" />
+      )}
       <Typography className={styles.price}>
         Արժեքը։ {product.price} դր․
       </Typography>

@@ -21,6 +21,7 @@ export interface IProduct {
   sizes: string
   smSizes: string
   isBest?: boolean
+  selectedSizes: string
   salePrice: number
   fastenerType: string
   sex: string

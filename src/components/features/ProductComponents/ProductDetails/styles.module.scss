@@ -51,22 +51,70 @@
     gap: 10px;
     margin-top: 10px;
 
-    .size {
+    .sizeContainer {
       padding: 10px;
       border-radius: 10px;
       background-color: #f6f6f9;
+      opacity: 0.5;
       cursor: pointer;
+      width: 20px;
+      box-shadow: 1px 1px 4px 1px;
+      height: 20px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .sizeDetails {
+        display: none;
+        position: absolute;
+        top: -85px;
+        width: 200px;
+        padding: 15px;
+        border: 1px solid gray;
+        border-radius: 10px;
+        background-color: white;
+        z-index: 9999;
+      }
     }
 
-    .selectedSize {
-      background-color: #f6c71e;
+    .selectedSizeContainer {
+      box-shadow: 1px 1px 4px 1px;
       padding: 10px;
+      width: 20px;
+      height: 20px;
       border-radius: 10px;
       cursor: pointer;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .sizeDetails {
+        display: none;
+        position: absolute;
+        top: -85px;
+        width: 200px;
+        padding: 15px;
+        border: 1px solid gray;
+        background-color: white;
+        border-radius: 10px;
+        z-index: 9999;
+      }
     }
 
-    .size:hover {
-      background-color: #f6c71e;
+    .sizeContainer:hover {
+     opacity: 1;
+
+      .sizeDetails {
+        display: block;
+      }
+    }
+  }
+
+  .selectedSizeContainer:hover {
+    .sizeDetails {
+      display: block;
     }
   }
 

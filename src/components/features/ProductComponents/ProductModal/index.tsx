@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import { useNavigate } from 'react-router'
 import { Box, Button, Modal } from '@mui/material'
 import ImageCarousel from '@shared/ImageCarousel'
 import ProductDetails from '../ProductDetails'
@@ -13,6 +14,7 @@ interface IProps {
 }
 
 const ProductModal: FC<IProps> = ({ open, product, onClose }) => {
+  const navigate = useNavigate()
   return (
     <Modal className={styles.modal} open={open} onClose={onClose}>
       <Box className={styles.modalContent}>
@@ -22,8 +24,11 @@ const ProductModal: FC<IProps> = ({ open, product, onClose }) => {
           </Box>
           <Box className={styles.details}>
             <ProductDetails {...product} onClose={onClose} />
-            <Button className={styles.seeMore} onClick={() => {}}>
-              Տեսնել ավելին
+            <Button
+              className={styles.seeMore}
+              onClick={() => navigate(`/edit-product/${product.id}`)}
+            >
+              Փոփոխել
             </Button>
           </Box>
         </Box>

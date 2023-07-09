@@ -16,6 +16,7 @@ import { getFromData } from '@utils/product/formData'
 import { createProduct } from 'services/products.service'
 import { ProductsContext } from 'contexts/products.context'
 import { ICreateProduct, ProductKeys } from 'types/product.types'
+import { useToast } from 'contexts/toast.context'
 
 import styles from './styles.module.scss'
 
@@ -50,6 +51,7 @@ const NewProductData = () => {
 
   const navigate = useNavigate()
   const { getProducts } = useContext(ProductsContext)
+  const { showToast } = useToast()
 
   const handleChange = (
     key: ProductKeys,
@@ -100,9 +102,9 @@ const NewProductData = () => {
   }
 
   const handleSizeChange = (
-    color: string,
     sizes: string[],
-    smSizes: string[]
+    smSizes: string[],
+    color?: string
   ) => {
     setColorProducts(
       colorProducts.map((colorProduct) => {
@@ -119,7 +121,7 @@ const NewProductData = () => {
     )
   }
 
-  const addSize = (color: string) => {
+  const addSize = (color?: string) => {
     setColorProducts(
       colorProducts.map((colorProduct) => {
         if (color === colorProduct.color) {
@@ -135,7 +137,7 @@ const NewProductData = () => {
     )
   }
 
-  const handleChangeImages = (color: string, images: File[]) => {
+  const handleChangeImages = (images: File[], color?: string) => {
     setColorProducts(
       colorProducts.map((colorProduct) => {
         if (colorProduct.color === color) {
@@ -163,9 +165,13 @@ const NewProductData = () => {
 
       const data = await createProduct(formData)
 
-      if (data.success && index === colorProducts.length - 1) {
-        getProducts()
-        navigate('/products')
+      if (data.success) {
+        if (index === colorProducts.length - 1) {
+          getProducts()
+          navigate('/products')
+        }
+      } else {
+        showToast('error', data.message)
       }
     })
   }
@@ -218,6 +224,7 @@ const NewProductData = () => {
           <TextField
             className={styles.purchase}
             label="Առք"
+            type="number"
             onChange={(evt) =>
               handleChange(ProductKeys.PURCHASE_PRICE, +evt.target.value)
             }
@@ -225,6 +232,7 @@ const NewProductData = () => {
           <TextField
             className={styles.price}
             label="Վաճառք"
+            type="number"
             onChange={(evt) =>
               handleChange(ProductKeys.PRICE, +evt.target.value)
             }
@@ -247,12 +255,12 @@ const NewProductData = () => {
           onChange={(season) => handleChange(ProductKeys.SEASON, season)}
         />
         <TextField
-          label="Քաշը"
+          label="Քաշը(գր․)"
           value={productData.weight}
           onChange={(evt) => handleChange(ProductKeys.WEIGHT, evt.target.value)}
         />
         <TextField
-          label="Կոշիկի բարձրությունը"
+          label="Կոշիկի բարձրությունը(սմ․)"
           value={productData.shoesHeight}
           onChange={(evt) =>
             handleChange(ProductKeys.SHOES_HEIGHT, evt.target.value)
@@ -265,6 +273,7 @@ const NewProductData = () => {
         <SectionHeader title="Գույները" />
         <Box id="colors"></Box>
         <ColorSelect
+          multiple={true}
           color={colorProducts.map(({ color }) => color || '')}
           onChange={(colors) => handleChange(ProductKeys.COLOR, colors)}
         />

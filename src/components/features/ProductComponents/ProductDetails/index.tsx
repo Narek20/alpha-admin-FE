@@ -1,4 +1,4 @@
-import { FC, useContext, useState } from 'react'
+import { FC, useContext, useState, useEffect } from 'react'
 import { Box, Button, Typography } from '@mui/material'
 import StarOutlinedIcon from '@mui/icons-material/StarOutlined'
 import { updateProduct } from 'services/products.service'
@@ -6,8 +6,6 @@ import { ProductsContext } from 'contexts/products.context'
 import { IProduct } from 'types/product.types'
 
 import styles from './styles.module.scss'
-
-const sizeOptions = Array.from({ length: 10 }, (_, index) => index + 36 + '')
 
 const ProductDetails: FC<IProduct & { onClose: () => void }> = ({
   id,
@@ -17,17 +15,23 @@ const ProductDetails: FC<IProduct & { onClose: () => void }> = ({
   category,
   price,
   sizes,
+  smSizes,
+  selectedSizes,
   onClose,
 }) => {
-  const [selectedSizes, setSelectedSizes] = useState(
-    sizes?.length ? sizes.split(',') : []
+  const [productSelectedSizes, setProductSelectedSizes] = useState(
+    selectedSizes ? selectedSizes.split(",") : []
   )
+
+  const [productSizes, setProductSizes] = useState<
+    { sizes: string; smSizes: string }[]
+  >([])
   const { getProducts } = useContext(ProductsContext)
 
   const handleSave = async () => {
     const data = await updateProduct({
       id,
-      sizes: selectedSizes.join(','),
+      selectedSizes: productSelectedSizes.join(','),
     } as IProduct)
 
     if (data.success) {
@@ -36,12 +40,27 @@ const ProductDetails: FC<IProduct & { onClose: () => void }> = ({
   }
 
   const handleSelect = (size: string) => {
-    if (selectedSizes.find((elem) => elem === size)) {
-      setSelectedSizes(selectedSizes.filter((elem) => elem !== size))
+    if (productSelectedSizes.find((elem) => elem === size)) {
+      setProductSelectedSizes(
+        productSelectedSizes.filter((elem) => elem !== size)
+      )
     } else {
-      setSelectedSizes([...selectedSizes, size])
+      setProductSelectedSizes([...productSelectedSizes, size])
     }
   }
+
+  useEffect(() => {
+    if (sizes.length) {
+      const productSizes = sizes.split(',')
+      const selectedSmSizes = smSizes.split(',')
+      setProductSizes(
+        productSizes.map((size, index) => ({
+          sizes: size,
+          smSizes: selectedSmSizes[index],
+        }))
+      )
+    }
+  }, [sizes, smSizes])
 
   return (
     <Box className={styles.productDetails}>
@@ -59,17 +78,25 @@ const ProductDetails: FC<IProduct & { onClose: () => void }> = ({
       )}
       <Typography className={styles.sizesTitle}>Չափսերը: </Typography>
       <Box className={styles.sizes}>
-        {sizeOptions.map((size) => (
+        {productSizes.map(({ sizes, smSizes }, index) => (
           <Box
-            key={size}
+            key={sizes}
             className={
-              selectedSizes.find((elem) => elem === size)
-                ? styles.selectedSize
-                : styles.size
+              productSelectedSizes.find(
+                (selectedSize) => selectedSize === sizes
+              )
+                ? styles.selectedSizeContainer
+                : styles.sizeContainer
             }
-            onClick={() => handleSelect(size)}
+            onClick={() => handleSelect(sizes)}
           >
-            {size}
+            {sizes}
+            <Box className={styles.sizeDetails}>
+              <Typography className={styles.smSize}>Չափսը։ {sizes}</Typography>
+              <Typography className={styles.size}>
+                Ոտքի երկարությունը: {smSizes}
+              </Typography>
+            </Box>
           </Box>
         ))}
       </Box>

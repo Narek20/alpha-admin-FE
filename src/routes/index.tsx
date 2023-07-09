@@ -4,6 +4,7 @@ import OrdersPage from 'pages/Orders'
 import ProductsPage from 'pages/Products'
 import AnalyticsPage from 'pages/Analytics'
 import NewProductPage from 'pages/NewProductPage'
+import ProductEditPage from 'pages/ProductEditPage'
 import { analyticsSections } from '@utils/analytics/constants'
 
 const Routers = () => {
@@ -13,6 +14,7 @@ const Routers = () => {
       <Route path="/products" element={<ProductsPage />} />
       <Route path="/analytics" element={<AnalyticsPage />} />
       <Route path="/new-product" element={<NewProductPage />} />
+      <Route path="/edit-product/:id" element={<ProductEditPage />} />
       {analyticsSections.map((analyticsSection) => (
         <Route
           key={analyticsSection.title}
