@@ -19,7 +19,15 @@ export interface IProduct {
   price: number
   color?: string
   sizes: string
+  smSizes: string
   isBest?: boolean
+  salePrice: number
+  fastenerType: string
+  sex: string
+  season: string
+  weight: string
+  shoesHeight: string
+  country: string
 }
 
 export type ICreateProduct = {
@@ -28,14 +36,30 @@ export type ICreateProduct = {
   brand: string
   price: number
   color?: string
-  sizes: string[] | string
+  sizes: string[]
+  smSizes: string[]
+  purchasePrice: number
+  clasp: string
+  gender: string
+  season: string
+  weight: string
+  shoesHeight: string
+  country: string
 }
 
 export enum ProductKeys {
+  GENDER = 'gender',
   TITLE = 'title',
-  CATEGORY = 'category',
   BRAND = 'brand',
   PRICE = 'price',
   COLOR = 'color',
   SIZES = 'sizes',
+  SEASON = 'season',
+  WEIGHT = 'weight',
+  COUNTRY = 'country',
+  CATEGORY = 'category',
+  SM_SIZES = 'smSizes',
+  PURCHASE_PRICE = 'purchasePrice',
+  CLASP = 'clasp',
+  SHOES_HEIGHT = 'shoesHeight',
 }

@@ -1,29 +1,28 @@
 import { ICreateProduct } from 'types/product.types'
+import { productKeys } from './constants'
 
 export const getFromData = (
-  imageFiles: File[],
+  colorProduct: {
+    color: string
+    images: File[]
+    sizes: string[]
+    smSizes: string[]
+  },
   productData: ICreateProduct
 ): FormData => {
   const formData = new FormData()
 
-  imageFiles.forEach((file) => {
-    formData.append('images', file)
+  productKeys.forEach((key) => {
+    formData.append(key, productData[key] as string)
   })
 
-  if (productData.color) {
-    formData.append('color', productData.color)
-  }
+  formData.append('color', colorProduct.color)
+  formData.append('smSizes', colorProduct.smSizes.join(','))
+  formData.append('sizes', colorProduct.sizes.join(','))
 
-  formData.append('title', productData.title)
-  formData.append('category', productData.category)
-  formData.append('brand', productData.brand)
-  formData.append('price', productData.price + '')
-  formData.append(
-    'sizes',
-    Array.isArray(productData.sizes)
-      ? productData.sizes.join(',')
-      : productData.sizes
-  )
+  colorProduct.images.forEach((file) => {
+    formData.append('images', file)
+  })
 
   return formData
 }
