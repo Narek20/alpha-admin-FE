@@ -54,7 +54,11 @@ const NewProductImages: FC<IProps> = ({ color, images, changeImages }) => {
       <Box className={styles.images}>
         {imageUrls.map((image, index) => (
           <Box key={image} className={styles.imageContainer}>
-            <img src={image} className={styles.image} />
+            <img
+              src={image}
+              className={styles.image}
+              alt={'ապրանք նկար' + index}
+            />
             <IconButton
               className={styles.removeBtn}
               onClick={() => removeImage(index)}
