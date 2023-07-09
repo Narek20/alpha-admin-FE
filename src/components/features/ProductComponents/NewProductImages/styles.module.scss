@@ -1,0 +1,50 @@
+.images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  .imageContainer {
+    position: relative;
+
+    .image {
+      width: 200px;
+      height: 200px;
+      border-radius: 10px;
+    }
+
+    .removeBtn {
+      display: none;
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
+    }
+  }
+
+  .imageContainer:hover {
+    .removeBtn {
+      display: block;
+    }
+  }
+
+  .imageLabel {
+    width: 200px;
+    height: 200px;
+
+    .imageAddContainer {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border: 1px gray;
+      border-radius: 10px;
+      border-style: dashed;
+      cursor: pointer;
+
+      .imageTitle {
+        color: #4356b9;
+      }
+    }
+  }
+}

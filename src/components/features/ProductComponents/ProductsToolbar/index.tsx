@@ -1,8 +1,8 @@
-import { FC, useState, useContext } from 'react'
+import { FC, useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Box, Button, IconButton } from '@mui/material'
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined'
 import ViewCompactOutlinedIcon from '@mui/icons-material/ViewCompactOutlined'
-import ProductAddModal from '@features/ProductComponents/AddProductModal'
 import { ProductsContext } from 'contexts/products.context'
 
 import styles from './styles.module.scss'
@@ -13,12 +13,11 @@ interface IProps {
 }
 
 const ProductsToolbar: FC<IProps> = ({ isBig, changeDisplay }) => {
-  const [isOpen, setIsOpen] = useState(false)
-
+  const navigate = useNavigate()
   const { getProducts } = useContext(ProductsContext)
 
   const handleAdd = () => {
-    setIsOpen(true)
+    navigate('/new-product')
   }
 
   return (
@@ -41,7 +40,6 @@ const ProductsToolbar: FC<IProps> = ({ isBig, changeDisplay }) => {
           Բոլոր ապրանքները
         </Button>
       </Box>
-      <ProductAddModal open={isOpen} onClose={() => setIsOpen(false)} />
     </Box>
   )
 }

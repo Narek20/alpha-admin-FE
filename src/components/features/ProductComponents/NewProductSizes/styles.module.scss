@@ -1,0 +1,19 @@
+.sizes {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .sizeContainer {
+    display: flex;
+    gap: 10px;
+  }
+
+  .addBtn {
+    width: fit-content;
+    color: black;
+  }
+
+  .addBtn:hover {
+    background-color: rgb(221, 221, 221);
+  }
+}
