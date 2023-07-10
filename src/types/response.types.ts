@@ -3,4 +3,9 @@ export type IResponse = {
   message: string;
   data?: any;
   token?: string;
+  pagination?: {
+    count: number,
+    take: number,
+    skip: number
+  }
 };

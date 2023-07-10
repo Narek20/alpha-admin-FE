@@ -1,5 +1,5 @@
 import { axiosInstance } from './axios.service'
-import { IProduct } from 'types/product.types'
+import { ICreateProduct, IProduct } from 'types/product.types'
 import { IResponse } from 'types/response.types'
 import { ProductEndpoints } from 'types/endpoints.types'
 
@@ -50,13 +50,13 @@ export const createProduct = async (formData: FormData): Promise<IResponse> => {
   } catch (err: any) {
     return {
       success: false,
-      message: "Պարամետրերը բացակայում են",
+      message: 'Պարամետրերը բացակայում են',
     }
   }
 }
 
 export const updateProduct = async (
-  productData: IProduct
+  productData: ICreateProduct & { id?: number }
 ): Promise<IResponse> => {
   try {
     const data = await axiosInstance.put(

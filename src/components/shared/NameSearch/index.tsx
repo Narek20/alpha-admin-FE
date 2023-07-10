@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import React, { FC } from 'react'
 import { TextField } from '@mui/material'
 
 import styles from './styles.module.scss'

@@ -12,10 +12,10 @@ import CategorySelect from '@shared/CategorySelect'
 import ClaspTypeSelect from '@shared/FastenerTypeSelect'
 import NewProductSizes from '@features/ProductComponents/NewProductSizes'
 import NewProductImages from '@features/ProductComponents/NewProductImages'
-import { getFromData } from '@utils/product/formData'
+import { getFormData } from '@utils/product/formData'
 import { createProduct } from 'services/products.service'
 import { ProductsContext } from 'contexts/products.context'
-import { ICreateProduct, ProductKeys } from 'types/product.types'
+import { ICreateProduct, ProductKeys, Sizes } from 'types/product.types'
 import { useToast } from 'contexts/toast.context'
 
 import styles from './styles.module.scss'
@@ -23,11 +23,11 @@ import styles from './styles.module.scss'
 const NewProductData = () => {
   const [selectedColor, setSelectedColor] = useState('')
   const [selectedProduct, setSelectedProduct] = useState<
-    | { color: string; images: File[]; sizes: string[]; smSizes: string[] }
+    | { color: string; images: File[]; sizes: Sizes[] }
     | undefined
   >(undefined)
   const [colorProducts, setColorProducts] = useState<
-    { color: string; images: File[]; sizes: string[]; smSizes: string[] }[]
+    { color: string; images: File[]; sizes: Sizes[] }[]
   >([])
   const [productData, setProductData] = useState<
     ICreateProduct & { images: File[] }
@@ -42,7 +42,6 @@ const NewProductData = () => {
     weight: '',
     country: '',
     category: '',
-    smSizes: [],
     purchasePrice: 0,
     clasp: '',
     shoesHeight: '',
@@ -63,8 +62,7 @@ const NewProductData = () => {
           ...colorProducts,
           {
             color: value[value.length - 1],
-            sizes: [''],
-            smSizes: [''],
+            sizes: [],
             images: [],
           },
         ])
@@ -102,8 +100,7 @@ const NewProductData = () => {
   }
 
   const handleSizeChange = (
-    sizes: string[],
-    smSizes: string[],
+    sizes: Sizes[],
     color?: string
   ) => {
     setColorProducts(
@@ -112,7 +109,6 @@ const NewProductData = () => {
           return {
             ...colorProduct,
             sizes,
-            smSizes,
           }
         }
 
@@ -127,8 +123,7 @@ const NewProductData = () => {
         if (color === colorProduct.color) {
           return {
             ...colorProduct,
-            sizes: [...colorProduct.sizes, ''],
-            smSizes: [...colorProduct.smSizes, ''],
+            sizes: [...colorProduct.sizes, {size: ''}]
           }
         }
 
@@ -161,7 +156,7 @@ const NewProductData = () => {
 
   const handleCreate = async () => {
     colorProducts.forEach(async (colorProduct, index) => {
-      const formData = getFromData(colorProduct, productData)
+      const formData = getFormData(colorProduct, productData)
 
       const data = await createProduct(formData)
 
@@ -305,7 +300,6 @@ const NewProductData = () => {
               color={selectedColor}
               sizes={selectedProduct.sizes}
               handleSizeChange={handleSizeChange}
-              smSizes={selectedProduct.smSizes}
               addSize={addSize}
             />
             <Box id="images"></Box>

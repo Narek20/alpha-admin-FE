@@ -15,6 +15,7 @@ interface IProps {
 
 const ProductModal: FC<IProps> = ({ open, product, onClose }) => {
   const navigate = useNavigate()
+  
   return (
     <Modal className={styles.modal} open={open} onClose={onClose}>
       <Box className={styles.modalContent}>

@@ -2,44 +2,46 @@ import { FC } from 'react'
 import { Box, TextField, Button, IconButton } from '@mui/material'
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined'
 import SectionHeader from '@shared/SectionTitle'
+import { Sizes } from 'types/product.types'
 
 import styles from './styles.module.scss'
 
 interface IProps {
   color?: string
-  sizes: string[]
-  smSizes: string[]
+  sizes: Sizes[]
   addSize: (color?: string) => void
-  handleSizeChange: (sizes: string[], smSizes: string[], color?: string) => void
+  handleSizeChange: (sizes: Sizes[], color?: string) => void
 }
 
 const NewProductSizes: FC<IProps> = ({
   color,
   sizes,
-  smSizes,
   addSize,
   handleSizeChange,
 }) => {
-  const handleChange = (sizeType: string, index: number, value: string) => {
-    if (sizeType === 'sizes') {
-      handleSizeChange(
-        sizes.map((size, ind) => (ind === index ? value : size)),
-        smSizes,
-        color
-      )
-    } else {
-      handleSizeChange(
-        sizes,
-        smSizes.map((size, ind) => (ind === index ? value : size)),
-        color
-      )
-    }
+  const handleChange = (
+    sizeType: 'size' | 'smSize',
+    index: number,
+    value: string
+  ) => {
+    handleSizeChange(
+      sizes.map((elem, ind) => {
+        if (ind === index) {
+          return {
+            ...elem,
+            [sizeType]: value,
+          }
+        }
+
+        return elem
+      }),
+      color
+    )
   }
 
   const removeSize = (index: number) => {
     handleSizeChange(
       sizes.filter((_, i) => i !== index),
-      smSizes.filter((_, i) => i !== index),
       color
     )
   }
@@ -48,20 +50,20 @@ const NewProductSizes: FC<IProps> = ({
     <>
       <SectionHeader title="Չափսերը" />
       <Box className={styles.sizes}>
-        {sizes.map((size, index) => (
-          <Box key={index} className={styles.sizeContainer}>
+        {sizes.map((elem, index) => (
+          <Box key={elem.size + index} className={styles.sizeContainer}>
             <TextField
               label="Չափսը"
               type="number"
-              value={sizes[index]}
-              onChange={(evt) => handleChange('sizes', index, evt.target.value)}
+              value={elem.size}
+              onChange={(evt) => handleChange('size', index, evt.target.value)}
             />
             <TextField
               label="Չափսը (սմ․)"
               type="number"
-              value={smSizes[index]}
+              value={elem.smSize}
               onChange={(evt) =>
-                handleChange('smSizes', index, evt.target.value)
+                handleChange('smSize', index, evt.target.value)
               }
             />
             <IconButton onClick={() => removeSize(index)}>

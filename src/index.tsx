@@ -7,8 +7,8 @@ import { ToastProvider } from 'contexts/toast.context'
 import { OrdersProvider } from 'contexts/order.context'
 import { ProductsProvider } from 'contexts/products.context'
 import '@fontsource/roboto'
-
 import App from './App'
+
 import './index.css'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)

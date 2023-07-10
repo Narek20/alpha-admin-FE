@@ -1,6 +1,6 @@
 import { FC, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Box, Button, IconButton } from '@mui/material'
+import { Box, Button, IconButton, MenuItem, Select } from '@mui/material'
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined'
 import ViewCompactOutlinedIcon from '@mui/icons-material/ViewCompactOutlined'
 import { ProductsContext } from 'contexts/products.context'
@@ -14,10 +14,14 @@ interface IProps {
 
 const ProductsToolbar: FC<IProps> = ({ isBig, changeDisplay }) => {
   const navigate = useNavigate()
-  const { getProducts } = useContext(ProductsContext)
+  const { getProducts, setFilters, filters } = useContext(ProductsContext)
 
   const handleAdd = () => {
     navigate('/new-product')
+  }
+
+  const changeItemsCount = (count: string) => {
+    setFilters({ ...filters, take: count, skip: '0' })
   }
 
   return (
@@ -31,6 +35,16 @@ const ProductsToolbar: FC<IProps> = ({ isBig, changeDisplay }) => {
             sx={{ color: isBig ? 'black' : '#f6c71e' }}
           />
         </IconButton>
+        <Select
+          value={filters.take || 10}
+          onChange={(evt) => changeItemsCount(evt.target.value as string)}
+          className={styles.select}
+        >
+          <MenuItem value="10">10</MenuItem>
+          <MenuItem value="20">20</MenuItem>
+          <MenuItem value="50">50</MenuItem>
+          <MenuItem value="100">100</MenuItem>
+        </Select>
       </Box>
       <Box className={styles.rightBar}>
         <Button className={styles.button} onClick={handleAdd}>
