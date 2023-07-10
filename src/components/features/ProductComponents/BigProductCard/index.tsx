@@ -28,30 +28,31 @@ const BigProductCard: FC<IProps> = ({ product }) => {
   }, [product.images[0]])
 
   return (
-    <Box className={styles.card}>
-      {isLoading ? (
-        <Box className={styles.img}>
-          <Loading />
+    <>
+      <Box className={styles.card} onClick={() => setIsOpen(true)}>
+        {isLoading ? (
+          <Box className={styles.img}>
+            <Loading />
+          </Box>
+        ) : (
+          <img className={styles.img} src={product.images[0]} alt="Ապրանք" />
+        )}
+        <Typography className={styles.price}>
+          Արժեքը։ {product.price} դր․
+        </Typography>
+        <Box className={styles.titleContainer}>
+          <Typography className={styles.title}>{product.title} /</Typography>
+          <Typography className={styles.category}>
+            {product.category}
+          </Typography>
         </Box>
-      ) : (
-        <img className={styles.img} src={product.images[0]} alt="Ապրանք" />
-      )}
-      <Typography className={styles.price}>
-        Արժեքը։ {product.price} դր․
-      </Typography>
-      <Box className={styles.titleContainer}>
-        <Typography className={styles.title}>{product.title} /</Typography>
-        <Typography className={styles.category}>{product.category}</Typography>
       </Box>
-      <Button className={styles.fastView} onClick={() => setIsOpen(true)}>
-        Արագ դիտում
-      </Button>
       <ProductModal
         open={isOpen}
         onClose={() => setIsOpen(false)}
         product={product}
       />
-    </Box>
+    </>
   )
 }
 

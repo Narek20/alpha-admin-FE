@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Box, TextField, Button } from '@mui/material'
 import Loading from '@shared/Loading'
@@ -12,10 +12,9 @@ import CategorySelect from '@shared/CategorySelect'
 import ClaspTypeSelect from '@shared/FastenerTypeSelect'
 import NewProductSizes from '@features/ProductComponents/NewProductSizes'
 import NewProductImages from '@features/ProductComponents/NewProductImages'
-import { getProductById } from 'services/products.service'
+import { getProductById, updateProduct } from 'services/products.service'
 import { useToast } from 'contexts/toast.context'
-import { ProductsContext } from 'contexts/products.context'
-import { ICreateProduct, ProductKeys } from 'types/product.types'
+import { ICreateProduct, ProductKeys, Sizes } from 'types/product.types'
 
 import styles from './styles.module.scss'
 
@@ -34,16 +33,14 @@ const ProductEditPage = () => {
     weight: '',
     country: '',
     category: '',
-    smSizes: [],
     purchasePrice: 0,
     clasp: '',
     shoesHeight: '',
     images: [],
   })
 
-  const { id } = useParams()
+  const { id = 0 } = useParams()
   const navigate = useNavigate()
-  const { getProducts } = useContext(ProductsContext)
   const { showToast } = useToast()
 
   const handleChange = (
@@ -54,7 +51,10 @@ const ProductEditPage = () => {
   }
 
   const addSize = () => {
-    setProductData({ ...productData, sizes: [...productData.sizes, ''] })
+    setProductData({
+      ...productData,
+      sizes: [...productData.sizes, { size: '' }],
+    })
   }
 
   const handleChangeImages = (images: File[]) => {
@@ -68,23 +68,25 @@ const ProductEditPage = () => {
     }
   }
 
-  const handleSizeChange = () => {}
-
-  const handleEdit = async () => {
-    // const data = await updateProduct(productData)
+  const handleSizeChange = (sizes: Sizes[]) => {
+    setProductData({ ...productData, sizes })
   }
 
+  const handleEdit = async () => {
+    const data = await updateProduct({ ...productData, id: +id })
+
+    if (data.success) {
+      showToast('success', data.message)
+      navigate("/products")
+    }
+  }
   const getProduct = async () => {
     if (id) {
       setIsLoading(true)
       const data = await getProductById(id)
 
       if (data.success) {
-        setProductData({
-          ...data.data,
-          sizes: data.data.sizes.split(','),
-          smSizes: data.data.smSizes.split(','),
-        })
+        setProductData(data.data)
         setIsLoading(false)
       }
     }
@@ -193,17 +195,16 @@ const ProductEditPage = () => {
               country={productData.country}
               onChange={(country) => handleChange(ProductKeys.COUNTRY, country)}
             />
-            <SectionHeader title="Գույները" />
             <Box id="colors"></Box>
+            <SectionHeader title="Գույները" />
+            <Box id="sizes"></Box>
             <ColorSelect
               color={productData.color || ''}
               onChange={(colors) => handleChange(ProductKeys.COLOR, colors)}
             />
-            <Box id="sizes"></Box>
             <NewProductSizes
               sizes={productData.sizes}
               handleSizeChange={handleSizeChange}
-              smSizes={productData.smSizes}
               addSize={addSize}
             />
             <Box id="images"></Box>

@@ -1,10 +1,24 @@
+import { Dispatch, SetStateAction } from "react";
+
 export interface IProductsContext {
   products: IProduct[] | []
   isLoading: boolean
+  pagination: {
+    count: number,
+    take: number,
+    skip: number
+  }
+  filters: {
+    [param: string]: string | string[] | number[]
+  }
   getProducts: () => void
-  filterProducts: (params: {
-    [query: string]: string | string[] | number[]
-  }) => void
+  setFilters: Dispatch<SetStateAction<{ [param: string]: string | string[] | number[]; }>>
+}
+
+export type Sizes = {
+  size: string
+  smSize?: string
+  quantity?: number
 }
 
 export interface IProduct {
@@ -18,10 +32,8 @@ export interface IProduct {
   createdAt: string
   price: number
   color?: string
-  sizes: string
-  smSizes: string
+  sizes?: Sizes[]
   isBest?: boolean
-  selectedSizes: string
   salePrice: number
   fastenerType: string
   sex: string
@@ -37,8 +49,7 @@ export type ICreateProduct = {
   brand: string
   price: number
   color?: string
-  sizes: string[]
-  smSizes: string[]
+  sizes: Sizes[]
   purchasePrice: number
   clasp: string
   gender: string
@@ -46,6 +57,7 @@ export type ICreateProduct = {
   weight: string
   shoesHeight: string
   country: string
+  images: Array<string | File>
 }
 
 export enum ProductKeys {
@@ -59,7 +71,6 @@ export enum ProductKeys {
   WEIGHT = 'weight',
   COUNTRY = 'country',
   CATEGORY = 'category',
-  SM_SIZES = 'smSizes',
   PURCHASE_PRICE = 'purchasePrice',
   CLASP = 'clasp',
   SHOES_HEIGHT = 'shoesHeight',

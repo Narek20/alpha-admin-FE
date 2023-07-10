@@ -11,11 +11,7 @@ import { ProductKeys } from 'types/product.types'
 import styles from './styles.module.scss'
 
 const ProductsSidebar = () => {
-  const [filters, setFilters] = useState<{
-    [param: string]: string | string[] | number[]
-  }>({})
-
-  const { filterProducts } = useContext(ProductsContext)
+  const { filters, setFilters } = useContext(ProductsContext)
 
   const handleFilter = (
     param: ProductKeys,
@@ -32,12 +28,6 @@ const ProductsSidebar = () => {
     <Box className={styles.sidebar}>
       <Box className={styles.header}>
         <Typography>Ֆիլտր</Typography>
-        <Button
-          className={styles.filterBtn}
-          onClick={() => filterProducts(filters)}
-        >
-          Կիրառել
-        </Button>
       </Box>
       <SidebarFilterSkillet
         title="Անունը"

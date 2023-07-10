@@ -12,10 +12,10 @@ import { getAllProducts } from 'services/products.service'
 export const ProductsContext = createContext<IProductsContext>({
   products: [],
   isLoading: false,
+  pagination: { count: 20, skip: 0, take: 10 },
   getProducts: () => {},
-  filterProducts: (params: {
-    [query: string]: string | string[] | number[]
-  }) => {},
+  filters: {},
+  setFilters: () => {},
 })
 
 // Custom hook to access the ProductsContext
@@ -25,36 +25,40 @@ export const useProducts = () => useContext(ProductsContext)
 export const ProductsProvider = ({ children }: { children: ReactNode }) => {
   const [products, setProducts] = useState<IProduct[] | []>([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [pagination, setPagination] = useState<{
+    count: number
+    skip: number
+    take: number
+  }>({ count: 20, skip: 0, take: 10 })
+  const [filters, setFilters] = useState<{
+    [param: string]: string | string[] | number[]
+  }>({})
 
   const getProducts = async () => {
     setIsLoading(true)
-    const data = await getAllProducts()
+    const data = await getAllProducts(filters)
     setIsLoading(false)
 
     if (data.success) {
       setProducts([...data.data])
-    }
-  }
-
-  const filterProducts = async (params: {
-    [query: string]: string | string[] | number[]
-  }) => {
-    setIsLoading(true)
-    const data = await getAllProducts(params)
-    setIsLoading(false)
-
-    if (data.success) {
-      setProducts([...data.data])
+      setPagination(data.pagination || pagination)
     }
   }
 
   useEffect(() => {
     getProducts()
-  }, [])
+  }, [filters])
 
   return (
     <ProductsContext.Provider
-      value={{ products, isLoading, getProducts, filterProducts }}
+      value={{
+        products,
+        isLoading,
+        filters,
+        pagination,
+        getProducts,
+        setFilters,
+      }}
     >
       {children}
     </ProductsContext.Provider>
