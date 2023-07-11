@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material'
 
 import styles from './styles.module.scss'
@@ -10,6 +10,13 @@ interface IProps {
 }
 
 const ColorSelect: FC<IProps> = ({ color, multiple, onChange }) => {
+  const [isOpen, setIsOpen] = useState(false)
+
+  const handelChange = (value: string | string[]) => {
+    onChange(value)
+    setIsOpen(false)
+  }
+
   return (
     <FormControl className={styles.form}>
       <InputLabel id="color-label">Գույները</InputLabel>
@@ -19,7 +26,10 @@ const ColorSelect: FC<IProps> = ({ color, multiple, onChange }) => {
         className={styles.select}
         value={color}
         multiple={multiple}
-        onChange={(evt) => onChange(evt.target.value)}
+        open={isOpen}
+        onClose={() => setIsOpen(false)}
+        onOpen={() => setIsOpen(true)}
+        onChange={(evt) => handelChange(evt.target.value)}
         MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}
       >
         <MenuItem value="Սև">Սև</MenuItem>

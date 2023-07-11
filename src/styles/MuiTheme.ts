@@ -9,11 +9,109 @@ export const THEME = createTheme({
         },
       },
     },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          color: '#f6c71e',
+          borderColor: '#f6c71e',
+          '& .MuiInput-underline': {
+            borderBottomColor: '#f6c71e',
+          },
+          '& .MuiOutlinedInput-root': {
+            borderColor: '#f6c71e',
+
+            '&.Mui-focused fieldset': {
+              borderColor: '#f6c71e',
+            },
+          },
+          '& fieldset': {
+            borderColor: '#f6c71e',
+          },
+          '& label.Mui-focused': {
+            color: '#f6c71e',
+          },
+          '& .MuiInput-underline:after': {
+            borderBottomColor: '#f6c71e',
+          },
+          '& .MuiFilledInput-underline:after': {
+            borderBottomColor: '#f6c71e',
+          },
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          color: '#f6c71e',
+        },
+      },
+    },
+    MuiFormControl: {
+      styleOverrides: {
+        root: {
+          '& .MuiInput-underline': {
+            borderBottomColor: '#f6c71e',
+          },
+          '& .MuiOutlinedInput-root': {
+            borderColor: '#f6c71e',
+
+            '&.Mui-focused fieldset': {
+              borderColor: '#f6c71e',
+            },
+          },
+          '& input': {
+            color: '#f6c71e',
+          },
+          '& div': {
+            color: '#f6c71e',
+          },
+          '& fieldset': {
+            borderColor: '#f6c71e',
+          },
+          '& label.Mui-focused': {
+            color: '#f6c71e',
+          },
+          '& .MuiInput-underline:after': {
+            borderBottomColor: '#f6c71e',
+          },
+          '& .MuiFilledInput-underline:after': {
+            borderBottomColor: '#f6c71e',
+          },
+        },
+      },
+    },
+    MuiSvgIcon: {
+      styleOverrides: {
+        root: {
+          color: '#f6c71e',
+        },
+      },
+    },
+    MuiSelect: {
+      styleOverrides: {
+        select: {
+          '& fieldset': {
+            borderColor: '#f6c71e',
+          },
+        },
+        iconOutlined: {
+          // Change the color of the arrow icon for outlined variant
+          color: '#f6c71e',
+        },
+      },
+    },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          color: '#f6c71e',
+        },
+      },
+    },
   },
   palette: {
     background: {
       default: '#2B2B29',
-      paper: "#2B2B29"
+      paper: '#2B2B29',
     },
   },
 })

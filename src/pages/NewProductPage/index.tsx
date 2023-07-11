@@ -143,13 +143,6 @@ const NewProductData = () => {
     )
   }
 
-  const handleScroll = (id: string) => {
-    const element = document.getElementById(id)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-    }
-  }
-
   const handleCreate = async () => {
     colorProducts.forEach(async (colorProduct, index) => {
       const formData = getFormData(productData, colorProduct)
@@ -177,29 +170,6 @@ const NewProductData = () => {
 
   return (
     <Box className={styles.newProductPage}>
-      <Box className={styles.sidebar}>
-        <Button className={styles.button} onClick={() => handleScroll('info')}>
-          Բնութագրեր
-        </Button>
-        <Button
-          className={styles.button}
-          onClick={() => handleScroll('colors')}
-        >
-          Գույներ
-        </Button>
-        <Button className={styles.button} onClick={() => handleScroll('sizes')}>
-          Չափսեր
-        </Button>
-        <Button
-          className={styles.button}
-          onClick={() => handleScroll('images')}
-        >
-          Նկարներ
-        </Button>
-        <Button className={styles.addBtn} onClick={handleCreate}>
-          Ստեղծել
-        </Button>
-      </Box>
       <Box className={styles.productData}>
         <Box id="info"></Box>
         <SectionHeader title="Բնութագրերը" />
@@ -284,7 +254,9 @@ const NewProductData = () => {
                 className={styles.removeBtn}
                 onClick={(evt) => handleRemove(evt, color || '')}
               >
-                <CloseOutlinedIcon sx={{ width: 20, height: 20 }} />
+                <CloseOutlinedIcon
+                  sx={{ width: 20, height: 20, color: 'red' }}
+                />
               </IconButton>
             </Box>
           ))}

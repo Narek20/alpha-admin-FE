@@ -23,7 +23,7 @@ interface IProps {
 const BrandSelect: FC<IProps> = ({ brand, onChange }) => {
   return (
     <FormControl className={styles.form}>
-      <InputLabel id="brand-label" sx={{color: "#f6c71e"}}>Բրենդը</InputLabel>
+      <InputLabel id="brand-label" >Բրենդը</InputLabel>
       <Select
         labelId="brand-label"
         label="Բրենդը"

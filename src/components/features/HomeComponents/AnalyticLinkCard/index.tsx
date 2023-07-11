@@ -23,7 +23,7 @@ const AnalyticLinkCard: FC<IProps> = ({ title, link, color }) => {
       <Typography className={styles.title}>
         {title}
         <ArrowForwardIosOutlinedIcon
-          sx={{ color: 'black', width: 10, height: 10 }}
+          sx={{ width: 10, height: 10 }}
         />
       </Typography>
     </Link>
