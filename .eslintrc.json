@@ -21,6 +21,5 @@
         "@typescript-eslint"
     ],
     "rules": {
-        "no-unused-vars": "ignore"
     }
 }
