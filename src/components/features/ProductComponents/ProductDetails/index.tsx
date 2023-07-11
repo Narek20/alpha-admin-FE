@@ -85,8 +85,8 @@ const ProductDetails: FC<IProduct & { onClose: () => void }> = ({
               <Typography>{size}</Typography>
             </Box>
             <Box className={styles.sizeDetails}>
-              <Typography>Քանակը։ {quantity || 0}</Typography>
-              <Typography>Երկարությունը: {smSize}</Typography>
+              <Typography>Քանակը։ {quantity || 0} հատ</Typography>
+              <Typography>Երկարությունը: {smSize}սմ․</Typography>
             </Box>
             <Box className={styles.sizeActions}>
               <IconButton

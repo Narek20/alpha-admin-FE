@@ -15,22 +15,24 @@ export const getFormData = (
     formData.append(key, productData[key] as string)
   })
 
-  if(productData.images.length) {
+  if (productData.images.length) {
     productData.images.forEach((file) => {
       formData.append('images', file)
     })
   }
 
-  if(colorProduct) {
+  if (productData.sizes.length) {
+    formData.append('sizes', JSON.stringify(productData.sizes))
+  }
 
+  if (colorProduct) {
     formData.append('color', colorProduct.color)
     formData.append('sizes', JSON.stringify(colorProduct.sizes))
-  
+
     colorProduct.images.forEach((file) => {
       formData.append('images', file)
     })
   }
-
 
   return formData
 }
