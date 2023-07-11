@@ -7,7 +7,7 @@ export const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use(
-  //@ts-ignore
+  //@ts-ignore for ability to use AxiosRequestConfig
   (config: AxiosRequestConfig) => {
     const token = localStorage.getItem(localStorageKeys.TOKEN_KEY);
 
