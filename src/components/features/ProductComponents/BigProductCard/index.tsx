@@ -1,5 +1,5 @@
-import { FC, useEffect, useRef, useState } from 'react'
-import { Box, Button, Typography } from '@mui/material'
+import { FC, useEffect, useState } from 'react'
+import { Box, Typography } from '@mui/material'
 import Loading from '@shared/Loading'
 import ProductModal from '../ProductModal'
 import { IProduct } from 'types/product.types'
