@@ -62,13 +62,6 @@ const ProductEditPage = () => {
     setProductData({ ...productData, images: images })
   }
 
-  const handleScroll = (id: string) => {
-    const element = document.getElementById(id)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-    }
-  }
-
   const handleSizeChange = (sizes: Sizes[]) => {
     setProductData({ ...productData, sizes })
   }
@@ -101,29 +94,6 @@ const ProductEditPage = () => {
 
   return (
     <Box className={styles.newProductPage}>
-      <Box className={styles.sidebar}>
-        <Button className={styles.button} onClick={() => handleScroll('info')}>
-          Բնութագրեր
-        </Button>
-        <Button
-          className={styles.button}
-          onClick={() => handleScroll('colors')}
-        >
-          Գույներ
-        </Button>
-        <Button className={styles.button} onClick={() => handleScroll('sizes')}>
-          Չափսեր
-        </Button>
-        <Button
-          className={styles.button}
-          onClick={() => handleScroll('images')}
-        >
-          Նկարներ
-        </Button>
-        <Button className={styles.addBtn} onClick={handleEdit}>
-          Պահպանել
-        </Button>
-      </Box>
       <Box className={styles.productData}>
         {isLoading ? (
           <Loading />

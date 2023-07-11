@@ -1,18 +1,15 @@
 .newProductPage {
   display: flex;
-  gap: 20px;
-  position: relative;
+  justify-content: center;
 
-  .sidebar {
-    flex: 1;
+  .productData {
     display: flex;
     flex-direction: column;
-    position: sticky;
-    top: 10px;
+    gap: 15px;
+    background-color: #2b2b29;
     padding: 20px;
     border-radius: 10px;
-    background-color: #2B2B29;
-    height: fit-content;
+    max-width: 400px;
 
     .button {
       color: #f6c71e;
@@ -103,25 +100,10 @@
     }
 
     .addBtn {
-      display: none;
-      background-color: #4400ff;
+      background-color: #f6c71e;
       color: white;
       margin-top: 20px;
       height: 60px;
-    }
-  }
-}
-
-@media only screen and (max-width: 1000px) {
-  .newProductPage {
-    .sidebar {
-      display: none;
-    }
-
-    .productData {
-      .addBtn {
-        display: block;
-      }
     }
   }
 }

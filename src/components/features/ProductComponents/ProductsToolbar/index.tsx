@@ -39,11 +39,12 @@ const ProductsToolbar: FC<IProps> = ({ isBig, changeDisplay }) => {
           value={filters.take || 10}
           onChange={(evt) => changeItemsCount(evt.target.value as string)}
           className={styles.select}
+          sx={{color : "#f6c71e"}}
         >
-          <MenuItem value="10">10</MenuItem>
-          <MenuItem value="20">20</MenuItem>
-          <MenuItem value="50">50</MenuItem>
-          <MenuItem value="100">100</MenuItem>
+          <MenuItem sx={{color :"#f6c71e"}} value="10">10</MenuItem>
+          <MenuItem sx={{color :"#f6c71e"}} value="20">20</MenuItem>
+          <MenuItem sx={{color :"#f6c71e"}} value="50">50</MenuItem>
+          <MenuItem sx={{color :"#f6c71e"}} value="100">100</MenuItem>
         </Select>
       </Box>
       <Box className={styles.rightBar}>

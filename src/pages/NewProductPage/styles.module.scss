@@ -1,48 +1,15 @@
 .newProductPage {
   display: flex;
-  gap: 20px;
-  position: relative;
-
-  .sidebar {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    position: sticky;
-    top: 10px;
-    padding: 20px;
-    border-radius: 10px;
-    background-color: #2B2B29;
-    height: fit-content;
-
-    .button {
-      color: #f6c71e;;
-      border-radius: 0px;
-    }
-
-    .button:hover {
-      color: #f6c71e;
-    }
-
-    .addBtn {
-      background-color: #f6c71e;
-      color: white;
-      margin-top: 20px;
-      height: 60px;
-    }
-
-    .addBtn:hover {
-      background-color: #ffda52;
-    }
-  }
+  justify-content: center;
 
   .productData {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    background-color: #2B2B29;
+    background-color: #2b2b29;
     padding: 20px;
     border-radius: 10px;
-    flex: 3;
+    max-width: 400px;
 
     .prices {
       display: flex;
@@ -67,11 +34,11 @@
       .colorContainer {
         height: 30px;
         padding: 15px;
-        border: 1px solid rgb(208, 207, 207);
         border-radius: 10px;
         cursor: pointer;
         display: flex;
         justify-content: center;
+        align-items: center;
 
         .removeBtn {
           color: red;
@@ -83,12 +50,12 @@
       .selectedColorContainer {
         height: 30px;
         padding: 15px;
-        border: 1px solid rgb(208, 207, 207);
+        border: 1px solid #f6c71e;
         border-radius: 10px;
         cursor: pointer;
-        background-color: rgb(223, 223, 223);
         display: flex;
         justify-content: center;
+        align-items: center;
 
         .removeBtn {
           color: red;
@@ -98,30 +65,14 @@
       }
 
       .colorContainer:hover {
-        background-color: rgb(223, 223, 223);
+        border: 1px solid #f6c71e;
       }
     }
 
     .addBtn {
-      display: none;
-      background-color: #4400ff;
+      background-color: #f6c71e;
       color: white;
       margin-top: 20px;
-      height: 60px;
-    }
-  }
-}
-
-@media only screen and (max-width: 1000px) {
-  .newProductPage {
-    .sidebar {
-      display: none;
-    }
-
-    .productData {
-      .addBtn {
-        display: block;
-      }
     }
   }
 }

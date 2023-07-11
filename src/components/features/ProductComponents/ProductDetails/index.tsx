@@ -3,6 +3,7 @@ import { Box, Button, IconButton, Typography } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
 import StarOutlinedIcon from '@mui/icons-material/StarOutlined'
+import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined'
 import { updateProduct } from 'services/products.service'
 import { ProductsContext } from 'contexts/products.context'
 import { ICreateProduct, IProduct, Sizes } from 'types/product.types'
@@ -19,6 +20,7 @@ const ProductDetails: FC<IProduct & { onClose: () => void }> = ({
   sizes,
   onClose,
 }) => {
+  const [isEdit, setIsEdit] = useState(false)
   const [productSizes, setProductSizes] = useState<Sizes[]>([])
   const { getProducts } = useContext(ProductsContext)
 
@@ -70,54 +72,70 @@ const ProductDetails: FC<IProduct & { onClose: () => void }> = ({
       {color && (
         <Typography className={styles.color}>Գույնը։ {color}</Typography>
       )}
-      <Typography className={styles.sizesTitle}>Չափսերը: </Typography>
+      <Box className={styles.sizeTitleContainer}>
+        <Typography className={styles.sizesTitle}>Չափսերը: </Typography>
+        <IconButton onClick={() => setIsEdit(true)}>
+          <ModeEditOutlineOutlinedIcon sx={{ color: '#f6c71e' }} />
+        </IconButton>
+      </Box>
       <Box className={styles.sizes}>
         {productSizes.map(({ size, smSize, quantity }, index) => (
           <Box key={size} className={styles.sizeContainer}>
             <Box
-              className={styles.size}
-              style={
-                quantity && quantity > 0
-                  ? { opacity: 1, border: '1px solid gray' }
-                  : { opacity: 0.5 }
+              className={
+                quantity && quantity > 0 ? styles.selectedSize : styles.size
               }
             >
-              <Typography>{size}</Typography>
+              <Typography className={styles.sizeText}>{size}</Typography>
+              <hr className={styles.line}/>
             </Box>
             <Box className={styles.sizeDetails}>
               <Typography>Քանակը։ {quantity || 0} հատ</Typography>
               <Typography>Երկարությունը: {smSize}սմ․</Typography>
             </Box>
-            <Box className={styles.sizeActions}>
-              <IconButton
-                className={styles.plusBtn}
-                onClick={() => handleChange(index, quantity ? ++quantity : 1)}
-              >
-                <AddIcon />
-              </IconButton>
-              <IconButton
-                className={styles.minusBtn}
-                onClick={() =>
-                  handleChange(index, quantity && quantity > 0 ? --quantity : 0)
-                }
-              >
-                <RemoveIcon />
-              </IconButton>
-            </Box>
+            {isEdit && (
+              <Box className={styles.sizeActions}>
+                <IconButton
+                  className={styles.plusBtn}
+                  onClick={() => handleChange(index, quantity ? ++quantity : 1)}
+                >
+                  <AddIcon />
+                </IconButton>
+                <IconButton
+                  className={styles.minusBtn}
+                  onClick={() =>
+                    handleChange(
+                      index,
+                      quantity && quantity > 0 ? --quantity : 0
+                    )
+                  }
+                >
+                  <RemoveIcon />
+                </IconButton>
+              </Box>
+            )}
           </Box>
         ))}
       </Box>
       <Box className={styles.actions}>
-        <Button
-          className={styles.saveBtn}
-          color={'success'}
-          onClick={handleSave}
-        >
-          Պահպանել
-        </Button>
-        <Button className={styles.cancelBtn} color="inherit" onClick={onClose}>
-          Չեղարկել
-        </Button>
+        {isEdit && (
+          <>
+            <Button
+              className={styles.saveBtn}
+              color={'success'}
+              onClick={handleSave}
+            >
+              Պահպանել
+            </Button>
+            <Button
+              className={styles.cancelBtn}
+              color="inherit"
+              onClick={() => setIsEdit(false)}
+            >
+              Չեղարկել
+            </Button>
+          </>
+        )}
       </Box>
     </Box>
   )

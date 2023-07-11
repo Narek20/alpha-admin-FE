@@ -46,7 +46,7 @@ const Header = () => {
           onMouseEnter={() => setIsDropDownOpen(true)}
           onMouseLeave={() => setIsDropDownOpen(false)}
         >
-          <Typography sx={{color: "#f6c71e"}}>Alpha Military shop</Typography>
+          <Typography >Alpha Military shop</Typography>
         </Box>
       </Box>
       <ProfileDropDown isOpen={isDropDownOpen} />
