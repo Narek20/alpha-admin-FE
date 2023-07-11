@@ -23,10 +23,10 @@ const ProductDetails: FC<IProduct & { onClose: () => void }> = ({
   const { getProducts } = useContext(ProductsContext)
 
   const handleSave = async () => {
-    const data = await updateProduct({
-      id,
-      sizes: productSizes,
-    } as ICreateProduct & { id: number })
+    const formData = new FormData()
+    formData.append('sizes', JSON.stringify(productSizes))
+
+    const data = await updateProduct(formData, id)
 
     if (data.success) {
       getProducts()
@@ -84,10 +84,10 @@ const ProductDetails: FC<IProduct & { onClose: () => void }> = ({
             >
               <Typography>{size}</Typography>
             </Box>
-              <Box className={styles.sizeDetails}>
-                <Typography>Քանակը։ {quantity || 0}</Typography>
-                <Typography>Երկարությունը: {smSize}</Typography>
-              </Box>
+            <Box className={styles.sizeDetails}>
+              <Typography>Քանակը։ {quantity || 0}</Typography>
+              <Typography>Երկարությունը: {smSize}</Typography>
+            </Box>
             <Box className={styles.sizeActions}>
               <IconButton
                 className={styles.plusBtn}

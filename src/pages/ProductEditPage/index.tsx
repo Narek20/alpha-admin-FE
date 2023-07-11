@@ -12,8 +12,9 @@ import CategorySelect from '@shared/CategorySelect'
 import ClaspTypeSelect from '@shared/FastenerTypeSelect'
 import NewProductSizes from '@features/ProductComponents/NewProductSizes'
 import NewProductImages from '@features/ProductComponents/NewProductImages'
-import { getProductById, updateProduct } from 'services/products.service'
 import { useToast } from 'contexts/toast.context'
+import { getFormData } from '@utils/product/formData'
+import { getProductById, updateProduct } from 'services/products.service'
 import { ICreateProduct, ProductKeys, Sizes } from 'types/product.types'
 
 import styles from './styles.module.scss'
@@ -73,13 +74,15 @@ const ProductEditPage = () => {
   }
 
   const handleEdit = async () => {
-    const data = await updateProduct({ ...productData, id: +id })
+    const formData = getFormData(productData)
+    const data = await updateProduct(formData, +id)
 
     if (data.success) {
       showToast('success', data.message)
-      navigate("/products")
+      navigate('/products')
     }
   }
+
   const getProduct = async () => {
     if (id) {
       setIsLoading(true)

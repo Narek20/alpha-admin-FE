@@ -23,8 +23,7 @@ import styles from './styles.module.scss'
 const NewProductData = () => {
   const [selectedColor, setSelectedColor] = useState('')
   const [selectedProduct, setSelectedProduct] = useState<
-    | { color: string; images: File[]; sizes: Sizes[] }
-    | undefined
+    { color: string; images: File[]; sizes: Sizes[] } | undefined
   >(undefined)
   const [colorProducts, setColorProducts] = useState<
     { color: string; images: File[]; sizes: Sizes[] }[]
@@ -99,10 +98,7 @@ const NewProductData = () => {
     setSelectedColor(colorProducts[0].color || '')
   }
 
-  const handleSizeChange = (
-    sizes: Sizes[],
-    color?: string
-  ) => {
+  const handleSizeChange = (sizes: Sizes[], color?: string) => {
     setColorProducts(
       colorProducts.map((colorProduct) => {
         if (colorProduct.color === color) {
@@ -123,7 +119,7 @@ const NewProductData = () => {
         if (color === colorProduct.color) {
           return {
             ...colorProduct,
-            sizes: [...colorProduct.sizes, {size: ''}]
+            sizes: [...colorProduct.sizes, { size: '' }],
           }
         }
 
@@ -156,7 +152,7 @@ const NewProductData = () => {
 
   const handleCreate = async () => {
     colorProducts.forEach(async (colorProduct, index) => {
-      const formData = getFormData(colorProduct, productData)
+      const formData = getFormData(productData, colorProduct)
 
       const data = await createProduct(formData)
 

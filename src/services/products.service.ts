@@ -56,12 +56,19 @@ export const createProduct = async (formData: FormData): Promise<IResponse> => {
 }
 
 export const updateProduct = async (
-  productData: ICreateProduct & { id?: number }
+  formData: FormData,
+  id: number
 ): Promise<IResponse> => {
   try {
     const data = await axiosInstance.put(
-      ProductEndpoints.PRODUCTS + productData.id,
-      productData
+      ProductEndpoints.PRODUCTS + id,
+      formData,
+      {
+        headers: {
+          Accept: 'multipart/form-data',
+          'Content-Type': 'multipart/form-data',
+        },
+      }
     )
 
     return data.data

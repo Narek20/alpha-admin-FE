@@ -51,7 +51,7 @@ const NewProductSizes: FC<IProps> = ({
       <SectionHeader title="Չափսերը" />
       <Box className={styles.sizes}>
         {sizes.map((elem, index) => (
-          <Box key={elem.size + index} className={styles.sizeContainer}>
+          <Box key={index} className={styles.sizeContainer}>
             <TextField
               label="Չափսը"
               type="number"
