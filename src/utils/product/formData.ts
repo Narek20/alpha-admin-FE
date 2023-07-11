@@ -2,12 +2,12 @@ import { ICreateProduct, Sizes } from 'types/product.types'
 import { productKeys } from './constants'
 
 export const getFormData = (
-  colorProduct: {
+  productData: ICreateProduct,
+  colorProduct?: {
     color: string
     images: File[]
     sizes: Sizes[]
-  },
-  productData: ICreateProduct
+  }
 ): FormData => {
   const formData = new FormData()
 
@@ -15,12 +15,22 @@ export const getFormData = (
     formData.append(key, productData[key] as string)
   })
 
-  formData.append('color', colorProduct.color)
-  formData.append('sizes', JSON.stringify(colorProduct.sizes))
+  if(productData.images.length) {
+    productData.images.forEach((file) => {
+      formData.append('images', file)
+    })
+  }
 
-  colorProduct.images.forEach((file) => {
-    formData.append('images', file)
-  })
+  if(colorProduct) {
+
+    formData.append('color', colorProduct.color)
+    formData.append('sizes', JSON.stringify(colorProduct.sizes))
+  
+    colorProduct.images.forEach((file) => {
+      formData.append('images', file)
+    })
+  }
+
 
   return formData
 }
