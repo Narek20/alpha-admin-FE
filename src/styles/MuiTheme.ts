@@ -1,7 +1,19 @@
-import { createTheme } from '@material-ui/core/styles'
+import { createTheme } from '@mui/material/styles'
 
 export const THEME = createTheme({
-  typography: {
-    fontFamily: `lato,arial,sans-serif !important`,
+  components: {
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          color: '#f6c71e',
+        },
+      },
+    },
+  },
+  palette: {
+    background: {
+      default: '#2B2B29',
+      paper: "#2B2B29"
+    },
   },
 })

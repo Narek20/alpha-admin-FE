@@ -10,8 +10,8 @@
   cursor: pointer;
 
   .img {
-    width: 50px;
-    height: 50px;
+    width: 100px;
+    height: 100px;
   }
 
   .brand {
@@ -25,5 +25,5 @@
 }
 
 .card:hover {
-  box-shadow: 2px 2px 5px 2px gray;
+  box-shadow: 2px 2px 5px 2px #f6c71e;
 }

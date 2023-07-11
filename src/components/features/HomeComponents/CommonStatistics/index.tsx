@@ -20,7 +20,7 @@ const CommonStatistics = () => {
           className={styles.statisticContainer}
         >
           <Box className={styles.titleContainer}>
-            <statistic.icon sx={{ color: '77767E', width: 30, height: 30 }} />
+            <statistic.icon sx={{ color: '#f6c71e', width: 30, height: 30 }} />
             <Typography className={styles.title}>{statistic.title}</Typography>
           </Box>
           <Typography

@@ -9,7 +9,7 @@ import { navlinks } from '@utils/navbar/constants'
 
 import styles from './styles.module.scss'
 
-const iconStyles = { color: 'black', width: 30, height: 30 }
+const iconStyles = { color: '#f6c71e', width: 30, height: 30 }
 
 const Header = () => {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false)
@@ -46,7 +46,7 @@ const Header = () => {
           onMouseEnter={() => setIsDropDownOpen(true)}
           onMouseLeave={() => setIsDropDownOpen(false)}
         >
-          <Typography>Alpha Military shop</Typography>
+          <Typography sx={{color: "#f6c71e"}}>Alpha Military shop</Typography>
         </Box>
       </Box>
       <ProfileDropDown isOpen={isDropDownOpen} />
