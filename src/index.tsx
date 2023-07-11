@@ -1,9 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter as RouterProvider } from 'react-router-dom'
-import { ThemeProvider } from '@material-ui/core/styles'
 import { THEME } from 'styles/MuiTheme'
 import { ToastProvider } from 'contexts/toast.context'
+import { ThemeProvider } from '@mui/material/styles';
 import { OrdersProvider } from 'contexts/order.context'
 import { ProductsProvider } from 'contexts/products.context'
 import '@fontsource/roboto'

@@ -13,14 +13,14 @@
         }
 
         & input:disabled {
-          -webkit-text-fill-color: black;
+          -webkit-text-fill-color: #f6c71e;
         }
       }
 
       .actions {
         display: flex;
         margin: auto;
-        background-color: white;
+        background-color: #2B2B29;
         border-radius: 10px;
         justify-content: center;
         width: fit-content;

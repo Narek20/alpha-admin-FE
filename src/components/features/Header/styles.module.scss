@@ -5,7 +5,7 @@
   justify-content: space-between;
   padding: 10px;
   position: relative;
-  background-color: white;
+  background-color: #2B2B29;
 
   .leftSection {
     display: flex;
@@ -21,7 +21,7 @@
       display: flex;
 
       .link {
-        color: black;
+        color: #f6c71e;
         text-decoration: none;
         padding: 10px;
         font-weight: 600;
@@ -31,7 +31,7 @@
       .active {
         text-decoration: none;
         padding: 10px;
-        background-color: #f9f8f0;
+        background-color: #ffefb6;
         color: #f6c71e;
         font-weight: 600;
         border-radius: 10px;
@@ -55,7 +55,7 @@
     }
 
     .accountIcon:hover {
-      background-color: #f0f0f3;
+      background-color: #f6c71e;;
     }
   }
 }
