@@ -5,32 +5,29 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import styles from './styles.module.scss'
 
 interface IProps {
-  isEdit: boolean
-  isComplete: boolean
+  isEdit?: boolean
+  isComplete?: boolean
+  text: string
+  btnText: string
   open: boolean
   onClose: () => void
+  onConfirm?: () => void
 }
 
-const OrdersModal: FC<IProps> = ({ open, isComplete, isEdit, onClose }) => {
-  const modalTitle = () => {
-    if (isEdit) {
-      return 'Պահպանել փոփոխությունները'
-    }
-
-    if (isComplete) {
-      return 'Ավարտել'
-    }
-
-    return 'Հեռացնել'
-  }
-
+const ConfirmationModal: FC<IProps> = ({
+  open,
+  text,
+  btnText,
+  isComplete,
+  isEdit,
+  onClose,
+  onConfirm,
+}) => {
   return (
     <Modal className={styles.modal} open={open} onClose={onClose}>
       <Box className={styles.modalContent}>
         <Box className={styles.header}>
-          <Typography className={styles.title}>
-            {modalTitle()} {!isEdit && 'պատվերը'}
-          </Typography>
+          <Typography className={styles.title}>{text}</Typography>
           <IconButton onClick={onClose}>
             <CloseOutlinedIcon />
           </IconButton>
@@ -45,8 +42,9 @@ const OrdersModal: FC<IProps> = ({ open, isComplete, isEdit, onClose }) => {
                 ? 'success'
                 : 'error'
             }
+            onClick={onConfirm}
           >
-            {modalTitle()}
+            {btnText}
           </Button>
           <Button
             className={styles.cancelBtn}
@@ -61,4 +59,4 @@ const OrdersModal: FC<IProps> = ({ open, isComplete, isEdit, onClose }) => {
   )
 }
 
-export default OrdersModal
+export default ConfirmationModal

@@ -39,6 +39,20 @@ export const THEME = createTheme({
         },
       },
     },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        input: {
+          '&::-webkit-inner-spin-button': {
+            '-webkit-appearance': 'none',
+            margin: 0,
+          },
+          '&::-webkit-outer-spin-button': {
+            '-webkit-appearance': 'none',
+            margin: 0,
+          },
+        },
+      },
+    },
     MuiInputLabel: {
       styleOverrides: {
         root: {
@@ -92,6 +106,7 @@ export const THEME = createTheme({
         select: {
           '& fieldset': {
             borderColor: '#f6c71e',
+            backgroundColor: 'transparent',
           },
         },
         iconOutlined: {

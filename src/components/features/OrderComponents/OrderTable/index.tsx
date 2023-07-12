@@ -17,7 +17,7 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined'
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined'
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined'
-import OrdersModal from '@shared/OrdersModal'
+import ConfirmationModal from '@shared/ConfirmationModal'
 import { OrdersContext } from 'contexts/order.context'
 import {
   OrderTableColumns,
@@ -34,6 +34,7 @@ const OrderTable = () => {
   const [open, setOpen] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
   const [editRow, setEditRow] = useState(0)
+  const [confirmModalText, setConfirmModalText] = useState('')
   const [isComplete, setIsComplete] = useState(false)
   const [rowChanges, setRowChanges] = useState<IOrder | null>(null)
 
@@ -43,15 +44,18 @@ const OrderTable = () => {
     setIsComplete(true)
     setIsEdit(false)
     setOpen(true)
+    setConfirmModalText('Ավարտել')
   }
 
   const openRemoveConfirm = () => {
     setIsEdit(false)
     setIsComplete(false)
     setOpen(true)
+    setConfirmModalText('Հեռացնել')
   }
 
   const onEdit = (index: number) => {
+    setConfirmModalText('Պահպանել փոփոխությունները')
     setEditRow(index)
     setIsEdit(true)
   }
@@ -70,8 +74,6 @@ const OrderTable = () => {
       setRowChanges({ ...rowChanges, [key]: value })
     }
   }
-
-  useEffect(() => {}, [])
 
   return (
     <>
@@ -166,9 +168,11 @@ const OrderTable = () => {
         onPageChange={(n: number) => console.log(n)}
         onRowsPerPageChange={(n: number) => console.log(n)}
       />
-      <OrdersModal
+      <ConfirmationModal
         open={open}
         onClose={() => setOpen(false)}
+        text={confirmModalText + !isEdit ? 'Պատվերը' : ''}
+        btnText={confirmModalText}
         isEdit={isEdit}
         isComplete={isComplete}
       />

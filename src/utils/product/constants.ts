@@ -1,4 +1,4 @@
-import { ProductKeys } from 'types/product.types'
+import { AdditionalDetailsKeys, ProductKeys } from 'types/product.types'
 
 export const productStatuses = [
   'Բոլորը',
@@ -23,6 +23,19 @@ export const productKeys = [
   ProductKeys.SEASON,
   ProductKeys.WEIGHT,
   ProductKeys.PURCHASE_PRICE,
+]
+
+export const additionalDetailsKeys = [
+  { key: AdditionalDetailsKeys.BRAND, label: 'Բրենդը' },
+  { key: AdditionalDetailsKeys.SEASON, label: 'Սեզոնը' },
+  { key: AdditionalDetailsKeys.GENDER, label: 'Սեռը' },
+  { key: AdditionalDetailsKeys.COLOR, label: 'Գույնը' },
+  { key: AdditionalDetailsKeys.WEIGHT, label: 'Քաշը' },
+  { key: AdditionalDetailsKeys.SHOES_HEIGHT, label: 'Կոշիկի բարձրությունը' },
+  { key: AdditionalDetailsKeys.CLASP, label: 'Ամրացման տեսակը' },
+  { key: AdditionalDetailsKeys.COUNTRY, label: 'Երկիրը' },
+  { key: AdditionalDetailsKeys.PURCHASE_PRICE, label: 'Առք' },
+  { key: AdditionalDetailsKeys.PRICE, label: 'Վաճառք' },
 ]
 
 export const claspTypes = [
