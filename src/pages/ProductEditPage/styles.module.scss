@@ -6,22 +6,22 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
-    background-color: #2b2b29;
+    background-color: white;
     padding: 20px;
     border-radius: 10px;
     width: 400px;
 
     .button {
-      color: #f6c71e;
+      color: black;
       border-radius: 0px;
     }
 
     .button:hover {
-      color: #f6c71e;
+      color: black;
     }
 
     .addBtn {
-      background-color: #f6c71e;
+      background-color: black;
       color: white;
       margin-top: 20px;
       height: 60px;
@@ -36,7 +36,7 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
-    background-color: #2b2b29;
+    background-color: white;
     padding: 20px;
     border-radius: 10px;
     flex: 3;
@@ -100,7 +100,7 @@
     }
 
     .addBtn {
-      background-color: #f6c71e;
+      background-color: black;
       color: white;
       margin-top: 20px;
       height: 60px;

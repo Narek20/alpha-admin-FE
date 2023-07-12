@@ -6,17 +6,17 @@
     display: flex;
 
     .chartBtn {
-      background-color: #f0f0f3;
-      color: #f6c71e;
+      color: black;
       height: 40px;
       border-radius: 0px;
+      border: 1px solid #f0f0f3;
     }
 
     .selectedChartBtn {
-      background-color: #f6c71e;
-      color: white;
+      color: #f6c71e;
       height: 40px;
       border-radius: 0px;
+      border: 1px solid #f6c71e;
     }
   }
 
@@ -25,17 +25,17 @@
     margin-left: 20px;
 
     .chartBtn {
-      background-color: #f0f0f3;
-      color: #f6c71e;
+      color: black;
       height: 40px;
       border-radius: 0px;
+      border: 1px solid #f0f0f3;
     }
 
     .selectedChartBtn {
-      background-color: #f6c71e;
-      color: white;
+      color: #f6c71e;
       height: 40px;
       border-radius: 0px;
+      border: 1px solid #f6c71e;
     }
   }
 }
