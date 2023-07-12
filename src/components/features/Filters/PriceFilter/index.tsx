@@ -17,11 +17,10 @@ const PriceFilter: FC<IProps> = ({ onChange }) => {
 
   const handleChange = (event: Event, newValue: number | number[]) => {
     setValue(newValue as number[])
+    if (onChange) {
+      onChange(ProductKeys.PRICE, value as number[])
+    }
   }
-
-  useEffect(() => {
-    if (value.length && onChange) onChange(ProductKeys.PRICE, value as number[])
-  }, [value])
 
   return (
     <Box className={styles.priceFilter}>
@@ -39,7 +38,7 @@ const PriceFilter: FC<IProps> = ({ onChange }) => {
       </Box>
       <Slider
         className={styles.slider}
-        sx={{color: "#f6c71e"}}
+        sx={{ color: '#f6c71e' }}
         getAriaLabel={() => 'Temperature range'}
         value={value}
         min={1000}

@@ -10,7 +10,7 @@ import { ProductsContext } from 'contexts/products.context'
 import styles from './styles.module.scss'
 
 const Products = () => {
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState<null | number>(null)
   const [isBig, setIsBig] = useState(true)
   const { products, isLoading, filters, pagination, setFilters } =
     useContext(ProductsContext)
@@ -20,7 +20,9 @@ const Products = () => {
   }
 
   useEffect(() => {
-    setFilters({ ...filters, skip: `${page - 1}` })
+    if (page) {
+      setFilters({ ...filters, skip: `${page - 1}` })
+    }
   }, [page])
 
   return (
@@ -44,7 +46,7 @@ const Products = () => {
       {!!products.length && (
         <Stack spacing={2}>
           <Pagination
-            page={page}
+            page={page || 1}
             count={Math.ceil(pagination.count / pagination.take)}
             variant="outlined"
             onChange={(_, page) => onPageChange(page)}

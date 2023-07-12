@@ -9,7 +9,7 @@ interface IProps {
   labels: string[]
   colors: string[]
   height?: number
-  fills?: {colors: string[]}
+  fills?: { colors: string[] }
   type:
     | 'line'
     | 'area'
@@ -36,23 +36,33 @@ const Chart: FC<IProps> = ({ series, labels, colors, type, height, fills }) => {
     },
     labels: [],
     stroke: {
-      width: [4, 4, 4]
+      width: [4, 4, 4],
     },
     plotOptions: {
       bar: {
-        columnWidth: "20%"
-      }
+        columnWidth: '20%',
+      },
     },
     colors: colors,
     xaxis: {
-      categories: labels,
+      labels: {
+        style: {
+          colors: '#f6c71e'
+        },
+      },
     },
-    yaxis: {},
+    yaxis: {
+      labels: {
+        style: {
+          colors: '#f6c71e'
+        },
+      },
+    },
     // fills: fills,
     grid: {
       row: {
-        colors: ['#F4F3A9', '#F4F3A9', '#9CDAA6','#D7E7BC', '#F4F3A9']
-      }
+        colors: ['#F4F3A9', '#F4F3A9', '#9CDAA6', '#D7E7BC', '#F4F3A9'],
+      },
     },
   }
 
