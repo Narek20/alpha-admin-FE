@@ -54,13 +54,11 @@ const NewProductSizes: FC<IProps> = ({
           <Box key={index} className={styles.sizeContainer}>
             <TextField
               label="Չափսը"
-              type="number"
               value={elem.size}
               onChange={(evt) => handleChange('size', index, evt.target.value)}
             />
             <TextField
               label="Չափսը (սմ․)"
-              type="number"
               value={elem.smSize}
               onChange={(evt) =>
                 handleChange('smSize', index, evt.target.value)

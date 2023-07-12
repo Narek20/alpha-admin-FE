@@ -50,7 +50,7 @@ export const createProduct = async (formData: FormData): Promise<IResponse> => {
   } catch (err: any) {
     return {
       success: false,
-      message: 'Պարամետրերը բացակայում են',
+      message: err.response.data.message,
     }
   }
 }
@@ -80,9 +80,11 @@ export const updateProduct = async (
   }
 }
 
-export const removeProduct = async (orderId: string): Promise<IResponse> => {
+export const removeProduct = async (productId: string): Promise<IResponse> => {
   try {
-    const data = await axiosInstance.delete(ProductEndpoints.PRODUCTS + orderId)
+    const data = await axiosInstance.delete(
+      ProductEndpoints.PRODUCTS + productId
+    )
 
     return data.data
   } catch (err: any) {

@@ -19,6 +19,9 @@ import { ICreateProduct, ProductKeys, Sizes } from 'types/product.types'
 
 import styles from './styles.module.scss'
 
+const max = 1000000
+const min = 0
+
 const ProductEditPage = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [productData, setProductData] = useState<
@@ -48,7 +51,14 @@ const ProductEditPage = () => {
     key: ProductKeys,
     value: string | string[] | number
   ) => {
-    setProductData({ ...productData, [key]: value })
+    let changedValue = value
+
+    if (key === ProductKeys.PRICE || key === ProductKeys.PURCHASE_PRICE) {
+      if (+changedValue > max) changedValue = max
+      if (+changedValue < min) changedValue = min
+    }
+
+    setProductData({ ...productData, [key]: changedValue })
   }
 
   const addSize = () => {

@@ -1,24 +1,39 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from 'react'
 
 export interface IProductsContext {
   products: IProduct[] | []
   isLoading: boolean
   pagination: {
-    count: number,
-    take: number,
+    count: number
+    take: number
     skip: number
   }
   filters: {
     [param: string]: string | string[] | number[]
   }
   getProducts: () => void
-  setFilters: Dispatch<SetStateAction<{ [param: string]: string | string[] | number[]; }>>
+  setFilters: Dispatch<
+    SetStateAction<{ [param: string]: string | string[] | number[] }>
+  >
 }
 
 export type Sizes = {
   size: string
   smSize?: string
   quantity?: number
+}
+
+export enum AdditionalDetailsKeys {
+  BRAND = 'brand',
+  GENDER = 'gender',
+  SEASON = 'season',
+  WEIGHT = 'weight',
+  SHOES_HEIGHT = 'shoesHeight',
+  CLASP = 'clasp',
+  COUNTRY = 'country',
+  COLOR = 'color',
+  PRICE = 'price',
+  PURCHASE_PRICE = 'purchasePrice',
 }
 
 export interface IProduct {
@@ -34,13 +49,14 @@ export interface IProduct {
   color?: string
   sizes?: Sizes[]
   isBest?: boolean
-  salePrice: number
-  fastenerType: string
-  sex: string
-  season: string
-  weight: string
-  shoesHeight: string
-  country: string
+  purchasePrice: number
+  clasp?: string
+  sex?: string
+  gender?: string
+  season?: string
+  weight?: string
+  shoesHeight?: string
+  country?: string
 }
 
 export type ICreateProduct = {

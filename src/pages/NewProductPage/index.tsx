@@ -20,6 +20,9 @@ import { useToast } from 'contexts/toast.context'
 
 import styles from './styles.module.scss'
 
+const min = 0
+const max = 1000000
+
 const NewProductData = () => {
   const [selectedColor, setSelectedColor] = useState('')
   const [selectedProduct, setSelectedProduct] = useState<
@@ -81,6 +84,13 @@ const NewProductData = () => {
         setSelectedColor(value[0])
       }
     } else {
+      let changedValue = value
+
+      if (key === ProductKeys.PRICE || key === ProductKeys.PURCHASE_PRICE) {
+        if (+changedValue > max) changedValue = max
+        if (+changedValue < min) changedValue = min
+      }
+
       setProductData({ ...productData, [key]: value })
     }
   }
@@ -129,35 +139,53 @@ const NewProductData = () => {
   }
 
   const handleChangeImages = (images: File[], color?: string) => {
-    setColorProducts(
-      colorProducts.map((colorProduct) => {
-        if (colorProduct.color === color) {
-          return {
-            ...colorProduct,
-            images,
+    if (selectedColor) {
+      setColorProducts(
+        colorProducts.map((colorProduct) => {
+          if (colorProduct.color === color) {
+            return {
+              ...colorProduct,
+              images,
+            }
           }
-        }
 
-        return colorProduct
-      })
-    )
+          return colorProduct
+        })
+      )
+    } else {
+      setProductData({ ...productData, images: images })
+    }
   }
 
   const handleCreate = async () => {
-    colorProducts.forEach(async (colorProduct, index) => {
-      const formData = getFormData(productData, colorProduct)
+    if (colorProducts.length) {
+      colorProducts.forEach(async (colorProduct, index) => {
+        const formData = getFormData(productData, colorProduct)
+
+        const data = await createProduct(formData)
+
+        if (data.success) {
+          if (index === colorProducts.length - 1) {
+            getProducts()
+            navigate('/products')
+          }
+        } else {
+          showToast('error', data.message)
+        }
+      })
+    } else {
+      const formData = getFormData(productData)
 
       const data = await createProduct(formData)
 
       if (data.success) {
-        if (index === colorProducts.length - 1) {
-          getProducts()
-          navigate('/products')
-        }
+        showToast('success', data.message)
+        getProducts()
+        navigate('/products')
       } else {
         showToast('error', data.message)
       }
-    })
+    }
   }
 
   useEffect(() => {
@@ -171,7 +199,6 @@ const NewProductData = () => {
   return (
     <Box className={styles.newProductPage}>
       <Box className={styles.productData}>
-        <Box id="info"></Box>
         <SectionHeader title="Բնութագրերը" />
         <TextField
           label="Անվանումը"
@@ -185,15 +212,29 @@ const NewProductData = () => {
           <TextField
             className={styles.purchase}
             label="Առք"
+            value={productData.purchasePrice}
             type="number"
+            InputProps={{
+              inputProps: {
+                max: 1000000,
+                min: 0,
+              },
+            }}
             onChange={(evt) =>
               handleChange(ProductKeys.PURCHASE_PRICE, +evt.target.value)
             }
           />
           <TextField
             className={styles.price}
+            value={productData.price}
             label="Վաճառք"
             type="number"
+            InputProps={{
+              inputProps: {
+                max: 1000000,
+                min: 0,
+              },
+            }}
             onChange={(evt) =>
               handleChange(ProductKeys.PRICE, +evt.target.value)
             }
@@ -232,7 +273,6 @@ const NewProductData = () => {
           onChange={(country) => handleChange(ProductKeys.COUNTRY, country)}
         />
         <SectionHeader title="Գույները" />
-        <Box id="colors"></Box>
         <ColorSelect
           multiple={true}
           color={colorProducts.map(({ color }) => color || '')}
@@ -261,23 +301,19 @@ const NewProductData = () => {
             </Box>
           ))}
         </Box>
-        <Box id="sizes"></Box>
         {selectedColor && selectedProduct && (
-          <>
-            <NewProductSizes
-              color={selectedColor}
-              sizes={selectedProduct.sizes}
-              handleSizeChange={handleSizeChange}
-              addSize={addSize}
-            />
-            <Box id="images"></Box>
-            <NewProductImages
-              images={selectedProduct.images}
-              color={selectedColor}
-              changeImages={handleChangeImages}
-            />
-          </>
+          <NewProductSizes
+            color={selectedColor}
+            sizes={selectedProduct.sizes}
+            handleSizeChange={handleSizeChange}
+            addSize={addSize}
+          />
         )}
+        <NewProductImages
+          images={selectedProduct ? selectedProduct.images : productData.images}
+          color={selectedColor}
+          changeImages={handleChangeImages}
+        />
         <Button className={styles.addBtn} onClick={handleCreate}>
           Ստեղծել
         </Button>
