@@ -1,45 +1,51 @@
+import { SetStateAction, Dispatch } from 'react'
+import { IProduct } from './product.types'
+
 export interface IOrdersContext {
   orders: IOrder[] | []
+  isLoading: boolean
+  pagination: {
+    count: number
+    take: number
+    skip: number
+  }
+  filters: {
+    [param: string]: string | string[] | number[]
+  }
+  getOrders: () => void
+  setFilters: Dispatch<
+    SetStateAction<{ [param: string]: string | string[] | number[] }>
+  >
 }
 
 export interface IOrder {
   id: number
-  title: string
-  category: string
-  brand: string
-  img: string
-  updatedAt: string
-  createdAt: string
-  storage: string
-  color: string
-  size: string
+  fullName: string
+  phone: string
   status: OrderStatus
   address: string
-  customer_phone: string
-  customer_name: string
   quantity: number
-  isDrafted: boolean
-  price: string
+  orderProducts: Array<{quantity: number, product: IProduct}>
+  updatedAt: string
+  createdAt: string
 }
 
 export enum OrderStatus {
   COMPLETED = 'Ավարտված է',
-  PENDING = 'Ընդունված է',
+  RECEIVED = 'Ընդունված է',
   DELIVERY = 'Առաքվում է',
   PACKING = 'Փաթեթավորվում է',
-  CANCELED = 'Չեղարկված է',
+  SPECIAL_ORDER = 'Հատուկ պատվեր',
+  ISSUE = 'Խնդիր',
 }
 
 export enum OrderTableKeysType {
   ID = 'id',
-  CUSTOMER_NAME = 'customer_name',
-  CUSTOMER_PHONE = 'customer_phone',
-  TITLE = 'title',
+  FULL_NAME = 'fullName',
+  PHONE = 'phone',
   ADDRESS = 'address',
-  CATEGORY = 'category',
-  STORAGE = 'storage',
   CREATED_AT = 'createdAt',
   QUANTITY = 'quantity',
-  PRICE = 'price',
   STATUS = 'status',
+  UPDATED_AT = 'updatedAt'
 }

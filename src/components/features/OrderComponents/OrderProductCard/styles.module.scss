@@ -1,0 +1,20 @@
+.productCard {
+  display: flex;
+  gap: 30px;
+
+  .img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .detailContainer {
+    .detail {
+      font-size: 18px;
+    }
+
+    .label {
+      color: white;
+      font-size: 14px;
+    }
+  }
+}

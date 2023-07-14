@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router'
 import Home from 'pages/Home'
+import OrderPage from 'pages/OrderPage'
 import OrdersPage from 'pages/Orders'
 import ProductsPage from 'pages/Products'
 import AnalyticsPage from 'pages/Analytics'
@@ -11,6 +12,7 @@ const Routers = () => {
   return (
     <Routes>
       <Route path="/orders" element={<OrdersPage />} />
+      <Route path="/orders/:id" element={<OrderPage />} />
       <Route path="/products" element={<ProductsPage />} />
       <Route path="/analytics" element={<AnalyticsPage />} />
       <Route path="/new-product" element={<NewProductPage />} />

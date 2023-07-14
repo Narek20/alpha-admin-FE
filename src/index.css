@@ -16,7 +16,8 @@ code {
 
 .App {
   background-color: #333232;
-
+  min-width: 100vw;
+  min-height: 100vh;
 }
 
 /* p {
