@@ -122,6 +122,19 @@ export const THEME = createTheme({
         },
       },
     },
+    MuiTablePagination: {
+      styleOverrides: {
+        root: {
+          color: "#f6c71e"
+        },
+        displayedRows: {
+          color: "#f6c71e"
+        },
+        selectIcon: {
+          color: "#f6c71e"
+        }
+      }
+    }
   },
   palette: {
     background: {

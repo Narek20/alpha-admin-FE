@@ -6,7 +6,7 @@ export const productStatuses = [
   'Ընդունված է',
   'Առաքվում է',
   'Փաթեթավորվում է',
-  'Չեղարկված է',
+  'Խնդիր',
 ]
 
 export const productKeyNames = ['Անվանումը', 'Գույնը']

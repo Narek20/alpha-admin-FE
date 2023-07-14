@@ -1,18 +1,25 @@
 .tableContainer {
   .table {
     th {
-      padding: 5px;
+      padding: 5px 0px;
 
       .headCell {
         font-weight: 600;
       }
 
+      .index {
+        font-weight: 500;
+        color: black;
+      }
+
       .data {
         font-size: 1px;
         color: black;
+        font-weight: 500;
         
         & input {
-          color: black;
+        font-weight: 500;
+        color: black;
         }
 
         & input:disabled {
@@ -47,32 +54,6 @@
         .data {
           & input {
             font-size: 10px;
-          }
-        }
-      }
-    }
-  }
-}
-
-@media only screen and (max-width: 400px) {
-  .tableContainer {
-    .table {
-      th {
-        .actions {
-          display: none;
-        }
-
-        .index {
-          font-size: 8px;
-        }
-
-        .headCell {
-          font-size: 8px;
-        }
-
-        .data {
-          & input {
-            font-size: 8px;
           }
         }
       }

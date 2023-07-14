@@ -1,0 +1,41 @@
+.orderPage {
+  width: 100%;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #2b2b29;
+
+  .header {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    .status {
+      color: white;
+      padding: 8px;
+      font-size: 14px;
+      border-radius: 10px;
+    }
+  }
+
+  .details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+    margin: 40px 0px;
+
+    .infoContainer {
+      border: 1px solid white;
+      border-radius: 15px;
+      padding: 15px;
+
+      .infoLabel {
+        color: white;
+        font-size: 14px;
+      }
+
+      .info {
+        font-size: 20px;
+      }
+    }
+  }
+}

@@ -7,9 +7,9 @@ export enum UserEndpoints {
 }
 
 export enum OrderEndpoints {
-  GET_CURRENT_ORDERS = 'orders/',
+  GET_ORDERS = 'orders/',
   GET_ORDERS_HISTORY = 'orders/history/',
-  GET_ORDER_BY_ID = 'orders/one/',
+  GET_ORDER_BY_ID = 'orders/',
   PLACE_ORDER = 'orders/',
   DELETE_ORDER = 'orders/',
 }

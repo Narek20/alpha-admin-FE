@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   Box,
   Button,
@@ -7,6 +7,7 @@ import {
   MenuItem,
   Select,
   TextField,
+  FormControl,
 } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import SettingsIcon from '@mui/icons-material/Settings'
@@ -18,8 +19,9 @@ import styles from './styles.module.scss'
 
 const OrderToolbar = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const [ordersType, setOrderType] = useState('all')
-  console.log(ordersType) // for eslint
+  const [ordersType, setOrdersType] = useState('all')
+
+  useEffect(() => {}, [ordersType])
 
   return (
     <Box className={styles.orderToolbar}>
@@ -30,16 +32,30 @@ const OrderToolbar = () => {
         </Button>
       </Box>
       <Box className={styles.topBar}>
-        <Button className={styles.button} onClick={() => setOrderType('all')}>
-          Բոլոր պատվերները
+        <Button
+          className={
+            ordersType === 'new' ? styles.selectedButton : styles.button
+          }
+          onClick={() => setOrdersType('new')}
+        >
+          Նոր պատվերները
         </Button>
         <Button
-          className={styles.button}
-          onClick={() => setOrderType('drafted')}
+          className={
+            ordersType === 'delivery' ? styles.selectedButton : styles.button
+          }
+          onClick={() => setOrdersType('delivery')}
         >
-          նախագծերը
+          Առաքվող պատվերները
         </Button>
-        <Button className={styles.button}>Պատվերների նախագիծը</Button>
+        <Button
+          className={
+            ordersType === 'all' ? styles.selectedButton : styles.button
+          }
+          onClick={() => setOrdersType('all')}
+        >
+          Արխիվ
+        </Button>
       </Box>
       <Box className={styles.bottomBar}>
         <TextField
@@ -53,13 +69,15 @@ const OrderToolbar = () => {
             ),
           }}
         />
-        <Select defaultValue={'Բոլորը'} className={styles.select}>
-          {productStatuses.map((status) => (
-            <MenuItem key={status} value={status}>
-              {status}
-            </MenuItem>
-          ))}
-        </Select>
+        <FormControl className={styles.select}>
+          <Select defaultValue={'Բոլորը'} className={styles.select}>
+            {productStatuses.map((status) => (
+              <MenuItem key={status} value={status}>
+                {status}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
         <IconButton className={styles.settings}>
           <SettingsIcon />
         </IconButton>
