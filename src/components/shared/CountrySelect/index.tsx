@@ -11,10 +11,10 @@ interface IProps {
 const CountrySelect: FC<IProps> = ({ country, onChange }) => {
   return (
     <FormControl className={styles.form}>
-      <InputLabel id="country-label">Երկիրը</InputLabel>
+      <InputLabel id="country-label">Արտադրված է</InputLabel>
       <Select
         labelId="country-label"
-        label="Երկիրը"
+        label="Արտադրված է"
         className={styles.select}
         value={country}
         onChange={(evt) => onChange(evt.target.value)}

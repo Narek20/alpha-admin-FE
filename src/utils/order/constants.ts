@@ -6,6 +6,7 @@ export const OrderTableColumns = [
   'Հեռախոսահամար',
   'Հասցեն',
   'Ստեղծման օրը',
+  'Ստատուսը',
   'Գործողություններ',
 ]
 
@@ -14,7 +15,7 @@ export const OrderTableKeys = [
   OrderTableKeysType.FULL_NAME,
   OrderTableKeysType.PHONE,
   OrderTableKeysType.ADDRESS,
-  OrderTableKeysType.CREATED_AT,
+  OrderTableKeysType.FORMATTED_DATE,
 ]
 
 export const OrderStatuses = [
@@ -28,23 +29,23 @@ export const OrderStatuses = [
 export const OrderDetailsKeys = [
   {
     label: 'Պատվիրատու',
-    key: OrderTableKeysType.FULL_NAME
+    key: OrderTableKeysType.FULL_NAME,
   },
   {
     label: 'Հեռախոսահամար',
-    key: OrderTableKeysType.PHONE
+    key: OrderTableKeysType.PHONE,
   },
   {
     label: 'Հասցե',
-    key: OrderTableKeysType.ADDRESS
+    key: OrderTableKeysType.ADDRESS,
   },
   {
     label: 'Ստեղծվել է',
-    key: OrderTableKeysType.CREATED_AT
+    key: OrderTableKeysType.CREATED_AT,
   },
   {
     label: 'Թարմացվել է',
-    key: OrderTableKeysType.UPDATED_AT
+    key: OrderTableKeysType.UPDATED_AT,
   },
 ]
 
@@ -63,14 +64,14 @@ export const orderStatusStyles = (status: OrderStatus): string => {
   }
 }
 
-export const orderRowColor = (status: OrderStatus) : string => {
+export const orderRowColor = (status: OrderStatus): string => {
   switch (status) {
     case OrderStatus.ISSUE:
       return '#FF0000'
     case OrderStatus.PACKING:
       return '#881AD7'
     case OrderStatus.DELIVERY:
-      return '#067B00'
+      return '#F4CB00'
     case OrderStatus.COMPLETED:
       return '#C4C4C4'
     case OrderStatus.SPECIAL_ORDER:

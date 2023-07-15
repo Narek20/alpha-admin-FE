@@ -31,9 +31,9 @@ export const additionalDetailsKeys = [
   { key: AdditionalDetailsKeys.GENDER, label: 'Սեռը' },
   { key: AdditionalDetailsKeys.COLOR, label: 'Գույնը' },
   { key: AdditionalDetailsKeys.WEIGHT, label: 'Քաշը' },
-  { key: AdditionalDetailsKeys.SHOES_HEIGHT, label: 'Կոշիկի բարձրությունը' },
+  { key: AdditionalDetailsKeys.SHOES_HEIGHT, label: 'Բարձրությունը' },
   { key: AdditionalDetailsKeys.CLASP, label: 'Ամրացման տեսակը' },
-  { key: AdditionalDetailsKeys.COUNTRY, label: 'Երկիրը' },
+  { key: AdditionalDetailsKeys.COUNTRY, label: 'Արտադրված է' },
   { key: AdditionalDetailsKeys.PURCHASE_PRICE, label: 'Առք' },
   { key: AdditionalDetailsKeys.PRICE, label: 'Վաճառք' },
 ]

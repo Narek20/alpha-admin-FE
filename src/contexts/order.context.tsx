@@ -16,6 +16,7 @@ export const OrdersContext = createContext<IOrdersContext>({
   pagination: { count: 20, skip: 0, take: 10 },
   getOrders: () => {},
   setFilters: () => {},
+  setOrders: () => {}
 })
 
 // Custom hook to access the OrdersContext
@@ -44,11 +45,11 @@ export const OrdersProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     getOrders()
-  }, [])
+  }, [filters])
 
   return (
     <OrdersContext.Provider
-      value={{ orders, isLoading, pagination, filters, setFilters, getOrders }}
+      value={{ orders, isLoading, pagination, filters, setFilters, getOrders, setOrders }}
     >
       {children}
     </OrdersContext.Provider>

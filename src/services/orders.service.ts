@@ -7,7 +7,7 @@ export const getAllOrders = async (params?: {
   [query: string]: string | string[] | number[]
 }): Promise<IResponse> => {
   try {
-    const data = await axiosInstance.get(OrderEndpoints.GET_ORDERS, params)
+    const data = await axiosInstance.get(OrderEndpoints.GET_ORDERS, { params })
 
     return data.data
   } catch (err: any) {
@@ -61,7 +61,23 @@ export const placeOrder = async (orderData: IOrder): Promise<IResponse> => {
   }
 }
 
-export const removeOrder = async (orderId: string): Promise<IResponse> => {
+export const updateOrder = async (orderData: IOrder): Promise<IResponse> => {
+  try {
+    const data = await axiosInstance.put(
+      OrderEndpoints.GET_ORDERS + orderData.id,
+      orderData
+    )
+
+    return data.data
+  } catch (err: any) {
+    return {
+      success: false,
+      message: err.message,
+    }
+  }
+}
+
+export const removeOrder = async (orderId: number): Promise<IResponse> => {
   try {
     const data = await axiosInstance.delete(
       OrderEndpoints.DELETE_ORDER + orderId
