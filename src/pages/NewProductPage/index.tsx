@@ -200,13 +200,13 @@ const NewProductData = () => {
     <Box className={styles.newProductPage}>
       <Box className={styles.productData}>
         <SectionHeader title="Բնութագրերը" />
-        <TextField
-          label="Անվանումը"
-          onChange={(evt) => handleChange(ProductKeys.TITLE, evt.target.value)}
-        />
         <CategorySelect
           category={productData.category}
           onChange={(category) => handleChange(ProductKeys.CATEGORY, category)}
+        />
+        <TextField
+          label="Անվանումը"
+          onChange={(evt) => handleChange(ProductKeys.TITLE, evt.target.value)}
         />
         <Box className={styles.prices}>
           <TextField
@@ -262,7 +262,7 @@ const NewProductData = () => {
           onChange={(evt) => handleChange(ProductKeys.WEIGHT, evt.target.value)}
         />
         <TextField
-          label="Կոշիկի բարձրությունը(սմ․)"
+          label="Բարձրությունը(սմ․)"
           value={productData.shoesHeight}
           onChange={(evt) =>
             handleChange(ProductKeys.SHOES_HEIGHT, evt.target.value)

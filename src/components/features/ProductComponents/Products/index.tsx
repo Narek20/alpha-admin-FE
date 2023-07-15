@@ -1,4 +1,5 @@
 import { useEffect, useContext, useState } from 'react'
+import { Outlet } from 'react-router'
 import { Box, Stack, Pagination } from '@mui/material'
 import BigProductCard from '../BigProductCard'
 import ProductsToolbar from '../ProductsToolbar'
@@ -53,6 +54,7 @@ const Products = () => {
           />
         </Stack>
       )}
+      <Outlet />
     </Box>
   )
 }

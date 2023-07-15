@@ -12,6 +12,8 @@ import {
   Box,
   IconButton,
   TextField,
+  MenuItem,
+  Select,
 } from '@mui/material'
 import DoneIcon from '@mui/icons-material/Done'
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
@@ -22,58 +24,130 @@ import Pagination from '@shared/Pagination'
 import ConfirmationModal from '@shared/ConfirmationModal'
 import { OrdersContext } from 'contexts/order.context'
 import {
+  OrderStatuses,
   OrderTableColumns,
   OrderTableKeys,
   orderRowColor,
   orderStatusStyles,
 } from '@utils/order/constants'
-import { OrderTableKeysType, IOrder } from 'types/order.types'
+import { OrderTableKeysType, IOrder, OrderStatus } from 'types/order.types'
 
 import styles from './styles.module.scss'
+import { removeOrder, updateOrder } from 'services/orders.service'
+import { useToast } from 'contexts/toast.context'
 
 const OrderTable = () => {
   const [open, setOpen] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
   const [editRow, setEditRow] = useState(0)
-  const [confirmModalText, setConfirmModalText] = useState('')
   const [isComplete, setIsComplete] = useState(false)
-  const [rowChanges, setRowChanges] = useState<IOrder | null>(null)
+  const [confirmModalText, setConfirmModalText] = useState('')
+  const [rowChanges, setRowChanges] = useState<IOrder | undefined>()
 
-  const { orders } = useContext(OrdersContext)
+  const { orders, setOrders } = useContext(OrdersContext)
+  const { showToast } = useToast()
   const navigate = useNavigate()
 
-  const openCompleteConfirm = () => {
+  const openCompleteConfirm = (
+    evt: React.MouseEvent<HTMLButtonElement>,
+    index: number
+  ) => {
+    evt.stopPropagation()
+    evt.preventDefault()
     setIsComplete(true)
+    setEditRow(index)
     setIsEdit(false)
     setOpen(true)
     setConfirmModalText('Ավարտել')
   }
 
-  const openRemoveConfirm = () => {
+  const openRemoveConfirm = (
+    evt: React.MouseEvent<HTMLButtonElement>,
+    index: number
+  ) => {
+    evt.stopPropagation()
+    evt.preventDefault()
     setIsEdit(false)
     setIsComplete(false)
+    setEditRow(index)
     setOpen(true)
     setConfirmModalText('Հեռացնել')
   }
 
-  const onEdit = (index: number) => {
+  const onEdit = (evt: React.MouseEvent<HTMLButtonElement>, index: number) => {
+    evt.stopPropagation()
+    evt.preventDefault()
+    const order = orders.find((_, ind) => ind === index)
     setConfirmModalText('Պահպանել փոփոխությունները')
+    setRowChanges(order)
     setEditRow(index)
     setIsEdit(true)
   }
 
-  const openEditConfirm = () => {
+  const openEditConfirm = (evt: React.MouseEvent<HTMLButtonElement>) => {
+    evt.stopPropagation()
+    evt.preventDefault()
     setOpen(true)
   }
 
-  const handleCancel = () => {
+  const handleCancel = (evt: React.MouseEvent<HTMLButtonElement>) => {
+    evt.stopPropagation()
+    evt.preventDefault()
     setIsEdit(false)
-    setRowChanges(null)
+    setRowChanges(undefined)
   }
 
-  const handleChange = (key: OrderTableKeysType, value: string) => {
+  const handleChange = (
+    index: number,
+    key: OrderTableKeysType,
+    value: string
+  ) => {
     if (rowChanges) {
       setRowChanges({ ...rowChanges, [key]: value })
+    }
+  }
+
+  const handleConfirm = async () => {
+    const order = orders.find((order, ind) => ind === editRow)
+
+    if (isEdit && rowChanges) {
+      const data = await updateOrder(rowChanges)
+
+      if (data.success) {
+        showToast('success', data.message)
+        setOrders(
+          orders.map((order, index) => (index === editRow ? rowChanges : order))
+        )
+        setOpen(false)
+        setIsEdit(false)
+      }
+    } else if (isComplete) {
+      const data = await updateOrder({
+        id: order?.id,
+        status: OrderStatus.COMPLETED,
+      } as IOrder)
+
+      if (data.success) {
+        showToast('success', 'Պատվերը ավարտված է')
+        setOpen(false)
+        setOrders(
+          orders.map((order, ind) =>
+            ind === editRow
+              ? { ...order, status: OrderStatus.COMPLETED }
+              : order
+          )
+        )
+      }
+    } else {
+      if (order?.id) {
+        const data = await removeOrder(order.id)
+
+        if (data.success) {
+          showToast('success', data.message)
+          setOrders(orders.filter((_, index) => index !== editRow))
+          setOpen(false)
+        }
+      }
     }
   }
 
@@ -98,8 +172,13 @@ const OrderTable = () => {
                   padding: 20,
                   backgroundColor: orderRowColor(order.status),
                   border: `1px solid gray`,
+                  cursor: 'pointer',
                 }}
-                onClick={() => navigate(`/orders/${order.id}`)}
+                onClick={
+                  isEdit || open
+                    ? () => {}
+                    : () => navigate(`/orders/${order.id}`)
+                }
                 className={styles[orderStatusStyles(order.status)]}
               >
                 {OrderTableKeys.map((key: OrderTableKeysType, ind) => (
@@ -112,7 +191,7 @@ const OrderTable = () => {
                   >
                     {ind === 0 ? (
                       <Typography className={styles.index}>
-                        {order[key]}
+                        №{order[key]}
                       </Typography>
                     ) : (
                       <TextField
@@ -120,7 +199,9 @@ const OrderTable = () => {
                         size="small"
                         className={styles.data}
                         disabled={!isEdit || index !== editRow}
-                        onChange={(evt) => handleChange(key, evt.target.value)}
+                        onChange={(evt) =>
+                          handleChange(index, key, evt.target.value)
+                        }
                       />
                     )}
                   </TableCell>
@@ -131,9 +212,39 @@ const OrderTable = () => {
                   scope="row"
                   align="center"
                 >
+                  <Select
+                    defaultValue={order.status}
+                    value={
+                      editRow === index ? rowChanges?.status : order.status
+                    }
+                    className={styles[orderStatusStyles(order.status)]}
+                    disabled={!isEdit || index !== editRow}
+                    onChange={(evt) =>
+                      handleChange(
+                        index,
+                        OrderTableKeysType.STATUS,
+                        evt.target.value
+                      )
+                    }
+                  >
+                    {OrderStatuses.map((status) => (
+                      <MenuItem value={status}>{status}</MenuItem>
+                    ))}
+                  </Select>
+                </TableCell>
+                <TableCell
+                  className={styles.bodyCell}
+                  component="th"
+                  scope="row"
+                  align="center"
+                >
                   <Box className={styles.actions}>
                     <IconButton
-                      onClick={isEdit ? openEditConfirm : openCompleteConfirm}
+                      onClick={(evt) =>
+                        isEdit
+                          ? openEditConfirm(evt)
+                          : openCompleteConfirm(evt, index)
+                      }
                     >
                       {isEdit ? (
                         <DoneIcon sx={{ color: '#067b00' }} />
@@ -149,10 +260,12 @@ const OrderTable = () => {
                       </IconButton>
                     ) : (
                       <>
-                        <IconButton onClick={() => onEdit(index)}>
+                        <IconButton onClick={(evt) => onEdit(evt, index)}>
                           <ModeEditOutlineOutlinedIcon />
                         </IconButton>
-                        <IconButton onClick={openRemoveConfirm}>
+                        <IconButton
+                          onClick={(evt) => openRemoveConfirm(evt, index)}
+                        >
                           <DeleteOutlineOutlinedIcon
                             sx={{ color: '#f96666' }}
                           />
@@ -178,6 +291,7 @@ const OrderTable = () => {
         btnText={confirmModalText}
         isEdit={isEdit}
         isComplete={isComplete}
+        onConfirm={handleConfirm}
       />
     </>
   )

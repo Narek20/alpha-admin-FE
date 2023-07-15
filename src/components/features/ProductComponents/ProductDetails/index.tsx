@@ -6,20 +6,18 @@ import RemoveIcon from '@mui/icons-material/Remove'
 import StarOutlinedIcon from '@mui/icons-material/StarOutlined'
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined'
 import ImageCarousel from '@shared/ImageCarousel'
-import { removeProduct, updateProduct } from 'services/products.service'
+import ConfirmationModal from '@shared/ConfirmationModal'
 import { useToast } from 'contexts/toast.context'
-import { ProductsContext } from 'contexts/products.context'
 import { IProduct, Sizes } from 'types/product.types'
+import { removeProduct, updateProduct } from 'services/products.service'
 import { additionalDetailsKeys } from '@utils/product/constants'
 
 import styles from './styles.module.scss'
-import ConfirmationModal from '@shared/ConfirmationModal'
 
 const ProductDetails: FC<{ product: IProduct }> = ({ product }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
   const [productSizes, setProductSizes] = useState<Sizes[]>([])
-  const { getProducts } = useContext(ProductsContext)
   const navigate = useNavigate()
   const { showToast } = useToast()
 
@@ -30,7 +28,7 @@ const ProductDetails: FC<{ product: IProduct }> = ({ product }) => {
     const data = await updateProduct(formData, product.id)
 
     if (data.success) {
-      getProducts()
+      showToast('success', data.message)
     }
   }
 
@@ -58,7 +56,7 @@ const ProductDetails: FC<{ product: IProduct }> = ({ product }) => {
 
     if (data.success) {
       showToast('success', data.message)
-      getProducts()
+      navigate('/products')
     }
   }
 

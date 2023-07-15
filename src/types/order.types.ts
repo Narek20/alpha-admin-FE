@@ -13,6 +13,7 @@ export interface IOrdersContext {
     [param: string]: string | string[] | number[]
   }
   getOrders: () => void
+  setOrders: Dispatch<SetStateAction<IOrder[]>>
   setFilters: Dispatch<
     SetStateAction<{ [param: string]: string | string[] | number[] }>
   >
@@ -25,7 +26,8 @@ export interface IOrder {
   status: OrderStatus
   address: string
   quantity: number
-  orderProducts: Array<{quantity: number, product: IProduct}>
+  formattedDate: string
+  orderProducts: Array<{ quantity: number; product: IProduct }>
   updatedAt: string
   createdAt: string
 }
@@ -47,5 +49,6 @@ export enum OrderTableKeysType {
   CREATED_AT = 'createdAt',
   QUANTITY = 'quantity',
   STATUS = 'status',
-  UPDATED_AT = 'updatedAt'
+  UPDATED_AT = 'updatedAt',
+  FORMATTED_DATE = 'formattedDate',
 }

@@ -20,28 +20,19 @@ code {
   min-height: 100vh;
 }
 
-/* p {
-  font-family: ,arial,sans-serif !important;
+.Toastify__toast-theme--light {
+  background-color: #2b2b29;
+  color: #f6c71e;
 }
 
-a {
-  font-family: latobold,arial,sans-serif !important;
+.Toastify__close-button {
+  color: #f6c71e;
+  opacity: 1;
 }
-
-
-span {
-  font-family: latobold,arial,sans-serif !important;
-}
-
-button {
-  font-family: latobold,arial,sans-serif !important;
-} */
 
 .pages {
   padding: 20px;
 }
-
-
 
 ::-webkit-scrollbar {
   width: 5px;

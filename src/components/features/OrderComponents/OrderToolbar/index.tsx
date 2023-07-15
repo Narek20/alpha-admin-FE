@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import {
   Box,
   Button,
@@ -13,6 +13,7 @@ import SearchIcon from '@mui/icons-material/Search'
 import SettingsIcon from '@mui/icons-material/Settings'
 import SectionHeader from '@shared/SectionTitle'
 import OrderAddModal from '@shared/AddOrderModal'
+import { OrdersContext } from 'contexts/order.context'
 import { productStatuses } from '@utils/product/constants'
 
 import styles from './styles.module.scss'
@@ -20,6 +21,15 @@ import styles from './styles.module.scss'
 const OrderToolbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [ordersType, setOrdersType] = useState('all')
+
+  const { filters, setFilters } = useContext(OrdersContext)
+
+  const handleFilter = (key: string, value: string) => {
+    if (key === 'type') {
+      setOrdersType(value)
+    }
+    setFilters({ ...filters, [key]: value })
+  }
 
   useEffect(() => {}, [ordersType])
 
@@ -36,7 +46,7 @@ const OrderToolbar = () => {
           className={
             ordersType === 'new' ? styles.selectedButton : styles.button
           }
-          onClick={() => setOrdersType('new')}
+          onClick={() => handleFilter('type', 'new')}
         >
           Նոր պատվերները
         </Button>
@@ -44,7 +54,7 @@ const OrderToolbar = () => {
           className={
             ordersType === 'delivery' ? styles.selectedButton : styles.button
           }
-          onClick={() => setOrdersType('delivery')}
+          onClick={() => handleFilter('type', 'delivery')}
         >
           Առաքվող պատվերները
         </Button>
@@ -52,7 +62,7 @@ const OrderToolbar = () => {
           className={
             ordersType === 'all' ? styles.selectedButton : styles.button
           }
-          onClick={() => setOrdersType('all')}
+          onClick={() => handleFilter('type', 'all')}
         >
           Արխիվ
         </Button>
@@ -70,7 +80,11 @@ const OrderToolbar = () => {
           }}
         />
         <FormControl className={styles.select}>
-          <Select defaultValue={'Բոլորը'} className={styles.select}>
+          <Select
+            defaultValue={'Բոլորը'}
+            className={styles.select}
+            onChange={(evt) => handleFilter('status', evt.target.value)}
+          >
             {productStatuses.map((status) => (
               <MenuItem key={status} value={status}>
                 {status}
