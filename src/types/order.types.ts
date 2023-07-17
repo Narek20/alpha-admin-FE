@@ -30,6 +30,7 @@ export interface IOrder {
   orderProducts: Array<{ quantity: number; product: IProduct }>
   updatedAt: string
   createdAt: string
+  productIDs?: Array<{ quantity: number; id: number }>
 }
 
 export enum OrderStatus {

@@ -125,16 +125,29 @@ export const THEME = createTheme({
     MuiTablePagination: {
       styleOverrides: {
         root: {
-          color: "#f6c71e"
+          color: '#f6c71e',
         },
         displayedRows: {
-          color: "#f6c71e"
+          color: '#f6c71e',
         },
         selectIcon: {
-          color: "#f6c71e"
-        }
-      }
-    }
+          color: '#f6c71e',
+        },
+      },
+    },
+    MuiAutocomplete: {
+      styleOverrides: {
+        root: {
+          color: '#f6c71e',
+        },
+        paper: {
+          color: '#f6c71e',
+        },
+        noOptions: {
+          color: '#f6c71e',
+        },
+      },
+    },
   },
   palette: {
     background: {

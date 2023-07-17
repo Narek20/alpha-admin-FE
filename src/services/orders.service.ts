@@ -56,7 +56,7 @@ export const placeOrder = async (orderData: IOrder): Promise<IResponse> => {
   } catch (err: any) {
     return {
       success: false,
-      message: err.message,
+      message: err.response.data.message,
     }
   }
 }
