@@ -29,6 +29,7 @@ interface IProps {
 }
 
 const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
+  const [selectedTitles, setSelectedTitles] = useState<string[]>([])
   const [selectedProducts, setSelectedProducts] = useState<
     Array<IProduct & { quantity: number; isLoading?: boolean }>
   >([])
@@ -50,17 +51,24 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
         (product) => product.title === values[values.length - 1]
       )
 
-      if (product)
+      if (product) {
+        setSelectedTitles([...selectedTitles, product.title])
         setSelectedProducts([
           ...selectedProducts,
           { ...product, quantity: 1, isLoading: true },
         ])
-    } else {
-      setSelectedProducts(
-        selectedProducts.filter((product) =>
-          values.find((value) => value == product.title)
+      } else {
+        setSelectedTitles(
+          selectedTitles.filter((title) =>
+            values.find((value) => value === title)
+          )
         )
-      )
+        setSelectedProducts(
+          selectedProducts.filter((product) =>
+            values.find((value) => value == product.title)
+          )
+        )
+      }
     }
   }
 
@@ -173,11 +181,12 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
               className={styles.search}
               options={products.map((product) => product.title)}
               onChange={(_, values) => handleProducts(values)}
-              value={selectedProducts.map((product) => product.title)}
+              value={selectedTitles}
               multiple
               renderInput={(params) => (
                 <TextField
                   {...params}
+                  value={selectedProducts.map((product) => product.title)}
                   label="Ապրանքի Որոնում"
                   onChange={(evt) => searchProducts(evt.target.value)}
                 />
