@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Box, TextField, Typography, Button, IconButton } from '@mui/material'
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
+import Loading from '@shared/Loading'
 import BrandSelect from '@shared/BrandSelect'
 import ColorSelect from '@shared/ColorSelect'
 import SeasonSelect from '@shared/SeasonSelect'
@@ -24,6 +25,7 @@ const min = 0
 const max = 1000000
 
 const NewProductData = () => {
+  const [isCreating, setIsCreating] = useState(false)
   const [selectedColor, setSelectedColor] = useState('')
   const [selectedProduct, setSelectedProduct] = useState<
     { color: string; images: File[]; sizes: Sizes[] } | undefined
@@ -158,6 +160,7 @@ const NewProductData = () => {
   }
 
   const handleCreate = async () => {
+    setIsCreating(true)
     if (colorProducts.length) {
       colorProducts.forEach(async (colorProduct, index) => {
         const formData = getFormData(productData, colorProduct)
@@ -166,10 +169,12 @@ const NewProductData = () => {
 
         if (data.success) {
           if (index === colorProducts.length - 1) {
+            setIsCreating(false)
             getProducts()
             navigate('/products')
           }
         } else {
+          setIsCreating(false)
           showToast('error', data.message)
         }
       })
@@ -179,10 +184,12 @@ const NewProductData = () => {
       const data = await createProduct(formData)
 
       if (data.success) {
+        setIsCreating(false)
         showToast('success', data.message)
         getProducts()
         navigate('/products')
       } else {
+        setIsCreating(false)
         showToast('error', data.message)
       }
     }
@@ -314,8 +321,11 @@ const NewProductData = () => {
           color={selectedColor}
           changeImages={handleChangeImages}
         />
-        <Button className={styles.addBtn} onClick={handleCreate}>
-          Ստեղծել
+        <Button
+          className={styles.addBtn}
+          onClick={!isCreating ? handleCreate : undefined}
+        >
+          {isCreating ? <Loading /> : 'Ստեղծել'}
         </Button>
       </Box>
     </Box>
