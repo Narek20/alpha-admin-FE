@@ -7,13 +7,16 @@
     left: 50%;
     transform: translate(-50%, -50%);
     position: absolute;
-    width: 400px;
+    width: 800px;
     height: auto;
-    background-color: #2B2B29;
+    background-color: #2b2b29;
     padding: 20px;
     border-radius: 10px;
     height: 600px;
-    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
     .header {
       width: 100%;
       display: flex;
@@ -25,15 +28,77 @@
         font-weight: 600;
       }
     }
-    
+
     .content {
-      overflow-y: scroll;
-      height: 480px;
       margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
 
       .input {
         width: 100%;
         margin-bottom: 10px;
+      }
+    }
+
+    .products {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+
+      .product {
+        margin-top: 20px;
+        display: flex;
+
+        .imgContainer {
+          position: relative;
+          width: 100px;
+          height: 100px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          .productImg {
+            width: 100px;
+            height: 100px;
+          }
+
+          .removeBtn {
+            display: none;
+            position: absolute;
+            bottom: 0px;
+            right: 0px;
+          }
+        }
+
+        .imgContainer:hover {
+          .removeBtn {
+            display: block;
+          }
+        }
+
+        .input {
+          width: 100px;
+          height: 30px;
+        }
+
+        .actions {
+          display: flex;
+          flex-direction: column;
+          margin: 0px;
+          align-items: center;
+          justify-content: flex-start;
+
+          .plusBtn {
+            width: 30px;
+            height: 30px;
+          }
+
+          .minusBtn {
+            width: 30px;
+            height: 30px;
+          }
+        }
       }
     }
 

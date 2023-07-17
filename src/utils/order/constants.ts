@@ -17,6 +17,11 @@ export const OrderTableKeys = [
   OrderTableKeysType.ADDRESS,
   OrderTableKeysType.FORMATTED_DATE,
 ]
+export const CreateOrderKeys = [
+  OrderTableKeysType.FULL_NAME,
+  OrderTableKeysType.PHONE,
+  OrderTableKeysType.ADDRESS,
+]
 
 export const OrderStatuses = [
   OrderStatus.COMPLETED,
@@ -41,11 +46,11 @@ export const OrderDetailsKeys = [
   },
   {
     label: 'Ստեղծվել է',
-    key: OrderTableKeysType.CREATED_AT,
+    key: OrderTableKeysType.FORMATTED_DATE,
   },
   {
     label: 'Թարմացվել է',
-    key: OrderTableKeysType.UPDATED_AT,
+    key: OrderTableKeysType.FORMATTED_DATE,
   },
 ]
 
