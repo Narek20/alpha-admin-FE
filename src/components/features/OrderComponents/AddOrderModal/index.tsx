@@ -7,12 +7,13 @@ import {
   Modal,
   TextField,
   Autocomplete,
+  Select,
+  MenuItem,
 } from '@mui/material'
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
-import { CreateOrderKeys, OrderTableColumns } from '@utils/order/constants'
 import Loading from '@shared/Loading'
 import { useToast } from 'contexts/toast.context'
 import { OrdersContext } from 'contexts/order.context'
@@ -20,6 +21,7 @@ import { placeOrder } from 'services/orders.service'
 import { getAllProducts } from 'services/products.service'
 import { IProduct } from 'types/product.types'
 import { IOrder, OrderTableKeysType } from 'types/order.types'
+import { CreateOrderKeys, OrderTableColumns } from '@utils/order/constants'
 
 import styles from './styles.module.scss'
 
@@ -31,7 +33,7 @@ interface IProps {
 const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
   const [selectedTitles, setSelectedTitles] = useState<string[]>([])
   const [selectedProducts, setSelectedProducts] = useState<
-    Array<IProduct & { quantity: number; isLoading?: boolean }>
+    Array<IProduct & { quantity: number; size?: string; isLoading?: boolean }>
   >([])
   const [products, setProducts] = useState<IProduct[]>([])
   const [orderData, setOrderData] = useState<{
@@ -115,16 +117,32 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
     )
   }
 
+  const handleSizeChange = (value: string, index: number) => {
+    setSelectedProducts(
+      selectedProducts.map((product, ind) => {
+        if (ind === index) {
+          return {
+            ...product,
+            size: value,
+          }
+        }
+
+        return product
+      })
+    )
+  }
+
   const handleAdd = async () => {
     const productIDs = selectedProducts.map((product) => ({
       id: product.id,
       quantity: product.quantity,
+      size: product.size,
     }))
 
     const data = await placeOrder({ ...orderData, productIDs } as IOrder)
 
     if (data.success) {
-      setOrders([...orders, data.data])
+      setOrders([data.data, ...orders])
       showToast('success', data.message)
       onClose()
     } else {
@@ -203,23 +221,42 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
           </Box>
           <Box className={styles.products}>
             {selectedProducts.map((product, index) => (
-              <Box className={styles.product}>
-                <Box className={styles.imgContainer}>
-                  {product.isLoading ? (
-                    <Loading />
-                  ) : (
-                    <img
-                      className={styles.productImg}
-                      src={product.images[0]}
-                      alt="Նկար"
-                    />
-                  )}
-                  <IconButton
-                    className={styles.removeBtn}
-                    onClick={() => removeImage(index)}
+              <Box key={product.title + index} className={styles.product}>
+                <Box>
+                  <Box className={styles.imgContainer}>
+                    {product.isLoading ? (
+                      <Loading />
+                    ) : (
+                      <img
+                        className={styles.productImg}
+                        src={product.images[0]}
+                        alt="Նկար"
+                      />
+                    )}
+
+                    <IconButton
+                      className={styles.removeBtn}
+                      onClick={() => removeImage(index)}
+                    >
+                      <DeleteOutlineOutlinedIcon sx={{ color: 'red' }} />
+                    </IconButton>
+                  </Box>
+                  <Select
+                    className={styles.select}
+                    value={product.size}
+                    onChange={(evt) =>
+                      handleSizeChange(evt.target.value as string, index)
+                    }
                   >
-                    <DeleteOutlineOutlinedIcon sx={{ color: 'red' }} />
-                  </IconButton>
+                    {product.sizes?.map(
+                      ({ size, quantity }) =>
+                        quantity && (
+                          <MenuItem key={size} value={size}>
+                            {size}
+                          </MenuItem>
+                        )
+                    )}
+                  </Select>
                 </Box>
                 <Box className={styles.actions}>
                   <IconButton

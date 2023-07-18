@@ -158,7 +158,7 @@ const OrderTable = () => {
           <TableHead>
             <TableRow>
               {OrderTableColumns.map((key) => (
-                <TableCell align="center">
+                <TableCell key={key} align="center">
                   <Typography className={styles.headCell}>{key}</Typography>
                 </TableCell>
               ))}
@@ -228,7 +228,9 @@ const OrderTable = () => {
                     }
                   >
                     {OrderStatuses.map((status) => (
-                      <MenuItem value={status}>{status}</MenuItem>
+                      <MenuItem key={status} value={status}>
+                        {status}
+                      </MenuItem>
                     ))}
                   </Select>
                 </TableCell>
