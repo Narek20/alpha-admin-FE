@@ -8,10 +8,6 @@ export const navlinks = [
     link: '/products',
   },
   {
-    title: 'Մարկետփլեյս',
-    link: '/marketplace',
-  },
-  {
     title: 'Անալիտիկա',
     link: '/analytics',
   },

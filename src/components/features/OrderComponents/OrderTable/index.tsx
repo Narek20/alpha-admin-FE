@@ -21,6 +21,7 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined'
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined'
 import { useToast } from 'contexts/toast.context'
+import Loading from '@shared/Loading'
 import Pagination from '@shared/Pagination'
 import ConfirmationModal from '@shared/ConfirmationModal'
 import { OrdersContext } from 'contexts/order.context'
@@ -44,7 +45,9 @@ const OrderTable = () => {
   const [confirmModalText, setConfirmModalText] = useState('')
   const [rowChanges, setRowChanges] = useState<IOrder | undefined>()
 
-  const { orders, filters, setOrders, setFilters } = useContext(OrdersContext)
+  const { orders, filters, setOrders, setFilters, isLoading } =
+    useContext(OrdersContext)
+
   const { showToast } = useToast()
   const navigate = useNavigate()
 
@@ -161,136 +164,144 @@ const OrderTable = () => {
 
   return (
     <>
-      <TableContainer className={styles.tableContainer} component={Paper}>
-        <Table className={styles.table} size="small" aria-label="a dense table">
-          <TableHead>
-            <TableRow>
-              {OrderTableColumns.map((key) => (
-                <TableCell key={key} align="center">
-                  <Typography className={styles.headCell}>{key}</Typography>
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {orders.map((order, index) => (
-              <TableRow
-                key={order.createdAt}
-                sx={{
-                  padding: 20,
-                  backgroundColor: orderRowColor(order.status),
-                  border: `1px solid gray`,
-                  cursor: 'pointer',
-                }}
-                onClick={
-                  isEdit || open
-                    ? () => {}
-                    : () => navigate(`/orders/${order.id}`)
-                }
-                className={styles[orderStatusStyles(order.status)]}
-              >
-                {OrderTableKeys.map((key: OrderTableKeysType, ind) => (
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <TableContainer className={styles.tableContainer} component={Paper}>
+          <Table
+            className={styles.table}
+            size="small"
+            aria-label="a dense table"
+          >
+            <TableHead>
+              <TableRow>
+                {OrderTableColumns.map((key) => (
+                  <TableCell key={key} align="center">
+                    <Typography className={styles.headCell}>{key}</Typography>
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {orders.map((order, index) => (
+                <TableRow
+                  key={order.createdAt}
+                  sx={{
+                    padding: 20,
+                    backgroundColor: orderRowColor(order.status),
+                    border: `1px solid gray`,
+                    cursor: 'pointer',
+                  }}
+                  onClick={
+                    isEdit || open
+                      ? () => {}
+                      : () => navigate(`/orders/${order.id}`)
+                  }
+                  className={styles[orderStatusStyles(order.status)]}
+                >
+                  {OrderTableKeys.map((key: OrderTableKeysType, ind) => (
+                    <TableCell
+                      key={key}
+                      className={styles.bodyCell}
+                      component="th"
+                      scope="row"
+                      align="center"
+                    >
+                      {ind === 0 ? (
+                        <Typography className={styles.index}>
+                          №{order[key]}
+                        </Typography>
+                      ) : (
+                        <TextField
+                          defaultValue={order[key]}
+                          size="small"
+                          className={styles.data}
+                          disabled={!isEdit || index !== editRow}
+                          onChange={(evt) =>
+                            handleChange(index, key, evt.target.value)
+                          }
+                        />
+                      )}
+                    </TableCell>
+                  ))}
                   <TableCell
-                    key={key}
                     className={styles.bodyCell}
                     component="th"
                     scope="row"
                     align="center"
                   >
-                    {ind === 0 ? (
-                      <Typography className={styles.index}>
-                        №{order[key]}
-                      </Typography>
-                    ) : (
-                      <TextField
-                        defaultValue={order[key]}
-                        size="small"
-                        className={styles.data}
-                        disabled={!isEdit || index !== editRow}
-                        onChange={(evt) =>
-                          handleChange(index, key, evt.target.value)
-                        }
-                      />
-                    )}
-                  </TableCell>
-                ))}
-                <TableCell
-                  className={styles.bodyCell}
-                  component="th"
-                  scope="row"
-                  align="center"
-                >
-                  <Select
-                    defaultValue={order.status}
-                    value={
-                      isEdit && editRow === index
-                        ? rowChanges?.status
-                        : order.status
-                    }
-                    className={styles[orderStatusStyles(order.status)]}
-                    disabled={!isEdit || index !== editRow}
-                    onChange={(evt) =>
-                      handleChange(
-                        index,
-                        OrderTableKeysType.STATUS,
-                        evt.target.value
-                      )
-                    }
-                  >
-                    {OrderStatuses.map((status) => (
-                      <MenuItem key={status} value={status}>
-                        {status}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </TableCell>
-                <TableCell
-                  className={styles.bodyCell}
-                  component="th"
-                  scope="row"
-                  align="center"
-                >
-                  <Box className={styles.actions}>
-                    <IconButton
-                      onClick={(evt) =>
-                        isEdit
-                          ? openEditConfirm(evt)
-                          : openCompleteConfirm(evt, index)
+                    <Select
+                      defaultValue={order.status}
+                      value={
+                        isEdit && editRow === index
+                          ? rowChanges?.status
+                          : order.status
+                      }
+                      className={styles[orderStatusStyles(order.status)]}
+                      disabled={!isEdit || index !== editRow}
+                      onChange={(evt) =>
+                        handleChange(
+                          index,
+                          OrderTableKeysType.STATUS,
+                          evt.target.value
+                        )
                       }
                     >
-                      {isEdit ? (
-                        <DoneIcon sx={{ color: '#067b00' }} />
-                      ) : (
-                        <CheckCircleOutlineOutlinedIcon
-                          sx={{ color: '#067b00' }}
-                        />
-                      )}
-                    </IconButton>
-                    {isEdit && index === editRow ? (
-                      <IconButton onClick={handleCancel}>
-                        <CloseOutlinedIcon sx={{ color: '#f96666' }} />
-                      </IconButton>
-                    ) : (
-                      <>
-                        <IconButton onClick={(evt) => onEdit(evt, index)}>
-                          <ModeEditOutlineOutlinedIcon />
-                        </IconButton>
-                        <IconButton
-                          onClick={(evt) => openRemoveConfirm(evt, index)}
-                        >
-                          <DeleteOutlineOutlinedIcon
-                            sx={{ color: '#f96666' }}
+                      {OrderStatuses.map((status) => (
+                        <MenuItem key={status} value={status}>
+                          {status}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </TableCell>
+                  <TableCell
+                    className={styles.bodyCell}
+                    component="th"
+                    scope="row"
+                    align="center"
+                  >
+                    <Box className={styles.actions}>
+                      <IconButton
+                        onClick={(evt) =>
+                          isEdit
+                            ? openEditConfirm(evt)
+                            : openCompleteConfirm(evt, index)
+                        }
+                      >
+                        {isEdit ? (
+                          <DoneIcon sx={{ color: '#067b00' }} />
+                        ) : (
+                          <CheckCircleOutlineOutlinedIcon
+                            sx={{ color: '#067b00' }}
                           />
+                        )}
+                      </IconButton>
+                      {isEdit && index === editRow ? (
+                        <IconButton onClick={handleCancel}>
+                          <CloseOutlinedIcon sx={{ color: '#f96666' }} />
                         </IconButton>
-                      </>
-                    )}
-                  </Box>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+                      ) : (
+                        <>
+                          <IconButton onClick={(evt) => onEdit(evt, index)}>
+                            <ModeEditOutlineOutlinedIcon />
+                          </IconButton>
+                          <IconButton
+                            onClick={(evt) => openRemoveConfirm(evt, index)}
+                          >
+                            <DeleteOutlineOutlinedIcon
+                              sx={{ color: '#f96666' }}
+                            />
+                          </IconButton>
+                        </>
+                      )}
+                    </Box>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
       <Pagination
         count={50}
         onPageChange={onPageChange}

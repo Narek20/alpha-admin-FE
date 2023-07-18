@@ -36,11 +36,13 @@ export const OrdersProvider = ({ children }: { children: ReactNode }) => {
   }>({})
 
   const getOrders = async () => {
+    setIsLoading(true)
     const data = await getAllOrders(filters)
 
     if (data.success) {
       setOrders([...data.data])
     }
+    setIsLoading(false)
   }
 
   useEffect(() => {
