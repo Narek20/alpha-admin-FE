@@ -24,13 +24,15 @@ export interface IOrder {
   fullName: string
   phone: string
   status: OrderStatus
+  city: string
   address: string
   quantity: number
+  size?: string
   formattedDate: string
   orderProducts: Array<{ quantity: number; product: IProduct }>
   updatedAt: string
   createdAt: string
-  productIDs?: Array<{ quantity: number; id: number }>
+  productIDs?: Array<{ quantity: number; id: number; size?: string }>
   notes?: string
 }
 
@@ -47,6 +49,7 @@ export enum OrderTableKeysType {
   ID = 'id',
   FULL_NAME = 'fullName',
   PHONE = 'phone',
+  CITY = 'city',
   ADDRESS = 'address',
   CREATED_AT = 'createdAt',
   QUANTITY = 'quantity',
@@ -54,4 +57,5 @@ export enum OrderTableKeysType {
   UPDATED_AT = 'updatedAt',
   FORMATTED_DATE = 'formattedDate',
   NOTES = 'notes',
+  SIZE = 'size',
 }

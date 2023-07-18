@@ -1,9 +1,10 @@
-import { OrderStatus, OrderTableKeysType, IOrder } from 'types/order.types'
+import { OrderStatus, OrderTableKeysType } from 'types/order.types'
 
 export const OrderTableColumns = [
   'Համարը',
   'Պատվիրատու',
   'Հեռախոսահամար',
+  'Քաղաք',
   'Հասցեն',
   'Ստեղծման օրը',
   'Ստատուսը',
@@ -14,12 +15,14 @@ export const OrderTableKeys = [
   OrderTableKeysType.ID,
   OrderTableKeysType.FULL_NAME,
   OrderTableKeysType.PHONE,
+  OrderTableKeysType.CITY,
   OrderTableKeysType.ADDRESS,
   OrderTableKeysType.FORMATTED_DATE,
 ]
 export const CreateOrderKeys = [
   OrderTableKeysType.FULL_NAME,
   OrderTableKeysType.PHONE,
+  OrderTableKeysType.CITY,
   OrderTableKeysType.ADDRESS,
 ]
 
@@ -41,6 +44,10 @@ export const OrderDetailsKeys = [
     key: OrderTableKeysType.PHONE,
   },
   {
+    label: 'Քաղաք',
+    key: OrderTableKeysType.CITY,
+  },
+  {
     label: 'Հասցե',
     key: OrderTableKeysType.ADDRESS,
   },
@@ -51,10 +58,6 @@ export const OrderDetailsKeys = [
   {
     label: 'Թարմացվել է',
     key: OrderTableKeysType.FORMATTED_DATE,
-  },
-  {
-    label: 'Նշումներ',
-    key: OrderTableKeysType.NOTES,
   },
 ]
 

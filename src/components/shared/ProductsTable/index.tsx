@@ -15,11 +15,19 @@ import { IProduct } from 'types/product.types'
 import styles from './styles.module.scss'
 
 interface IProps {
-  data: Array<{ product: IProduct; quantity: number }>
+  data: Array<{ product: IProduct; quantity: number; size?: string }>
 }
 
 const ProductTable: FC<IProps> = ({ data }) => {
-  const columns = ['Նկար', 'Կատեգորիա', 'Անվանում', 'Բրենդ', 'Գին', 'Քանակ']
+  const columns = [
+    'Նկար',
+    'Կատեգորիա',
+    'Անվանում',
+    'Բրենդ',
+    'Գին',
+    'Քանակ',
+    'Չափս',
+  ]
   const navigate = useNavigate()
 
   return (
@@ -35,7 +43,7 @@ const ProductTable: FC<IProps> = ({ data }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map(({ quantity, product }) => (
+          {data.map(({ quantity, product, size }) => (
             <TableRow
               key={product.title}
               sx={{ padding: 20 }}
@@ -91,6 +99,14 @@ const ProductTable: FC<IProps> = ({ data }) => {
                 align="left"
               >
                 <Typography className={styles.data}>{quantity}</Typography>
+              </TableCell>
+              <TableCell
+                className={styles.bodyCell}
+                component="th"
+                scope="row"
+                align="left"
+              >
+                <Typography className={styles.data}>{size}</Typography>
               </TableCell>
             </TableRow>
           ))}

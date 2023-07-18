@@ -40,7 +40,7 @@ const OrderPage = () => {
       const commonQtyAndPrice = order.orderProducts.reduce(
         (acc, product) => ({
           qty: acc.qty + product.quantity,
-          price: acc.price + +product.product.price,
+          price: acc.price + +product.product.price * product.quantity,
         }),
         {
           qty: 0,
@@ -68,19 +68,16 @@ const OrderPage = () => {
             </Typography>
           </Box>
           <Box className={styles.details}>
-            {OrderDetailsKeys.map(
-              (detailsKey) =>
-                order[detailsKey.key] && (
-                  <Box key={detailsKey.label} className={styles.infoContainer}>
-                    <Typography className={styles.infoLabel}>
-                      {detailsKey.label}
-                    </Typography>
-                    <Typography className={styles.info}>
-                      {order[detailsKey.key]}
-                    </Typography>
-                  </Box>
-                )
-            )}
+            {OrderDetailsKeys.map((detailsKey) => (
+              <Box key={detailsKey.label} className={styles.infoContainer}>
+                <Typography className={styles.infoLabel}>
+                  {detailsKey.label}
+                </Typography>
+                <Typography className={styles.info}>
+                  {order[detailsKey.key]}
+                </Typography>
+              </Box>
+            ))}
             <Box className={styles.infoContainer}>
               <Typography className={styles.infoLabel}>
                 Ընդհանուր Քանակ
@@ -98,6 +95,12 @@ const OrderPage = () => {
               </Typography>
             </Box>
           </Box>
+          {order.notes && (
+            <>
+              <SectionHeader title="Նշումներ" />
+              <Typography className={styles.notes}>{order.notes}</Typography>
+            </>
+          )}
           <SectionHeader title="Պատվիրած ապրանքները" />
           <Box className={styles.products}>
             <ProductTable data={order.orderProducts} />

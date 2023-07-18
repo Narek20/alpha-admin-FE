@@ -12,7 +12,7 @@ import {
 import SearchIcon from '@mui/icons-material/Search'
 import SettingsIcon from '@mui/icons-material/Settings'
 import SectionHeader from '@shared/SectionTitle'
-import OrderAddModal from '@shared/AddOrderModal'
+import OrderAddModal from '@features/OrderComponents/AddOrderModal'
 import { OrdersContext } from 'contexts/order.context'
 import { productStatuses } from '@utils/product/constants'
 
