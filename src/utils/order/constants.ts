@@ -52,6 +52,10 @@ export const OrderDetailsKeys = [
     label: 'Թարմացվել է',
     key: OrderTableKeysType.FORMATTED_DATE,
   },
+  {
+    label: 'Նշումներ',
+    key: OrderTableKeysType.NOTES,
+  },
 ]
 
 export const orderStatusStyles = (status: OrderStatus): string => {

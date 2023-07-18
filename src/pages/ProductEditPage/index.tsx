@@ -109,7 +109,6 @@ const ProductEditPage = () => {
           <Loading />
         ) : (
           <>
-            <Box id="info"></Box>
             <SectionHeader title="Բնութագրերը" />
             <TextField
               value={productData.title}
@@ -178,9 +177,15 @@ const ProductEditPage = () => {
               country={productData.country}
               onChange={(country) => handleChange(ProductKeys.COUNTRY, country)}
             />
-            <Box id="colors"></Box>
+            <TextField
+              label="Նշումներ"
+              multiline
+              value={productData.notes}
+              onChange={(evt) =>
+                handleChange(ProductKeys.NOTES, evt.target.value)
+              }
+            />
             <SectionHeader title="Գույները" />
-            <Box id="sizes"></Box>
             <ColorSelect
               color={productData.color || ''}
               onChange={(colors) => handleChange(ProductKeys.COLOR, colors)}
@@ -190,7 +195,6 @@ const ProductEditPage = () => {
               handleSizeChange={handleSizeChange}
               addSize={addSize}
             />
-            <Box id="images"></Box>
             <NewProductImages
               images={productData.images}
               changeImages={handleChangeImages}

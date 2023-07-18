@@ -57,18 +57,18 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
           ...selectedProducts,
           { ...product, quantity: 1, isLoading: true },
         ])
-      } else {
-        setSelectedTitles(
-          selectedTitles.filter((title) =>
-            values.find((value) => value === title)
-          )
-        )
-        setSelectedProducts(
-          selectedProducts.filter((product) =>
-            values.find((value) => value == product.title)
-          )
-        )
       }
+    } else {
+      setSelectedTitles(
+        selectedTitles.filter((title) =>
+          values.find((value) => value === title)
+        )
+      )
+      setSelectedProducts(
+        selectedProducts.filter((product) =>
+          values.find((value) => value == product.title)
+        )
+      )
     }
   }
 
@@ -82,6 +82,7 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
 
   const removeImage = (index: number) => {
     setSelectedProducts(selectedProducts.filter((_, ind) => ind !== index))
+    setSelectedTitles(selectedTitles.filter((_, ind) => ind !== index))
   }
 
   const addQty = (index: number) => {
@@ -175,6 +176,14 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
                 onChange={(evt) => handleChange(key, evt.target.value)}
               />
             ))}
+            <TextField
+              label="Նշումներ"
+              multiline
+              className={styles.input}
+              onChange={(evt) =>
+                handleChange(OrderTableKeysType.NOTES, evt.target.value)
+              }
+            />
             <Autocomplete
               disablePortal
               id="combo-box-demo"
@@ -186,7 +195,6 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  value={selectedProducts.map((product) => product.title)}
                   label="Ապրանքի Որոնում"
                   onChange={(evt) => searchProducts(evt.target.value)}
                 />

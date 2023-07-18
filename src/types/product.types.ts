@@ -57,6 +57,7 @@ export interface IProduct {
   weight?: string
   shoesHeight?: string
   country?: string
+  notes?: string
 }
 
 export type ICreateProduct = {
@@ -74,6 +75,7 @@ export type ICreateProduct = {
   shoesHeight: string
   country: string
   images: Array<string | File>
+  notes?: string
 }
 
 export enum ProductKeys {
@@ -90,4 +92,5 @@ export enum ProductKeys {
   PURCHASE_PRICE = 'purchasePrice',
   CLASP = 'clasp',
   SHOES_HEIGHT = 'shoesHeight',
+  NOTES = 'notes',
 }

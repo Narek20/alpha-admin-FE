@@ -31,6 +31,7 @@ export interface IOrder {
   updatedAt: string
   createdAt: string
   productIDs?: Array<{ quantity: number; id: number }>
+  notes?: string
 }
 
 export enum OrderStatus {
@@ -52,4 +53,5 @@ export enum OrderTableKeysType {
   STATUS = 'status',
   UPDATED_AT = 'updatedAt',
   FORMATTED_DATE = 'formattedDate',
+  NOTES = 'notes',
 }

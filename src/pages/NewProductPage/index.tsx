@@ -279,6 +279,11 @@ const NewProductData = () => {
           country={productData.country}
           onChange={(country) => handleChange(ProductKeys.COUNTRY, country)}
         />
+        <TextField
+          label="Նշումներ"
+          multiline
+          onChange={(evt) => handleChange(ProductKeys.NOTES, evt.target.value)}
+        />
         <SectionHeader title="Գույները" />
         <ColorSelect
           multiple={true}

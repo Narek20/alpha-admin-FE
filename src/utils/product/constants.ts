@@ -23,6 +23,7 @@ export const productKeys = [
   ProductKeys.SEASON,
   ProductKeys.WEIGHT,
   ProductKeys.PURCHASE_PRICE,
+  ProductKeys.NOTES,
 ]
 
 export const additionalDetailsKeys = [

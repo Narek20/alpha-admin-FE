@@ -28,7 +28,9 @@ const ProductTable: FC<IProps> = ({ data }) => {
         <TableHead>
           <TableRow>
             {columns.map((key) => (
-              <TableCell align="left">{key}</TableCell>
+              <TableCell key={key} align="left">
+                {key}
+              </TableCell>
             ))}
           </TableRow>
         </TableHead>
