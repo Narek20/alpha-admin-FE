@@ -20,9 +20,11 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined'
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined'
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined'
+import { useToast } from 'contexts/toast.context'
 import Pagination from '@shared/Pagination'
 import ConfirmationModal from '@shared/ConfirmationModal'
 import { OrdersContext } from 'contexts/order.context'
+import { removeOrder, updateOrder } from 'services/orders.service'
 import {
   OrderStatuses,
   OrderTableColumns,
@@ -33,8 +35,6 @@ import {
 import { OrderTableKeysType, IOrder, OrderStatus } from 'types/order.types'
 
 import styles from './styles.module.scss'
-import { removeOrder, updateOrder } from 'services/orders.service'
-import { useToast } from 'contexts/toast.context'
 
 const OrderTable = () => {
   const [open, setOpen] = useState(false)
@@ -44,7 +44,7 @@ const OrderTable = () => {
   const [confirmModalText, setConfirmModalText] = useState('')
   const [rowChanges, setRowChanges] = useState<IOrder | undefined>()
 
-  const { orders, setOrders } = useContext(OrdersContext)
+  const { orders, filters, setOrders, setFilters } = useContext(OrdersContext)
   const { showToast } = useToast()
   const navigate = useNavigate()
 
@@ -151,6 +151,14 @@ const OrderTable = () => {
     }
   }
 
+  const onPageChange = (page: number) => {
+    setFilters({ ...filters, skip: `${page - 1}` })
+  }
+
+  const onRowsPerPageChange = (rows: number) => {
+    setFilters({ ...filters, take: `${rows}` })
+  }
+
   return (
     <>
       <TableContainer className={styles.tableContainer} component={Paper}>
@@ -215,7 +223,9 @@ const OrderTable = () => {
                   <Select
                     defaultValue={order.status}
                     value={
-                      editRow === index ? rowChanges?.status : order.status
+                      isEdit && editRow === index
+                        ? rowChanges?.status
+                        : order.status
                     }
                     className={styles[orderStatusStyles(order.status)]}
                     disabled={!isEdit || index !== editRow}
@@ -283,8 +293,8 @@ const OrderTable = () => {
       </TableContainer>
       <Pagination
         count={50}
-        onPageChange={(n: number) => console.log(n)}
-        onRowsPerPageChange={(n: number) => console.log(n)}
+        onPageChange={onPageChange}
+        onRowsPerPageChange={onRowsPerPageChange}
       />
       <ConfirmationModal
         open={open}

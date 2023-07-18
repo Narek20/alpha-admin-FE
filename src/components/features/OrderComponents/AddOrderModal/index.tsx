@@ -31,6 +31,7 @@ interface IProps {
 }
 
 const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
+  const [isCreating, setIsCreating] = useState(false)
   const [selectedTitles, setSelectedTitles] = useState<string[]>([])
   const [selectedProducts, setSelectedProducts] = useState<
     Array<IProduct & { quantity: number; size?: string; isLoading?: boolean }>
@@ -40,7 +41,7 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
     [key: string]: string | number
   } | null>(null)
 
-  const { setOrders, orders } = useContext(OrdersContext)
+  const { setOrders, orders, filters } = useContext(OrdersContext)
   const { showToast } = useToast()
 
   const handleChange = (key: OrderTableKeysType, value: string) => {
@@ -139,15 +140,25 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
       size: product.size,
     }))
 
+    if (isCreating) return
+
+    setIsCreating(true)
+
     const data = await placeOrder({ ...orderData, productIDs } as IOrder)
 
     if (data.success) {
+      const limit = filters.take ? +filters.take : 10
+      if (orders.length > limit) {
+        orders.pop()
+      }
+
       setOrders([data.data, ...orders])
       showToast('success', data.message)
       onClose()
     } else {
       showToast('error', data.message)
     }
+    setIsCreating(false)
   }
 
   const handleImageLoad = () => {
