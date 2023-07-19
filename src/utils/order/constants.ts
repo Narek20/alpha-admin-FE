@@ -43,19 +43,19 @@ export const OrderDetailsKeys = [
     key: OrderTableKeysType.PHONE,
   },
   {
-    label: 'Քաղաք',
-    key: OrderTableKeysType.CITY,
-  },
-  {
     label: 'Հասցե',
     key: OrderTableKeysType.ADDRESS,
   },
   {
-    label: 'Ստեղծվել է',
-    key: OrderTableKeysType.FORMATTED_DATE,
+    label: 'Առաքիչ',
+    key: OrderTableKeysType.DRIVER,
   },
   {
-    label: 'Թարմացվել է',
+    label: 'Առաքման օրը',
+    key: OrderTableKeysType.DELIVERY_DATE,
+  },
+  {
+    label: 'Ստեղծվել է',
     key: OrderTableKeysType.FORMATTED_DATE,
   },
 ]
@@ -84,7 +84,7 @@ export const orderRowColor = (status: OrderStatus): string => {
     case OrderStatus.DELIVERY:
       return '#FFFD02'
     case OrderStatus.COMPLETED:
-      return '#C4C4C4'
+      return '#B7B7B7'
     default:
       return '#FE9901'
   }

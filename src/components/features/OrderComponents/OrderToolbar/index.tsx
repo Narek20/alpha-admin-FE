@@ -20,7 +20,7 @@ import styles from './styles.module.scss'
 
 const OrderToolbar = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const [ordersType, setOrdersType] = useState('new')
+  const [ordersType, setOrdersType] = useState('Նոր պատվեր')
 
   const { filters, setFilters } = useContext(OrdersContext)
 
@@ -31,7 +31,9 @@ const OrderToolbar = () => {
     setFilters({ ...filters, [key]: value })
   }
 
-  useEffect(() => {}, [ordersType])
+  useEffect(() => {
+    setFilters({ ...filters, status: ordersType })
+  }, [])
 
   return (
     <Box className={styles.orderToolbar}>
@@ -44,15 +46,17 @@ const OrderToolbar = () => {
       <Box className={styles.topBar}>
         <Button
           className={
-            ordersType === 'new' ? styles.selectedButton : styles.button
+            ordersType === 'Նոր պատվեր' ? styles.selectedButton : styles.button
           }
-          onClick={() => handleFilter('status', 'Բոլորը')}
+          onClick={() => handleFilter('status', 'Նոր պատվեր')}
         >
           Պատվերներ
         </Button>
         <Button
           className={
-            ordersType === 'packing' ? styles.selectedButton : styles.button
+            ordersType === 'Փաթեթավորվում է'
+              ? styles.selectedButton
+              : styles.button
           }
           onClick={() => handleFilter('status', 'Փաթեթավորվում է')}
         >
@@ -60,7 +64,7 @@ const OrderToolbar = () => {
         </Button>
         <Button
           className={
-            ordersType === 'delivery' ? styles.selectedButton : styles.button
+            ordersType === 'Առաքվում է' ? styles.selectedButton : styles.button
           }
           onClick={() => handleFilter('status', 'Առաքվում է')}
         >
@@ -68,7 +72,7 @@ const OrderToolbar = () => {
         </Button>
         <Button
           className={
-            ordersType === 'all' ? styles.selectedButton : styles.button
+            ordersType === 'Ավարտված' ? styles.selectedButton : styles.button
           }
           onClick={() => handleFilter('status', 'Ավարտված')}
         >
@@ -89,7 +93,7 @@ const OrderToolbar = () => {
         />
         <FormControl className={styles.select}>
           <Select
-            defaultValue={'Բոլորը'}
+            defaultValue={'Նոր պատվեր'}
             className={styles.select}
             onChange={(evt) => handleFilter('status', evt.target.value)}
           >

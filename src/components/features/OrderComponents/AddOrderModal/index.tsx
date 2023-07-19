@@ -9,12 +9,14 @@ import {
   Autocomplete,
   Select,
   MenuItem,
+  FormControl,
 } from '@mui/material'
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
 import Loading from '@shared/Loading'
+import DriverSelect from '@shared/DriverSelect'
 import { useToast } from 'contexts/toast.context'
 import { OrdersContext } from 'contexts/order.context'
 import { placeOrder } from 'services/orders.service'
@@ -213,6 +215,20 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
                 handleChange(OrderTableKeysType.NOTES, evt.target.value)
               }
             />
+            <TextField
+              label="Առաքման օրը"
+              type="date"
+              className={styles.input}
+              onChange={(evt) =>
+                handleChange(OrderTableKeysType.DELIVERY_DATE, evt.target.value)
+              }
+            />
+            <DriverSelect
+              driver={orderData?.driver as string}
+              onChange={(driver: string) =>
+                handleChange(OrderTableKeysType.DRIVER, driver)
+              }
+            />
             <Autocomplete
               disablePortal
               id="combo-box-demo"
@@ -252,22 +268,21 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
                       <DeleteOutlineOutlinedIcon sx={{ color: 'red' }} />
                     </IconButton>
                   </Box>
-                  <Select
-                    className={styles.select}
-                    value={product.size}
-                    onChange={(evt) =>
-                      handleSizeChange(evt.target.value as string, index)
-                    }
-                  >
-                    {product.sizes?.map(
-                      ({ size, quantity }) =>
-                        quantity && (
-                          <MenuItem key={size} value={size}>
-                            {size}
-                          </MenuItem>
-                        )
-                    )}
-                  </Select>
+                  <FormControl>
+                    <Select
+                      className={styles.select}
+                      value={product.size}
+                      onChange={(evt) =>
+                        handleSizeChange(evt.target.value as string, index)
+                      }
+                    >
+                      {product.sizes?.map(({ size }) => (
+                        <MenuItem key={size} value={size}>
+                          {size}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
                 </Box>
                 <Box className={styles.actions}>
                   <IconButton
@@ -276,13 +291,13 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
                   >
                     <AddIcon sx={{ color: 'green' }} />
                   </IconButton>
+                  <Typography>{product.quantity}</Typography>
                   <IconButton
                     className={styles.minusBtn}
                     onClick={() => subQty(index)}
                   >
                     <RemoveIcon sx={{ color: 'red' }} />
                   </IconButton>
-                  <Typography>{product.quantity}</Typography>
                 </Box>
               </Box>
             ))}

@@ -40,7 +40,7 @@ import styles from './styles.module.scss'
 const OrderTable = () => {
   const [open, setOpen] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
-  const [editRow, setEditRow] = useState(0)
+  const [editRow, setEditRow] = useState(-1)
   const [isComplete, setIsComplete] = useState(false)
   const [confirmModalText, setConfirmModalText] = useState('')
   const [rowChanges, setRowChanges] = useState<IOrder | undefined>()
@@ -100,13 +100,32 @@ const OrderTable = () => {
     setRowChanges(undefined)
   }
 
-  const handleChange = (
-    index: number,
-    key: OrderTableKeysType,
-    value: string
-  ) => {
+  const handleChange = async (key: OrderTableKeysType, value: string) => {
     if (rowChanges) {
       setRowChanges({ ...rowChanges, [key]: value })
+
+      if (key === OrderTableKeysType.STATUS) {
+        const order = orders.find((_, ind) => ind === editRow)
+
+        const data = await updateOrder({
+          id: order?.id,
+          status: value,
+        } as IOrder)
+
+        if (data.success) {
+          showToast('success', data.message)
+          setOpen(false)
+          setIsEdit(false)
+          setEditRow(-1)
+          setOrders(
+            orders.map((order, ind) =>
+              ind === editRow
+                ? { ...order, status: value as OrderStatus }
+                : order
+            )
+          )
+        }
+      }
     }
   }
 
@@ -114,7 +133,9 @@ const OrderTable = () => {
     const order = orders.find((order, ind) => ind === editRow)
 
     if (isEdit && rowChanges) {
-      const data = await updateOrder(rowChanges)
+      const data = await updateOrder({
+        ...rowChanges,
+      })
 
       if (data.success) {
         showToast('success', data.message)
@@ -131,7 +152,7 @@ const OrderTable = () => {
       } as IOrder)
 
       if (data.success) {
-        showToast('success', 'Պատվերը ավարտված է')
+        showToast('success', data.message)
         setOpen(false)
         setOrders(
           orders.map((order, ind) =>
@@ -218,7 +239,7 @@ const OrderTable = () => {
                           className={styles.data}
                           disabled={!isEdit || index !== editRow}
                           onChange={(evt) =>
-                            handleChange(index, key, evt.target.value)
+                            handleChange(key, evt.target.value)
                           }
                         />
                       )}
@@ -231,9 +252,43 @@ const OrderTable = () => {
                     align="center"
                   >
                     <TextField
-                      defaultValue={order.createdAt}
+                      value={
+                        editRow === index
+                          ? rowChanges?.createdAt
+                          : order.createdAt
+                      }
                       size="small"
                       type="date"
+                      onChange={(evt) =>
+                        handleChange(
+                          OrderTableKeysType.CREATED_AT,
+                          evt.target.value
+                        )
+                      }
+                      className={styles.data}
+                      disabled={!isEdit || index !== editRow}
+                    />
+                  </TableCell>
+                  <TableCell
+                    className={styles.bodyCell}
+                    component="th"
+                    scope="row"
+                    align="center"
+                  >
+                    <TextField
+                      value={
+                        editRow === index
+                          ? rowChanges?.deliveryDate
+                          : order.deliveryDate
+                      }
+                      size="small"
+                      type="date"
+                      onChange={(evt) =>
+                        handleChange(
+                          OrderTableKeysType.DELIVERY_DATE,
+                          evt.target.value
+                        )
+                      }
                       className={styles.data}
                       disabled={!isEdit || index !== editRow}
                     />
@@ -251,11 +306,10 @@ const OrderTable = () => {
                           ? rowChanges?.status
                           : order.status
                       }
-                      className={styles[orderStatusStyles(order.status)]}
+                      className={styles.status}
                       disabled={!isEdit || index !== editRow}
                       onChange={(evt) =>
                         handleChange(
-                          index,
                           OrderTableKeysType.STATUS,
                           evt.target.value
                         )

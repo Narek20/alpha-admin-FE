@@ -34,6 +34,8 @@ export interface IOrder {
   createdAt: string
   productIDs?: Array<{ quantity: number; id: number; size?: string }>
   notes?: string
+  driver?: string
+  deliveryDate: string
 }
 
 export enum OrderStatus {
@@ -57,4 +59,6 @@ export enum OrderTableKeysType {
   FORMATTED_DATE = 'formattedDate',
   NOTES = 'notes',
   SIZE = 'size',
+  DRIVER = 'driver',
+  DELIVERY_DATE = 'deliveryDate'
 }
