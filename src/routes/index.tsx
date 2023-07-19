@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router'
 import Home from 'pages/Home'
+import Drivers from 'pages/Drivers'
 import OrderPage from 'pages/OrderPage'
 import OrdersPage from 'pages/Orders'
 import ProductsPage from 'pages/Products'
@@ -12,6 +13,7 @@ import ProductPage from 'pages/ProductPage'
 const Routers = () => {
   return (
     <Routes>
+      <Route path="/drivers" element={<Drivers />} />
       <Route path="/orders" element={<OrdersPage />} />
       <Route path="/orders/:id" element={<OrderPage />} />
       <Route path="products" element={<ProductsPage />}>

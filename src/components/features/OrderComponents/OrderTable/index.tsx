@@ -230,6 +230,20 @@ const OrderTable = () => {
                     scope="row"
                     align="center"
                   >
+                    <TextField
+                      defaultValue={order.createdAt}
+                      size="small"
+                      type="date"
+                      className={styles.data}
+                      disabled={!isEdit || index !== editRow}
+                    />
+                  </TableCell>
+                  <TableCell
+                    className={styles.bodyCell}
+                    component="th"
+                    scope="row"
+                    align="center"
+                  >
                     <Select
                       defaultValue={order.status}
                       value={

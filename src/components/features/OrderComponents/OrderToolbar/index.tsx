@@ -20,12 +20,12 @@ import styles from './styles.module.scss'
 
 const OrderToolbar = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const [ordersType, setOrdersType] = useState('all')
+  const [ordersType, setOrdersType] = useState('new')
 
   const { filters, setFilters } = useContext(OrdersContext)
 
   const handleFilter = (key: string, value: string) => {
-    if (key === 'type') {
+    if (key === 'status') {
       setOrdersType(value)
     }
     setFilters({ ...filters, [key]: value })
@@ -46,23 +46,31 @@ const OrderToolbar = () => {
           className={
             ordersType === 'new' ? styles.selectedButton : styles.button
           }
-          onClick={() => handleFilter('type', 'new')}
+          onClick={() => handleFilter('status', 'Բոլորը')}
         >
-          Նոր պատվերները
+          Պատվերներ
+        </Button>
+        <Button
+          className={
+            ordersType === 'packing' ? styles.selectedButton : styles.button
+          }
+          onClick={() => handleFilter('status', 'Փաթեթավորվում է')}
+        >
+          Փաթեթավորվում է
         </Button>
         <Button
           className={
             ordersType === 'delivery' ? styles.selectedButton : styles.button
           }
-          onClick={() => handleFilter('type', 'delivery')}
+          onClick={() => handleFilter('status', 'Առաքվում է')}
         >
-          Առաքվող պատվերները
+          Առաքվում է
         </Button>
         <Button
           className={
             ordersType === 'all' ? styles.selectedButton : styles.button
           }
-          onClick={() => handleFilter('type', 'all')}
+          onClick={() => handleFilter('status', 'Ավարտված')}
         >
           Արխիվ
         </Button>

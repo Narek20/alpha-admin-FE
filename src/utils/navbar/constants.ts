@@ -11,4 +11,8 @@ export const navlinks = [
     title: 'Անալիտիկա',
     link: '/analytics',
   },
+  {
+    title: 'Առաքիչներ',
+    link: '/drivers',
+  },
 ]
