@@ -68,16 +68,19 @@ const OrderPage = () => {
             </Typography>
           </Box>
           <Box className={styles.details}>
-            {OrderDetailsKeys.map((detailsKey) => (
-              <Box key={detailsKey.label} className={styles.infoContainer}>
-                <Typography className={styles.infoLabel}>
-                  {detailsKey.label}
-                </Typography>
-                <Typography className={styles.info}>
-                  {order[detailsKey.key]}
-                </Typography>
-              </Box>
-            ))}
+            {OrderDetailsKeys.map(
+              (detailsKey) =>
+                order[detailsKey.key] && (
+                  <Box key={detailsKey.label} className={styles.infoContainer}>
+                    <Typography className={styles.infoLabel}>
+                      {detailsKey.label}
+                    </Typography>
+                    <Typography className={styles.info}>
+                      {order[detailsKey.key]}
+                    </Typography>
+                  </Box>
+                )
+            )}
             <Box className={styles.infoContainer}>
               <Typography className={styles.infoLabel}>
                 Ընդհանուր Քանակ
