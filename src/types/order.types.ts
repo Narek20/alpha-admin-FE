@@ -37,11 +37,10 @@ export interface IOrder {
 }
 
 export enum OrderStatus {
-  COMPLETED = 'Ավարտված է',
-  RECEIVED = 'Ընդունված է',
+  COMPLETED = 'Ավարտված',
+  RECEIVED = 'Նոր պատվեր',
   DELIVERY = 'Առաքվում է',
   PACKING = 'Փաթեթավորվում է',
-  SPECIAL_ORDER = 'Հատուկ պատվեր',
   ISSUE = 'Խնդիր',
 }
 

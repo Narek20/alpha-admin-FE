@@ -3,10 +3,11 @@ import { OrderStatus, OrderTableKeysType } from 'types/order.types'
 export const OrderTableColumns = [
   'Համարը',
   'Պատվիրատու',
-  'Հեռախոսահամար',
-  'Քաղաք',
-  'Հասցեն',
-  'Ստեղծման օրը',
+  'Հեռախոս',
+  'Հասցե',
+  'Նշումներ',
+  'Ստեղծման օր',
+  'Առաքման օր',
   'Ստատուսը',
   'Գործողություններ',
 ]
@@ -15,14 +16,12 @@ export const OrderTableKeys = [
   OrderTableKeysType.ID,
   OrderTableKeysType.FULL_NAME,
   OrderTableKeysType.PHONE,
-  OrderTableKeysType.CITY,
   OrderTableKeysType.ADDRESS,
-  OrderTableKeysType.FORMATTED_DATE,
+  OrderTableKeysType.NOTES,
 ]
 export const CreateOrderKeys = [
   OrderTableKeysType.FULL_NAME,
   OrderTableKeysType.PHONE,
-  OrderTableKeysType.CITY,
   OrderTableKeysType.ADDRESS,
 ]
 
@@ -81,14 +80,12 @@ export const orderRowColor = (status: OrderStatus): string => {
     case OrderStatus.ISSUE:
       return '#FF0000'
     case OrderStatus.PACKING:
-      return '#881AD7'
+      return '#FF00FE'
     case OrderStatus.DELIVERY:
-      return '#F4CB00'
+      return '#FFFD02'
     case OrderStatus.COMPLETED:
       return '#C4C4C4'
-    case OrderStatus.SPECIAL_ORDER:
-      return '#4984E5'
     default:
-      return '#A4F46B'
+      return '#FE9901'
   }
 }

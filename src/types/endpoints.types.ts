@@ -19,3 +19,10 @@ export enum ProductEndpoints {
   CREATE_PRODUCT = 'products/create',
   GET_PRODUCTS_HISTORY = 'products/history/',
 }
+
+export enum DriverEndpoints {
+  DRIVERS = 'drivers/',
+  CREATE_DRIVER = 'drivers/create',
+  UPDATE_DRIVER = 'drivers/',
+  DELETE_DRIVER = 'drivers/',
+}
