@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import { Box, IconButton, Typography } from '@mui/material'
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined'
-import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined'
 import ProfileDropDown from '@features/ProductComponents/ProfileDropDown'
 import logo from '@assets/images/alpha-logo.jpg'
 import { navlinks } from '@utils/navbar/constants'
@@ -36,9 +35,6 @@ const Header = () => {
       </Box>
       <Box className={styles.rightSection}>
         <IconButton className={styles.icon}>
-          <NotificationsNoneOutlinedIcon sx={iconStyles} />
-        </IconButton>
-        <IconButton className={styles.icon}>
           <HelpOutlineOutlinedIcon sx={iconStyles} />
         </IconButton>
         <Box
@@ -46,7 +42,7 @@ const Header = () => {
           onMouseEnter={() => setIsDropDownOpen(true)}
           onMouseLeave={() => setIsDropDownOpen(false)}
         >
-          <Typography >Alpha Military shop</Typography>
+          <Typography>Alpha Military shop</Typography>
         </Box>
       </Box>
       <ProfileDropDown isOpen={isDropDownOpen} />

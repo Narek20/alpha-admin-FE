@@ -10,6 +10,10 @@ import {
   Select,
   MenuItem,
   FormControl,
+  FormLabel,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
 } from '@mui/material'
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined'
@@ -40,13 +44,13 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
   >([])
   const [products, setProducts] = useState<IProduct[]>([])
   const [orderData, setOrderData] = useState<{
-    [key: string]: string | number
+    [key: string]: string | number | boolean
   } | null>(null)
 
   const { setOrders, orders, filters } = useContext(OrdersContext)
   const { showToast } = useToast()
 
-  const handleChange = (key: OrderTableKeysType, value: string) => {
+  const handleChange = (key: OrderTableKeysType, value: string | boolean) => {
     setOrderData({ ...orderData, [key]: value })
   }
 
@@ -218,11 +222,38 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
             <TextField
               label="Առաքման օրը"
               type="date"
+              InputLabelProps={{ shrink: true }}
               className={styles.input}
               onChange={(evt) =>
                 handleChange(OrderTableKeysType.DELIVERY_DATE, evt.target.value)
               }
             />
+            <FormControl>
+              <FormLabel id="demo-radio-buttons-group-label">
+                Հատուկ պատվեր
+              </FormLabel>
+              <RadioGroup
+                aria-labelledby="demo-radio-buttons-group-label"
+                defaultValue="female"
+                name="radio-buttons-group"
+              >
+                <FormControlLabel
+                  value={true}
+                  control={
+                    <Radio
+                      checked={!!orderData?.isSpecial}
+                      onClick={() =>
+                        handleChange(
+                          OrderTableKeysType.IS_SPECIAL,
+                          !orderData?.isSpecial
+                        )
+                      }
+                    />
+                  }
+                  label="Հատուկ պատվեր"
+                />
+              </RadioGroup>
+            </FormControl>
             <DriverSelect
               driver={orderData?.driver as string}
               onChange={(driver: string) =>
