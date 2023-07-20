@@ -16,6 +16,7 @@ import {
   Select,
 } from '@mui/material'
 import DoneIcon from '@mui/icons-material/Done'
+import StarsIcon from '@mui/icons-material/Stars'
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined'
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined'
@@ -230,7 +231,10 @@ const OrderTable = () => {
                     >
                       {ind === 0 ? (
                         <Typography className={styles.index}>
-                          №{order[key]}
+                          №{order[key]}{' '}
+                          {order.isSpecial && (
+                            <StarsIcon sx={{ color: 'red' }} />
+                          )}
                         </Typography>
                       ) : (
                         <TextField

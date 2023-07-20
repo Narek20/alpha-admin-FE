@@ -104,7 +104,7 @@ const OrderPage = () => {
               <Typography className={styles.notes}>{order.notes}</Typography>
             </>
           )}
-          <SectionHeader title="Պատվիրած ապրանքները" />
+          <SectionHeader title="Պատվիրված ապրանքները" />
           <Box className={styles.products}>
             <ProductTable data={order.orderProducts} />
           </Box>

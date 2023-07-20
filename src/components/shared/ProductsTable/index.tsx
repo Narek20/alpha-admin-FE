@@ -2,6 +2,8 @@ import { FC } from 'react'
 import { useNavigate } from 'react-router'
 import Paper from '@mui/material/Paper'
 import {
+  Box,
+  Button,
   Table,
   TableRow,
   TableBody,
@@ -24,14 +26,14 @@ const ProductTable: FC<IProps> = ({ data }) => {
     'Կատեգորիա',
     'Անվանում',
     'Բրենդ',
-    'Գին',
-    'Քանակ',
     'Չափս',
+    'Քանակ',
+    'Գին',
   ]
   const navigate = useNavigate()
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer className={styles.tableContainer} component={Paper}>
       <Table className={styles.table} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
@@ -48,15 +50,25 @@ const ProductTable: FC<IProps> = ({ data }) => {
               key={product.title}
               sx={{ padding: 20 }}
               className={styles.bodyRow}
-              onClick={() => navigate(`/products/${product.id}`)}
             >
               <TableCell
-                className={styles.bodyCell}
+                className={styles.imgBodyCell}
                 component="th"
                 scope="row"
                 align="left"
               >
-                <img src={product.images[0]} className={styles.img} />
+                <Box className={styles.imgContainer}>
+                  <img src={product.images[0]} className={styles.img} />
+                  <Box className={styles.zoomedContainer}>
+                    <img src={product.images[0]} className={styles.zoomedImg} />
+                    <Button
+                      className={styles.seeMoreBtn}
+                      onClick={() => navigate(`/products/${product.id}`)}
+                    >
+                      Տեսնել ավելին
+                    </Button>
+                  </Box>
+                </Box>
               </TableCell>
               <TableCell
                 className={styles.bodyCell}
@@ -90,7 +102,7 @@ const ProductTable: FC<IProps> = ({ data }) => {
                 scope="row"
                 align="left"
               >
-                <Typography className={styles.data}>{product.price}</Typography>
+                <Typography className={styles.data}>{size}</Typography>
               </TableCell>
               <TableCell
                 className={styles.bodyCell}
@@ -106,7 +118,7 @@ const ProductTable: FC<IProps> = ({ data }) => {
                 scope="row"
                 align="left"
               >
-                <Typography className={styles.data}>{size}</Typography>
+                <Typography className={styles.data}>{product.price}</Typography>
               </TableCell>
             </TableRow>
           ))}

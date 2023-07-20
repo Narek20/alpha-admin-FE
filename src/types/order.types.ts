@@ -36,6 +36,7 @@ export interface IOrder {
   notes?: string
   driver?: string
   deliveryDate: string
+  isSpecial?: boolean
 }
 
 export enum OrderStatus {
@@ -60,5 +61,6 @@ export enum OrderTableKeysType {
   NOTES = 'notes',
   SIZE = 'size',
   DRIVER = 'driver',
-  DELIVERY_DATE = 'deliveryDate'
+  DELIVERY_DATE = 'deliveryDate',
+  IS_SPECIAL = 'isSpecial'
 }
