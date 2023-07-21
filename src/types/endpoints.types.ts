@@ -26,3 +26,10 @@ export enum DriverEndpoints {
   UPDATE_DRIVER = 'drivers/',
   DELETE_DRIVER = 'drivers/',
 }
+
+export enum StorageEndpoints {
+  STORAGE_IMPORTS = 'storages/',
+  ADD_STORAGE_IMPORTS = 'storages/create',
+  UPDATE_STORAGE_IMPORT = 'storages/',
+  DELETE_STORAGE_IMPORTS = 'storages/',
+}

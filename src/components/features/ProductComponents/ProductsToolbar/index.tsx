@@ -1,4 +1,4 @@
-import { FC, useContext } from 'react'
+import { FC, useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   Box,
@@ -13,6 +13,7 @@ import ViewCompactOutlinedIcon from '@mui/icons-material/ViewCompactOutlined'
 import { ProductsContext } from 'contexts/products.context'
 
 import styles from './styles.module.scss'
+import AddStorageProduct from '../AddStorageProduct'
 
 interface IProps {
   isBig: boolean
@@ -20,6 +21,8 @@ interface IProps {
 }
 
 const ProductsToolbar: FC<IProps> = ({ isBig, changeDisplay }) => {
+  const [isOpen, setIsOpen] = useState(false)
+
   const navigate = useNavigate()
   const { getProducts, setFilters, filters } = useContext(ProductsContext)
 
@@ -55,6 +58,9 @@ const ProductsToolbar: FC<IProps> = ({ isBig, changeDisplay }) => {
         </FormControl>
       </Box>
       <Box className={styles.rightBar}>
+        <Button className={styles.button} onClick={() => setIsOpen(true)}>
+          Ապրանքի ներկրում
+        </Button>
         <Button className={styles.button} onClick={handleAdd}>
           Ավելացնել
         </Button>
@@ -62,6 +68,7 @@ const ProductsToolbar: FC<IProps> = ({ isBig, changeDisplay }) => {
           Բոլոր ապրանքները
         </Button>
       </Box>
+      <AddStorageProduct open={isOpen} onClose={() => setIsOpen(false)} />
     </Box>
   )
 }

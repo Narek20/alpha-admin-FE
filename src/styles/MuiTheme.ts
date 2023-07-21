@@ -46,6 +46,13 @@ export const THEME = createTheme({
         },
       },
     },
+    MuiTableCell: {
+      styleOverrides: {
+        root: {
+          color: 'white'
+        },
+      }
+    },
     MuiOutlinedInput: {
       styleOverrides: {
         input: {

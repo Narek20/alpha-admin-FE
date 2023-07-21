@@ -5,6 +5,7 @@ import { THEME } from 'styles/MuiTheme'
 import { ToastProvider } from 'contexts/toast.context'
 import { ThemeProvider } from '@mui/material/styles'
 import { OrdersProvider } from 'contexts/order.context'
+import { StorageProvider } from 'contexts/storage.context'
 import { DriversProvider } from 'contexts/driver.context'
 import { ProductsProvider } from 'contexts/products.context'
 import '@fontsource/roboto'
@@ -21,9 +22,11 @@ root.render(
         <ProductsProvider>
           <OrdersProvider>
             <DriversProvider>
-              <ThemeProvider theme={THEME}>
-                <App />
-              </ThemeProvider>
+              <StorageProvider>
+                <ThemeProvider theme={THEME}>
+                  <App />
+                </ThemeProvider>
+              </StorageProvider>
             </DriversProvider>
           </OrdersProvider>
         </ProductsProvider>
