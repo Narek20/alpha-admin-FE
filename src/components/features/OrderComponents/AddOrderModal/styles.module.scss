@@ -40,6 +40,11 @@
       .input {
         width: 100%;
       }
+
+      .flex {
+        display: flex;
+        gap: 20px;
+      }
     }
 
     .products {
