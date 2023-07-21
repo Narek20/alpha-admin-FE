@@ -229,9 +229,6 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
               }
             />
             <FormControl>
-              <FormLabel id="demo-radio-buttons-group-label">
-                Հատուկ պատվեր
-              </FormLabel>
               <RadioGroup
                 aria-labelledby="demo-radio-buttons-group-label"
                 defaultValue="female"

@@ -39,6 +39,13 @@ export const THEME = createTheme({
         },
       },
     },
+    MuiFormLabel: {
+      styleOverrides: {
+        root: {
+          color: '#f6c71e',
+        },
+      },
+    },
     MuiOutlinedInput: {
       styleOverrides: {
         input: {
