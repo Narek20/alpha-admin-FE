@@ -26,8 +26,12 @@ import { OrdersContext } from 'contexts/order.context'
 import { placeOrder } from 'services/orders.service'
 import { getAllProducts } from 'services/products.service'
 import { IProduct } from 'types/product.types'
-import { IOrder, OrderTableKeysType } from 'types/order.types'
-import { CreateOrderKeys, OrderTableColumns } from '@utils/order/constants'
+import { IOrder, OrderTableKeysType, PaymentMethods } from 'types/order.types'
+import {
+  CreateOrderKeys,
+  OrderTableColumns,
+  paymentMethods,
+} from '@utils/order/constants'
 
 import styles from './styles.module.scss'
 
@@ -228,29 +232,48 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
                 handleChange(OrderTableKeysType.DELIVERY_DATE, evt.target.value)
               }
             />
-            <FormControl>
-              <RadioGroup
-                aria-labelledby="demo-radio-buttons-group-label"
-                defaultValue="female"
-                name="radio-buttons-group"
-              >
-                <FormControlLabel
-                  value={true}
-                  control={
-                    <Radio
-                      checked={!!orderData?.isSpecial}
-                      onClick={() =>
-                        handleChange(
-                          OrderTableKeysType.IS_SPECIAL,
-                          !orderData?.isSpecial
-                        )
-                      }
-                    />
+            <Box className={styles.flex}>
+              <FormControl>
+                <RadioGroup
+                  aria-labelledby="demo-radio-buttons-group-label"
+                  defaultValue="female"
+                  name="radio-buttons-group"
+                >
+                  <FormControlLabel
+                    value={true}
+                    control={
+                      <Radio
+                        checked={!!orderData?.isSpecial}
+                        onClick={() =>
+                          handleChange(
+                            OrderTableKeysType.IS_SPECIAL,
+                            !orderData?.isSpecial
+                          )
+                        }
+                      />
+                    }
+                    label="Հատուկ պատվեր"
+                  />
+                </RadioGroup>
+              </FormControl>
+              <FormControl>
+                <Select
+                  defaultValue={PaymentMethods.CASH}
+                  onChange={(evt) =>
+                    handleChange(
+                      OrderTableKeysType.PAYMENT_METHOD,
+                      evt.target.value as string
+                    )
                   }
-                  label="Հատուկ պատվեր"
-                />
-              </RadioGroup>
-            </FormControl>
+                >
+                  {paymentMethods.map((method) => (
+                    <MenuItem key={method} value={method}>
+                      {method}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Box>
             <DriverSelect
               driver={orderData?.driver as string}
               onChange={(driver: string) =>

@@ -37,6 +37,7 @@ export interface IOrder {
   driver?: string
   deliveryDate: string
   isSpecial?: boolean
+  paymentMethod?: string
 }
 
 export enum OrderStatus {
@@ -45,6 +46,12 @@ export enum OrderStatus {
   DELIVERY = 'Առաքվում է',
   PACKING = 'Փաթեթավորվում է',
   ISSUE = 'Խնդիր',
+}
+
+export enum PaymentMethods {
+  PAID = 'Վճարված է',
+  CASH = 'Կանխիկ',
+  NON_CASH = 'Անկանխիկ'
 }
 
 export enum OrderTableKeysType {
@@ -62,5 +69,6 @@ export enum OrderTableKeysType {
   SIZE = 'size',
   DRIVER = 'driver',
   DELIVERY_DATE = 'deliveryDate',
-  IS_SPECIAL = 'isSpecial'
+  IS_SPECIAL = 'isSpecial',
+  PAYMENT_METHOD = 'paymentMethod'
 }

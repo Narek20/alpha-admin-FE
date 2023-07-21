@@ -1,4 +1,8 @@
-import { OrderStatus, OrderTableKeysType } from 'types/order.types'
+import {
+  OrderStatus,
+  OrderTableKeysType,
+  PaymentMethods,
+} from 'types/order.types'
 
 export const OrderTableColumns = [
   'Համարը',
@@ -26,11 +30,17 @@ export const CreateOrderKeys = [
 ]
 
 export const OrderStatuses = [
+  OrderStatus.RECEIVED,
+  OrderStatus.PACKING,
+  OrderStatus.DELIVERY,
   OrderStatus.COMPLETED,
   OrderStatus.ISSUE,
-  OrderStatus.DELIVERY,
-  OrderStatus.PACKING,
-  OrderStatus.RECEIVED,
+]
+
+export const paymentMethods = [
+  PaymentMethods.PAID,
+  PaymentMethods.CASH,
+  PaymentMethods.NON_CASH,
 ]
 
 export const OrderDetailsKeys = [
@@ -49,6 +59,10 @@ export const OrderDetailsKeys = [
   {
     label: 'Առաքիչ',
     key: OrderTableKeysType.DRIVER,
+  },
+  {
+    label: 'Վճարման եղանակը',
+    key: OrderTableKeysType.PAYMENT_METHOD,
   },
   {
     label: 'Առաքման օրը',
