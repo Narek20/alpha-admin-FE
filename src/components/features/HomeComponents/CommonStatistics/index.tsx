@@ -1,4 +1,6 @@
-import { Box, Typography } from '@mui/material'
+import { useState } from 'react'
+import { Box, Button, Typography } from '@mui/material'
+import OrderAddModal from '@features/OrderComponents/AddOrderModal'
 import CommonSearch from '@shared/CommonSearch'
 import SectionHeader from '@shared/SectionTitle'
 import { commonStatistics } from '@utils/statistics/constants'
@@ -6,11 +8,15 @@ import { commonStatistics } from '@utils/statistics/constants'
 import styles from './styles.module.scss'
 
 const CommonStatistics = () => {
+  const [isOpen, setIsOpen] = useState(false)
   return (
     <Box className={styles.statistics}>
       <SectionHeader title="Ընդհանուր Ստատիստիկա" />
       <Box className={styles.statisticContainer}>
         <CommonSearch />
+        <Button className={styles.addOrder} onClick={() => setIsOpen(true)}>
+          Ավելացնել Պատվեր
+        </Button>
       </Box>
       <hr />
       {commonStatistics.map((statistic) => (
@@ -30,6 +36,7 @@ const CommonStatistics = () => {
           </Typography>
         </Box>
       ))}
+      <OrderAddModal open={isOpen} onClose={() => setIsOpen(false)} />
     </Box>
   )
 }

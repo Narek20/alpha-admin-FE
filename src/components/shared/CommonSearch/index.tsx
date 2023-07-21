@@ -12,7 +12,7 @@ const CommonSearch: FC<IProps> = () => {
       id="combo-box-demo"
       className={styles.search}
       options={[]}
-      sx={{ width: 300 }}
+      sx={{ width: 250 }}
       renderInput={(params) => <TextField {...params} label="Որոնում" />}
     />
   )

@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react'
+import { useState, useContext } from 'react'
 import {
   Box,
   Button,
@@ -30,10 +30,6 @@ const OrderToolbar = () => {
     }
     setFilters({ ...filters, [key]: value })
   }
-
-  useEffect(() => {
-    setFilters({ ...filters, status: ordersType })
-  }, [])
 
   return (
     <Box className={styles.orderToolbar}>
