@@ -16,7 +16,7 @@ export const OrdersContext = createContext<IOrdersContext>({
   pagination: { count: 20, skip: 0, take: 10 },
   getOrders: () => {},
   setFilters: () => {},
-  setOrders: () => {}
+  setOrders: () => {},
 })
 
 // Custom hook to access the OrdersContext
@@ -33,7 +33,7 @@ export const OrdersProvider = ({ children }: { children: ReactNode }) => {
   }>({ count: 20, skip: 0, take: 10 })
   const [filters, setFilters] = useState<{
     [param: string]: string | string[] | number[]
-  }>({status: 'Նոր պատվեր'})
+  }>({ status: 'Նոր պատվեր' })
 
   const getOrders = async () => {
     setIsLoading(true)
@@ -51,7 +51,15 @@ export const OrdersProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <OrdersContext.Provider
-      value={{ orders, isLoading, pagination, filters, setFilters, getOrders, setOrders }}
+      value={{
+        orders,
+        isLoading,
+        pagination,
+        filters,
+        setFilters,
+        getOrders,
+        setOrders,
+      }}
     >
       {children}
     </OrdersContext.Provider>

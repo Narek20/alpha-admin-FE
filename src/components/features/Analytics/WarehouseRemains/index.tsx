@@ -6,7 +6,7 @@ import styles from './styles.module.scss'
 const WarehouseRemains = () => {
   return (
     <Box className={styles.warehouseRemains}>
-      <SectionHeader title='7.Հաշվետվություն բաժնետոմսերի մնացորդների մասին'/>
+      <SectionHeader title="7.Հաշվետվություն բաժնետոմսերի մնացորդների մասին" />
     </Box>
   )
 }

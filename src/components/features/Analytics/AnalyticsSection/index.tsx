@@ -27,7 +27,7 @@ const AnalyticsSection: FC<IProps> = ({
         </Typography>
         <Typography className={styles.description}>{description}</Typography>
       </Box>
-      <img className={styles.img} src={image} alt={"image" + index} />
+      <img className={styles.img} src={image} alt={'image' + index} />
     </Link>
   )
 }

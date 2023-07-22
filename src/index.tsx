@@ -7,6 +7,7 @@ import { ThemeProvider } from '@mui/material/styles'
 import { OrdersProvider } from 'contexts/order.context'
 import { StorageProvider } from 'contexts/storage.context'
 import { DriversProvider } from 'contexts/driver.context'
+import { CategoryProvider } from 'contexts/category.context'
 import { ProductsProvider } from 'contexts/products.context'
 import '@fontsource/roboto'
 import App from './App'
@@ -23,9 +24,11 @@ root.render(
           <OrdersProvider>
             <DriversProvider>
               <StorageProvider>
-                <ThemeProvider theme={THEME}>
-                  <App />
-                </ThemeProvider>
+                <CategoryProvider>
+                  <ThemeProvider theme={THEME}>
+                    <App />
+                  </ThemeProvider>
+                </CategoryProvider>
               </StorageProvider>
             </DriversProvider>
           </OrdersProvider>

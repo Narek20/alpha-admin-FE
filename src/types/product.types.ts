@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from 'react'
+import { ICategory } from './category.types'
 
 export interface IProductsContext {
   products: IProduct[] | []
@@ -25,21 +26,22 @@ export type Sizes = {
 
 export enum AdditionalDetailsKeys {
   BRAND = 'brand',
-  GENDER = 'gender',
-  SEASON = 'season',
-  WEIGHT = 'weight',
-  SHOES_HEIGHT = 'shoesHeight',
-  CLASP = 'clasp',
   COUNTRY = 'country',
   COLOR = 'color',
   PRICE = 'price',
   PURCHASE_PRICE = 'purchasePrice',
 }
 
+export type ProductAdditionalInfo = {
+  title: string
+  key: string
+  value: string
+}
+
 export interface IProduct {
   id: number
   title: string
-  category: string
+  category: ICategory
   brand: string
   images: string[]
   rating?: number
@@ -50,14 +52,9 @@ export interface IProduct {
   sizes?: Sizes[]
   isBest?: boolean
   purchasePrice: number
-  clasp?: string
-  sex?: string
-  gender?: string
-  season?: string
-  weight?: string
-  shoesHeight?: string
   country?: string
   notes?: string
+  additionalInfo?: ProductAdditionalInfo[]
 }
 
 export type ICreateProduct = {
@@ -68,29 +65,21 @@ export type ICreateProduct = {
   color?: string
   sizes: Sizes[]
   purchasePrice: number
-  clasp: string
-  gender: string
-  season: string
-  weight: string
-  shoesHeight: string
   country: string
   images: Array<string | File>
   notes?: string
+  additionalInfo: ProductAdditionalInfo[]
 }
 
 export enum ProductKeys {
-  GENDER = 'gender',
   TITLE = 'title',
   BRAND = 'brand',
   PRICE = 'price',
   COLOR = 'color',
   SIZES = 'sizes',
-  SEASON = 'season',
-  WEIGHT = 'weight',
   COUNTRY = 'country',
   CATEGORY = 'category',
   PURCHASE_PRICE = 'purchasePrice',
-  CLASP = 'clasp',
-  SHOES_HEIGHT = 'shoesHeight',
   NOTES = 'notes',
+  ADDITIONAL_INFO = 'additionalInfo',
 }

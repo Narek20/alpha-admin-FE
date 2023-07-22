@@ -28,10 +28,7 @@ const BigProductCard: FC<IProps> = ({ product }) => {
   }, [product.images[0]])
 
   return (
-    <Box
-      className={styles.card}
-      onClick={() => navigate(`${product.id}`)}
-    >
+    <Box className={styles.card} onClick={() => navigate(`${product.id}`)}>
       {isLoading ? (
         <Box className={styles.img}>
           <Loading />
@@ -44,7 +41,9 @@ const BigProductCard: FC<IProps> = ({ product }) => {
       </Typography>
       <Box className={styles.titleContainer}>
         <Typography className={styles.title}>{product.title} /</Typography>
-        <Typography className={styles.category}>{product.category}</Typography>
+        <Typography className={styles.category}>
+          {product.category.title}
+        </Typography>
       </Box>
     </Box>
   )

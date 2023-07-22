@@ -76,7 +76,7 @@ const ProductDetails: FC<{ product: IProduct }> = ({ product }) => {
           <Box className={styles.titleContainer}>
             <Typography className={styles.title}>{product.title} /</Typography>
             <Typography className={styles.category}>
-              {product.category}
+              {product.category.title}
             </Typography>
           </Box>
           <Box className={styles.ratingContainer}>
@@ -99,6 +99,13 @@ const ProductDetails: FC<{ product: IProduct }> = ({ product }) => {
                   </Box>
                 )
             )}
+            {product.additionalInfo &&
+              product.additionalInfo.map(({ value, title }) => (
+                <Box className={styles.infoContainer} key={title}>
+                  <Typography className={styles.label}>{title}:</Typography>
+                  <Typography className={styles.info}>{value}</Typography>
+                </Box>
+              ))}
           </Box>
           <Box className={styles.sizeTitleContainer}>
             <Typography className={styles.sizesTitle}>Չափսերը: </Typography>

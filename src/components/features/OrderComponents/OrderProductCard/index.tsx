@@ -17,7 +17,7 @@ const OrderProductCard: FC<IProduct & { quantity: number }> = ({
       <img src={images[0]} className={styles.img} alt="նկար" />
       <Box className={styles.detailContainer}>
         <Typography className={styles.label}>Կատեգորիան</Typography>
-        <Typography className={styles.detail}>{category}</Typography>
+        <Typography className={styles.detail}>{category.title}</Typography>
       </Box>
       <Box className={styles.detailContainer}>
         <Typography className={styles.label}>Քանակը</Typography>

@@ -1,6 +1,12 @@
 .newProductPage {
   display: flex;
   justify-content: center;
+  position: relative;
+  .categoryContainer {
+    left: 100px;
+    position: absolute;
+    width: 300px;
+  }
 
   .productData {
     display: flex;

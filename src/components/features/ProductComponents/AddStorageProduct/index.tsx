@@ -34,7 +34,14 @@ const AddStorageProduct: FC<IProps> = ({ open, onClose }) => {
   const [isCreating, setIsCreating] = useState(false)
   const [selectedTitles, setSelectedTitles] = useState<string[]>([])
   const [selectedProducts, setSelectedProducts] = useState<
-    Array<IProduct & { quantity: number; size?: string; smSize?: string, isLoading?: boolean }>
+    Array<
+      IProduct & {
+        quantity: number
+        size?: string
+        smSize?: string
+        isLoading?: boolean
+      }
+    >
   >([])
   const [products, setProducts] = useState<IProduct[]>([])
   const [storageData, setStorageData] = useState<{

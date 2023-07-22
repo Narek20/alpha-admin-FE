@@ -1,4 +1,4 @@
-import { ICreateProduct, Sizes } from 'types/product.types'
+import { ICreateProduct, ProductKeys, Sizes } from 'types/product.types'
 import { productKeys } from './constants'
 
 export const getFormData = (
@@ -12,7 +12,11 @@ export const getFormData = (
   const formData = new FormData()
 
   productKeys.forEach((key) => {
-    formData.append(key, productData[key] as string)
+    if (key === ProductKeys.ADDITIONAL_INFO) {
+      formData.append(key, JSON.stringify(productData[key]))
+    } else {
+      formData.append(key, productData[key] as string)
+    }
   })
 
   if (productData.images.length) {
