@@ -7,7 +7,11 @@ interface IProps {
   onRowsPerPageChange: (rows: number) => void
 }
 
-const Pagination: FC<IProps> = ({ count, onPageChange, onRowsPerPageChange }) => {
+const Pagination: FC<IProps> = ({
+  count,
+  onPageChange,
+  onRowsPerPageChange,
+}) => {
   const [page, setPage] = useState(2)
   const [rowsPerPage, setRowsPerPage] = useState(10)
 

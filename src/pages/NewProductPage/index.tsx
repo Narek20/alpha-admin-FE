@@ -5,19 +5,17 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import Loading from '@shared/Loading'
 import BrandSelect from '@shared/BrandSelect'
 import ColorSelect from '@shared/ColorSelect'
-import SeasonSelect from '@shared/SeasonSelect'
-import GenderSelect from '@shared/GenderSelect'
 import SectionHeader from '@shared/SectionTitle'
 import CountrySelect from '@shared/CountrySelect'
 import CategorySelect from '@shared/CategorySelect'
-import ClaspTypeSelect from '@shared/FastenerTypeSelect'
 import NewProductSizes from '@features/ProductComponents/ProductSizes'
 import NewProductImages from '@features/ProductComponents/ProductImages'
 import { getFormData } from '@utils/product/formData'
 import { createProduct } from 'services/products.service'
-import { ProductsContext } from 'contexts/products.context'
-import { ICreateProduct, ProductKeys, Sizes } from 'types/product.types'
 import { useToast } from 'contexts/toast.context'
+import { ProductsContext } from 'contexts/products.context'
+import { CategoriesContext } from 'contexts/category.context'
+import { ICreateProduct, ProductKeys, Sizes } from 'types/product.types'
 
 import styles from './styles.module.scss'
 
@@ -33,27 +31,27 @@ const NewProductData = () => {
   const [colorProducts, setColorProducts] = useState<
     { color: string; images: File[]; sizes: Sizes[] }[]
   >([])
+  const [additionalFields, setAdditionalFields] = useState<
+    { key: string; title: string }[]
+  >([])
   const [productData, setProductData] = useState<
     ICreateProduct & { images: File[] }
   >({
-    gender: '',
     title: '',
     brand: '',
     price: 0,
     color: '',
     sizes: [],
-    season: '',
-    weight: '',
     country: '',
     category: '',
     purchasePrice: 0,
-    clasp: '',
-    shoesHeight: '',
     images: [],
+    additionalInfo: [],
   })
 
   const navigate = useNavigate()
   const { getProducts } = useContext(ProductsContext)
+  const { categories } = useContext(CategoriesContext)
   const { showToast } = useToast()
 
   const handleChange = (
@@ -95,6 +93,32 @@ const NewProductData = () => {
 
       setProductData({ ...productData, [key]: value })
     }
+  }
+
+  const handleAddInfo = (key: string, title: string, value: string) => {
+    const chosenInfo = productData.additionalInfo.find(
+      (info) => info.key === key
+    )
+
+    const changedInfo = productData.additionalInfo.map((info) => {
+      if (info.key === key) {
+        return {
+          ...info,
+          value,
+        }
+      }
+
+      return info
+    })
+
+    if (!chosenInfo) {
+      changedInfo.push({ value, title, key })
+    }
+
+    setProductData({
+      ...productData,
+      additionalInfo: changedInfo,
+    })
   }
 
   const handleRemove = (
@@ -196,6 +220,16 @@ const NewProductData = () => {
   }
 
   useEffect(() => {
+    if (productData.category) {
+      const category = categories.find(
+        (category) => category.title === productData.category
+      )
+
+      if (category) setAdditionalFields(category.fields)
+    }
+  }, [productData.category])
+
+  useEffect(() => {
     if (selectedColor && colorProducts) {
       setSelectedProduct(
         colorProducts.find((product) => product.color === selectedColor)
@@ -205,134 +239,128 @@ const NewProductData = () => {
 
   return (
     <Box className={styles.newProductPage}>
-      <Box className={styles.productData}>
-        <SectionHeader title="Բնութագրերը" />
+      <Box className={styles.categoryContainer}>
         <CategorySelect
           category={productData.category}
           onChange={(category) => handleChange(ProductKeys.CATEGORY, category)}
         />
-        <TextField
-          label="Անվանումը"
-          onChange={(evt) => handleChange(ProductKeys.TITLE, evt.target.value)}
-        />
-        <Box className={styles.prices}>
-          <TextField
-            className={styles.purchase}
-            label="Առք"
-            value={productData.purchasePrice}
-            type="number"
-            InputProps={{
-              inputProps: {
-                max: 1000000,
-                min: 0,
-              },
-            }}
-            onChange={(evt) =>
-              handleChange(ProductKeys.PURCHASE_PRICE, +evt.target.value)
-            }
-          />
-          <TextField
-            className={styles.price}
-            value={productData.price}
-            label="Վաճառք"
-            type="number"
-            InputProps={{
-              inputProps: {
-                max: 1000000,
-                min: 0,
-              },
-            }}
-            onChange={(evt) =>
-              handleChange(ProductKeys.PRICE, +evt.target.value)
-            }
-          />
-        </Box>
-        <BrandSelect
-          brand={productData.brand}
-          onChange={(brand) => handleChange(ProductKeys.BRAND, brand)}
-        />
-        <ClaspTypeSelect
-          clasp={productData.clasp}
-          onChange={(clasp) => handleChange(ProductKeys.CLASP, clasp)}
-        />
-        <GenderSelect
-          gender={productData.gender}
-          onChange={(gender) => handleChange(ProductKeys.GENDER, gender)}
-        />
-        <SeasonSelect
-          season={productData.season}
-          onChange={(season) => handleChange(ProductKeys.SEASON, season)}
-        />
-        <TextField
-          label="Քաշը(գր․)"
-          value={productData.weight}
-          onChange={(evt) => handleChange(ProductKeys.WEIGHT, evt.target.value)}
-        />
-        <TextField
-          label="Բարձրությունը(սմ․)"
-          value={productData.shoesHeight}
-          onChange={(evt) =>
-            handleChange(ProductKeys.SHOES_HEIGHT, evt.target.value)
-          }
-        />
-        <CountrySelect
-          country={productData.country}
-          onChange={(country) => handleChange(ProductKeys.COUNTRY, country)}
-        />
-        <TextField
-          label="Նշումներ"
-          multiline
-          onChange={(evt) => handleChange(ProductKeys.NOTES, evt.target.value)}
-        />
-        <SectionHeader title="Գույները" />
-        <ColorSelect
-          multiple={true}
-          color={colorProducts.map(({ color }) => color || '')}
-          onChange={(colors) => handleChange(ProductKeys.COLOR, colors)}
-        />
-        <Box className={styles.colors}>
-          {colorProducts.map(({ color }) => (
-            <Box
-              key={color}
-              className={
-                selectedColor === color
-                  ? styles.selectedColorContainer
-                  : styles.colorContainer
-              }
-              onClick={() => setSelectedColor(color || '')}
-            >
-              <Typography className={styles.color}>{color}</Typography>
-              <IconButton
-                className={styles.removeBtn}
-                onClick={(evt) => handleRemove(evt, color || '')}
-              >
-                <CloseOutlinedIcon
-                  sx={{ width: 20, height: 20, color: 'red' }}
-                />
-              </IconButton>
-            </Box>
-          ))}
-        </Box>
-        {selectedColor && selectedProduct && (
-          <NewProductSizes
-            color={selectedColor}
-            sizes={selectedProduct.sizes}
-            handleSizeChange={handleSizeChange}
-            addSize={addSize}
-          />
-        )}
-        <NewProductImages
-          images={selectedProduct ? selectedProduct.images : productData.images}
-          color={selectedColor}
-          changeImages={handleChangeImages}
-        />
-        <Button
-          className={styles.addBtn}
-          onClick={!isCreating ? handleCreate : undefined}
-        >
-          {isCreating ? <Loading /> : 'Ստեղծել'}
-        </Button>
       </Box>
+      {productData.category && (
+        <Box className={styles.productData}>
+          <SectionHeader title="Բնութագրերը" />
+
+          <TextField
+            label="Անվանումը"
+            onChange={(evt) =>
+              handleChange(ProductKeys.TITLE, evt.target.value)
+            }
+          />
+          <Box className={styles.prices}>
+            <TextField
+              className={styles.purchase}
+              label="Առք"
+              value={productData.purchasePrice}
+              type="number"
+              InputProps={{
+                inputProps: {
+                  max: 1000000,
+                  min: 0,
+                },
+              }}
+              onChange={(evt) =>
+                handleChange(ProductKeys.PURCHASE_PRICE, +evt.target.value)
+              }
+            />
+            <TextField
+              className={styles.price}
+              value={productData.price}
+              label="Վաճառք"
+              type="number"
+              InputProps={{
+                inputProps: {
+                  max: 1000000,
+                  min: 0,
+                },
+              }}
+              onChange={(evt) =>
+                handleChange(ProductKeys.PRICE, +evt.target.value)
+              }
+            />
+          </Box>
+          <BrandSelect
+            brand={productData.brand}
+            onChange={(brand) => handleChange(ProductKeys.BRAND, brand)}
+          />
+          <CountrySelect
+            country={productData.country}
+            onChange={(country) => handleChange(ProductKeys.COUNTRY, country)}
+          />
+          {additionalFields.map(({ key, title }) => (
+            <TextField
+              label={title}
+              key={title}
+              onChange={(evt) => handleAddInfo(key, title, evt.target.value)}
+            />
+          ))}
+          <TextField
+            label="Նշումներ"
+            multiline
+            onChange={(evt) =>
+              handleChange(ProductKeys.NOTES, evt.target.value)
+            }
+          />
+          <SectionHeader title="Գույները" />
+          <ColorSelect
+            multiple={true}
+            color={colorProducts.map(({ color }) => color || '')}
+            onChange={(colors) => handleChange(ProductKeys.COLOR, colors)}
+          />
+          <Box className={styles.colors}>
+            {colorProducts.map(({ color }) => (
+              <Box
+                key={color}
+                className={
+                  selectedColor === color
+                    ? styles.selectedColorContainer
+                    : styles.colorContainer
+                }
+                onClick={() => setSelectedColor(color || '')}
+              >
+                <Typography className={styles.color}>{color}</Typography>
+                <IconButton
+                  className={styles.removeBtn}
+                  onClick={(evt) => handleRemove(evt, color || '')}
+                >
+                  <CloseOutlinedIcon
+                    sx={{ width: 20, height: 20, color: 'red' }}
+                  />
+                </IconButton>
+              </Box>
+            ))}
+          </Box>
+          {selectedColor && selectedProduct && (
+            <NewProductSizes
+              color={selectedColor}
+              sizes={selectedProduct.sizes}
+              handleSizeChange={handleSizeChange}
+              addSize={addSize}
+            />
+          )}
+          <NewProductImages
+            images={
+              selectedProduct ? selectedProduct.images : productData.images
+            }
+            color={selectedColor}
+            changeImages={handleChangeImages}
+          />
+          <Button
+            className={styles.addBtn}
+            onClick={!isCreating ? handleCreate : undefined}
+          >
+            {isCreating ? <Loading /> : 'Ստեղծել'}
+          </Button>
+        </Box>
+      )}
     </Box>
   )
 }

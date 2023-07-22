@@ -61,9 +61,7 @@ const TurnoverAnalytics = () => {
       <Box className={styles.turnoverTypes}>
         <Button
           className={
-            turnoverType === ''
-              ? styles.selectedTableBtn
-              : styles.tableBtn
+            turnoverType === '' ? styles.selectedTableBtn : styles.tableBtn
           }
           onClick={() => seTurnoverType('remain')}
         >
@@ -71,9 +69,7 @@ const TurnoverAnalytics = () => {
         </Button>
         <Button
           className={
-            turnoverType === ''
-              ? styles.selectedTableBtn
-              : styles.chartBtn
+            turnoverType === '' ? styles.selectedTableBtn : styles.chartBtn
           }
           onClick={() => seTurnoverType('daily')}
         >

@@ -27,6 +27,13 @@ export enum DriverEndpoints {
   DELETE_DRIVER = 'drivers/',
 }
 
+export enum CategoryEndpoints {
+  CATEGORIES = 'categories/',
+  CREATE_CATEGORY = 'categories/create',
+  UPDATE_CATEGORY = 'categories/',
+  DELETE_CATEGORY = 'categories/',
+}
+
 export enum StorageEndpoints {
   STORAGE_IMPORTS = 'storages/',
   ADD_STORAGE_IMPORTS = 'storages/create',

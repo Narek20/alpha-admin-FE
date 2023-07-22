@@ -34,11 +34,11 @@ const ProfileDropDown: FC<IProps> = ({ isOpen }) => {
           onChange={(evt) => setLanguage(evt.target.value as string)}
         >
           <MenuItem value="AM">
-            <img style={iconStyles} src={armeniaIcon} alt="icon"/>
+            <img style={iconStyles} src={armeniaIcon} alt="icon" />
             <Typography>AM</Typography>
           </MenuItem>
           <MenuItem value="EN">
-            <img style={iconStyles} src={russianIcon} alt="icon"/>
+            <img style={iconStyles} src={russianIcon} alt="icon" />
             <Typography>RU</Typography>
           </MenuItem>
         </Select>

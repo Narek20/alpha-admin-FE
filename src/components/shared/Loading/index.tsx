@@ -8,7 +8,7 @@ interface IProps {}
 const Loading: FC<IProps> = () => {
   return (
     <Box className={styles.loading}>
-      <CircularProgress color='warning'/>
+      <CircularProgress color="warning" />
     </Box>
   )
 }

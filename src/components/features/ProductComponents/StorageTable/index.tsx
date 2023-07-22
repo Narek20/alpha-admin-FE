@@ -20,7 +20,6 @@ interface IProps {
 }
 
 const StorageTable: FC<IProps> = ({ data, columns }) => {
-
   return (
     <TableContainer component={Paper}>
       <Table className={styles.table} size="small" aria-label="a dense table">

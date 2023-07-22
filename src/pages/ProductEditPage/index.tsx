@@ -27,20 +27,16 @@ const ProductEditPage = () => {
   const [productData, setProductData] = useState<
     ICreateProduct & { images: File[] }
   >({
-    gender: '',
     title: '',
     brand: '',
     price: 0,
     color: '',
     sizes: [],
-    season: '',
-    weight: '',
     country: '',
     category: '',
     purchasePrice: 0,
-    clasp: '',
-    shoesHeight: '',
     images: [],
+    additionalInfo: [],
   })
 
   const { id = 0 } = useParams()
@@ -146,32 +142,6 @@ const ProductEditPage = () => {
             <BrandSelect
               brand={productData.brand}
               onChange={(brand) => handleChange(ProductKeys.BRAND, brand)}
-            />
-            <ClaspTypeSelect
-              clasp={productData.clasp}
-              onChange={(clasp) => handleChange(ProductKeys.CLASP, clasp)}
-            />
-            <GenderSelect
-              gender={productData.gender}
-              onChange={(gender) => handleChange(ProductKeys.GENDER, gender)}
-            />
-            <SeasonSelect
-              season={productData.season}
-              onChange={(season) => handleChange(ProductKeys.SEASON, season)}
-            />
-            <TextField
-              label="Քաշը(գր․)"
-              value={productData.weight}
-              onChange={(evt) =>
-                handleChange(ProductKeys.WEIGHT, evt.target.value)
-              }
-            />
-            <TextField
-              label="Կոշիկի բարձրությունը(սմ․)"
-              value={productData.shoesHeight}
-              onChange={(evt) =>
-                handleChange(ProductKeys.SHOES_HEIGHT, evt.target.value)
-              }
             />
             <CountrySelect
               country={productData.country}

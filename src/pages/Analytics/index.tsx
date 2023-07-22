@@ -11,7 +11,7 @@ const AnalyticsPage = () => {
       <SectionHeader title="Անալիտիկա" />
       <Box className={styles.sections}>
         {analyticsSections.map((section, index) => (
-          <AnalyticsSection key={section.title} {...section} index={index}/>
+          <AnalyticsSection key={section.title} {...section} index={index} />
         ))}
       </Box>
     </Box>

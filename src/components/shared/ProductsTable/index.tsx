@@ -77,7 +77,7 @@ const ProductTable: FC<IProps> = ({ data }) => {
                 align="left"
               >
                 <Typography className={styles.data}>
-                  {product.category}
+                  {product.category.title}
                 </Typography>
               </TableCell>
               <TableCell

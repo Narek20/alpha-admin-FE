@@ -22,7 +22,7 @@
       "@shared/*": ["components/shared/*"],
       "@assets/*": ["assets/*"],
       "@types/*": ["types/*"],
-      "@utils/*": ["utils/*"],
+      "@utils/*": ["utils/*"]
     }
   },
   "include": ["src"]

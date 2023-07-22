@@ -122,7 +122,9 @@ const MarketPlace: FC<IProps> = () => {
           </Typography>
         </Box>
       </Box>
-      <Typography className={styles.sold}>Վաճառված է։ {marketPlaceData.sold}</Typography>
+      <Typography className={styles.sold}>
+        Վաճառված է։ {marketPlaceData.sold}
+      </Typography>
     </Box>
   )
 }

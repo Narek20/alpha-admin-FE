@@ -4,7 +4,7 @@ import {
   // useState,
   // useEffect,
   ReactNode,
-} from 'react';
+} from 'react'
 // import { getUser } from '@/services/user.service';
 // import { IUser } from '@/types/user.types';
 
@@ -24,7 +24,7 @@ export const AuthContext = createContext({
     phone: '',
     password: '',
   },
-});
+})
 
 // AuthContext component that wraps your app
 export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
@@ -84,7 +84,7 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
     //     getUserData,
     //   }}
     // >
-      <></>
+    <></>
     // </AuthContext.Provider>
-  );
-};
+  )
+}

@@ -51,7 +51,7 @@ export enum OrderStatus {
 export enum PaymentMethods {
   PAID = 'Վճարված է',
   CASH = 'Կանխիկ',
-  NON_CASH = 'Անկանխիկ'
+  NON_CASH = 'Անկանխիկ',
 }
 
 export enum OrderTableKeysType {
@@ -70,5 +70,5 @@ export enum OrderTableKeysType {
   DRIVER = 'driver',
   DELIVERY_DATE = 'deliveryDate',
   IS_SPECIAL = 'isSpecial',
-  PAYMENT_METHOD = 'paymentMethod'
+  PAYMENT_METHOD = 'paymentMethod',
 }

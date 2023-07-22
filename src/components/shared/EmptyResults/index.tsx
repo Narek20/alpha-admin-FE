@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material'
-import SearchOffOutlinedIcon from '@mui/icons-material/SearchOffOutlined';
+import SearchOffOutlinedIcon from '@mui/icons-material/SearchOffOutlined'
 
 import styles from './styles.module.scss'
 

@@ -27,16 +27,12 @@ const SmallProductCard: FC<IProps> = ({ product }) => {
 
   return (
     <Box className={styles.card}>
-       {isLoading ? (
+      {isLoading ? (
         <Box className={styles.img}>
           <Loading />
         </Box>
       ) : (
-        <img
-          className={styles.img}
-          src={product.images[0]}
-          alt="Ապրանք"
-        />
+        <img className={styles.img} src={product.images[0]} alt="Ապրանք" />
       )}
       <Typography className={styles.title}>{product.title}</Typography>
       <Typography className={styles.brand}>{product.brand}</Typography>
