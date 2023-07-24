@@ -6,7 +6,7 @@ import {
   useEffect,
 } from 'react'
 import { IOrdersContext, OrderStatus, IOrder } from 'types/order.types'
-import { getAllOrders } from 'services/orders.service'
+import { getAllOrders, searchAllOrders } from 'services/orders.service'
 
 // Create a OrdersContext
 export const OrdersContext = createContext<IOrdersContext>({
@@ -15,6 +15,7 @@ export const OrdersContext = createContext<IOrdersContext>({
   isLoading: false,
   pagination: { count: 20, skip: 0, take: 10 },
   getOrders: () => {},
+  searchOrders: (search) => {},
   setFilters: () => {},
   setOrders: () => {},
 })
@@ -45,6 +46,16 @@ export const OrdersProvider = ({ children }: { children: ReactNode }) => {
     setIsLoading(false)
   }
 
+  const searchOrders = async (searchTerms: string) => {
+    setIsLoading(true)
+    const data = await searchAllOrders(searchTerms)
+
+    if (data.success) {
+      setOrders([...data.data])
+    }
+    setIsLoading(false)
+  }
+
   useEffect(() => {
     getOrders()
   }, [filters])
@@ -58,6 +69,7 @@ export const OrdersProvider = ({ children }: { children: ReactNode }) => {
         filters,
         setFilters,
         getOrders,
+        searchOrders,
         setOrders,
       }}
     >

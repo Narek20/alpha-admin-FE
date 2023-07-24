@@ -13,6 +13,7 @@ export interface IOrdersContext {
     [param: string]: string | string[] | number[]
   }
   getOrders: () => void
+  searchOrders: (search: string) => void
   setOrders: Dispatch<SetStateAction<IOrder[]>>
   setFilters: Dispatch<
     SetStateAction<{ [param: string]: string | string[] | number[] }>
