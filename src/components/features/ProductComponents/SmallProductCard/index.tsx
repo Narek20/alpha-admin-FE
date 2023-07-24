@@ -1,4 +1,5 @@
 import { FC, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router'
 import { Box, Typography } from '@mui/material'
 import Loading from '@shared/Loading'
 import { IProduct } from 'types/product.types'
@@ -11,6 +12,8 @@ interface IProps {
 
 const SmallProductCard: FC<IProps> = ({ product }) => {
   const [isLoading, setIsLoading] = useState(true)
+
+  const navigate = useNavigate()
 
   const handleImageLoad = () => {
     setIsLoading(false)
@@ -26,7 +29,7 @@ const SmallProductCard: FC<IProps> = ({ product }) => {
   }, [product.images[0]])
 
   return (
-    <Box className={styles.card}>
+    <Box className={styles.card} onClick={() => navigate(`${product.id}`)}>
       {isLoading ? (
         <Box className={styles.img}>
           <Loading />

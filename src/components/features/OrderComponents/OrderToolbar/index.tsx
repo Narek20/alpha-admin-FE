@@ -22,7 +22,7 @@ const OrderToolbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [ordersType, setOrdersType] = useState('Նոր պատվեր')
 
-  const { filters, setFilters } = useContext(OrdersContext)
+  const { filters, setFilters, searchOrders } = useContext(OrdersContext)
 
   const handleFilter = (key: string, value: string) => {
     if (key === 'status') {
@@ -79,6 +79,7 @@ const OrderToolbar = () => {
         <TextField
           className={styles.search}
           label="Որոնում"
+          onChange={(evt) => searchOrders(evt.target.value)}
           InputProps={{
             endAdornment: (
               <InputAdornment position="start">

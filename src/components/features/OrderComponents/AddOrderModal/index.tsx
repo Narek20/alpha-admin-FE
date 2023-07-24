@@ -51,7 +51,7 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
     [key: string]: string | number | boolean
   } | null>(null)
 
-  const { setOrders, orders, filters } = useContext(OrdersContext)
+  const { orders, filters, getOrders } = useContext(OrdersContext)
   const { showToast } = useToast()
 
   const handleChange = (key: OrderTableKeysType, value: string | boolean) => {
@@ -162,7 +162,7 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
         orders.pop()
       }
 
-      setOrders([data.data, ...orders])
+      getOrders()
       showToast('success', data.message)
       onClose()
     } else {

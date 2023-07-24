@@ -18,11 +18,15 @@ export const getAllOrders = async (params?: {
   }
 }
 
-export const getOrdersHistory = async (userId: string): Promise<IResponse> => {
+export const searchAllOrders = async (
+  searchTerms: string
+): Promise<IResponse> => {
   try {
-    const data = await axiosInstance.get(
-      OrderEndpoints.GET_ORDERS_HISTORY + userId
-    )
+    const data = await axiosInstance.get(OrderEndpoints.SEARCH_ORDERS, {
+      params: {
+        search: searchTerms,
+      },
+    })
 
     return data.data
   } catch (err: any) {
