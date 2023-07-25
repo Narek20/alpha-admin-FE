@@ -75,7 +75,7 @@ const OrderSettings: FC<IProps> = ({ open, onClose }) => {
           </IconButton>
         </Box>
         <Box className={styles.content}>
-          {columns.map(({ column, isChecked }) => (
+          {columns.slice(1).map(({ column, isChecked }) => (
             <Box key={column}>
               <FormControl>
                 <RadioGroup
