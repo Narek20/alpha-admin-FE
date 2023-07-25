@@ -2,10 +2,10 @@ import { AdditionalDetailsKeys, ProductKeys } from 'types/product.types'
 
 export const productStatuses = [
   'Բոլորը',
-  'Ավարտված է',
   'Նոր պատվեր',
-  'Առաքվում է',
   'Փաթեթավորվում է',
+  'Առաքվում է',
+  'Ավարտված',
   'Խնդիր',
 ]
 

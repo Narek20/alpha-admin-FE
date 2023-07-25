@@ -39,7 +39,7 @@ export const OrdersProvider = ({ children }: { children: ReactNode }) => {
   }>({ count: 20, skip: 0, take: 10 })
   const [filters, setFilters] = useState<{
     [param: string]: string | string[] | number[]
-  }>({ status: 'Նոր պատվեր' })
+  }>({ status: 'Բոլորը' })
 
   const getOrders = async () => {
     setIsLoading(true)

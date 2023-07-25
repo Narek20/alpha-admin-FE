@@ -5,7 +5,7 @@ import { FormControl, InputLabel, MenuItem, Select } from '@mui/material'
 import styles from './styles.module.scss'
 
 interface IProps {
-  driver: string
+  driver?: string
   onChange: (driver: string) => void
 }
 
@@ -22,9 +22,9 @@ const DriverSelect: FC<IProps> = ({ driver, onChange }) => {
         onChange={(evt) => onChange(evt.target.value)}
         MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}
       >
-        {drivers.map(({ fullName, phone }) => (
+        {drivers.map(({ fullName, phone, direction }) => (
           <MenuItem key={phone} value={fullName}>
-            {fullName}
+            {`${fullName} ${phone} ${direction}`}
           </MenuItem>
         ))}
       </Select>

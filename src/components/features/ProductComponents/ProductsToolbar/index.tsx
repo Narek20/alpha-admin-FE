@@ -24,7 +24,7 @@ const ProductsToolbar: FC<IProps> = ({ isBig, changeDisplay }) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const navigate = useNavigate()
-  const { getProducts, setFilters, filters } = useContext(ProductsContext)
+  const { setFilters, filters } = useContext(ProductsContext)
 
   const handleAdd = () => {
     navigate('/new-product')
@@ -58,14 +58,11 @@ const ProductsToolbar: FC<IProps> = ({ isBig, changeDisplay }) => {
         </FormControl>
       </Box>
       <Box className={styles.rightBar}>
-        <Button className={styles.button} onClick={() => setIsOpen(true)}>
-          Ապրանքի ներկրում
-        </Button>
         <Button className={styles.button} onClick={handleAdd}>
           Ավելացնել
         </Button>
-        <Button className={styles.button} onClick={() => getProducts()}>
-          Բոլոր ապրանքները
+        <Button className={styles.button} onClick={() => setIsOpen(true)}>
+          Ապրանքի ընդունում
         </Button>
       </Box>
       <AddStorageProduct open={isOpen} onClose={() => setIsOpen(false)} />

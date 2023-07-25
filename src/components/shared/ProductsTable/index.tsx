@@ -24,8 +24,8 @@ const ProductTable: FC<IProps> = ({ data }) => {
   const columns = [
     'Նկար',
     'Կատեգորիա',
-    'Անվանում',
     'Բրենդ',
+    'Անվանում',
     'Չափս',
     'Քանակ',
     'Գին',
@@ -86,7 +86,7 @@ const ProductTable: FC<IProps> = ({ data }) => {
                 scope="row"
                 align="left"
               >
-                <Typography className={styles.data}>{product.title}</Typography>
+                <Typography className={styles.data}>{product.brand}</Typography>
               </TableCell>
               <TableCell
                 className={styles.bodyCell}
@@ -94,7 +94,7 @@ const ProductTable: FC<IProps> = ({ data }) => {
                 scope="row"
                 align="left"
               >
-                <Typography className={styles.data}>{product.brand}</Typography>
+                <Typography className={styles.data}>{product.title}</Typography>
               </TableCell>
               <TableCell
                 className={styles.bodyCell}

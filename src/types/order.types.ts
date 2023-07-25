@@ -40,7 +40,7 @@ export interface IOrder {
   driver?: string
   deliveryDate: string
   isSpecial?: boolean
-  paymentMethod?: string
+  paymentMethod: PaymentMethods
 }
 
 export enum OrderStatus {

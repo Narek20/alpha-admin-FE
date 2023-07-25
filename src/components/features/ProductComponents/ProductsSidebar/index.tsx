@@ -28,6 +28,9 @@ const ProductsSidebar = () => {
     <Box className={styles.sidebar}>
       <Box className={styles.header}>
         <Typography>Ֆիլտր</Typography>
+        <Button className={styles.allOrders} onClick={() => setFilters({})}>
+          Բոլոր ապրանքները
+        </Button>
       </Box>
       <SidebarFilterSkillet
         title="Անունը"

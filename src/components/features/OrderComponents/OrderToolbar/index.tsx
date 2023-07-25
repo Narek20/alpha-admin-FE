@@ -92,7 +92,7 @@ const OrderToolbar = () => {
         />
         <FormControl className={styles.select}>
           <Select
-            defaultValue={'Նոր պատվեր'}
+            defaultValue={'Բոլորը'}
             className={styles.select}
             onChange={(evt) => handleFilter('status', evt.target.value)}
           >

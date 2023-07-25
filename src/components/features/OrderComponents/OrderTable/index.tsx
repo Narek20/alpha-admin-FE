@@ -15,8 +15,11 @@ import {
   MenuItem,
   Select,
 } from '@mui/material'
+import PaidIcon from '@mui/icons-material/Paid'
 import DoneIcon from '@mui/icons-material/Done'
 import StarsIcon from '@mui/icons-material/Stars'
+import LocalAtmIcon from '@mui/icons-material/LocalAtm'
+import CreditCardIcon from '@mui/icons-material/CreditCard'
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined'
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined'
@@ -26,6 +29,7 @@ import Loading from '@shared/Loading'
 import Pagination from '@shared/Pagination'
 import ConfirmationModal from '@shared/ConfirmationModal'
 import { OrdersContext } from 'contexts/order.context'
+import { DriversContext } from 'contexts/driver.context'
 import { removeOrder, updateOrder } from 'services/orders.service'
 import {
   OrderStatuses,
@@ -33,7 +37,12 @@ import {
   orderRowColor,
   orderStatusStyles,
 } from '@utils/order/constants'
-import { OrderTableKeysType, IOrder, OrderStatus } from 'types/order.types'
+import {
+  OrderTableKeysType,
+  IOrder,
+  OrderStatus,
+  PaymentMethods,
+} from 'types/order.types'
 
 import styles from './styles.module.scss'
 
@@ -47,6 +56,8 @@ const OrderTable = () => {
 
   const { orders, filters, setOrders, setFilters, isLoading, tableColumns } =
     useContext(OrdersContext)
+
+  const { drivers } = useContext(DriversContext)
 
   const { showToast } = useToast()
   const navigate = useNavigate()
@@ -213,11 +224,6 @@ const OrderTable = () => {
                     border: `1px solid gray`,
                     cursor: 'pointer',
                   }}
-                  onClick={
-                    isEdit || open
-                      ? () => {}
-                      : () => navigate(`/orders/${order.id}`)
-                  }
                   className={styles[orderStatusStyles(order.status)]}
                 >
                   {OrderTableKeys.map(
@@ -232,10 +238,21 @@ const OrderTable = () => {
                           align="center"
                         >
                           {ind === 0 ? (
-                            <Typography className={styles.index}>
-                              №{order[key]}{' '}
+                            <Typography
+                              className={styles.index}
+                              onClick={() => navigate(`/orders/${order.id}`)}
+                            >
+                              №{order[key]}
                               {order.isSpecial && (
-                                <StarsIcon sx={{ color: 'red' }} />
+                                <StarsIcon sx={{ color: 'blue' }} />
+                              )}
+                              {order.paymentMethod === PaymentMethods.CASH ? (
+                                <LocalAtmIcon sx={{ color: 'blue' }} />
+                              ) : order.paymentMethod ===
+                                PaymentMethods.NON_CASH ? (
+                                <CreditCardIcon sx={{ color: 'blue' }} />
+                              ) : (
+                                <PaidIcon sx={{ color: 'blue' }} />
                               )}
                             </Typography>
                           ) : (
@@ -251,6 +268,38 @@ const OrderTable = () => {
                           )}
                         </TableCell>
                       )
+                  )}
+                  {tableColumns.find((column) => column === 'Առաքիչ') && (
+                    <TableCell
+                      className={styles.bodyCell}
+                      component="th"
+                      scope="row"
+                      align="center"
+                    >
+                      <Select
+                        labelId="driver-label"
+                        defaultValue={order.driver}
+                        value={
+                          isEdit && editRow === index
+                            ? rowChanges?.driver
+                            : order.driver
+                        }
+                        className={styles.status}
+                        disabled={!isEdit || index !== editRow}
+                        onChange={(evt) =>
+                          handleChange(
+                            OrderTableKeysType.DRIVER,
+                            evt.target.value
+                          )
+                        }
+                      >
+                        {drivers.map(({ fullName, direction }) => (
+                          <MenuItem key={fullName} value={fullName}>
+                            {`${fullName} ${direction}`}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </TableCell>
                   )}
                   {tableColumns.find((column) => column === 'Ստեղծման օր') && (
                     <TableCell

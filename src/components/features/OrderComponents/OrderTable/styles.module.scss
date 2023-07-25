@@ -12,11 +12,22 @@
         align-items: center;
         width: 100%;
         justify-content: space-between;
+        margin-right: 15px;
       }
 
       .status {
         div {
           padding: 5px;
+          padding-right: 32px;
+          -webkit-text-fill-color: rgba(0, 0, 0, 1);
+          font-weight: 600;
+        }
+      }
+
+      .driver {
+        min-width: 150px;
+        div {
+          padding: 12px;
           padding-right: 32px;
           -webkit-text-fill-color: rgba(0, 0, 0, 1);
           font-weight: 600;
@@ -38,6 +49,7 @@
           -webkit-text-fill-color: black;
         }
       }
+
 
       .actions {
         display: flex;
