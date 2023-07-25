@@ -3,16 +3,15 @@ import { Box, Typography, IconButton } from '@mui/material'
 import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined'
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined'
 import NotesModal from '@shared/NotesModal'
+import { INotes } from 'types/notes.types'
 
 import styles from './styles.module.scss'
 
 interface IProps {
-  title: string
-  date: string
-  note: string
+  noteData: INotes
 }
 
-const Note: FC<IProps> = ({ title, date, note }) => {
+const Note: FC<IProps> = ({ noteData}) => {
   const [isEdit, setIsEdit] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
 
@@ -28,9 +27,9 @@ const Note: FC<IProps> = ({ title, date, note }) => {
 
   return (
     <Box className={styles.noteContainer}>
-      <Typography className={styles.title}>{title}</Typography>
-      <Typography className={styles.date}>{date}</Typography>
-      <Typography className={styles.note}>{note}</Typography>
+      <Typography className={styles.title}>{noteData.title}</Typography>
+      <Typography className={styles.date}>{noteData.date}</Typography>
+      <Typography className={styles.note}>{noteData.note}</Typography>
       <Box className={styles.actions}>
         <IconButton className={styles.edit} onClick={handleEdit}>
           <BorderColorOutlinedIcon sx={{ color: '#067b00' }} />
@@ -43,8 +42,7 @@ const Note: FC<IProps> = ({ title, date, note }) => {
         open={isOpen}
         isEdit={isEdit}
         onClose={() => setIsOpen(false)}
-        title={title}
-        note={note}
+        noteData={noteData}
       />
     </Box>
   )

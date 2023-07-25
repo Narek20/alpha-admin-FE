@@ -32,9 +32,9 @@ const Home = () => {
       </Box>
       <Box className={styles.row}>
         <Turnover />
-        <StorageWaitingTime />
+        <Supplies />
+        {/* <StorageWaitingTime /> */}
       </Box>
-      <Supplies />
     </Box>
   )
 }

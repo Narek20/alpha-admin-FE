@@ -4,6 +4,7 @@ import { BrowserRouter as RouterProvider } from 'react-router-dom'
 import { THEME } from 'styles/MuiTheme'
 import { ToastProvider } from 'contexts/toast.context'
 import { ThemeProvider } from '@mui/material/styles'
+import { NotesProvider } from 'contexts/notes.context'
 import { OrdersProvider } from 'contexts/order.context'
 import { StorageProvider } from 'contexts/storage.context'
 import { DriversProvider } from 'contexts/driver.context'
@@ -25,9 +26,11 @@ root.render(
             <DriversProvider>
               <StorageProvider>
                 <CategoryProvider>
-                  <ThemeProvider theme={THEME}>
-                    <App />
-                  </ThemeProvider>
+                  <NotesProvider>
+                    <ThemeProvider theme={THEME}>
+                      <App />
+                    </ThemeProvider>
+                  </NotesProvider>
                 </CategoryProvider>
               </StorageProvider>
             </DriversProvider>

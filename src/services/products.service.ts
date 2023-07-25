@@ -20,6 +20,21 @@ export const getAllProducts = async (params?: {
   }
 }
 
+export const search = async (searchTerm: string): Promise<IResponse> => {
+  try {
+    const data = await axiosInstance.get(ProductEndpoints.SEARCH, {
+      params: { searchTerm },
+    })
+
+    return data.data
+  } catch (err: any) {
+    return {
+      success: false,
+      message: err.message,
+    }
+  }
+}
+
 export const getProductById = async (orderId: string): Promise<IResponse> => {
   try {
     const data = await axiosInstance.get(ProductEndpoints.PRODUCTS + orderId)

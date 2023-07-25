@@ -13,13 +13,13 @@ const feedbacks = [
     img: koshik,
   },
   {
-    feedback: 'Կոշիկի մեջ պլանա դրած այ ախպեր',
+    feedback: 'Կոշիկ',
     rate: 4,
     date: '21.06.2023',
     img: koshik,
   },
   {
-    feedback: 'Ծծցնեմ ապրանք եք ծախում',
+    feedback: 'good good',
     rate: 5,
     date: '22.06.2023',
     img: koshik,
@@ -53,7 +53,6 @@ const Feedbacks = () => {
           <Feedback key={feedback.feedback} {...feedback} />
         ))}
       </Box>
-      <Button className={styles.seeMore}>Բոլոր վարկանիշները</Button>
     </Box>
   )
 }
