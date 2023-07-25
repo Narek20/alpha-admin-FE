@@ -16,6 +16,7 @@ export enum OrderEndpoints {
 
 export enum ProductEndpoints {
   PRODUCTS = 'products/',
+  SEARCH = 'products/search',
   CREATE_PRODUCT = 'products/create',
   GET_PRODUCTS_HISTORY = 'products/history/',
 }
@@ -39,4 +40,11 @@ export enum StorageEndpoints {
   ADD_STORAGE_IMPORTS = 'storages/create',
   UPDATE_STORAGE_IMPORT = 'storages/',
   DELETE_STORAGE_IMPORTS = 'storages/',
+}
+
+export enum NotesEndpoints {
+  NOTES = 'notes/',
+  NOTES_CREATE = 'notes/create',
+  NOTES_UPDATE = 'notes/',
+  NOTES_DELETE = 'notes/',
 }

@@ -32,7 +32,7 @@ const questions = [
     img: koshik,
   },
   {
-    question: 'Բողկս չի աճում ինչ անեմ',
+    question: 'good',
     date: '25.06.2023',
     img: koshik,
   },
@@ -47,7 +47,6 @@ const Questions = () => {
           <Question key={question.question} {...question} />
         ))}
       </Box>
-      <Button className={styles.seeMore}>Բոլոր հարցերը</Button>
     </Box>
   )
 }

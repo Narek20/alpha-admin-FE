@@ -77,7 +77,7 @@ const regions = [
 const StorageLoad: FC<IProps> = () => {
   return (
     <Box className={styles.storageLoad}>
-      <SectionHeader title="Պահեստների ծանրաբեռնվածությունը" />
+      <SectionHeader title="Պատվերները ըստ հասցե դաշտի" />
       <Box className={styles.regions}>
         {regions.map(({ title, load }) => (
           <Box className={styles.region} key={title}>
