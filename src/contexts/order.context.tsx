@@ -5,8 +5,10 @@ import {
   useState,
   useEffect,
 } from 'react'
-import { IOrdersContext, OrderStatus, IOrder } from 'types/order.types'
+import { IOrdersContext, IOrder } from 'types/order.types'
 import { getAllOrders, searchAllOrders } from 'services/orders.service'
+import localStorageKeys from '@utils/localStorageKeys'
+import { OrderTableColumns } from '@utils/order/constants'
 
 // Create a OrdersContext
 export const OrdersContext = createContext<IOrdersContext>({
@@ -14,9 +16,11 @@ export const OrdersContext = createContext<IOrdersContext>({
   filters: {},
   isLoading: false,
   pagination: { count: 20, skip: 0, take: 10 },
+  tableColumns: [],
   getOrders: () => {},
   searchOrders: (search) => {},
   setFilters: () => {},
+  setTableColumns: () => {},
   setOrders: () => {},
 })
 
@@ -26,6 +30,7 @@ export const useOrders = () => useContext(OrdersContext)
 // OrdersProvider component that wraps your app
 export const OrdersProvider = ({ children }: { children: ReactNode }) => {
   const [orders, setOrders] = useState<IOrder[] | []>([])
+  const [tableColumns, setTableColumns] = useState<string[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [pagination, setPagination] = useState<{
     count: number
@@ -60,6 +65,17 @@ export const OrdersProvider = ({ children }: { children: ReactNode }) => {
     getOrders()
   }, [filters])
 
+  useEffect(() => {
+    const tableColumns = localStorage.getItem(localStorageKeys.TABLE_COLUMNS)
+    if (tableColumns) {
+      const columns = JSON.parse(tableColumns)
+
+      setTableColumns(columns)
+    } else {
+      setTableColumns([...OrderTableColumns])
+    }
+  }, [])
+
   return (
     <OrdersContext.Provider
       value={{
@@ -71,6 +87,8 @@ export const OrdersProvider = ({ children }: { children: ReactNode }) => {
         getOrders,
         searchOrders,
         setOrders,
+        setTableColumns,
+        tableColumns,
       }}
     >
       {children}
