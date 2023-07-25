@@ -13,6 +13,7 @@ import SearchIcon from '@mui/icons-material/Search'
 import SettingsIcon from '@mui/icons-material/Settings'
 import SectionHeader from '@shared/SectionTitle'
 import OrderAddModal from '@features/OrderComponents/AddOrderModal'
+import OrderSettings from '../OrderSettings'
 import { OrdersContext } from 'contexts/order.context'
 import { productStatuses } from '@utils/product/constants'
 
@@ -20,6 +21,7 @@ import styles from './styles.module.scss'
 
 const OrderToolbar = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false)
   const [ordersType, setOrdersType] = useState('Նոր պատվեր')
 
   const { filters, setFilters, searchOrders } = useContext(OrdersContext)
@@ -101,11 +103,18 @@ const OrderToolbar = () => {
             ))}
           </Select>
         </FormControl>
-        <IconButton className={styles.settings}>
+        <IconButton
+          className={styles.settings}
+          onClick={() => setIsSettingsOpen(true)}
+        >
           <SettingsIcon />
         </IconButton>
       </Box>
       <OrderAddModal open={isOpen} onClose={() => setIsOpen(false)} />
+      <OrderSettings
+        open={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
+      />
     </Box>
   )
 }

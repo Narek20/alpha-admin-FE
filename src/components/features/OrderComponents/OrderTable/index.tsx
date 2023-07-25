@@ -29,7 +29,6 @@ import { OrdersContext } from 'contexts/order.context'
 import { removeOrder, updateOrder } from 'services/orders.service'
 import {
   OrderStatuses,
-  OrderTableColumns,
   OrderTableKeys,
   orderRowColor,
   orderStatusStyles,
@@ -46,7 +45,7 @@ const OrderTable = () => {
   const [confirmModalText, setConfirmModalText] = useState('')
   const [rowChanges, setRowChanges] = useState<IOrder | undefined>()
 
-  const { orders, filters, setOrders, setFilters, isLoading } =
+  const { orders, filters, setOrders, setFilters, isLoading, tableColumns } =
     useContext(OrdersContext)
 
   const { showToast } = useToast()
@@ -197,7 +196,7 @@ const OrderTable = () => {
           >
             <TableHead>
               <TableRow>
-                {OrderTableColumns.map((key) => (
+                {tableColumns.map((key) => (
                   <TableCell key={key} align="center">
                     <Typography className={styles.headCell}>{key}</Typography>
                   </TableCell>
@@ -221,153 +220,167 @@ const OrderTable = () => {
                   }
                   className={styles[orderStatusStyles(order.status)]}
                 >
-                  {OrderTableKeys.map((key: OrderTableKeysType, ind) => (
+                  {OrderTableKeys.map(
+                    ({ key, label }, ind) =>
+                      (tableColumns.find((column) => column === label) ||
+                        ind === 0) && (
+                        <TableCell
+                          key={key}
+                          className={styles.bodyCell}
+                          component="th"
+                          scope="row"
+                          align="center"
+                        >
+                          {ind === 0 ? (
+                            <Typography className={styles.index}>
+                              №{order[key]}{' '}
+                              {order.isSpecial && (
+                                <StarsIcon sx={{ color: 'red' }} />
+                              )}
+                            </Typography>
+                          ) : (
+                            <TextField
+                              defaultValue={order[key]}
+                              size="small"
+                              className={styles.data}
+                              disabled={!isEdit || index !== editRow}
+                              onChange={(evt) =>
+                                handleChange(key, evt.target.value)
+                              }
+                            />
+                          )}
+                        </TableCell>
+                      )
+                  )}
+                  {tableColumns.find((column) => column === 'Ստեղծման օր') && (
                     <TableCell
-                      key={key}
                       className={styles.bodyCell}
                       component="th"
                       scope="row"
                       align="center"
                     >
-                      {ind === 0 ? (
-                        <Typography className={styles.index}>
-                          №{order[key]}{' '}
-                          {order.isSpecial && (
-                            <StarsIcon sx={{ color: 'red' }} />
-                          )}
-                        </Typography>
-                      ) : (
-                        <TextField
-                          defaultValue={order[key]}
-                          size="small"
-                          className={styles.data}
-                          disabled={!isEdit || index !== editRow}
-                          onChange={(evt) =>
-                            handleChange(key, evt.target.value)
-                          }
-                        />
-                      )}
+                      <TextField
+                        value={
+                          editRow === index
+                            ? rowChanges?.createdAt
+                            : order.createdAt
+                        }
+                        size="small"
+                        type="date"
+                        onChange={(evt) =>
+                          handleChange(
+                            OrderTableKeysType.CREATED_AT,
+                            evt.target.value
+                          )
+                        }
+                        className={styles.data}
+                        disabled={!isEdit || index !== editRow}
+                      />
                     </TableCell>
-                  ))}
-                  <TableCell
-                    className={styles.bodyCell}
-                    component="th"
-                    scope="row"
-                    align="center"
-                  >
-                    <TextField
-                      value={
-                        editRow === index
-                          ? rowChanges?.createdAt
-                          : order.createdAt
-                      }
-                      size="small"
-                      type="date"
-                      onChange={(evt) =>
-                        handleChange(
-                          OrderTableKeysType.CREATED_AT,
-                          evt.target.value
-                        )
-                      }
-                      className={styles.data}
-                      disabled={!isEdit || index !== editRow}
-                    />
-                  </TableCell>
-                  <TableCell
-                    className={styles.bodyCell}
-                    component="th"
-                    scope="row"
-                    align="center"
-                  >
-                    <TextField
-                      value={
-                        editRow === index
-                          ? rowChanges?.deliveryDate
-                          : order.deliveryDate
-                      }
-                      size="small"
-                      type="date"
-                      onChange={(evt) =>
-                        handleChange(
-                          OrderTableKeysType.DELIVERY_DATE,
-                          evt.target.value
-                        )
-                      }
-                      className={styles.data}
-                      disabled={!isEdit || index !== editRow}
-                    />
-                  </TableCell>
-                  <TableCell
-                    className={styles.bodyCell}
-                    component="th"
-                    scope="row"
-                    align="center"
-                  >
-                    <Select
-                      defaultValue={order.status}
-                      value={
-                        isEdit && editRow === index
-                          ? rowChanges?.status
-                          : order.status
-                      }
-                      className={styles.status}
-                      disabled={!isEdit || index !== editRow}
-                      onChange={(evt) =>
-                        handleChange(
-                          OrderTableKeysType.STATUS,
-                          evt.target.value
-                        )
-                      }
+                  )}
+                  {tableColumns.find((column) => column === 'Առաքման օր') && (
+                    <TableCell
+                      className={styles.bodyCell}
+                      component="th"
+                      scope="row"
+                      align="center"
                     >
-                      {OrderStatuses.map((status) => (
-                        <MenuItem key={status} value={status}>
-                          {status}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </TableCell>
-                  <TableCell
-                    className={styles.bodyCell}
-                    component="th"
-                    scope="row"
-                    align="center"
-                  >
-                    <Box className={styles.actions}>
-                      <IconButton
-                        onClick={(evt) =>
-                          isEdit
-                            ? openEditConfirm(evt)
-                            : openCompleteConfirm(evt, index)
+                      <TextField
+                        value={
+                          editRow === index
+                            ? rowChanges?.deliveryDate
+                            : order.deliveryDate
+                        }
+                        size="small"
+                        type="date"
+                        onChange={(evt) =>
+                          handleChange(
+                            OrderTableKeysType.DELIVERY_DATE,
+                            evt.target.value
+                          )
+                        }
+                        className={styles.data}
+                        disabled={!isEdit || index !== editRow}
+                      />
+                    </TableCell>
+                  )}
+                  {tableColumns.find((column) => column === 'Ստատուսը') && (
+                    <TableCell
+                      className={styles.bodyCell}
+                      component="th"
+                      scope="row"
+                      align="center"
+                    >
+                      <Select
+                        defaultValue={order.status}
+                        value={
+                          isEdit && editRow === index
+                            ? rowChanges?.status
+                            : order.status
+                        }
+                        className={styles.status}
+                        disabled={!isEdit || index !== editRow}
+                        onChange={(evt) =>
+                          handleChange(
+                            OrderTableKeysType.STATUS,
+                            evt.target.value
+                          )
                         }
                       >
-                        {isEdit ? (
-                          <DoneIcon sx={{ color: '#067b00' }} />
-                        ) : (
-                          <CheckCircleOutlineOutlinedIcon
-                            sx={{ color: '#067b00' }}
-                          />
-                        )}
-                      </IconButton>
-                      {isEdit && index === editRow ? (
-                        <IconButton onClick={handleCancel}>
-                          <CloseOutlinedIcon sx={{ color: '#f96666' }} />
-                        </IconButton>
-                      ) : (
-                        <>
-                          <IconButton onClick={(evt) => onEdit(evt, index)}>
-                            <ModeEditOutlineOutlinedIcon />
-                          </IconButton>
-                          <IconButton
-                            onClick={(evt) => openRemoveConfirm(evt, index)}
-                          >
-                            <DeleteOutlineOutlinedIcon
-                              sx={{ color: '#f96666' }}
+                        {OrderStatuses.map((status) => (
+                          <MenuItem key={status} value={status}>
+                            {status}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </TableCell>
+                  )}
+                  {tableColumns.find(
+                    (column) => column === 'Գործողություններ'
+                  ) && (
+                    <TableCell
+                      className={styles.bodyCell}
+                      component="th"
+                      scope="row"
+                      align="center"
+                    >
+                      <Box className={styles.actions}>
+                        <IconButton
+                          onClick={(evt) =>
+                            isEdit
+                              ? openEditConfirm(evt)
+                              : openCompleteConfirm(evt, index)
+                          }
+                        >
+                          {isEdit ? (
+                            <DoneIcon sx={{ color: '#067b00' }} />
+                          ) : (
+                            <CheckCircleOutlineOutlinedIcon
+                              sx={{ color: '#067b00' }}
                             />
+                          )}
+                        </IconButton>
+                        {isEdit && index === editRow ? (
+                          <IconButton onClick={handleCancel}>
+                            <CloseOutlinedIcon sx={{ color: '#f96666' }} />
                           </IconButton>
-                        </>
-                      )}
-                    </Box>
-                  </TableCell>
+                        ) : (
+                          <>
+                            <IconButton onClick={(evt) => onEdit(evt, index)}>
+                              <ModeEditOutlineOutlinedIcon />
+                            </IconButton>
+                            <IconButton
+                              onClick={(evt) => openRemoveConfirm(evt, index)}
+                            >
+                              <DeleteOutlineOutlinedIcon
+                                sx={{ color: '#f96666' }}
+                              />
+                            </IconButton>
+                          </>
+                        )}
+                      </Box>
+                    </TableCell>
+                  )}
                 </TableRow>
               ))}
             </TableBody>

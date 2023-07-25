@@ -12,9 +12,11 @@ export interface IOrdersContext {
   filters: {
     [param: string]: string | string[] | number[]
   }
+  tableColumns: string[]
   getOrders: () => void
   searchOrders: (search: string) => void
   setOrders: Dispatch<SetStateAction<IOrder[]>>
+  setTableColumns: Dispatch<SetStateAction<string[]>>
   setFilters: Dispatch<
     SetStateAction<{ [param: string]: string | string[] | number[] }>
   >
