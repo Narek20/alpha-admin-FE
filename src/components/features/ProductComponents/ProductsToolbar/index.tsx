@@ -14,6 +14,7 @@ import { ProductsContext } from 'contexts/products.context'
 
 import styles from './styles.module.scss'
 import AddStorageProduct from '../AddStorageProduct'
+import ProductSettings from '../ProductSettings'
 
 interface IProps {
   isBig: boolean
@@ -22,6 +23,7 @@ interface IProps {
 
 const ProductsToolbar: FC<IProps> = ({ isBig, changeDisplay }) => {
   const [isOpen, setIsOpen] = useState(false)
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false)
 
   const navigate = useNavigate()
   const { setFilters, filters } = useContext(ProductsContext)
@@ -64,8 +66,18 @@ const ProductsToolbar: FC<IProps> = ({ isBig, changeDisplay }) => {
         <Button className={styles.button} onClick={() => setIsOpen(true)}>
           Ապրանքի ընդունում
         </Button>
+        <Button
+          className={styles.button}
+          onClick={() => setIsSettingsOpen(true)}
+        >
+          Կարգավորումներ
+        </Button>
       </Box>
       <AddStorageProduct open={isOpen} onClose={() => setIsOpen(false)} />
+      <ProductSettings
+        open={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
+      />
     </Box>
   )
 }
