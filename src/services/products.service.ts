@@ -5,10 +5,11 @@ import { ProductEndpoints } from 'types/endpoints.types'
 
 export const getAllProducts = async (params?: {
   [query: string]: string | string[] | number[]
-}): Promise<IResponse> => {
+}, abortController?: AbortController): Promise<IResponse> => {
   try {
     const data = await axiosInstance.get(ProductEndpoints.PRODUCTS, {
       params,
+      signal: abortController?.signal
     })
 
     return data.data

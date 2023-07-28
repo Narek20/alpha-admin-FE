@@ -8,18 +8,18 @@ import styles from './styles.module.scss'
 interface IProps {
   fullName: string
   phone: string
+  direction: string
   status: DriverStatus
 }
 
-const DriverCard: FC<IProps> = ({ fullName, phone, status }) => {
+const DriverCard: FC<IProps> = ({ fullName, phone, status, direction }) => {
   return (
     <Box className={styles.driverCard}>
       <Box className={styles.driverInfo}>
         <AccountCircleIcon sx={{ height: 40, width: 40 }} />
-        <Box className={styles.info}>
-          <Typography>{fullName}</Typography>
-          <Typography>{phone}</Typography>
-        </Box>
+        <Typography>{fullName}</Typography>
+        <Typography>{phone}</Typography>
+        <Typography>{direction}</Typography>
       </Box>
       <Typography
         className={status === DriverStatus.FREE ? styles.free : styles.busy}

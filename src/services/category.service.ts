@@ -35,11 +35,11 @@ export const createCategory = async (
 }
 
 export const updateCategory = async (
-  CategoryData: ICategory
+  CategoryData: ICategory[]
 ): Promise<IResponse> => {
   try {
     const data = await axiosInstance.put(
-      CategoryEndpoints.UPDATE_CATEGORY + CategoryData.id,
+      CategoryEndpoints.UPDATE_CATEGORY,
       CategoryData
     )
 

@@ -3,11 +3,17 @@ import { IOrder } from 'types/order.types'
 import { IResponse } from 'types/response.types'
 import { OrderEndpoints } from 'types/endpoints.types'
 
-export const getAllOrders = async (params?: {
-  [query: string]: string | string[] | number[]
-}): Promise<IResponse> => {
+export const getAllOrders = async (
+  params?: {
+    [query: string]: string | string[] | number[]
+  },
+  abortController?: AbortController
+): Promise<IResponse> => {
   try {
-    const data = await axiosInstance.get(OrderEndpoints.GET_ORDERS, { params })
+    const data = await axiosInstance.get(OrderEndpoints.GET_ORDERS, {
+      params,
+      signal: abortController?.signal,
+    })
 
     return data.data
   } catch (err: any) {
@@ -19,13 +25,15 @@ export const getAllOrders = async (params?: {
 }
 
 export const searchAllOrders = async (
-  searchTerms: string
+  searchTerms: string,
+  abortController?: AbortController
 ): Promise<IResponse> => {
   try {
     const data = await axiosInstance.get(OrderEndpoints.SEARCH_ORDERS, {
       params: {
         search: searchTerms,
       },
+      signal: abortController?.signal,
     })
 
     return data.data

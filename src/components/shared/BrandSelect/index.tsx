@@ -12,6 +12,7 @@ const BrandSelect: FC<IProps> = ({ brand, onChange }) => {
   return (
     <TextField
       label="Բրենդ"
+      className={styles.input}
       value={brand}
       onChange={(evt) => onChange(evt.target.value)}
     />

@@ -42,8 +42,9 @@ const BigProductCard: FC<IProps> = ({ product }) => {
       <Box className={styles.titleContainer}>
         <Typography className={styles.title}>{product.title} /</Typography>
         <Typography className={styles.category}>
-          {product.category.title}
+          {product.category.title} /
         </Typography>
+        <Typography className={styles.category}>{product.brand}</Typography>
       </Box>
     </Box>
   )

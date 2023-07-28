@@ -4,6 +4,7 @@ import {
   ReactNode,
   useState,
   useEffect,
+  useRef,
 } from 'react'
 import { IOrdersContext, IOrder } from 'types/order.types'
 import { getAllOrders, searchAllOrders } from 'services/orders.service'
@@ -41,9 +42,15 @@ export const OrdersProvider = ({ children }: { children: ReactNode }) => {
     [param: string]: string | string[] | number[]
   }>({ status: 'Բոլորը' })
 
+  // Use an AbortController to cancel previous requests
+  const abortControllerRef = useRef<AbortController | null>(null)
+
   const getOrders = async () => {
+    const abortController = new AbortController()
+    abortControllerRef.current = abortController
+
     setIsLoading(true)
-    const data = await getAllOrders(filters)
+    const data = await getAllOrders(filters, abortController)
 
     if (data.success) {
       setOrders([...data.data])
@@ -52,8 +59,12 @@ export const OrdersProvider = ({ children }: { children: ReactNode }) => {
   }
 
   const searchOrders = async (searchTerms: string) => {
+    const abortController = new AbortController()
+    abortControllerRef.current = abortController
+
+
     setIsLoading(true)
-    const data = await searchAllOrders(searchTerms)
+    const data = await searchAllOrders(searchTerms, abortController)
 
     if (data.success) {
       setOrders([...data.data])

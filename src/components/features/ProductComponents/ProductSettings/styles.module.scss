@@ -49,8 +49,18 @@
           display: flex;
           flex-direction: column;
           gap: 5px;
+
+          .addField {
+            color: #f6c71e;
+            margin-top: 10px;
+          }
         }
       }
+    }
+
+    .addBtn {
+      width: fit-content;
+      color: #f6c71e;
     }
 
     .actions {
@@ -59,7 +69,7 @@
       justify-content: flex-end;
       margin-top: 30px;
 
-      .addBtn {
+      .saveBtn {
         font-weight: 600;
       }
 

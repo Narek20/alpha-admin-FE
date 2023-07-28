@@ -164,6 +164,8 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
 
       setFilters({})
       showToast('success', data.message)
+      setOrderData({}),
+      setProducts([])
       onClose()
     } else {
       showToast('error', data.message)

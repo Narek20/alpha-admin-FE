@@ -13,7 +13,7 @@ interface IField {
 }
 
 export interface ICategory {
-  id: number
+  id?: number
   title: string
   fields: IField[]
 }

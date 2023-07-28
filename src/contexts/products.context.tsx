@@ -4,6 +4,7 @@ import {
   ReactNode,
   useState,
   useEffect,
+  useRef
 } from 'react'
 import { IProduct, IProductsContext } from 'types/product.types'
 import { getAllProducts } from 'services/products.service'
@@ -22,32 +23,57 @@ export const ProductsContext = createContext<IProductsContext>({
 export const useProducts = () => useContext(ProductsContext)
 
 // ProductsProvider component that wraps your app
+// ... (imports remain the same)
+
+// ProductsProvider component that wraps your app
 export const ProductsProvider = ({ children }: { children: ReactNode }) => {
-  const [products, setProducts] = useState<IProduct[] | []>([])
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [products, setProducts] = useState<IProduct[] | []>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [pagination, setPagination] = useState<{
-    count: number
-    skip: number
-    take: number
-  }>({ count: 20, skip: 0, take: 10 })
+    count: number;
+    skip: number;
+    take: number;
+  }>({ count: 20, skip: 0, take: 10 });
   const [filters, setFilters] = useState<{
-    [param: string]: string | string[] | number[]
-  }>({})
+    [param: string]: string | string[] | number[];
+  }>({});
+
+  // Use an AbortController to cancel previous requests
+  const abortControllerRef = useRef<AbortController | null>(null);
 
   const getProducts = async () => {
-    setIsLoading(true)
-    const data = await getAllProducts(filters)
-    setIsLoading(false)
-
-    if (data.success) {
-      setProducts([...data.data])
-      setPagination(data.pagination || pagination)
+    if (abortControllerRef.current) {
+      // If there's an existing request, abort it before making a new one
+      abortControllerRef.current.abort();
     }
-  }
+
+    setIsLoading(true);
+    const abortController = new AbortController();
+    abortControllerRef.current = abortController;
+
+    try {
+      const data = await getAllProducts(filters, abortController);
+      setIsLoading(false);
+
+      if (data.success) {
+        setProducts(data.data);
+        setPagination(data.pagination || pagination);
+      }
+    } catch (error) {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    getProducts()
-  }, [filters])
+    getProducts();
+
+    // Cleanup function to abort the request if the component unmounts or the filters change
+    return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    };
+  }, [filters]);
 
   return (
     <ProductsContext.Provider
@@ -62,5 +88,6 @@ export const ProductsProvider = ({ children }: { children: ReactNode }) => {
     >
       {children}
     </ProductsContext.Provider>
-  )
-}
+  );
+};
+
