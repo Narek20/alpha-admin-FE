@@ -28,6 +28,11 @@ export enum DriverEndpoints {
   DELETE_DRIVER = 'drivers/',
 }
 
+
+export enum CustomerEndpoints {
+  CUSTOMER = 'customers/',
+}
+
 export enum CategoryEndpoints {
   CATEGORIES = 'categories/',
   CREATE_CATEGORY = 'categories/create',

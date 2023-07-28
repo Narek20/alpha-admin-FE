@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Box, Typography } from '@mui/material'
 import Loading from '@shared/Loading'
 import ProductTable from '@shared/ProductsTable'
@@ -19,6 +19,7 @@ const OrderPage = () => {
   })
 
   const { id } = useParams()
+  const navigate = useNavigate()
 
   const getProduct = async () => {
     if (id) {
@@ -71,7 +72,15 @@ const OrderPage = () => {
             {OrderDetailsKeys.map(
               (detailsKey) =>
                 order[detailsKey.key] && (
-                  <Box key={detailsKey.label} className={styles.infoContainer}>
+                  <Box
+                    key={detailsKey.label}
+                    className={styles.infoContainer}
+                    onClick={
+                      detailsKey.label === 'Պատվիրատու'
+                        ? () => navigate(`/customers/${order[detailsKey.key]}`)
+                        : undefined
+                    }
+                  >
                     <Typography className={styles.infoLabel}>
                       {detailsKey.label}
                     </Typography>

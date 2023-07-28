@@ -4,6 +4,7 @@ import Drivers from 'pages/Drivers'
 import OrderPage from 'pages/OrderPage'
 import OrdersPage from 'pages/Orders'
 import ProductsPage from 'pages/Products'
+import CustomerPage from 'pages/CustomerPage'
 import AnalyticsPage from 'pages/Analytics'
 import NewProductPage from 'pages/NewProductPage'
 import ProductEditPage from 'pages/ProductEditPage'
@@ -20,6 +21,7 @@ const Routers = () => {
         <Route path=":id" element={<ProductPage />} />
       </Route>
       <Route path="/analytics" element={<AnalyticsPage />} />
+      <Route path="/customers/:fullName" element={<CustomerPage />} />
       <Route path="/new-product" element={<NewProductPage />} />
       <Route path="/edit-product/:id" element={<ProductEditPage />} />
       {analyticsSections.map((analyticsSection) => (

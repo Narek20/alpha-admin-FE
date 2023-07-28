@@ -17,6 +17,16 @@ export const OrderTableColumns = [
   'Գործողություններ',
 ]
 
+export const CustomerOrdersTableColumns = [
+  'Համարը',
+  'Հասցե',
+  'Նշումներ',
+  'Առաքիչ',
+  'Ստեղծման օր',
+  'Առաքման օր',
+  'Ստատուսը',
+]
+
 export const OrderTableKeys = [
   { label: 'Համար', key: OrderTableKeysType.ID },
   { label: 'Պատվիրատու', key: OrderTableKeysType.FULL_NAME },

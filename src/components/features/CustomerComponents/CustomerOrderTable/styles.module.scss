@@ -1,0 +1,55 @@
+.tableContainer {
+  .table {
+    th {
+      .headCell {
+        font-weight: 600;
+      }
+
+      .index {
+        font-weight: 600;
+        color: black;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        justify-content: space-between;
+        margin-right: 15px;
+      }
+
+      .status {
+        color: black;
+      }
+
+      .driver {
+        min-width: 150px;
+        color: black;
+      }
+
+      .data {
+        color: black;
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .tableContainer {
+    .table {
+      th {
+        .actions {
+          display: none;
+        }
+
+        .headCell {
+          font-size: 10px;
+        }
+
+        .data {
+          & input {
+            font-size: 10px;
+          }
+        }
+      }
+    }
+  }
+}
