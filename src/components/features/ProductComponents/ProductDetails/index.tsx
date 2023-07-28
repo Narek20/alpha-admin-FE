@@ -29,6 +29,7 @@ const ProductDetails: FC<{ product: IProduct }> = ({ product }) => {
 
     if (data.success) {
       showToast('success', data.message)
+      setIsEdit(false)
     }
   }
 
@@ -76,7 +77,10 @@ const ProductDetails: FC<{ product: IProduct }> = ({ product }) => {
           <Box className={styles.titleContainer}>
             <Typography className={styles.title}>{product.title} /</Typography>
             <Typography className={styles.category}>
-              {product.category.title}
+              {product.category.title} /
+            </Typography>
+            <Typography className={styles.category}>
+              {product.brand}
             </Typography>
           </Box>
           <Box className={styles.ratingContainer}>
