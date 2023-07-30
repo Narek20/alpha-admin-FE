@@ -1,7 +1,8 @@
-import { FC, useState } from 'react'
+import { FC, useContext, useState } from 'react'
 import { Box, Typography, Select, MenuItem, Button } from '@mui/material'
 import armeniaIcon from '@assets/images/armenia.png'
 import russianIcon from '@assets/images/russia.png'
+import { AuthContext } from 'contexts/auth.context'
 
 import styles from './styles.module.scss'
 
@@ -14,6 +15,13 @@ const iconStyles = { width: 30, height: 30, marginRight: 10 }
 const ProfileDropDown: FC<IProps> = ({ isOpen }) => {
   const [isHovered, setIsHovered] = useState(false)
   const [language, setLanguage] = useState('AM')
+
+  const { setUserData } = useContext(AuthContext)
+
+  const handleExit = () => {
+    setUserData(null)
+    localStorage.removeItem('token')
+  }
 
   return (
     <Box
@@ -43,7 +51,9 @@ const ProfileDropDown: FC<IProps> = ({ isOpen }) => {
           </MenuItem>
         </Select>
         <hr />
-        <Button className={styles.exit}>Ելք</Button>
+        <Button className={styles.exit} onClick={handleExit}>
+          Ելք
+        </Button>
         <Box></Box>
       </Box>
     </Box>

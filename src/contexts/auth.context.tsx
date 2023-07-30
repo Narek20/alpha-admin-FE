@@ -1,90 +1,63 @@
-import {
-  FC,
-  createContext,
-  // useState,
-  // useEffect,
-  ReactNode,
-} from 'react'
-// import { getUser } from '@/services/user.service';
-// import { IUser } from '@/types/user.types';
+import { FC, createContext, ReactNode, useEffect, useState } from 'react'
+import { getSingleUser } from 'services/users.service'
+import { IUser, IUserContext } from 'types/user.types'
 
 // Create a AuthContext
-export const AuthContext = createContext({
+export const AuthContext = createContext<IUserContext>({
   isLoggedIn: false,
   isLoading: false,
+  userData: null,
   login: () => {},
   logout: () => {},
   getUserData: () => {},
-  userData: {
-    _id: '',
-    name: '',
-    surname: '',
-    patronymic: '',
-    email: '',
-    phone: '',
-    password: '',
-  },
+  setUserData: () => {},
 })
 
 // AuthContext component that wraps your app
 export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // const [isLoading, setIsLoading] = useState(true);
-  // const [userData, setUserData] = useState<IUser & { _id: string }>({
-  //   _id: '',
-  //   name: '',
-  //   surname: '',
-  //   patronymic: '',
-  //   email: '',
-  //   phone: '',
-  //   password: '',
-  // });
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+  const [userData, setUserData] = useState<IUser | null>(null)
 
-  // const login = () => {
-  //   setIsLoggedIn(true);
-  // };
+  const login = () => {
+    setIsLoggedIn(true)
+  }
 
-  // const logout = () => {
-  //   setIsLoggedIn(false);
-  //   localStorage.removeItem('token');
-  //   setUserData({
-  //     _id: '',
-  //     name: '',
-  //     surname: '',
-  //     patronymic: '',
-  //     email: '',
-  //     phone: '',
-  //     password: '',
-  //   });
-  // };
+  const logout = () => {
+    setIsLoggedIn(false)
+    localStorage.removeItem('token')
+    setUserData(null)
+  }
 
-  // const getUserData = async () => {
-  //   const data = await getUser();
-  //   setIsLoading(false);
+  const getUserData = async () => {
+    setIsLoading(true)
+    const data = await getSingleUser()
 
-  //   if (data.success) {
-  //     setUserData(data.data);
-  //     login();
-  //   }
-  // };
+    if (data.success) {
+      setUserData(data.data)
+      login()
+      setIsLoading(false)
+    }
+  }
 
-  // useEffect(() => {
-  //   if (localStorage.getItem('token')) getUserData();
-  //   else setIsLoading(false);
-  // }, []);
+  useEffect(() => {
+    if (localStorage.getItem('token')) getUserData()
+    else setIsLoading(false)
+  }, [])
 
   return (
-    // <AuthContext.Provider
-    //   value={{
-    //     isLoggedIn,
-    //     isLoading,
-    //     login,
-    //     logout,
-    //     userData,
-    //     getUserData,
-    //   }}
-    // >
-    <></>
-    // </AuthContext.Provider>
+    <AuthContext.Provider
+      value={{
+        isLoggedIn,
+        isLoading,
+        login,
+        logout,
+        userData,
+        getUserData,
+        setUserData,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
   )
 }

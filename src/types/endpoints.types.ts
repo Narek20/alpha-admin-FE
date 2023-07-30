@@ -28,6 +28,15 @@ export enum DriverEndpoints {
   DELETE_DRIVER = 'drivers/',
 }
 
+export enum UsersEndpoints {
+  USERS = 'users/',
+  GET_ONE = 'users/one',
+  USER_VERIFY = 'users/verify',
+  CREATE_USER = 'users/create',
+  UPDATE_USER = 'users/',
+  DELETE_USER = 'users/'
+}
+
 
 export enum CustomerEndpoints {
   CUSTOMER = 'customers/',
