@@ -25,34 +25,35 @@ const Login = () => {
   const { setUserData } = useContext(AuthContext)
 
   const handleSubmit = async () => {
-    const data = await getUserByPhoneNumber(phoneNumber)
+    try {
+      const data = await getUserByPhoneNumber(phoneNumber)
 
-    if (!data.success) {
-      showToast('error', data.message)
-      return
-    }
-    setUser({ user: data.data, token: data.accessToken })
-
-    if (!isClicked) setIsClicked(true)
-    else return
-
-    const recaptchaVerifier = new RecaptchaVerifier(
-      auth,
-      'recaptcha-container',
-      {
-        size: 'normal',
-        callback: async () => {
-          const response = await signInWithPhoneNumber(
-            auth,
-            `+374${phoneNumber.substring(1)}`,
-            recaptchaVerifier
-          )
-
-          setOptVerifier(response)
-        },
+      if (!data.success) {
+        showToast('error', data.message)
+        return
       }
-    )
-    recaptchaVerifier.render()
+      setUser({ user: data.data, token: data.accessToken })
+
+      if (!isClicked) setIsClicked(true)
+      else return
+
+      const recaptchaVerifier = new RecaptchaVerifier(
+        auth,
+        'recaptcha-container',
+        {}
+      )
+      recaptchaVerifier.render()
+
+      const response = await signInWithPhoneNumber(
+        auth,
+        `+374${phoneNumber.substring(1)}`,
+        recaptchaVerifier
+      )
+
+      setOptVerifier(response)
+    } catch (err) {
+      showToast('error', 'Փորձեք մի փոքր ուշ')
+    }
   }
 
   const handleApprove = () => {
