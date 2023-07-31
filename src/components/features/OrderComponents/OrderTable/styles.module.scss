@@ -13,6 +13,22 @@
         width: 100%;
         justify-content: space-between;
         margin-right: 15px;
+
+        .paymentIcon {
+          width: 20px;
+          height: 20px;
+        }
+
+        .paymentMethods {
+          div {
+            padding: 5px;
+            padding-right: 32px;
+            -webkit-text-fill-color: rgba(0, 0, 0, 1);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+          }
+        }
       }
 
       .status {
@@ -49,7 +65,6 @@
           -webkit-text-fill-color: black;
         }
       }
-
 
       .actions {
         display: flex;

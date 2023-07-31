@@ -34,8 +34,10 @@ import { removeOrder, updateOrder } from 'services/orders.service'
 import {
   OrderStatuses,
   OrderTableKeys,
+  getOrderIcon,
   orderRowColor,
   orderStatusStyles,
+  paymentMethods,
 } from '@utils/order/constants'
 import {
   OrderTableKeysType,
@@ -240,19 +242,47 @@ const OrderTable = () => {
                           {ind === 0 ? (
                             <Typography
                               className={styles.index}
-                              onClick={() => navigate(`/orders/${order.id}`)}
+                              onClick={
+                                isEdit
+                                  ? undefined
+                                  : () => navigate(`/orders/${order.id}`)
+                              }
                             >
                               №{order[key]}
                               {order.isSpecial && (
                                 <StarsIcon sx={{ color: 'blue' }} />
                               )}
-                              {order.paymentMethod === PaymentMethods.CASH ? (
-                                <LocalAtmIcon sx={{ color: 'blue' }} />
-                              ) : order.paymentMethod ===
-                                PaymentMethods.NON_CASH ? (
-                                <CreditCardIcon sx={{ color: 'blue' }} />
+                              {isEdit ? (
+                                <Select
+                                  defaultValue={order.paymentMethod}
+                                  value={
+                                    editRow === index
+                                      ? rowChanges?.paymentMethod
+                                      : order.paymentMethod
+                                  }
+                                  className={styles.paymentMethods}
+                                  disabled={index !== editRow}
+                                  onChange={(evt) =>
+                                    handleChange(
+                                      OrderTableKeysType.PAYMENT_METHOD,
+                                      evt.target.value
+                                    )
+                                  }
+                                >
+                                  {paymentMethods.map((method) => (
+                                    <MenuItem key={method} value={method}>
+                                      <img
+                                        style={{ width: 20, height: 20 }}
+                                        src={getOrderIcon(method)}
+                                      />
+                                    </MenuItem>
+                                  ))}
+                                </Select>
                               ) : (
-                                <PaidIcon sx={{ color: 'blue' }} />
+                                <img
+                                  className={styles.paymentIcon}
+                                  src={getOrderIcon(order.paymentMethod)}
+                                />
                               )}
                             </Typography>
                           ) : (

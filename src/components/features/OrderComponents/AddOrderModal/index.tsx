@@ -49,7 +49,7 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
   const [products, setProducts] = useState<IProduct[]>([])
   const [orderData, setOrderData] = useState<{
     [key: string]: string | number | boolean
-  } | null>(null)
+  } | null>({paymentMethod: PaymentMethods.CASH})
 
   const { orders, filters, setFilters } = useContext(OrdersContext)
   const { showToast } = useToast()

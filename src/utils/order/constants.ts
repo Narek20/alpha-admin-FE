@@ -3,6 +3,9 @@ import {
   OrderTableKeysType,
   PaymentMethods,
 } from 'types/order.types'
+import POSSvg from '@assets/SVG/POS.svg'
+import cashSvg from '@assets/SVG/cash.svg'
+import paidPng from '@assets/SVG/paid.png'
 
 export const OrderTableColumns = [
   'Համարը',
@@ -112,5 +115,16 @@ export const orderRowColor = (status: OrderStatus): string => {
       return '#B7B7B7'
     default:
       return '#FE9901'
+  }
+}
+
+export const getOrderIcon = (paymentMethods: PaymentMethods) => {
+  switch (paymentMethods) {
+    case PaymentMethods.CASH:
+      return cashSvg
+    case PaymentMethods.NON_CASH:
+      return POSSvg
+    default:
+      return paidPng
   }
 }

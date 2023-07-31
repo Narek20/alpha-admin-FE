@@ -1,10 +1,11 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import { Box, IconButton, Typography } from '@mui/material'
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined'
 import ProfileDropDown from '@features/UserComponents/ProfileDropDown'
 import logo from '@assets/images/alpha-logo.jpg'
 import { navlinks } from '@utils/navbar/constants'
+import { AuthContext } from 'contexts/auth.context'
 
 import styles from './styles.module.scss'
 
@@ -12,6 +13,7 @@ const iconStyles = { color: '#f6c71e', width: 30, height: 30 }
 
 const Header = () => {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false)
+  const { userData } = useContext(AuthContext)
 
   return (
     <Box className={styles.header}>
@@ -42,7 +44,9 @@ const Header = () => {
           onMouseEnter={() => setIsDropDownOpen(true)}
           onMouseLeave={() => setIsDropDownOpen(false)}
         >
-          <Typography className={styles.userName}>Alpha Military shop</Typography>
+          <Typography className={styles.userName}>
+            {userData?.fullName}
+          </Typography>
         </Box>
       </Box>
       <ProfileDropDown isOpen={isDropDownOpen} />
