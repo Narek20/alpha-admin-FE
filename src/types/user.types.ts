@@ -11,9 +11,10 @@ export interface IUserContext {
 
 export type IUser = {
   id: number
-  name: string
+  fullName: string
   phone: string
   status: UserStatus
+  isAdmin: boolean
 }
 
 export enum UserStatus {

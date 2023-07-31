@@ -56,7 +56,10 @@
 
     .accountIcon:hover {
       background-color: #f6c71e;
-      color: white;
+
+      .userName {
+        color: white;
+      }
     }
   }
 }

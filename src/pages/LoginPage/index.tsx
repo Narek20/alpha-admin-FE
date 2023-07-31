@@ -96,13 +96,15 @@ const Login = () => {
           >
             Ստանալ SMS
           </Button>
-          <Button
-            className={styles.submitBtn}
-            id="sign-in-button"
-            onClick={handleApprove}
-          >
-            Հաստատել
-          </Button>
+          {isClicked && (
+            <Button
+              className={styles.submitBtn}
+              id="sign-in-button"
+              onClick={handleApprove}
+            >
+              Հաստատել
+            </Button>
+          )}
         </Box>
       </Box>
     </Box>

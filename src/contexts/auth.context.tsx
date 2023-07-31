@@ -1,6 +1,6 @@
 import { FC, createContext, ReactNode, useEffect, useState } from 'react'
 import { getSingleUser } from 'services/users.service'
-import { IUser, IUserContext } from 'types/user.types'
+import { IUser, IUserContext, UserStatus } from 'types/user.types'
 
 // Create a AuthContext
 export const AuthContext = createContext<IUserContext>({
@@ -34,7 +34,10 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
     const data = await getSingleUser()
 
     if (data.success) {
-      setUserData(data.data)
+      setUserData({
+        ...data.data,
+        isAdmin: data.data.status === UserStatus.ADMIN,
+      })
       login()
       setIsLoading(false)
     }

@@ -1,4 +1,5 @@
 import { FC, useContext, useState } from 'react'
+import { useNavigate } from 'react-router'
 import { Box, Typography, Select, MenuItem, Button } from '@mui/material'
 import armeniaIcon from '@assets/images/armenia.png'
 import russianIcon from '@assets/images/russia.png'
@@ -16,7 +17,8 @@ const ProfileDropDown: FC<IProps> = ({ isOpen }) => {
   const [isHovered, setIsHovered] = useState(false)
   const [language, setLanguage] = useState('AM')
 
-  const { setUserData } = useContext(AuthContext)
+  const { userData, setUserData } = useContext(AuthContext)
+  const navigate = useNavigate()
 
   const handleExit = () => {
     setUserData(null)
@@ -31,7 +33,14 @@ const ProfileDropDown: FC<IProps> = ({ isOpen }) => {
     >
       <Box className={styles.header}>
         <Typography className={styles.profileTitle}>Պրոֆիլ</Typography>
-        <Typography className={styles.settings}>Կարգավորումներ</Typography>
+        {userData?.isAdmin && (
+          <Button
+            className={styles.settings}
+            onClick={() => navigate('/settings')}
+          >
+            Կարգավորումներ
+          </Button>
+        )}
       </Box>
       <Box className={styles.content}>
         <hr />
