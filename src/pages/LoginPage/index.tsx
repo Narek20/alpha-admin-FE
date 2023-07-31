@@ -7,12 +7,12 @@ import {
   ConfirmationResult,
 } from 'firebase/auth'
 import { auth } from 'services/firebase.service'
-
-import styles from './styles.module.scss'
 import { getUserByPhoneNumber } from 'services/users.service'
 import { useToast } from 'contexts/toast.context'
-import { IUser } from 'types/user.types'
 import { AuthContext } from 'contexts/auth.context'
+import { IUser, UserStatus } from 'types/user.types'
+
+import styles from './styles.module.scss'
 
 const Login = () => {
   const [phoneNumber, setPhoneNumber] = useState('')
@@ -62,7 +62,10 @@ const Login = () => {
         .confirm(verificationCode)
         .then(() => {
           if (user && user.token) {
-            setUserData(user.user)
+            setUserData({
+              ...user.user,
+              isAdmin: user.user.status === UserStatus.ADMIN,
+            })
             localStorage.setItem('token', user.token)
           }
         })
