@@ -23,7 +23,7 @@ const Header = () => {
         </Link>
         <Box className={styles.links}>
           {navlinks.map(({ link, title }) => (
-            <NavLink
+            title === 'Անալիտիկա' && !userData?.isAdmin ? null : <NavLink
               className={({ isActive }) =>
                 isActive ? styles.active : styles.link
               }

@@ -8,6 +8,8 @@ import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutl
 import ImageCarousel from '@shared/ImageCarousel'
 import ConfirmationModal from '@shared/ConfirmationModal'
 import { useToast } from 'contexts/toast.context'
+import { AuthContext } from 'contexts/auth.context'
+import { UserStatus } from 'types/user.types'
 import { IProduct, Sizes } from 'types/product.types'
 import { removeProduct, updateProduct } from 'services/products.service'
 import { additionalDetailsKeys } from '@utils/product/constants'
@@ -20,6 +22,7 @@ const ProductDetails: FC<{ product: IProduct }> = ({ product }) => {
   const [productSizes, setProductSizes] = useState<Sizes[]>([])
   const navigate = useNavigate()
   const { showToast } = useToast()
+  const { userData } = useContext(AuthContext)
 
   const handleSave = async () => {
     const formData = new FormData()
@@ -79,9 +82,7 @@ const ProductDetails: FC<{ product: IProduct }> = ({ product }) => {
             <Typography className={styles.category}>
               {product.category.title} /
             </Typography>
-            <Typography className={styles.category}>
-              {product.brand}
-            </Typography>
+            <Typography className={styles.category}>{product.brand}</Typography>
           </Box>
           <Box className={styles.ratingContainer}>
             <StarOutlinedIcon
@@ -113,9 +114,11 @@ const ProductDetails: FC<{ product: IProduct }> = ({ product }) => {
           </Box>
           <Box className={styles.sizeTitleContainer}>
             <Typography className={styles.sizesTitle}>Չափսերը: </Typography>
-            <IconButton onClick={() => setIsEdit(true)}>
-              <ModeEditOutlineOutlinedIcon />
-            </IconButton>
+            {userData?.status !== UserStatus.USER && (
+              <IconButton onClick={() => setIsEdit(true)}>
+                <ModeEditOutlineOutlinedIcon />
+              </IconButton>
+            )}
           </Box>
           <Box className={styles.sizes}>
             {productSizes.map(({ size, smSize, quantity }, index) => (
@@ -179,17 +182,19 @@ const ProductDetails: FC<{ product: IProduct }> = ({ product }) => {
             )}
           </Box>
         </Box>
-        <Box className={styles.actions}>
-          <Button
-            className={styles.seeMore}
-            onClick={() => navigate(`/edit-product/${product.id}`)}
-          >
-            Փոփոխել
-          </Button>
-          <Button className={styles.removeBtn} onClick={handleRemove}>
-            Հեռացնել Ապրանքը
-          </Button>
-        </Box>
+        {userData?.status !== UserStatus.USER && (
+          <Box className={styles.actions}>
+            <Button
+              className={styles.seeMore}
+              onClick={() => navigate(`/edit-product/${product.id}`)}
+            >
+              Փոփոխել
+            </Button>
+            <Button className={styles.removeBtn} onClick={handleRemove}>
+              Հեռացնել Ապրանքը
+            </Button>
+          </Box>
+        )}
         <ConfirmationModal
           btnText={'Հեռացնել Ապրանքը'}
           onClose={() => setIsOpen(false)}

@@ -15,6 +15,7 @@ import ProductEditPage from 'pages/ProductEditPage'
 import UserSettingsPage from 'pages/UserSettingsPage'
 import { analyticsSections } from '@utils/analytics/constants'
 import { AuthContext } from 'contexts/auth.context'
+import { UserStatus } from 'types/user.types'
 
 const Routers = () => {
   const { userData, isLoading } = useContext(AuthContext)
@@ -31,20 +32,27 @@ const Routers = () => {
           <Route path="products" element={<ProductsPage />}>
             <Route path=":id" element={<ProductPage />} />
           </Route>
-          <Route path="/analytics" element={<AnalyticsPage />} />
           {userData.isAdmin && (
-            <Route path="/settings" element={<UserSettingsPage />} />
+            <>
+              <Route path="/settings" element={<UserSettingsPage />} />
+              <Route path="/analytics" element={<AnalyticsPage />} />
+              {analyticsSections.map((analyticsSection) => (
+                <Route
+                  key={analyticsSection.title}
+                  path={analyticsSection.link}
+                  element={<analyticsSection.component />}
+                />
+              ))}
+            </>
           )}
-          <Route path="/new-product" element={<NewProductPage />} />
+          {userData.status !== UserStatus.USER && (
+            <>
+              <Route path="/new-product" element={<NewProductPage />} />
+              <Route path="/edit-product/:id" element={<ProductEditPage />} />
+            </>
+          )}
+
           <Route path="/customers/:fullName" element={<CustomerPage />} />
-          <Route path="/edit-product/:id" element={<ProductEditPage />} />
-          {analyticsSections.map((analyticsSection) => (
-            <Route
-              key={analyticsSection.title}
-              path={analyticsSection.link}
-              element={<analyticsSection.component />}
-            />
-          ))}
           <Route path="*" element={<Home />} />
         </>
       ) : (

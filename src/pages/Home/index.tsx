@@ -1,3 +1,4 @@
+import { useContext } from 'react'
 import { Box } from '@mui/material'
 import Notes from '@features/HomeComponents/Notes'
 import Supplies from '@features/HomeComponents/Supplies'
@@ -9,21 +10,35 @@ import StorageLoad from '@features/HomeComponents/StorageLoad'
 import MarketPlace from '@features/HomeComponents/MarketPlace'
 import CommonStatistics from '@features/HomeComponents/CommonStatistics'
 import FinanceStatistics from '@features/HomeComponents/FinanceStatistics'
-import StorageWaitingTime from '@features/HomeComponents/StorageWaitingTime'
+import { AuthContext } from 'contexts/auth.context'
 
 import styles from './styles.module.scss'
 
 const Home = () => {
+  const { userData } = useContext(AuthContext)
+
   return (
     <Box className={styles.home}>
       <Box className={styles.row}>
         <CommonStatistics />
-        <FinanceStatistics />
+        {userData?.isAdmin ? (
+          <FinanceStatistics />
+        ) : (
+          <>
+            <StorageLoad />
+            <MarketPlace />
+          </>
+        )}
       </Box>
       <Box className={styles.row}>
-        <StorageLoad />
-        <MarketPlace />
-        <Analytics />
+        {userData?.isAdmin && (
+          <>
+            <StorageLoad />
+            <MarketPlace />
+            <Analytics />
+          </>
+        )}
+        
       </Box>
       <Box className={styles.row}>
         <Feedbacks />
