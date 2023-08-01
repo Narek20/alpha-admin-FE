@@ -4,7 +4,7 @@
   align-items: center;
   height: 100%;
   width: 100%;
-  position: absolute;
+  margin-top: 300px;
 
   .content {
     background-color: #2b2b29;
@@ -20,6 +20,14 @@
     .submitBtn {
       color: #f6c71e;
       margin-top: 10px;
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .loginPage {
+    .content {
+      width: 100%;
     }
   }
 }
