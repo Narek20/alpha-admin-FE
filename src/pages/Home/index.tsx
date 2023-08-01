@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { Box } from '@mui/material'
+import { Box, useMediaQuery, useTheme } from '@mui/material'
 import Notes from '@features/HomeComponents/Notes'
 import Supplies from '@features/HomeComponents/Supplies'
 import Turnover from '@features/HomeComponents/Turnover'
@@ -16,11 +16,15 @@ import styles from './styles.module.scss'
 
 const Home = () => {
   const { userData } = useContext(AuthContext)
+  const theme = useTheme()
+
+  const isTablet = useMediaQuery(theme.breakpoints.down(1200))
+  const isMobile = useMediaQuery(theme.breakpoints.down(600))
 
   return (
     <Box className={styles.home}>
       <Box className={styles.row}>
-        <CommonStatistics />
+        {(!isTablet || isMobile) && <CommonStatistics />}
         {userData?.isAdmin ? (
           <FinanceStatistics />
         ) : (
@@ -31,25 +35,41 @@ const Home = () => {
         )}
       </Box>
       <Box className={styles.row}>
+        {isTablet && !isMobile && <CommonStatistics />}
         {userData?.isAdmin && (
           <>
             <StorageLoad />
-            <MarketPlace />
-            <Analytics />
+            {(!isTablet || isMobile) && (
+              <>
+                <MarketPlace />
+                <Analytics />
+              </>
+            )}
           </>
         )}
-        
       </Box>
+      {isTablet && !isMobile && (
+        <Box className={styles.row}>
+          <MarketPlace />
+          <Analytics />
+        </Box>
+      )}
       <Box className={styles.row}>
         <Feedbacks />
         <Questions />
-        <Notes />
+        {(!isTablet || isMobile) && <Notes />}
       </Box>
       <Box className={styles.row}>
+        {isTablet && !isMobile && <Notes />}
         <Turnover />
-        <Supplies />
+        {(!isTablet || isMobile) && <Supplies />}
         {/* <StorageWaitingTime /> */}
       </Box>
+      {isTablet && !isMobile && (
+        <Box className={styles.row}>
+          <Supplies />
+        </Box>
+      )}
     </Box>
   )
 }

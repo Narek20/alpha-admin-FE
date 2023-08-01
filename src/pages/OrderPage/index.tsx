@@ -6,7 +6,7 @@ import ProductTable from '@shared/ProductsTable'
 import SectionHeader from '@shared/SectionTitle'
 import { IOrder } from 'types/order.types'
 import { getOrderById } from 'services/orders.service'
-import { OrderDetailsKeys, orderRowColor } from '@utils/order/constants'
+import { OrderDetailsKeys, getOrderIcon, orderRowColor } from '@utils/order/constants'
 
 import styles from './styles.module.scss'
 
@@ -67,6 +67,10 @@ const OrderPage = () => {
             >
               {order.status}
             </Typography>
+            <img
+              style={{ width: 20, height: 20 }}
+              src={getOrderIcon(order.paymentMethod)}
+            />
           </Box>
           <Box className={styles.details}>
             {OrderDetailsKeys.map(

@@ -17,3 +17,42 @@
 .linkContainer:hover {
   box-shadow: 2px 2px 5px 2px rgb(191, 191, 191);
 }
+
+@media only screen and (max-width: 1350px) {
+  .linkContainer {
+    width: 120px;
+    height: 120px;
+
+    .title {
+      font-size: 12px;
+    }
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .linkContainer {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .linkContainer {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .linkContainer {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+@media only screen and (max-width: 370px) {
+  .linkContainer {
+    width: 80px;
+    height: 80px;
+  }
+}

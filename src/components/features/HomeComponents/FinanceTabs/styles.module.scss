@@ -1,6 +1,7 @@
 .tabs {
   display: flex;
   margin: 10px 0px;
+  gap: 20px;
 
   .purchaseTypes {
     display: flex;
@@ -22,7 +23,6 @@
 
   .durations {
     display: flex;
-    margin-left: 20px;
 
     .chartBtn {
       background-color: #f0f0f3;
@@ -36,6 +36,35 @@
       color: white;
       height: 40px;
       border-radius: 0px;
+    }
+  }
+}
+
+
+@media only screen and (max-width: 600px) {
+  .tabs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .purchaseTypes {
+      .chartBtn {
+        font-size: 12px;
+      }
+
+      .selectedChartBtn {
+        font-size: 12px;
+      }
+    }
+
+    .durations {
+      .chartBtn {
+        font-size: 12px;
+      }
+
+      .selectedChartBtn {
+        font-size: 12px;
+      }
     }
   }
 }

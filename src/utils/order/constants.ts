@@ -75,10 +75,6 @@ export const OrderDetailsKeys = [
     key: OrderTableKeysType.DRIVER,
   },
   {
-    label: 'Վճարման եղանակը',
-    key: OrderTableKeysType.PAYMENT_METHOD,
-  },
-  {
     label: 'Առաքման օրը',
     key: OrderTableKeysType.DELIVERY_DATE,
   },

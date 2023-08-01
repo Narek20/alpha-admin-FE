@@ -1,4 +1,5 @@
-import { Box, Button } from '@mui/material'
+import { Link } from 'react-router-dom'
+import { Box } from '@mui/material'
 import SectionHeader from '@shared/SectionTitle'
 import AnalyticLinkCard from '../AnalyticLinkCard'
 
@@ -36,7 +37,7 @@ const Analytics = () => {
           <AnalyticLinkCard key={analyticsLink.title} {...analyticsLink} />
         ))}
       </Box>
-      <Button>Բոլոր Հաշվետվությունները</Button>
+      <Link to='/analytics' className={styles.allAnalytics}>Բոլոր Հաշվետվությունները</Link>
     </Box>
   )
 }

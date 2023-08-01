@@ -11,36 +11,41 @@
     font-weight: 500;
   }
 
-  .infoContainer {
-    .infoTitle {
-      margin-top: 20px;
-      color: #676767;
-      font-size: 14px;
-    }
+  .information {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 
-    .totalInfo {
-      margin-top: 2px;
-      font-size: 18px;
-    }
+    .infoContainer {
+      .infoTitle {
+        color: #676767;
+        font-size: 14px;
+      }
 
-    .difference {
-      margin-top: 8px;
-      color: #067b00;
-      font-size: 12px;
-      margin-top: 10px;
-    }
+      .totalInfo {
+        margin-top: 2px;
+        font-size: 18px;
+      }
 
-    .negativeDifference {
-      margin-top: 8px;
-      color: #f96666;
-      font-size: 12px;
-      margin-top: 10px;
-    }
+      .difference {
+        margin-top: 8px;
+        color: #067b00;
+        font-size: 12px;
+        margin-top: 10px;
+      }
 
-    .differenceTitle {
-      color: #676767;
-      margin-top: 2px;
-      font-size: 12px;
+      .negativeDifference {
+        margin-top: 8px;
+        color: #f96666;
+        font-size: 12px;
+        margin-top: 10px;
+      }
+
+      .differenceTitle {
+        color: #676767;
+        margin-top: 2px;
+        font-size: 12px;
+      }
     }
   }
 
@@ -76,5 +81,20 @@
     color: #676767;
     font-size: 10px;
     margin-top: 20px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .financeInformation {
+    .information {
+      margin-top: 10px;
+      flex-direction: row;
+      gap: 50px;
+      justify-content: center;
+    }
+  }
+
+  .colorContainers {
+    display: none;
   }
 }

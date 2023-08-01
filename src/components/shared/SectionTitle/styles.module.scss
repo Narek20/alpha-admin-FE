@@ -7,3 +7,11 @@
     color: #f6c71e;
   }
 }
+
+@media only screen and (max-width: 600px) {
+  .header {  
+    .title {
+      font-size: 20px;
+    }
+  }
+}

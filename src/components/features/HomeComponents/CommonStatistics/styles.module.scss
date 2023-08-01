@@ -5,18 +5,16 @@
   padding: 20px;
   flex: 1;
 
+  .statisticHeader {
+    width: 100%;
+  }
+
   .statisticContainer {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 20px 0px;
-
-    .addOrder {
-      color: #f6c71e;
-      font-size: 14px;
-      border: 1px solid #f6c71e;
-    }
 
     .totalPrice {
       font-size: 20px;

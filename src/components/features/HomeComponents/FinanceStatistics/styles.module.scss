@@ -5,7 +5,6 @@
   background-color: #2b2b29;
   border-radius: 10px;
   padding: 20px;
-  // width: calc(60% + 40px);
   flex: 2 1 55px;
 
   .information {
@@ -14,3 +13,12 @@
     height: 100%;
   }
 }
+
+@media only screen and (max-width: 600px) {
+ .statistics {
+  .information {
+    justify-content: center;
+  }
+ }
+}
+
