@@ -39,8 +39,8 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
         isAdmin: data.data.status === UserStatus.ADMIN,
       })
       login()
-      setIsLoading(false)
     }
+    setIsLoading(false)
   }
 
   useEffect(() => {
