@@ -17,7 +17,7 @@
 
   .topBar {
     display: flex;
-    margin: 20px 0px;
+    margin-top: 20px;
     width: 100%;
 
     .button {
@@ -44,6 +44,7 @@
     width: 100%;
     justify-content: space-between;
     gap: 20px;
+    margin-top: 20px;
 
     .search {
       flex: 3;
@@ -57,6 +58,46 @@
       border-radius: 5px;
       border: 1px solid #f6c71e;
       padding: 10px;
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .orderToolbar {
+    .header {
+      gap: 5px;
+      .addBtn {
+        font-size: 10px;
+      }
+    }
+
+    .topBar {
+      display: none;
+    }
+
+    .bottomBar {
+      .search {
+        flex: 1;
+
+        label {
+          font-size: 14px;
+        }
+
+        svg {
+          display: none;
+        }
+      }
+
+      .select {
+        div {
+          font-size: 14px;
+          padding-right: 0px;
+        }
+
+        svg {
+          display: none;
+        }
+      }
     }
   }
 }

@@ -42,6 +42,7 @@ const OrderToolbar = () => {
         </Button>
       </Box>
       <Box className={styles.topBar}>
+        <Box>
         <Button
           className={
             ordersType === 'Նոր պատվեր' ? styles.selectedButton : styles.button
@@ -60,6 +61,8 @@ const OrderToolbar = () => {
         >
           Փաթեթավորվում է
         </Button>
+        </Box>
+        <Box>
         <Button
           className={
             ordersType === 'Առաքվում է' ? styles.selectedButton : styles.button
@@ -76,6 +79,7 @@ const OrderToolbar = () => {
         >
           Արխիվ
         </Button>
+        </Box>
       </Box>
       <Box className={styles.bottomBar}>
         <TextField

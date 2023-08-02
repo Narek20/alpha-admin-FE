@@ -82,17 +82,26 @@
   .tableContainer {
     .table {
       th {
-        .actions {
-          display: none;
+
+        .driver {
+          div {
+            font-size: 14px;
+          }
+        }
+
+        .status {
+          div {
+            font-size: 14px;
+          }
         }
 
         .headCell {
-          font-size: 10px;
+          font-size: 14px;
         }
 
         .data {
           & input {
-            font-size: 10px;
+            font-size: 14px;
           }
         }
       }

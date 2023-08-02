@@ -52,6 +52,9 @@
     }
 
     .accountIcon {
+      display: flex;
+      align-items: center;
+      gap: 10px;
       padding: 10px;
       border-radius: 10px;
       margin-left: 10px;
@@ -63,6 +66,26 @@
 
       .userName {
         color: white;
+      }
+
+      .icon {
+        color: white !important;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .header {
+    .rightSection {
+      .addOrder {
+        font-size: 12px;
+      }
+
+      .accountIcon {
+        .userName {
+          display: none;
+        }
       }
     }
   }

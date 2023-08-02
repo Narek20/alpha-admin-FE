@@ -1,4 +1,4 @@
-import { FC, useContext, useState } from 'react'
+import { FC, useContext, useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router'
 import { Box, Typography, Select, MenuItem, Button } from '@mui/material'
 import armeniaIcon from '@assets/images/armenia.png'
@@ -9,24 +9,40 @@ import styles from './styles.module.scss'
 
 interface IProps {
   isOpen: boolean
+  onClose: () => void
 }
 
 const iconStyles = { width: 30, height: 30, marginRight: 10 }
 
-const ProfileDropDown: FC<IProps> = ({ isOpen }) => {
+const ProfileDropDown: FC<IProps> = ({ isOpen, onClose }) => {
   const [isHovered, setIsHovered] = useState(false)
   const [language, setLanguage] = useState('AM')
 
   const { userData, setUserData } = useContext(AuthContext)
   const navigate = useNavigate()
+  const dropDownRef = useRef<HTMLDivElement>(null)
+  const onClickClose = (evt: any) => {
+    if (
+      dropDownRef.current &&
+      isOpen &&
+      !dropDownRef.current.contains(evt.target)
+    ) {
+      onClose()
+    }
+  }
 
   const handleExit = () => {
     setUserData(null)
     localStorage.removeItem('token')
   }
 
+  useEffect(() => {
+    document.addEventListener('mousedown', onClickClose)
+  }, [])
+
   return (
     <Box
+      ref={dropDownRef}
       className={isOpen || isHovered ? styles.dropDown : styles.hidden}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}

@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useState, useRef, useEffect } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import {
   Box,
@@ -9,7 +9,7 @@ import {
   Typography,
 } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
-import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined'
+import AccountIcon from '@mui/icons-material/AccountCircleOutlined'
 import OrderAddModal from '@features/OrderComponents/AddOrderModal'
 import ProfileDropDown from '@features/UserComponents/ProfileDropDown'
 import logo from '@assets/images/alpha-logo.jpg'
@@ -18,8 +18,6 @@ import DrawerComponent from '@shared/Drawer'
 import { AuthContext } from 'contexts/auth.context'
 
 import styles from './styles.module.scss'
-
-const iconStyles = { color: '#f6c71e', width: 30, height: 30 }
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -62,20 +60,27 @@ const Header = () => {
         <Button className={styles.addOrder} onClick={() => setIsOpen(true)}>
           Ավելացնել Պատվեր
         </Button>
-        <IconButton className={styles.icon}>
+        {/* <IconButton className={styles.icon}>
           <HelpOutlineOutlinedIcon sx={iconStyles} />
-        </IconButton>
+        </IconButton> */}
         <Box
           className={styles.accountIcon}
-          onMouseEnter={() => setIsDropDownOpen(true)}
-          onMouseLeave={() => setIsDropDownOpen(false)}
+          onMouseEnter={isTablet ? undefined : () => setIsDropDownOpen(true)}
+          onMouseLeave={isTablet ? undefined : () => setIsDropDownOpen(false)}
+          onClick={isTablet ? () => setIsDropDownOpen(true) : undefined}
+          onBlur={() => setIsDropDownOpen(false)}
+          onClickCapture={() => setIsDropDownOpen(false)}
         >
+          <AccountIcon className={styles.icon} />
           <Typography className={styles.userName}>
             {userData?.fullName}
           </Typography>
         </Box>
       </Box>
-      <ProfileDropDown isOpen={isDropDownOpen} />
+      <ProfileDropDown
+        isOpen={isDropDownOpen}
+        onClose={() => setIsDropDownOpen(false)}
+      />
       <OrderAddModal open={isOpen} onClose={() => setIsOpen(false)} />
       <DrawerComponent
         isOpen={isDrawerOpen}
