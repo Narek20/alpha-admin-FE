@@ -80,6 +80,7 @@ const Header = () => {
       <ProfileDropDown
         isOpen={isDropDownOpen}
         onClose={() => setIsDropDownOpen(false)}
+        isTablet={isTablet}
       />
       <OrderAddModal open={isOpen} onClose={() => setIsOpen(false)} />
       <DrawerComponent
