@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { Box, Typography } from '@mui/material'
+import { Box, Typography, useMediaQuery, useTheme } from '@mui/material'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import { DriverStatus } from 'types/driver.types'
 
@@ -13,13 +13,17 @@ interface IProps {
 }
 
 const DriverCard: FC<IProps> = ({ fullName, phone, status, direction }) => {
+  
+  const theme = useTheme()
+  const isTablet = useMediaQuery(theme.breakpoints.down(1000))
+
   return (
     <Box className={styles.driverCard}>
       <Box className={styles.driverInfo}>
-        <AccountCircleIcon sx={{ height: 40, width: 40 }} />
-        <Typography>{fullName}</Typography>
-        <Typography>{phone}</Typography>
-        <Typography>{direction}</Typography>
+        <AccountCircleIcon sx={{ height: isTablet ? 100 : 40, width: isTablet ? 100 : 40 }} />
+        <Typography>Անունը։ {fullName}</Typography>
+        <Typography>Հեռախոսը։ {phone}</Typography>
+        <Typography>Ուղղությունը։ {direction}</Typography>
       </Box>
       <Typography
         className={status === DriverStatus.FREE ? styles.free : styles.busy}

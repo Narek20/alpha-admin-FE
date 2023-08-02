@@ -7,3 +7,12 @@
     gap: 20;
   }
 }
+
+@media only screen and (max-width: 1000px) {
+  .productsPage {
+    .content {
+      flex-direction: column;
+    }
+  }
+}
+
