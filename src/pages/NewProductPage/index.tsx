@@ -56,7 +56,7 @@ const NewProductData = () => {
 
   const handleChange = (
     key: ProductKeys,
-    value: string | string[] | number
+    value: string | string[] | number,
   ) => {
     if (key === ProductKeys.COLOR && Array.isArray(value)) {
       if (value.length > colorProducts.length) {
@@ -76,7 +76,7 @@ const NewProductData = () => {
             }
 
             return true
-          })
+          }),
         )
       }
 
@@ -97,7 +97,7 @@ const NewProductData = () => {
 
   const handleAddInfo = (key: string, title: string, value: string) => {
     const chosenInfo = productData.additionalInfo.find(
-      (info) => info.key === key
+      (info) => info.key === key,
     )
 
     const changedInfo = productData.additionalInfo.map((info) => {
@@ -123,13 +123,13 @@ const NewProductData = () => {
 
   const handleRemove = (
     evt: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    color: string
+    color: string,
   ) => {
     evt.stopPropagation()
     evt.preventDefault()
 
     setColorProducts(
-      colorProducts.filter((colorProduct) => colorProduct.color !== color)
+      colorProducts.filter((colorProduct) => colorProduct.color !== color),
     )
     setSelectedColor(colorProducts[0].color || '')
   }
@@ -145,7 +145,7 @@ const NewProductData = () => {
         }
 
         return colorProduct
-      })
+      }),
     )
   }
 
@@ -160,7 +160,7 @@ const NewProductData = () => {
         }
 
         return colorProduct
-      })
+      }),
     )
   }
 
@@ -176,7 +176,7 @@ const NewProductData = () => {
           }
 
           return colorProduct
-        })
+        }),
       )
     } else {
       setProductData({ ...productData, images: images })
@@ -222,7 +222,7 @@ const NewProductData = () => {
   useEffect(() => {
     if (productData.category) {
       const category = categories.find(
-        (category) => category.title === productData.category
+        (category) => category.title === productData.category,
       )
 
       if (category) setAdditionalFields(category.fields)
@@ -232,7 +232,7 @@ const NewProductData = () => {
   useEffect(() => {
     if (selectedColor && colorProducts) {
       setSelectedProduct(
-        colorProducts.find((product) => product.color === selectedColor)
+        colorProducts.find((product) => product.color === selectedColor),
       )
     }
   }, [selectedColor, colorProducts])
@@ -248,7 +248,6 @@ const NewProductData = () => {
       {productData.category && (
         <Box className={styles.productData}>
           <SectionHeader title="Բնութագրերը" />
-
           <TextField
             label="Անվանումը"
             onChange={(evt) =>
@@ -291,10 +290,6 @@ const NewProductData = () => {
             brand={productData.brand}
             onChange={(brand) => handleChange(ProductKeys.BRAND, brand)}
           />
-          <CountrySelect
-            country={productData.country}
-            onChange={(country) => handleChange(ProductKeys.COUNTRY, country)}
-          />
           {additionalFields.map(({ key, title }) => (
             <TextField
               label={title}
@@ -302,6 +297,12 @@ const NewProductData = () => {
               onChange={(evt) => handleAddInfo(key, title, evt.target.value)}
             />
           ))}
+          <TextField
+            value={productData.country}
+            onChange={(evt) =>
+              handleChange(ProductKeys.COUNTRY, evt.target.value)
+            }
+          />
           <TextField
             label="Նշումներ"
             multiline

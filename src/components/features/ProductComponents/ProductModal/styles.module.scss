@@ -49,3 +49,22 @@
     }
   }
 }
+
+@media only screen and (max-width: 1000px) {
+  .modal {
+    .modalContent {
+      width: 80%;
+
+      .content {
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .header {
+        .title {
+          font-size: 20px;
+        }
+      }
+    }
+  }
+}

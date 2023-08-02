@@ -1,4 +1,5 @@
 import { FC, useContext, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
   Box,
   Button,
@@ -26,8 +27,13 @@ const ProductsToolbar: FC<IProps> = ({ isBig, changeDisplay }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [isSettingsOpen, setIsSettingsOpen] = useState(false)
 
+  const navigate = useNavigate()
   const { setFilters, filters } = useContext(ProductsContext)
   const { userData } = useContext(AuthContext)
+
+  const handleAdd = () => {
+    navigate('/new-product')
+  }
 
   const changeItemsCount = (count: string) => {
     setFilters({ ...filters, take: count, skip: '0' })
@@ -58,6 +64,9 @@ const ProductsToolbar: FC<IProps> = ({ isBig, changeDisplay }) => {
       </Box>
       {userData?.status !== UserStatus.USER && (
         <Box className={styles.rightBar}>
+          <Button className={styles.button} onClick={handleAdd}>
+            Ավելացնել
+          </Button>
           <Button className={styles.button} onClick={() => setIsOpen(true)}>
             Ապրանքի ընդունում
           </Button>

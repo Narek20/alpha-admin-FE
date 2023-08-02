@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { Carousel } from 'react-responsive-carousel'
 
+import styles from './styles.module.scss'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 
 interface IProps {
@@ -10,7 +11,12 @@ interface IProps {
 
 const ImageCarousel: FC<IProps> = ({ slides, size }) => {
   return (
-    <Carousel showThumbs={false} autoPlay infiniteLoop>
+    <Carousel
+      className={styles.carousel}
+      showThumbs={false}
+      autoPlay
+      infiniteLoop
+    >
       {slides.map((slide) => (
         <img
           key={slide}

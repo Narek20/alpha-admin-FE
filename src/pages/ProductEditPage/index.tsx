@@ -1,18 +1,16 @@
-import { useState, useEffect } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Box, TextField, Button } from '@mui/material'
 import Loading from '@shared/Loading'
 import BrandSelect from '@shared/BrandSelect'
 import ColorSelect from '@shared/ColorSelect'
-import SeasonSelect from '@shared/SeasonSelect'
-import GenderSelect from '@shared/GenderSelect'
 import SectionHeader from '@shared/SectionTitle'
 import CountrySelect from '@shared/CountrySelect'
 import CategorySelect from '@shared/CategorySelect'
-import ClaspTypeSelect from '@shared/FastenerTypeSelect'
 import NewProductSizes from '@features/ProductComponents/ProductSizes'
 import NewProductImages from '@features/ProductComponents/ProductImages'
 import { useToast } from 'contexts/toast.context'
+import { CategoriesContext } from 'contexts/category.context'
 import { getFormData } from '@utils/product/formData'
 import { getProductById, updateProduct } from 'services/products.service'
 import { ICreateProduct, ProductKeys, Sizes } from 'types/product.types'
@@ -24,6 +22,9 @@ const min = 0
 
 const ProductEditPage = () => {
   const [isLoading, setIsLoading] = useState(false)
+  const [additionalFields, setAdditionalFields] = useState<
+    { key: string; title: string }[]
+  >([])
   const [productData, setProductData] = useState<
     ICreateProduct & { images: File[] }
   >({
@@ -42,10 +43,11 @@ const ProductEditPage = () => {
   const { id = 0 } = useParams()
   const navigate = useNavigate()
   const { showToast } = useToast()
+  const { categories } = useContext(CategoriesContext)
 
   const handleChange = (
     key: ProductKeys,
-    value: string | string[] | number
+    value: string | string[] | number,
   ) => {
     let changedValue = value
 
@@ -72,6 +74,32 @@ const ProductEditPage = () => {
     setProductData({ ...productData, sizes })
   }
 
+  const handleChangeInfo = (key: string, title: string, value: string) => {
+    const chosenInfo = productData.additionalInfo.find(
+      (info) => info.key === key,
+    )
+
+    const changedInfo = productData.additionalInfo.map((info) => {
+      if (info.key === key) {
+        return {
+          ...info,
+          value,
+        }
+      }
+
+      return info
+    })
+
+    if (!chosenInfo) {
+      changedInfo.push({ value, title, key })
+    }
+
+    setProductData({
+      ...productData,
+      additionalInfo: changedInfo,
+    })
+  }
+
   const handleEdit = async () => {
     const formData = getFormData(productData)
     const data = await updateProduct(formData, +id)
@@ -88,11 +116,23 @@ const ProductEditPage = () => {
       const data = await getProductById(id)
 
       if (data.success) {
-        setProductData(data.data)
+        setProductData({ ...data.data, category: data.data.category.title })
         setIsLoading(false)
       }
     }
   }
+
+  useEffect(() => {
+    if (productData.category) {
+      const category = categories.find(
+        (category) => category.title === productData.category,
+      )
+
+      if (category) {
+        setAdditionalFields(category.fields)
+      }
+    }
+  }, [productData.category])
 
   useEffect(() => {
     getProduct()
@@ -100,6 +140,12 @@ const ProductEditPage = () => {
 
   return (
     <Box className={styles.newProductPage}>
+      <Box className={styles.categoryContainer}>
+        <CategorySelect
+          category={productData.category}
+          onChange={(category) => handleChange(ProductKeys.CATEGORY, category)}
+        />
+      </Box>
       <Box className={styles.productData}>
         {isLoading ? (
           <Loading />
@@ -111,12 +157,6 @@ const ProductEditPage = () => {
               label="Անվանումը"
               onChange={(evt) =>
                 handleChange(ProductKeys.TITLE, evt.target.value)
-              }
-            />
-            <CategorySelect
-              category={productData.category}
-              onChange={(category) =>
-                handleChange(ProductKeys.CATEGORY, category)
               }
             />
             <Box className={styles.prices}>
@@ -143,9 +183,20 @@ const ProductEditPage = () => {
               brand={productData.brand}
               onChange={(brand) => handleChange(ProductKeys.BRAND, brand)}
             />
-            <CountrySelect
-              country={productData.country}
-              onChange={(country) => handleChange(ProductKeys.COUNTRY, country)}
+            {additionalFields.map(({ key, title }) => (
+              <TextField
+                label={title}
+                key={title}
+                onChange={(evt) =>
+                  handleChangeInfo(key, title, evt.target.value)
+                }
+              />
+            ))}
+            <TextField
+              value={productData.country}
+              onChange={(evt) =>
+                handleChange(ProductKeys.COUNTRY, evt.target.value)
+              }
             />
             <TextField
               label="Նշումներ"

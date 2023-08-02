@@ -1,11 +1,11 @@
 .newProductPage {
   display: flex;
-  justify-content: center;
-  position: relative;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+
   .categoryContainer {
-    left: 100px;
-    position: absolute;
-    width: 300px;
+    width: 400px;
   }
 
   .productData {
@@ -80,6 +80,19 @@
       color: white;
       margin-top: 20px;
       height: 50px;
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .newProductPage {
+
+    .categoryContainer {
+      width: 100%;
+    }
+
+    .productData {
+      width: 100%;
     }
   }
 }

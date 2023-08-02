@@ -1,6 +1,13 @@
 import { FC, useContext, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router'
-import { Box, Button, IconButton, Typography } from '@mui/material'
+import {
+  Box,
+  Button,
+  IconButton,
+  Typography,
+  useTheme,
+  useMediaQuery,
+} from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
 import StarOutlinedIcon from '@mui/icons-material/StarOutlined'
@@ -23,6 +30,9 @@ const ProductDetails: FC<{ product: IProduct }> = ({ product }) => {
   const navigate = useNavigate()
   const { showToast } = useToast()
   const { userData } = useContext(AuthContext)
+
+  const theme = useTheme()
+  const isTablet = useMediaQuery(theme.breakpoints.down(1000))
 
   const handleSave = async () => {
     const formData = new FormData()
@@ -73,7 +83,7 @@ const ProductDetails: FC<{ product: IProduct }> = ({ product }) => {
   return (
     <>
       <Box className={styles.carousel}>
-        <ImageCarousel slides={product.images} size={500} />
+        <ImageCarousel slides={product.images} size={isTablet ? 200 : 500} />
       </Box>
       <Box className={styles.productDetails}>
         <Box className={styles.details}>
