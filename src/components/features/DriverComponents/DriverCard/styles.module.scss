@@ -11,6 +11,17 @@
     display: flex;
     align-items: center;
     gap: 20px;
+    align-items: center;
+
+    .info {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      .label {
+        color: white;
+      }
+    }
   }
 
   .free {
@@ -26,17 +37,34 @@
     border-radius: 10px;
     background: red;
   }
+
+  .actions {
+    display: flex;
+    gap: 10px;
+
+    .btns {
+      display: flex;
+    }
+  }
 }
 
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 1400px) {
   .driverCard {
     flex-direction: column;
-    width: auto;
+    width: 300px;
 
     .driverInfo {
       flex-direction: column;
       gap: 5px;
       margin-bottom: 20px;
+
+      .info {
+        flex-direction: row;
+      }
+    }
+
+    .actions {
+      flex-direction: column;
     }
   }
 }

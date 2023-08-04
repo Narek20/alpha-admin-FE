@@ -7,7 +7,7 @@
 
       .index {
         font-weight: 600;
-        color: black;
+        // color: black;
         display: flex;
         align-items: center;
         width: 100%;
@@ -23,7 +23,7 @@
           div {
             padding: 5px;
             padding-right: 32px;
-            -webkit-text-fill-color: rgba(0, 0, 0, 1);
+            -webkit-text-fill-color: #f6c71e;
             font-weight: 600;
             display: flex;
             align-items: center;
@@ -35,7 +35,7 @@
         div {
           padding: 5px;
           padding-right: 32px;
-          -webkit-text-fill-color: rgba(0, 0, 0, 1);
+          -webkit-text-fill-color: #f6c71e;
           font-weight: 600;
         }
       }
@@ -45,24 +45,24 @@
         div {
           padding: 12px;
           padding-right: 32px;
-          -webkit-text-fill-color: rgba(0, 0, 0, 1);
+          -webkit-text-fill-color: #f6c71e;
           font-weight: 600;
         }
       }
 
       .data {
         font-size: 1px;
-        color: black;
+        // color: black;
         font-weight: 600;
 
         & input {
           font-weight: 600;
-          color: black;
+          // color: black;
           padding: 2px;
         }
 
         & input:disabled {
-          -webkit-text-fill-color: black;
+          -webkit-text-fill-color: #f6c71e;
         }
       }
 
@@ -108,3 +108,115 @@
     }
   }
 }
+
+
+// .tableContainer {
+//   .table {
+//     th {
+//       .headCell {
+//         font-weight: 600;
+//       }
+
+//       .index {
+//         font-weight: 600;
+//         color: black;
+//         display: flex;
+//         align-items: center;
+//         width: 100%;
+//         justify-content: space-between;
+//         margin-right: 15px;
+
+//         .paymentIcon {
+//           width: 20px;
+//           height: 20px;
+//         }
+
+//         .paymentMethods {
+//           div {
+//             padding: 5px;
+//             padding-right: 32px;
+//             -webkit-text-fill-color: rgba(0, 0, 0, 1);
+//             font-weight: 600;
+//             display: flex;
+//             align-items: center;
+//           }
+//         }
+//       }
+
+//       .status {
+//         div {
+//           padding: 5px;
+//           padding-right: 32px;
+//           -webkit-text-fill-color: rgba(0, 0, 0, 1);
+//           font-weight: 600;
+//         }
+//       }
+
+//       .driver {
+//         min-width: 150px;
+//         div {
+//           padding: 12px;
+//           padding-right: 32px;
+//           -webkit-text-fill-color: rgba(0, 0, 0, 1);
+//           font-weight: 600;
+//         }
+//       }
+
+//       .data {
+//         font-size: 1px;
+//         color: black;
+//         font-weight: 600;
+
+//         & input {
+//           font-weight: 600;
+//           color: black;
+//           padding: 2px;
+//         }
+
+//         & input:disabled {
+//           -webkit-text-fill-color: black;
+//         }
+//       }
+
+//       .actions {
+//         display: flex;
+//         margin: auto;
+//         background-color: #2b2b29;
+//         border-radius: 10px;
+//         justify-content: center;
+//         width: fit-content;
+//       }
+//     }
+//   }
+// }
+
+// @media only screen and (max-width: 1000px) {
+//   .tableContainer {
+//     .table {
+//       th {
+
+//         .driver {
+//           div {
+//             font-size: 14px;
+//           }
+//         }
+
+//         .status {
+//           div {
+//             font-size: 14px;
+//           }
+//         }
+
+//         .headCell {
+//           font-size: 14px;
+//         }
+
+//         .data {
+//           & input {
+//             font-size: 14px;
+//           }
+//         }
+//       }
+//     }
+//   }
+// }

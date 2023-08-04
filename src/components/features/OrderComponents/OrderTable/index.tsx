@@ -66,7 +66,7 @@ const OrderTable = () => {
 
   const openCompleteConfirm = (
     evt: React.MouseEvent<HTMLButtonElement>,
-    index: number
+    index: number,
   ) => {
     evt.stopPropagation()
     evt.preventDefault()
@@ -79,7 +79,7 @@ const OrderTable = () => {
 
   const openRemoveConfirm = (
     evt: React.MouseEvent<HTMLButtonElement>,
-    index: number
+    index: number,
   ) => {
     evt.stopPropagation()
     evt.preventDefault()
@@ -134,8 +134,8 @@ const OrderTable = () => {
             orders.map((order, ind) =>
               ind === editRow
                 ? { ...order, status: value as OrderStatus }
-                : order
-            )
+                : order,
+            ),
           )
         }
       }
@@ -153,7 +153,9 @@ const OrderTable = () => {
       if (data.success) {
         showToast('success', data.message)
         setOrders(
-          orders.map((order, index) => (index === editRow ? rowChanges : order))
+          orders.map((order, index) =>
+            index === editRow ? rowChanges : order,
+          ),
         )
         setOpen(false)
         setIsEdit(false)
@@ -171,8 +173,8 @@ const OrderTable = () => {
           orders.map((order, ind) =>
             ind === editRow
               ? { ...order, status: OrderStatus.COMPLETED }
-              : order
-          )
+              : order,
+          ),
         )
       }
     } else {
@@ -222,7 +224,6 @@ const OrderTable = () => {
                   key={order.createdAt}
                   sx={{
                     padding: 20,
-                    backgroundColor: orderRowColor(order.status),
                     border: `1px solid gray`,
                     cursor: 'pointer',
                   }}
@@ -265,7 +266,7 @@ const OrderTable = () => {
                                   onChange={(evt) =>
                                     handleChange(
                                       OrderTableKeysType.PAYMENT_METHOD,
-                                      evt.target.value
+                                      evt.target.value,
                                     )
                                   }
                                 >
@@ -297,7 +298,7 @@ const OrderTable = () => {
                             />
                           )}
                         </TableCell>
-                      )
+                      ),
                   )}
                   {tableColumns.find((column) => column === 'Առաքիչ') && (
                     <TableCell
@@ -319,7 +320,7 @@ const OrderTable = () => {
                         onChange={(evt) =>
                           handleChange(
                             OrderTableKeysType.DRIVER,
-                            evt.target.value
+                            evt.target.value,
                           )
                         }
                       >
@@ -349,7 +350,7 @@ const OrderTable = () => {
                         onChange={(evt) =>
                           handleChange(
                             OrderTableKeysType.CREATED_AT,
-                            evt.target.value
+                            evt.target.value,
                           )
                         }
                         className={styles.data}
@@ -375,7 +376,7 @@ const OrderTable = () => {
                         onChange={(evt) =>
                           handleChange(
                             OrderTableKeysType.DELIVERY_DATE,
-                            evt.target.value
+                            evt.target.value,
                           )
                         }
                         className={styles.data}
@@ -398,11 +399,12 @@ const OrderTable = () => {
                             : order.status
                         }
                         className={styles.status}
+                        style={{ backgroundColor: orderRowColor(order.status) }}
                         disabled={!isEdit || index !== editRow}
                         onChange={(evt) =>
                           handleChange(
                             OrderTableKeysType.STATUS,
-                            evt.target.value
+                            evt.target.value,
                           )
                         }
                       >
@@ -415,7 +417,7 @@ const OrderTable = () => {
                     </TableCell>
                   )}
                   {tableColumns.find(
-                    (column) => column === 'Գործողություններ'
+                    (column) => column === 'Գործողություններ',
                   ) && (
                     <TableCell
                       className={styles.bodyCell}

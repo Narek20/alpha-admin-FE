@@ -52,10 +52,10 @@ export const updateDriver = async (driverData: IDriver): Promise<IResponse> => {
   }
 }
 
-export const removeDriver = async (driverData: number): Promise<IResponse> => {
+export const removeDriver = async (id: string): Promise<IResponse> => {
   try {
     const data = await axiosInstance.delete(
-      DriverEndpoints.DELETE_DRIVER + driverData
+      DriverEndpoints.DELETE_DRIVER + id
     )
 
     return data.data
