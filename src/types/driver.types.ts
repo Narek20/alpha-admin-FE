@@ -11,7 +11,6 @@ export interface IDriver {
   id: string
   fullName: string
   phone: string
-  status: DriverStatus
   direction: string
 }
 
@@ -25,9 +24,4 @@ export enum DriverKeys {
   FULL_NAME = 'fullName',
   PHONE = 'phone',
   DIRECTION = 'direction',
-}
-
-export enum DriverStatus {
-  FREE = 'Ազատ է',
-  DELIVERY = 'Զբաղված է',
 }

@@ -14,7 +14,6 @@ import { useToast } from 'contexts/toast.context'
 import { removeDriver } from 'services/drivers.service'
 import { DriversContext } from 'contexts/driver.context'
 import ConfirmationModal from '@shared/ConfirmationModal'
-import { DriverStatus } from 'types/driver.types'
 
 import styles from './styles.module.scss'
 
@@ -23,10 +22,9 @@ interface IProps {
   fullName: string
   phone: string
   direction: string
-  status: DriverStatus
 }
 
-const DriverCard: FC<IProps> = ({ id, fullName, phone, status, direction }) => {
+const DriverCard: FC<IProps> = ({ id, fullName, phone, direction }) => {
   const [isEdit, setIsEdit] = useState(false)
   const [isRemove, setIsRemove] = useState(false)
 
@@ -65,24 +63,22 @@ const DriverCard: FC<IProps> = ({ id, fullName, phone, status, direction }) => {
         </Box>
       </Box>
       <Box className={styles.actions}>
-        <Typography
-          className={status === DriverStatus.FREE ? styles.free : styles.busy}
-        >
-          {status}
-        </Typography>
         <Box className={styles.btns}>
-        <IconButton className={styles.edit} onClick={() => setIsEdit(true)}>
-          <BorderColorOutlinedIcon sx={{ color: '#067b00' }} />
-        </IconButton>
-        <IconButton className={styles.remove} onClick={() => setIsRemove(true)}>
-          <DeleteOutlineOutlinedIcon sx={{ color: '#f96666' }} />
-        </IconButton>
+          <IconButton className={styles.edit} onClick={() => setIsEdit(true)}>
+            <BorderColorOutlinedIcon sx={{ color: '#067b00' }} />
+          </IconButton>
+          <IconButton
+            className={styles.remove}
+            onClick={() => setIsRemove(true)}
+          >
+            <DeleteOutlineOutlinedIcon sx={{ color: '#f96666' }} />
+          </IconButton>
         </Box>
       </Box>
       <DriverEditModal
         open={isEdit}
         onClose={() => setIsEdit(false)}
-        diver={{ id, fullName, phone, direction, status }}
+        diver={{ id, fullName, phone, direction }}
       />
       <ConfirmationModal
         open={isRemove}
