@@ -27,6 +27,14 @@
             font-weight: 600;
             display: flex;
             align-items: center;
+
+            &:not([aria-disabled]) {
+              border: 1px solid #f6c71e;
+
+              &:hover {
+                border: 1px solid black;
+              }
+            }
           }
         }
       }
@@ -41,16 +49,24 @@
       }
 
       .driver {
-        min-width: 150px;
         div {
-          padding: 12px;
+          padding: 5px;
           padding-right: 32px;
           -webkit-text-fill-color: #f6c71e;
           font-weight: 600;
+
+          &:not([aria-disabled]) {
+            border: 1px solid #f6c71e;
+
+            &:hover {
+              border: 1px solid black;
+            }
+          }
         }
       }
 
       .data {
+        position: relative;
         font-size: 1px;
         // color: black;
         font-weight: 600;
@@ -63,6 +79,16 @@
 
         & input:disabled {
           -webkit-text-fill-color: #f6c71e;
+        }
+
+        & input[type="date"]::-webkit-calendar-picker-indicator {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          opacity: 0;
+          cursor: pointer;
         }
       }
 

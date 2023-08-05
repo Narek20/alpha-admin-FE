@@ -14,6 +14,7 @@ import {
   TextField,
   MenuItem,
   Select,
+  InputBase,
 } from '@mui/material'
 import PaidIcon from '@mui/icons-material/Paid'
 import DoneIcon from '@mui/icons-material/Done'
@@ -315,7 +316,7 @@ const OrderTable = () => {
                             ? rowChanges?.driver
                             : order.driver
                         }
-                        className={styles.status}
+                        className={styles.driver}
                         disabled={!isEdit || index !== editRow}
                         onChange={(evt) =>
                           handleChange(
@@ -387,6 +388,7 @@ const OrderTable = () => {
                   {tableColumns.find((column) => column === 'Ստատուսը') && (
                     <TableCell
                       className={styles.bodyCell}
+                      style={{ backgroundColor: orderRowColor(order.status) }}
                       component="th"
                       scope="row"
                       align="center"
@@ -399,7 +401,7 @@ const OrderTable = () => {
                             : order.status
                         }
                         className={styles.status}
-                        style={{ backgroundColor: orderRowColor(order.status) }}
+                        input={<InputBase />}
                         disabled={!isEdit || index !== editRow}
                         onChange={(evt) =>
                           handleChange(
