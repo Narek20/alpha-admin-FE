@@ -24,13 +24,6 @@ const max = 1000000
 
 const NewProductData = () => {
   const [isCreating, setIsCreating] = useState(false)
-  const [selectedColor, setSelectedColor] = useState('')
-  const [selectedProduct, setSelectedProduct] = useState<
-    { color: string; images: File[]; sizes: Sizes[] } | undefined
-  >(undefined)
-  const [colorProducts, setColorProducts] = useState<
-    { color: string; images: File[]; sizes: Sizes[] }[]
-  >([])
   const [additionalFields, setAdditionalFields] = useState<
     { key: string; title: string }[]
   >([])
@@ -58,41 +51,14 @@ const NewProductData = () => {
     key: ProductKeys,
     value: string | string[] | number,
   ) => {
-    if (key === ProductKeys.COLOR && Array.isArray(value)) {
-      if (value.length > colorProducts.length) {
-        setColorProducts([
-          ...colorProducts,
-          {
-            color: value[value.length - 1],
-            sizes: [],
-            images: [],
-          },
-        ])
-      } else {
-        setColorProducts(
-          colorProducts.filter((colorProduct) => {
-            if (!value.find((color) => color === colorProduct.color)) {
-              return false
-            }
+    let changedValue = value
 
-            return true
-          }),
-        )
-      }
-
-      if (!selectedColor) {
-        setSelectedColor(value[0])
-      }
-    } else {
-      let changedValue = value
-
-      if (key === ProductKeys.PRICE || key === ProductKeys.PURCHASE_PRICE) {
-        if (+changedValue > max) changedValue = max
-        if (+changedValue < min) changedValue = min
-      }
-
-      setProductData({ ...productData, [key]: value })
+    if (key === ProductKeys.PRICE || key === ProductKeys.PURCHASE_PRICE) {
+      if (+changedValue > max) changedValue = max
+      if (+changedValue < min) changedValue = min
     }
+
+    setProductData({ ...productData, [key]: value })
   }
 
   const handleAddInfo = (key: string, title: string, value: string) => {
@@ -121,102 +87,35 @@ const NewProductData = () => {
     })
   }
 
-  const handleRemove = (
-    evt: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    color: string,
-  ) => {
-    evt.stopPropagation()
-    evt.preventDefault()
-
-    setColorProducts(
-      colorProducts.filter((colorProduct) => colorProduct.color !== color),
-    )
-    setSelectedColor(colorProducts[0].color || '')
+  const handleSizeChange = (sizes: Sizes[]) => {
+    setProductData({ ...productData, sizes })
   }
 
-  const handleSizeChange = (sizes: Sizes[], color?: string) => {
-    setColorProducts(
-      colorProducts.map((colorProduct) => {
-        if (colorProduct.color === color) {
-          return {
-            ...colorProduct,
-            sizes,
-          }
-        }
-
-        return colorProduct
-      }),
-    )
+  const addSize = () => {
+    setProductData({
+      ...productData,
+      sizes: [...productData.sizes, { size: '', smSize: '' }],
+    })
   }
 
-  const addSize = (color?: string) => {
-    setColorProducts(
-      colorProducts.map((colorProduct) => {
-        if (color === colorProduct.color) {
-          return {
-            ...colorProduct,
-            sizes: [...colorProduct.sizes, { size: '' }],
-          }
-        }
-
-        return colorProduct
-      }),
-    )
-  }
-
-  const handleChangeImages = (images: File[], color?: string) => {
-    if (selectedColor) {
-      setColorProducts(
-        colorProducts.map((colorProduct) => {
-          if (colorProduct.color === color) {
-            return {
-              ...colorProduct,
-              images,
-            }
-          }
-
-          return colorProduct
-        }),
-      )
-    } else {
-      setProductData({ ...productData, images: images })
-    }
+  const handleChangeImages = (images: File[]) => {
+    setProductData({ ...productData, images: images })
   }
 
   const handleCreate = async () => {
     setIsCreating(true)
-    if (colorProducts.length) {
-      colorProducts.forEach(async (colorProduct, index) => {
-        const formData = getFormData(productData, colorProduct)
+    const formData = getFormData(productData)
 
-        const data = await createProduct(formData)
+    const data = await createProduct(formData)
 
-        if (data.success) {
-          if (index === colorProducts.length - 1) {
-            setIsCreating(false)
-            getProducts()
-            navigate('/products')
-          }
-        } else {
-          setIsCreating(false)
-          showToast('error', data.message)
-        }
-      })
+    if (data.success) {
+      showToast('success', data.message)
+      getProducts()
+      navigate('/products')
     } else {
-      const formData = getFormData(productData)
-
-      const data = await createProduct(formData)
-
-      if (data.success) {
-        setIsCreating(false)
-        showToast('success', data.message)
-        getProducts()
-        navigate('/products')
-      } else {
-        setIsCreating(false)
-        showToast('error', data.message)
-      }
+      showToast('error', data.message)
     }
+    setIsCreating(false)
   }
 
   useEffect(() => {
@@ -228,14 +127,6 @@ const NewProductData = () => {
       if (category) setAdditionalFields(category.fields)
     }
   }, [productData.category])
-
-  useEffect(() => {
-    if (selectedColor && colorProducts) {
-      setSelectedProduct(
-        colorProducts.find((product) => product.color === selectedColor),
-      )
-    }
-  }, [selectedColor, colorProducts])
 
   return (
     <Box className={styles.newProductPage}>
@@ -258,7 +149,6 @@ const NewProductData = () => {
             <TextField
               className={styles.purchase}
               label="Առք"
-              value={productData.purchasePrice}
               type="number"
               InputProps={{
                 inputProps: {
@@ -272,7 +162,6 @@ const NewProductData = () => {
             />
             <TextField
               className={styles.price}
-              value={productData.price}
               label="Վաճառք"
               type="number"
               InputProps={{
@@ -298,6 +187,7 @@ const NewProductData = () => {
             />
           ))}
           <TextField
+            label="Արտադրված է"
             value={productData.country}
             onChange={(evt) =>
               handleChange(ProductKeys.COUNTRY, evt.target.value)
@@ -310,48 +200,13 @@ const NewProductData = () => {
               handleChange(ProductKeys.NOTES, evt.target.value)
             }
           />
-          <SectionHeader title="Գույները" />
-          <ColorSelect
-            multiple={true}
-            color={colorProducts.map(({ color }) => color || '')}
-            onChange={(colors) => handleChange(ProductKeys.COLOR, colors)}
+          <NewProductSizes
+            sizes={productData.sizes}
+            handleSizeChange={handleSizeChange}
+            addSize={addSize}
           />
-          <Box className={styles.colors}>
-            {colorProducts.map(({ color }) => (
-              <Box
-                key={color}
-                className={
-                  selectedColor === color
-                    ? styles.selectedColorContainer
-                    : styles.colorContainer
-                }
-                onClick={() => setSelectedColor(color || '')}
-              >
-                <Typography className={styles.color}>{color}</Typography>
-                <IconButton
-                  className={styles.removeBtn}
-                  onClick={(evt) => handleRemove(evt, color || '')}
-                >
-                  <CloseOutlinedIcon
-                    sx={{ width: 20, height: 20, color: 'red' }}
-                  />
-                </IconButton>
-              </Box>
-            ))}
-          </Box>
-          {selectedColor && selectedProduct && (
-            <NewProductSizes
-              color={selectedColor}
-              sizes={selectedProduct.sizes}
-              handleSizeChange={handleSizeChange}
-              addSize={addSize}
-            />
-          )}
           <NewProductImages
-            images={
-              selectedProduct ? selectedProduct.images : productData.images
-            }
-            color={selectedColor}
+            images={productData.images}
             changeImages={handleChangeImages}
           />
           <Button

@@ -57,7 +57,7 @@ const ProductDetails: FC<{ product: IProduct }> = ({ product }) => {
         }
 
         return elem
-      })
+      }),
     )
   }
 
@@ -112,7 +112,7 @@ const ProductDetails: FC<{ product: IProduct }> = ({ product }) => {
                       {product[key]}
                     </Typography>
                   </Box>
-                )
+                ),
             )}
             {product.additionalInfo &&
               product.additionalInfo.map(({ value, title }) => (
@@ -160,7 +160,7 @@ const ProductDetails: FC<{ product: IProduct }> = ({ product }) => {
                       onClick={() =>
                         handleChange(
                           index,
-                          quantity && quantity > 0 ? --quantity : 0
+                          quantity && quantity > 0 ? --quantity : 0,
                         )
                       }
                     >

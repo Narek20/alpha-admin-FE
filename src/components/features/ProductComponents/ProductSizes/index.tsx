@@ -7,22 +7,16 @@ import { Sizes } from 'types/product.types'
 import styles from './styles.module.scss'
 
 interface IProps {
-  color?: string
   sizes: Sizes[]
-  addSize: (color?: string) => void
+  addSize: () => void
   handleSizeChange: (sizes: Sizes[], color?: string) => void
 }
 
-const NewProductSizes: FC<IProps> = ({
-  color,
-  sizes,
-  addSize,
-  handleSizeChange,
-}) => {
+const NewProductSizes: FC<IProps> = ({ sizes, addSize, handleSizeChange }) => {
   const handleChange = (
     sizeType: 'size' | 'smSize',
     index: number,
-    value: string
+    value: string,
   ) => {
     handleSizeChange(
       sizes.map((elem, ind) => {
@@ -35,15 +29,11 @@ const NewProductSizes: FC<IProps> = ({
 
         return elem
       }),
-      color
     )
   }
 
   const removeSize = (index: number) => {
-    handleSizeChange(
-      sizes.filter((_, i) => i !== index),
-      color
-    )
+    handleSizeChange(sizes.filter((_, i) => i !== index))
   }
 
   return (
@@ -69,7 +59,7 @@ const NewProductSizes: FC<IProps> = ({
             </IconButton>
           </Box>
         ))}
-        <Button className={styles.addBtn} onClick={() => addSize(color)}>
+        <Button className={styles.addBtn} onClick={() => addSize()}>
           Ավելացնել չափս
         </Button>
       </Box>
