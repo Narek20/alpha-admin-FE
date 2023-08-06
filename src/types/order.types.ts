@@ -32,7 +32,7 @@ export interface IOrder {
   quantity: number
   size?: string
   formattedDate: string
-  orderProducts: Array<{ quantity: number; product: IProduct }>
+  orderProducts: orderProductType[]
   updatedAt: string
   createdAt: string
   productIDs?: Array<{ quantity: number; id: number; size?: string }>
@@ -41,6 +41,13 @@ export interface IOrder {
   deliveryDate: string
   isSpecial?: boolean
   paymentMethod: PaymentMethods
+}
+
+export type orderProductType = {
+  id: number
+  quantity: number
+  product: IProduct
+  size?: string
 }
 
 export enum OrderStatus {

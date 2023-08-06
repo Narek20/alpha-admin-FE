@@ -11,25 +11,36 @@ import {
   TableHead,
   TableContainer,
   Typography,
+  IconButton,
+  Select,
+  MenuItem,
 } from '@mui/material'
 import { IProduct } from 'types/product.types'
+import AddIcon from '@mui/icons-material/Add'
+import RemoveIcon from '@mui/icons-material/Remove'
 
 import styles from './styles.module.scss'
 
 interface IProps {
   data: Array<{ product: IProduct; quantity: number; size?: string }>
+  isEditing: boolean
+  editProduct: (
+    id: number,
+    newData: { size?: string; quantity?: number },
+  ) => void
 }
 
-const ProductTable: FC<IProps> = ({ data }) => {
-  const columns = [
-    'Նկար',
-    'Կատեգորիա',
-    'Բրենդ',
-    'Անվանում',
-    'Չափս',
-    'Քանակ',
-    'Գին',
-  ]
+const columns = [
+  'Նկար',
+  'Կատեգորիա',
+  'Բրենդ',
+  'Անվանում',
+  'Չափս',
+  'Քանակ',
+  'Գին',
+]
+
+const ProductTable: FC<IProps> = ({ data, isEditing, editProduct }) => {
   const navigate = useNavigate()
 
   return (
@@ -45,9 +56,9 @@ const ProductTable: FC<IProps> = ({ data }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map(({ quantity, product, size }) => (
+          {data.map(({ quantity, product, size }, index) => (
             <TableRow
-              key={product.title}
+              key={`${product.id} ${size ? size : ''}`}
               sx={{ padding: 20 }}
               className={styles.bodyRow}
             >
@@ -102,7 +113,25 @@ const ProductTable: FC<IProps> = ({ data }) => {
                 scope="row"
                 align="left"
               >
-                <Typography className={styles.data}>{size}</Typography>
+                {product.sizes && isEditing ? (
+                  <Select
+                    value={size}
+                    className={styles.select}
+                    onChange={(evt) =>
+                      editProduct(index, { size: evt.target.value })
+                    }
+                  >
+                    {product.sizes.map((el) =>
+                      // el.quantity ? (
+                        <MenuItem key={el.size} value={el.size}>
+                          {el.size}
+                        </MenuItem>
+                      // ) : null,
+                    )}
+                  </Select>
+                ) : (
+                  <Typography className={styles.data}>{size}</Typography>
+                )}
               </TableCell>
               <TableCell
                 className={styles.bodyCell}
@@ -110,7 +139,34 @@ const ProductTable: FC<IProps> = ({ data }) => {
                 scope="row"
                 align="left"
               >
-                <Typography className={styles.data}>{quantity}</Typography>
+                <Box className={styles.incDecBox}>
+                  <Typography className={styles.data}>{quantity}</Typography>
+                  {isEditing && (
+                    <Box className={styles.incDecActions}>
+                      <IconButton
+                        onClick={() =>
+                          // quantity <
+                          //   (product.sizes?.find((el) => el.size === size)
+                          //     ?.quantity || 0) &&
+                          editProduct(index, {
+                            quantity: quantity + 1,
+                          })
+                        }
+                      >
+                        <AddIcon />
+                      </IconButton>
+                      <IconButton
+                        onClick={() =>
+                          editProduct(index, {
+                            quantity: quantity - 1,
+                          })
+                        }
+                      >
+                        <RemoveIcon />
+                      </IconButton>
+                    </Box>
+                  )}
+                </Box>
               </TableCell>
               <TableCell
                 className={styles.bodyCell}
