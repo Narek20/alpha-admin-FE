@@ -18,6 +18,7 @@ import {
 import { IProduct } from 'types/product.types'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined'
 
 import styles from './styles.module.scss'
 
@@ -28,6 +29,7 @@ interface IProps {
     id: number,
     newData: { size?: string; quantity?: number },
   ) => void
+  handleRemove: (index: number) => void
 }
 
 const columns = [
@@ -40,7 +42,12 @@ const columns = [
   'Գին',
 ]
 
-const ProductTable: FC<IProps> = ({ data, isEditing, editProduct }) => {
+const ProductTable: FC<IProps> = ({
+  data,
+  isEditing,
+  editProduct,
+  handleRemove,
+}) => {
   const navigate = useNavigate()
 
   return (
@@ -53,6 +60,7 @@ const ProductTable: FC<IProps> = ({ data, isEditing, editProduct }) => {
                 {key}
               </TableCell>
             ))}
+            {isEditing && <TableCell key="actions" align="left"></TableCell>}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -121,11 +129,13 @@ const ProductTable: FC<IProps> = ({ data, isEditing, editProduct }) => {
                       editProduct(index, { size: evt.target.value })
                     }
                   >
-                    {product.sizes.map((el) =>
-                      // el.quantity ? (
+                    {product.sizes.map(
+                      (el) => (
+                        // el.quantity ? (
                         <MenuItem key={el.size} value={el.size}>
                           {el.size}
                         </MenuItem>
+                      ),
                       // ) : null,
                     )}
                   </Select>
@@ -176,6 +186,18 @@ const ProductTable: FC<IProps> = ({ data, isEditing, editProduct }) => {
               >
                 <Typography className={styles.data}>{product.price}</Typography>
               </TableCell>
+              {isEditing && (
+                <TableCell
+                  className={styles.bodyCell}
+                  component="th"
+                  scope="row"
+                  align="left"
+                >
+                  <IconButton onClick={() => handleRemove(index)}>
+                    <DeleteOutlineOutlinedIcon sx={{ color: 'red' }} />
+                  </IconButton>
+                </TableCell>
+              )}
             </TableRow>
           ))}
         </TableBody>

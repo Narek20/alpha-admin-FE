@@ -91,6 +91,16 @@ const OrderPage = () => {
     )
   }
 
+  const removeOrderProduct = (index: number) => {
+    setOrder(
+      (prev) =>
+        prev && {
+          ...prev,
+          orderProducts: prev.orderProducts.filter((_, i) => i !== index),
+        },
+    )
+  }
+
   const handleFilterSearch = (data: IProduct[]) =>
     data.filter(
       (product: IProduct) =>
@@ -256,6 +266,7 @@ const OrderPage = () => {
               data={order.orderProducts}
               isEditing={isEditing}
               editProduct={editProduct}
+              handleRemove={removeOrderProduct}
             />
             {isEditing && (
               <Box>
