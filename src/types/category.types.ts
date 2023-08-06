@@ -9,7 +9,6 @@ export interface ICategoryContext {
 
 interface IField {
   title: string
-  key: string
 }
 
 export interface ICategory {

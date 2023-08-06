@@ -24,9 +24,9 @@ const max = 1000000
 
 const NewProductData = () => {
   const [isCreating, setIsCreating] = useState(false)
-  const [additionalFields, setAdditionalFields] = useState<
-    { key: string; title: string }[]
-  >([])
+  const [additionalFields, setAdditionalFields] = useState<{ title: string }[]>(
+    [],
+  )
   const [productData, setProductData] = useState<
     ICreateProduct & { images: File[] }
   >({
@@ -61,13 +61,13 @@ const NewProductData = () => {
     setProductData({ ...productData, [key]: value })
   }
 
-  const handleAddInfo = (key: string, title: string, value: string) => {
+  const handleAddInfo = (title: string, value: string) => {
     const chosenInfo = productData.additionalInfo.find(
-      (info) => info.key === key,
+      (info) => info.title === title,
     )
 
     const changedInfo = productData.additionalInfo.map((info) => {
-      if (info.key === key) {
+      if (info.title === title) {
         return {
           ...info,
           value,
@@ -78,7 +78,7 @@ const NewProductData = () => {
     })
 
     if (!chosenInfo) {
-      changedInfo.push({ value, title, key })
+      changedInfo.push({ value, title })
     }
 
     setProductData({
@@ -148,6 +148,7 @@ const NewProductData = () => {
           <Box className={styles.prices}>
             <TextField
               className={styles.purchase}
+              value={productData.purchasePrice || undefined}
               label="Առք"
               type="number"
               InputProps={{
@@ -162,6 +163,7 @@ const NewProductData = () => {
             />
             <TextField
               className={styles.price}
+              value={productData.price || undefined}
               label="Վաճառք"
               type="number"
               InputProps={{
@@ -179,11 +181,11 @@ const NewProductData = () => {
             brand={productData.brand}
             onChange={(brand) => handleChange(ProductKeys.BRAND, brand)}
           />
-          {additionalFields.map(({ key, title }) => (
+          {additionalFields.map(({ title }) => (
             <TextField
               label={title}
               key={title}
-              onChange={(evt) => handleAddInfo(key, title, evt.target.value)}
+              onChange={(evt) => handleAddInfo(title, evt.target.value)}
             />
           ))}
           <TextField

@@ -10,6 +10,7 @@ import CategorySelect from '@shared/CategorySelect'
 import NewProductSizes from '@features/ProductComponents/ProductSizes'
 import NewProductImages from '@features/ProductComponents/ProductImages'
 import { useToast } from 'contexts/toast.context'
+import { ProductsContext } from 'contexts/products.context'
 import { CategoriesContext } from 'contexts/category.context'
 import { getFormData } from '@utils/product/formData'
 import { getProductById, updateProduct } from 'services/products.service'
@@ -23,7 +24,7 @@ const min = 0
 const ProductEditPage = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [additionalFields, setAdditionalFields] = useState<
-    { key: string; title: string }[]
+    { title: string; value?: string }[]
   >([])
   const [productData, setProductData] = useState<
     ICreateProduct & { images: File[] }
@@ -44,6 +45,7 @@ const ProductEditPage = () => {
   const navigate = useNavigate()
   const { showToast } = useToast()
   const { categories } = useContext(CategoriesContext)
+  const { getProducts } = useContext(ProductsContext)
 
   const handleChange = (
     key: ProductKeys,
@@ -74,13 +76,13 @@ const ProductEditPage = () => {
     setProductData({ ...productData, sizes })
   }
 
-  const handleChangeInfo = (key: string, title: string, value: string) => {
+  const handleChangeInfo = (title: string, value: string) => {
     const chosenInfo = productData.additionalInfo.find(
-      (info) => info.key === key,
+      (info) => info.title === title,
     )
 
-    const changedInfo = productData.additionalInfo.map((info) => {
-      if (info.key === key) {
+    const changedProductInfo = productData.additionalInfo.map((info) => {
+      if (info.title === title) {
         return {
           ...info,
           value,
@@ -90,13 +92,26 @@ const ProductEditPage = () => {
       return info
     })
 
+    const changedInfo = additionalFields.map((info) => {
+      if (info.title === title) {
+        return {
+          ...info,
+          value,
+        }
+      }
+
+      return info
+    })
+
+    setAdditionalFields(changedInfo)
+
     if (!chosenInfo) {
-      changedInfo.push({ value, title, key })
+      changedProductInfo.push({ value, title })
     }
 
     setProductData({
       ...productData,
-      additionalInfo: changedInfo,
+      additionalInfo: changedProductInfo,
     })
   }
 
@@ -106,6 +121,7 @@ const ProductEditPage = () => {
 
     if (data.success) {
       showToast('success', data.message)
+      getProducts()
       navigate('/products')
     }
   }
@@ -123,20 +139,35 @@ const ProductEditPage = () => {
   }
 
   useEffect(() => {
+    getProduct()
+  }, [id])
+
+  useEffect(() => {
     if (productData.category) {
       const category = categories.find(
         (category) => category.title === productData.category,
       )
 
-      if (category) {
-        setAdditionalFields(category.fields)
-      }
+      const fields = category?.fields.map(({ title }) => {
+        const additionalInfo = productData.additionalInfo.find(
+          (info) => info.title === title,
+        )
+
+        if (additionalInfo) {
+          return {
+            title,
+            value: additionalInfo.value,
+          }
+        }
+
+        return {
+          title,
+        }
+      })
+
+      if (category && fields) setAdditionalFields(fields)
     }
   }, [productData.category])
-
-  useEffect(() => {
-    getProduct()
-  }, [id])
 
   return (
     <Box className={styles.newProductPage}>
@@ -183,16 +214,16 @@ const ProductEditPage = () => {
               brand={productData.brand}
               onChange={(brand) => handleChange(ProductKeys.BRAND, brand)}
             />
-            {additionalFields.map(({ key, title }) => (
+            {additionalFields.map(({ title, value }) => (
               <TextField
                 label={title}
+                value={value}
                 key={title}
-                onChange={(evt) =>
-                  handleChangeInfo(key, title, evt.target.value)
-                }
+                onChange={(evt) => handleChangeInfo(title, evt.target.value)}
               />
             ))}
             <TextField
+              label="Արտադրված է"
               value={productData.country}
               onChange={(evt) =>
                 handleChange(ProductKeys.COUNTRY, evt.target.value)
@@ -205,11 +236,6 @@ const ProductEditPage = () => {
               onChange={(evt) =>
                 handleChange(ProductKeys.NOTES, evt.target.value)
               }
-            />
-            <SectionHeader title="Գույները" />
-            <ColorSelect
-              color={productData.color || ''}
-              onChange={(colors) => handleChange(ProductKeys.COLOR, colors)}
             />
             <NewProductSizes
               sizes={productData.sizes}

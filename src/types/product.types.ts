@@ -34,7 +34,6 @@ export enum AdditionalDetailsKeys {
 
 export type ProductAdditionalInfo = {
   title: string
-  key: string
   value: string
 }
 

@@ -75,7 +75,7 @@ const ProductSettings: FC<IProps> = ({ open, onClose }) => {
   }
 
   const handleAdd = () => {
-    setCategory([...category, { title: '', fields: [{ title: '', key: '' }] }])
+    setCategory([...category, { title: '', fields: [{ title: '' }] }])
   }
 
   const removeCategory = (categoryTitle: string) => {

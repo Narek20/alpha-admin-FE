@@ -20,7 +20,7 @@ export const getFormData = (
     })
   }
 
-  if (productData.sizes.length) {
+  if (productData.sizes) {
     formData.append('sizes', JSON.stringify(productData.sizes))
   }
 
