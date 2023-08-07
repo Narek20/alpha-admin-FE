@@ -35,6 +35,7 @@
 
     .titleContainer {
       display: flex;
+      flex-wrap: wrap;
 
       .category {
         color: rgb(149, 149, 149);
