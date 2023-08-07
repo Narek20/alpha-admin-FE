@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { renderMatches, useNavigate, useParams } from 'react-router-dom'
 import {
   Box,
@@ -7,17 +7,26 @@ import {
   Typography,
   Autocomplete,
   MenuItem,
+  Select,
+  InputBase,
 } from '@mui/material'
 import Loading from '@shared/Loading'
 import ProductTable from '@shared/ProductsTable'
 import SectionHeader from '@shared/SectionTitle'
-import { IOrder, orderProductType } from 'types/order.types'
+import {
+  IOrder,
+  OrderStatus,
+  PaymentMethods,
+  orderProductType,
+} from 'types/order.types'
 import { IProduct } from 'types/product.types'
 import { getOrderById, updateOrder } from 'services/orders.service'
 import {
   OrderDetailsKeys,
+  OrderStatuses,
   getOrderIcon,
   orderRowColor,
+  paymentMethods,
 } from '@utils/order/constants'
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined'
@@ -27,6 +36,7 @@ import ControlPointIcon from '@mui/icons-material/ControlPoint'
 import styles from './styles.module.scss'
 import { getAllProducts } from 'services/products.service'
 import { ProductSearch } from '@shared/ProductSearch'
+import { DriversContext } from 'contexts/driver.context'
 
 const OrderPage = () => {
   const [isLoading, setIsLoading] = useState(false)
@@ -39,6 +49,8 @@ const OrderPage = () => {
   const [isEditing, setIsEditing] = useState(false)
   const [isAddActive, setIsAddActive] = useState(false)
   const [searchedProducts, setSearchedProducts] = useState<IProduct[]>([])
+
+  const { drivers } = useContext(DriversContext)
 
   const { id } = useParams()
   const navigate = useNavigate()
@@ -77,6 +89,16 @@ const OrderPage = () => {
                   }
                 : { quantity, product, size, id },
           ),
+        },
+    )
+  }
+
+  const editOrder = (newData: Partial<IOrder>) => {
+    setOrder(
+      (prev) =>
+        prev && {
+          ...prev,
+          ...newData,
         },
     )
   }
@@ -187,16 +209,41 @@ const OrderPage = () => {
         <>
           <Box className={styles.header}>
             <SectionHeader title={`Պատվեր №${order.id}`} />
-            <Typography
+            <Select
+              defaultValue={order.status}
+              value={order.status}
               className={styles.status}
+              input={<InputBase />}
+              disabled={!isEditing}
+              onChange={(evt) =>
+                editOrder({ status: evt.target.value as OrderStatus })
+              }
               style={{ background: orderRowColor(order.status) }}
             >
-              {order.status}
-            </Typography>
-            <img
-              style={{ width: 20, height: 20 }}
-              src={getOrderIcon(order.paymentMethod)}
-            />
+              {OrderStatuses.map((status) => (
+                <MenuItem key={status} value={status}>
+                  {status}
+                </MenuItem>
+              ))}
+            </Select>
+            <Select
+              defaultValue={order.paymentMethod}
+              value={order.paymentMethod}
+              className={styles.select}
+              disabled={!isEditing}
+              onChange={(evt) =>
+                editOrder({ paymentMethod: evt.target.value as PaymentMethods })
+              }
+            >
+              {paymentMethods.map((method) => (
+                <MenuItem key={method} value={method}>
+                  <img
+                    style={{ width: 20, height: 20 }}
+                    src={getOrderIcon(method)}
+                  />
+                </MenuItem>
+              ))}
+            </Select>
             {isEditing ? (
               <Box className={styles.right}>
                 <IconButton onClick={acceptEditing}>
@@ -219,23 +266,74 @@ const OrderPage = () => {
             {OrderDetailsKeys.map(
               (detailsKey) =>
                 order[detailsKey.key] && (
-                  <Box
-                    key={detailsKey.label}
-                    className={styles.infoContainer}
-                    onClick={
-                      detailsKey.label === 'Պատվիրատու'
-                        ? () => navigate(`/customers/${order[detailsKey.key]}`)
-                        : undefined
-                    }
-                  >
-                    <Typography className={styles.infoLabel}>
-                      {detailsKey.label}
-                    </Typography>
-                    <Typography className={styles.info}>
-                      {order[detailsKey.key]}
-                    </Typography>
-                  </Box>
+                  <>
+                    {detailsKey.key === 'driver' && (
+                      <Box
+                        key={detailsKey.label}
+                        className={styles.infoContainer}
+                      >
+                        <Typography className={styles.infoLabel}>
+                          {detailsKey.label}
+                        </Typography>
+                        <Select
+                          labelId="driver-label"
+                          variant="outlined"
+                          defaultValue={order.driver}
+                          value={order.driver}
+                          className={styles.select}
+                          disabled={!isEditing}
+                          onChange={(evt) =>
+                            editOrder({ driver: evt.target.value })
+                          }
+                        >
+                          {drivers.map(({ fullName, direction }) => (
+                            <MenuItem key={fullName} value={fullName}>
+                              {`${fullName} ${direction}`}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </Box>
+                    )}
+                    {detailsKey.key === 'deliveryDate' && (
+                      <Box
+                        key={detailsKey.label}
+                        className={styles.infoContainer}
+                      >
+                        <Typography className={styles.infoLabel}>
+                          {detailsKey.label}
+                        </Typography>
+                        <TextField
+                          defaultValue={order.createdAt}
+                          value={order.createdAt}
+                          size="small"
+                          type="date"
+                          onChange={(evt) =>
+                            editOrder({ createdAt: evt.target.value })
+                          }
+                          className={styles.date}
+                          disabled={!isEditing}
+                        />
+                      </Box>
+                    )}
+                  </>
                 ),
+
+              // <Box
+              //   key={detailsKey.label}
+              //   className={styles.infoContainer}
+              //   onClick={
+              //     detailsKey.label === 'Պատվիրատու'
+              //       ? () => navigate(`/customers/${order[detailsKey.key]}`)
+              //       : undefined
+              //   }
+              // >
+              //   <Typography className={styles.infoLabel}>
+              //     {detailsKey.label}
+              //   </Typography>
+              //   <Typography className={styles.info}>
+              //     {order[detailsKey.key]}
+              //   </Typography>
+              // </Box>
             )}
             <Box className={styles.infoContainer}>
               <Typography className={styles.infoLabel}>

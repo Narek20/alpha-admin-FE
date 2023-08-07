@@ -52,4 +52,59 @@
     // padding-bottom: 170px;
     overflow-y: none;
   }
+
+  .select {
+    * {
+      padding: 0;
+      border: 0;
+      font-size: 20px;
+      color: #f6c71e;
+      -webkit-text-fill-color: #f6c71e !important;
+    }
+
+    & input:disabled+svg {
+      opacity: 0;
+    }
+  }
+
+  .status {
+    * {
+      color: black;
+      -webkit-text-fill-color: black !important;
+    }
+
+    & input:disabled {
+
+      +svg {
+        opacity: 0;
+      }
+    }
+  }
+
+  .date {
+    position: relative;
+
+    & input {
+      font-size: 20px;
+      padding: 0;
+    }
+
+    & fieldset {
+      border: 0;
+    }
+
+    & input:disabled {
+      -webkit-text-fill-color: #f6c71e;
+    }
+
+    & input[type="date"]::-webkit-calendar-picker-indicator {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+  }
 }
