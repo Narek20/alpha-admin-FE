@@ -1,22 +1,44 @@
 import { useState, useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
-import { Box, Typography } from '@mui/material'
+import { renderMatches, useNavigate, useParams } from 'react-router-dom'
+import {
+  Box,
+  IconButton,
+  TextField,
+  Typography,
+  Autocomplete,
+  MenuItem,
+} from '@mui/material'
 import Loading from '@shared/Loading'
 import ProductTable from '@shared/ProductsTable'
 import SectionHeader from '@shared/SectionTitle'
-import { IOrder } from 'types/order.types'
-import { getOrderById } from 'services/orders.service'
-import { OrderDetailsKeys, getOrderIcon, orderRowColor } from '@utils/order/constants'
+import { IOrder, orderProductType } from 'types/order.types'
+import { IProduct } from 'types/product.types'
+import { getOrderById, updateOrder } from 'services/orders.service'
+import {
+  OrderDetailsKeys,
+  getOrderIcon,
+  orderRowColor,
+} from '@utils/order/constants'
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
+import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined'
+import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined'
+import ControlPointIcon from '@mui/icons-material/ControlPoint'
 
 import styles from './styles.module.scss'
+import { getAllProducts } from 'services/products.service'
+import { ProductSearch } from '@shared/ProductSearch'
 
 const OrderPage = () => {
   const [isLoading, setIsLoading] = useState(false)
+  const [defaultOrder, setDefaultOrder] = useState<IOrder | null>(null)
   const [order, setOrder] = useState<IOrder | null>(null)
   const [commonQtyAndPrice, setCommonQtyAndPrice] = useState({
     qty: 0,
     price: 0,
   })
+  const [isEditing, setIsEditing] = useState(false)
+  const [isAddActive, setIsAddActive] = useState(false)
+  const [searchedProducts, setSearchedProducts] = useState<IProduct[]>([])
 
   const { id } = useParams()
   const navigate = useNavigate()
@@ -28,10 +50,114 @@ const OrderPage = () => {
 
       if (data.success) {
         setOrder(data.data)
+        setDefaultOrder(data.data)
         setIsLoading(false)
       }
     }
   }
+
+  const editProduct = (index: number, newData: Partial<orderProductType>) => {
+    setOrder(
+      (prev) =>
+        prev && {
+          ...prev,
+          orderProducts: prev.orderProducts.map(
+            ({ quantity, product, size, id }, i) =>
+              index === i
+                ? {
+                    id,
+                    quantity: newData.quantity || quantity,
+                    size:
+                      prev.orderProducts.some(
+                        (orderProduct) => orderProduct.size === newData.size,
+                      ) || !newData.size
+                        ? size
+                        : newData.size,
+                    product,
+                  }
+                : { quantity, product, size, id },
+          ),
+        },
+    )
+  }
+
+  const addOrderProduct = (newData: orderProductType) => {
+    setOrder(
+      (prev) =>
+        prev && {
+          ...prev,
+          orderProducts: [...prev.orderProducts, { ...newData }],
+        },
+    )
+  }
+
+  const removeOrderProduct = (index: number) => {
+    setOrder(
+      (prev) =>
+        prev && {
+          ...prev,
+          orderProducts: prev.orderProducts.filter((_, i) => i !== index),
+        },
+    )
+  }
+
+  const handleFilterSearch = (data: IProduct[]) =>
+    data.filter(
+      (product: IProduct) =>
+        product.sizes?.some(
+          (size) =>
+            !order?.orderProducts.some(
+              (orderProduct) =>
+                orderProduct.product.id === product.id &&
+                orderProduct.size === size.size,
+            ) && size.quantity,
+        ),
+    )
+
+  const handleAddProduct: (
+    event: React.SyntheticEvent<Element, Event>,
+    value: IProduct | null,
+  ) => void = (evt, value) => {
+    const newData = searchedProducts.find((product) => product.id === value?.id)
+    if (!newData) {
+      return
+    }
+    addOrderProduct({
+      id: NaN,
+      product: newData,
+      quantity: 1,
+      size: newData.sizes?.find(
+        (size) =>
+          !order?.orderProducts.some(
+            (orderProduct) =>
+              orderProduct.product.id === newData.id &&
+              orderProduct.size === size.size,
+          ) && size.quantity,
+      )?.size,
+    })
+    setSearchedProducts([])
+    setIsAddActive(false)
+  }
+
+  const acceptEditing = async () => {
+    setIsEditing(false)
+    if (order && order !== defaultOrder) {
+      setIsLoading(true)
+      const data = await updateOrder(order)
+
+      if (data.success) {
+        setDefaultOrder(data.data)
+        setOrder(data.data)
+        setIsLoading(false)
+      }
+    }
+  }
+
+  const cancelEditing = () => {
+    setIsEditing(false)
+    setOrder(defaultOrder)
+  }
+
   useEffect(() => {
     getProduct()
   }, [id])
@@ -46,7 +172,7 @@ const OrderPage = () => {
         {
           qty: 0,
           price: 0,
-        }
+        },
       )
 
       setCommonQtyAndPrice(commonQtyAndPrice)
@@ -71,6 +197,23 @@ const OrderPage = () => {
               style={{ width: 20, height: 20 }}
               src={getOrderIcon(order.paymentMethod)}
             />
+            {isEditing ? (
+              <Box className={styles.right}>
+                <IconButton onClick={acceptEditing}>
+                  <CheckCircleOutlineOutlinedIcon sx={{ color: 'green' }} />
+                </IconButton>
+                <IconButton onClick={cancelEditing}>
+                  <CloseOutlinedIcon sx={{ color: 'red' }} />
+                </IconButton>
+              </Box>
+            ) : (
+              <IconButton
+                onClick={() => setIsEditing(true)}
+                className={styles.right}
+              >
+                <ModeEditOutlineOutlinedIcon />
+              </IconButton>
+            )}
           </Box>
           <Box className={styles.details}>
             {OrderDetailsKeys.map(
@@ -92,7 +235,7 @@ const OrderPage = () => {
                       {order[detailsKey.key]}
                     </Typography>
                   </Box>
-                )
+                ),
             )}
             <Box className={styles.infoContainer}>
               <Typography className={styles.infoLabel}>
@@ -119,7 +262,28 @@ const OrderPage = () => {
           )}
           <SectionHeader title="Պատվիրված ապրանքները" />
           <Box className={styles.products}>
-            <ProductTable data={order.orderProducts} />
+            <ProductTable
+              data={order.orderProducts}
+              isEditing={isEditing}
+              editProduct={editProduct}
+              handleRemove={removeOrderProduct}
+            />
+            {isEditing && (
+              <Box>
+                {isAddActive ? (
+                  <ProductSearch
+                    searchedProducts={searchedProducts}
+                    setSearchedProducts={setSearchedProducts}
+                    onChange={handleAddProduct}
+                    handleFilter={handleFilterSearch}
+                  />
+                ) : (
+                  <IconButton onClick={() => setIsAddActive(true)}>
+                    <ControlPointIcon sx={{ color: 'green' }} />
+                  </IconButton>
+                )}
+              </Box>
+            )}
           </Box>
         </>
       )}

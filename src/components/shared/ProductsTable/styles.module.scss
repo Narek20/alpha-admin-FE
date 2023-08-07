@@ -1,11 +1,11 @@
 .tableContainer {
-  padding-bottom: 170px;
+  // padding-bottom: 170px;
   overflow-y: none;
+
   .table {
     width: 100%;
 
-    tr {
-    }
+    tr {}
 
     th {
       padding: 20px;
@@ -50,7 +50,26 @@
       }
 
       .data {
+        display: inline-block;
+        margin: auto 0;
       }
     }
+  }
+}
+
+.incDecBox {
+  display: flex;
+
+  .incDecActions {
+    display: inline-flex;
+    flex-direction: column;
+    margin-left: 5px;
+  }
+}
+
+.select {
+  div {
+    -webkit-text-fill-color: #f6c71e;
+    border: 1px solid #f6c71e;
   }
 }
