@@ -12,7 +12,8 @@ export interface IUserContext {
 export type IUser = {
   id: number
   fullName: string
-  phone: string
+  login: string
+  password: string
   status: UserStatus
   isAdmin: boolean
 }

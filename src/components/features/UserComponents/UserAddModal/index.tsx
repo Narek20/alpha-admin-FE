@@ -27,15 +27,17 @@ interface IProps {
 }
 
 const UserAddModal: FC<IProps> = ({ open, users, setUsers, onClose }) => {
-  const [phone, setPhone] = useState('')
+  const [login, setLogin] = useState('')
+  const [password, setPassword] = useState('')
   const [fullName, setFullName] = useState('')
-  const [status, setStatus] = useState({label: '', key: ''})
+  const [status, setStatus] = useState({ label: '', key: '' })
 
   const { showToast } = useToast()
 
   const handleConfirm = async () => {
     const data = await createUser({
-      phone,
+      login,
+      password,
       fullName,
       status: status.key,
     } as IUser)
@@ -66,9 +68,17 @@ const UserAddModal: FC<IProps> = ({ open, users, setUsers, onClose }) => {
           />
           <TextField
             className={styles.editInput}
-            value={phone}
-            onChange={(evt) => setPhone(evt.target.value)}
-            label="Հեռախոս"
+            value={login}
+            onChange={(evt) => setLogin(evt.target.value)}
+            label="Լոգին"
+            maxRows={5}
+            variant="outlined"
+          />
+          <TextField
+            className={styles.editInput}
+            value={password}
+            onChange={(evt) => setPassword(evt.target.value)}
+            label="Գաղտնաբառ"
             maxRows={5}
             variant="outlined"
           />

@@ -4,7 +4,7 @@
   align-items: center;
   height: 100%;
   width: 100%;
-  margin-top: 300px;
+  margin-top: 200px;
 
   .content {
     background-color: #2b2b29;
@@ -12,9 +12,13 @@
     border-radius: 10px;
     width: 400px;
 
-    .phoneInput {
+    .loginInput {
       width: 100%;
       margin: 20px 0px;
+    }
+
+    .passwordInput {
+      width: 100%;
     }
 
     .submitBtn {

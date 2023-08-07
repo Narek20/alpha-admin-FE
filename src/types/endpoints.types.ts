@@ -31,12 +31,11 @@ export enum DriverEndpoints {
 export enum UsersEndpoints {
   USERS = 'users/',
   GET_ONE = 'users/one',
-  USER_VERIFY = 'users/verify',
+  USERS_LOGIN = 'users/login',
   CREATE_USER = 'users/create',
   UPDATE_USER = 'users/',
-  DELETE_USER = 'users/'
+  DELETE_USER = 'users/',
 }
-
 
 export enum CustomerEndpoints {
   CUSTOMER = 'customers/',

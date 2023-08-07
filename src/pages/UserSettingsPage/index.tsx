@@ -65,7 +65,6 @@ const UserSettingsPage = () => {
           <Box className={styles.userContainer} key={user.id}>
             <Box className={styles.info}>
               <Typography>{user.fullName}</Typography>
-              <Typography>{user.phone}</Typography>
               <Typography>
                 {TranslatedUserStatuses[user.status].label}
               </Typography>

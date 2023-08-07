@@ -34,7 +34,8 @@ const UserEditModal: FC<IProps> = ({
   setUsers,
   onClose,
 }) => {
-  const [phone, setPhone] = useState(userData.phone)
+  const [login, setLogin] = useState(userData.login)
+  const [password, setPassword] = useState(userData.password)
   const [fullName, setFullName] = useState(userData.fullName)
   const [status, setStatus] = useState(TranslatedUserStatuses[userData.status])
 
@@ -43,7 +44,8 @@ const UserEditModal: FC<IProps> = ({
   const handleConfirm = async () => {
     const data = await updateUser({
       id: userData.id,
-      phone,
+      login,
+      password,
       fullName,
       status: status.key,
     } as IUser)
@@ -51,7 +53,7 @@ const UserEditModal: FC<IProps> = ({
     if (data.success) {
       showToast('success', data.message)
       setUsers(
-        users.map((user) => (user.id === userData.id ? data.data : user))
+        users.map((user) => (user.id === userData.id ? data.data : user)),
       )
       onClose()
     }
@@ -76,9 +78,17 @@ const UserEditModal: FC<IProps> = ({
           />
           <TextField
             className={styles.editInput}
-            defaultValue={userData.phone}
-            onChange={(evt) => setPhone(evt.target.value)}
-            label="Հեռախոս"
+            defaultValue={userData.login}
+            onChange={(evt) => setLogin(evt.target.value)}
+            label="Լոգին"
+            maxRows={5}
+            variant="outlined"
+          />
+          <TextField
+            className={styles.editInput}
+            defaultValue={userData.password}
+            onChange={(evt) => setPassword(evt.target.value)}
+            label="Գաղտնաբառ"
             maxRows={5}
             variant="outlined"
           />
@@ -98,7 +108,7 @@ const UserEditModal: FC<IProps> = ({
               maxRows={5}
               variant="outlined"
             >
-              {Object.values(TranslatedUserStatuses).map(({key, label}) => (
+              {Object.values(TranslatedUserStatuses).map(({ key, label }) => (
                 <MenuItem key={key} value={label}>
                   {label}
                 </MenuItem>
