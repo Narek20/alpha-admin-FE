@@ -150,7 +150,9 @@ const ProductTable: FC<IProps> = ({
                 align="left"
               >
                 <Box className={styles.incDecBox}>
-                  <Typography className={styles.data}>{quantity}</Typography>
+                  {!isEditing && (
+                    <Typography className={styles.data}>{quantity}</Typography>
+                  )}
                   {isEditing && (
                     <Box className={styles.incDecActions}>
                       <IconButton
@@ -165,6 +167,9 @@ const ProductTable: FC<IProps> = ({
                       >
                         <AddIcon />
                       </IconButton>
+                      <Typography className={styles.data}>
+                        {quantity}
+                      </Typography>
                       <IconButton
                         onClick={() =>
                           editProduct(index, {
