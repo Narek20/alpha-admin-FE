@@ -32,16 +32,18 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined'
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined'
 import ControlPointIcon from '@mui/icons-material/ControlPoint'
+import { ProductSearch } from '@shared/ProductSearch'
+import { useToast } from 'contexts/toast.context'
+import { OrdersContext } from 'contexts/order.context'
+import { DriversContext } from 'contexts/driver.context'
 
 import styles from './styles.module.scss'
-import { getAllProducts } from 'services/products.service'
-import { ProductSearch } from '@shared/ProductSearch'
-import { DriversContext } from 'contexts/driver.context'
 
 const OrderPage = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [defaultOrder, setDefaultOrder] = useState<IOrder | null>(null)
   const [order, setOrder] = useState<IOrder | null>(null)
+  const [originalOrder, setOriginalOrder] = useState<IOrder | null>(null)
   const [commonQtyAndPrice, setCommonQtyAndPrice] = useState({
     qty: 0,
     price: 0,
@@ -51,17 +53,20 @@ const OrderPage = () => {
   const [searchedProducts, setSearchedProducts] = useState<IProduct[]>([])
 
   const { drivers } = useContext(DriversContext)
+  const { getOrders } = useContext(OrdersContext)
+  const {showToast} = useToast()
 
   const { id } = useParams()
   const navigate = useNavigate()
 
-  const getProduct = async () => {
+  const getOrder = async () => {
     if (id) {
       setIsLoading(true)
       const data = await getOrderById(id)
 
       if (data.success) {
         setOrder(data.data)
+        setOriginalOrder(data.data)
         setDefaultOrder(data.data)
         setIsLoading(false)
       }
@@ -171,6 +176,8 @@ const OrderPage = () => {
         setDefaultOrder(data.data)
         setOrder(data.data)
         setIsLoading(false)
+        getOrders()
+        showToast('success', data.message)
       }
     }
   }
@@ -181,7 +188,7 @@ const OrderPage = () => {
   }
 
   useEffect(() => {
-    getProduct()
+    getOrder()
   }, [id])
 
   useEffect(() => {
@@ -203,7 +210,7 @@ const OrderPage = () => {
 
   return (
     <Box className={styles.orderPage}>
-      {isLoading || !order ? (
+      {isLoading || !order || !originalOrder ? (
         <Loading />
       ) : (
         <>
@@ -265,7 +272,7 @@ const OrderPage = () => {
           <Box className={styles.details}>
             {OrderDetailsKeys.map(
               (detailsKey) =>
-                order[detailsKey.key] && (
+                originalOrder[detailsKey.key] && (
                   <>
                     {detailsKey.key === 'driver' && (
                       <Box
@@ -294,7 +301,8 @@ const OrderPage = () => {
                         </Select>
                       </Box>
                     )}
-                    {detailsKey.key === 'deliveryDate' && (
+                    {(detailsKey.key === 'deliveryDate' ||
+                      detailsKey.key === 'createdAt') && (
                       <Box
                         key={detailsKey.label}
                         className={styles.infoContainer}
@@ -303,37 +311,49 @@ const OrderPage = () => {
                           {detailsKey.label}
                         </Typography>
                         <TextField
-                          defaultValue={order.createdAt}
-                          value={order.createdAt}
+                          defaultValue={order[detailsKey.key]}
                           size="small"
                           type="date"
                           onChange={(evt) =>
-                            editOrder({ createdAt: evt.target.value })
+                            editOrder({ [detailsKey.key]: evt.target.value })
                           }
                           className={styles.date}
                           disabled={!isEditing}
                         />
                       </Box>
                     )}
+                    {detailsKey.key !== 'driver' &&
+                      detailsKey.key !== 'createdAt' &&
+                      detailsKey.key !== 'deliveryDate' && (
+                        <Box
+                          key={detailsKey.label}
+                          className={styles.infoContainer}
+                          onClick={
+                            detailsKey.label === 'Պատվիրատու' && !isEditing
+                              ? () =>
+                                  navigate(
+                                    `/customers/${order[detailsKey.key]}`,
+                                  )
+                              : undefined
+                          }
+                        >
+                          <Typography className={styles.infoLabel}>
+                            {detailsKey.label}
+                          </Typography>
+                          <TextField
+                            defaultValue={order[detailsKey.key]}
+                            value={order[detailsKey.key]}
+                            size="small"
+                            onChange={(evt) =>
+                              editOrder({ [detailsKey.key]: evt.target.value })
+                            }
+                            className={styles.date}
+                            disabled={!isEditing}
+                          />
+                        </Box>
+                      )}
                   </>
                 ),
-
-              // <Box
-              //   key={detailsKey.label}
-              //   className={styles.infoContainer}
-              //   onClick={
-              //     detailsKey.label === 'Պատվիրատու'
-              //       ? () => navigate(`/customers/${order[detailsKey.key]}`)
-              //       : undefined
-              //   }
-              // >
-              //   <Typography className={styles.infoLabel}>
-              //     {detailsKey.label}
-              //   </Typography>
-              //   <Typography className={styles.info}>
-              //     {order[detailsKey.key]}
-              //   </Typography>
-              // </Box>
             )}
             <Box className={styles.infoContainer}>
               <Typography className={styles.infoLabel}>
@@ -352,10 +372,17 @@ const OrderPage = () => {
               </Typography>
             </Box>
           </Box>
-          {order.notes && (
+          {originalOrder.notes && (
             <>
               <SectionHeader title="Նշումներ" />
-              <Typography className={styles.notes}>{order.notes}</Typography>
+              <TextField
+                value={order.notes}
+                size="small"
+                onChange={(evt) => editOrder({ notes: evt.target.value })}
+                className={styles.date}
+                style={{margin: '20px 0px'}}
+                disabled={!isEditing}
+              />
             </>
           )}
           <SectionHeader title="Պատվիրված ապրանքները" />
@@ -367,7 +394,7 @@ const OrderPage = () => {
               handleRemove={removeOrderProduct}
             />
             {isEditing && (
-              <Box>
+              <Box className={styles.productAddBtn}>
                 {isAddActive ? (
                   <ProductSearch
                     searchedProducts={searchedProducts}

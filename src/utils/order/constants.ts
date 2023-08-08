@@ -80,7 +80,7 @@ export const OrderDetailsKeys = [
   },
   {
     label: 'Ստեղծվել է',
-    key: OrderTableKeysType.FORMATTED_DATE,
+    key: OrderTableKeysType.CREATED_AT,
   },
 ]
 
