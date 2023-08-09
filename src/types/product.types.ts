@@ -13,6 +13,7 @@ export interface IProductsContext {
     [param: string]: string | string[] | number[]
   }
   getProducts: () => void
+  setProducts: Dispatch<SetStateAction<IProduct[]>>
   setFilters: Dispatch<
     SetStateAction<{ [param: string]: string | string[] | number[] }>
   >

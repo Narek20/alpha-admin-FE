@@ -22,6 +22,7 @@ import { removeProduct, updateProduct } from 'services/products.service'
 import { additionalDetailsKeys } from '@utils/product/constants'
 
 import styles from './styles.module.scss'
+import { ProductsContext } from 'contexts/products.context'
 
 const ProductDetails: FC<{ product: IProduct }> = ({ product }) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -30,6 +31,7 @@ const ProductDetails: FC<{ product: IProduct }> = ({ product }) => {
   const navigate = useNavigate()
   const { showToast } = useToast()
   const { userData } = useContext(AuthContext)
+  const { products, setProducts } = useContext(ProductsContext)
 
   const theme = useTheme()
   const isTablet = useMediaQuery(theme.breakpoints.down(1000))
@@ -70,6 +72,7 @@ const ProductDetails: FC<{ product: IProduct }> = ({ product }) => {
 
     if (data.success) {
       showToast('success', data.message)
+      setProducts(products.filter(({ id }) => id !== product.id))
       navigate('/products')
     }
   }

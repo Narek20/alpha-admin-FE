@@ -15,6 +15,7 @@ export const ProductsContext = createContext<IProductsContext>({
   isLoading: false,
   pagination: { count: 20, skip: 0, take: 10 },
   getProducts: () => {},
+  setProducts: () => {},
   filters: {},
   setFilters: () => {},
 })
@@ -27,7 +28,7 @@ export const useProducts = () => useContext(ProductsContext)
 
 // ProductsProvider component that wraps your app
 export const ProductsProvider = ({ children }: { children: ReactNode }) => {
-  const [products, setProducts] = useState<IProduct[] | []>([])
+  const [products, setProducts] = useState<IProduct[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [pagination, setPagination] = useState<{
     count: number
@@ -81,6 +82,7 @@ export const ProductsProvider = ({ children }: { children: ReactNode }) => {
         pagination,
         getProducts,
         setFilters,
+        setProducts
       }}
     >
       {children}
