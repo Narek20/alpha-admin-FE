@@ -1,6 +1,6 @@
 import { FC, useContext } from 'react'
+import { Autocomplete, TextField } from '@mui/material'
 import { DriversContext } from 'contexts/driver.context'
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material'
 
 import styles from './styles.module.scss'
 
@@ -11,24 +11,17 @@ interface IProps {
 
 const DriverSelect: FC<IProps> = ({ driver, onChange }) => {
   const { drivers } = useContext(DriversContext)
+  
   return (
-    <FormControl className={styles.form}>
-      <InputLabel id="brand-label">Առաքիչ</InputLabel>
-      <Select
-        labelId="brand-label"
-        label="Առաքիչ"
-        className={styles.select}
-        value={driver}
-        onChange={(evt) => onChange(evt.target.value)}
-        MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}
-      >
-        {drivers.map(({ fullName, phone, direction }) => (
-          <MenuItem key={phone} value={fullName}>
-            {`${fullName} ${phone} ${direction}`}
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
+    <Autocomplete
+      disablePortal
+      id="combo-box-demo"
+      className={styles.driver}
+      options={drivers.map((product) => product.fullName)}
+      onChange={(_, value) => onChange(value as string)}
+      value={driver}
+      renderInput={(params) => <TextField {...params} label="Առաքիչ" />}
+    />
   )
 }
 

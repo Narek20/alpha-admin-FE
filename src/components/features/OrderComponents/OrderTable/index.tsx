@@ -15,12 +15,10 @@ import {
   MenuItem,
   Select,
   InputBase,
+  Autocomplete,
 } from '@mui/material'
-import PaidIcon from '@mui/icons-material/Paid'
 import DoneIcon from '@mui/icons-material/Done'
 import StarsIcon from '@mui/icons-material/Stars'
-import LocalAtmIcon from '@mui/icons-material/LocalAtm'
-import CreditCardIcon from '@mui/icons-material/CreditCard'
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined'
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined'
@@ -314,29 +312,25 @@ const OrderTable = () => {
                       scope="row"
                       align="center"
                     >
-                      <Select
-                        labelId="driver-label"
-                        defaultValue={order.driver}
-                        value={
-                          isEdit && editRow === index
-                            ? rowChanges?.driver
-                            : order.driver
-                        }
+                      <Autocomplete
+                        disablePortal
+                        id="combo-box-demo"
                         className={styles.driver}
-                        disabled={!isEdit || index !== editRow}
-                        onChange={(evt) =>
+                        options={drivers.map((product) => product.fullName)}
+                        onChange={(_, value) =>
                           handleChange(
                             OrderTableKeysType.DRIVER,
-                            evt.target.value,
+                            value as string,
                           )
                         }
-                      >
-                        {drivers.map(({ fullName, direction }) => (
-                          <MenuItem key={fullName} value={fullName}>
-                            {`${fullName} ${direction}`}
-                          </MenuItem>
-                        ))}
-                      </Select>
+                        value={
+                          editRow === index ? rowChanges?.driver : order.driver
+                        }
+                        disabled={!isEdit}
+                        renderInput={(params) => (
+                          <TextField {...params} disabled={!isEdit} />
+                        )}
+                      />
                     </TableCell>
                   )}
                   {tableColumns.find((column) => column === 'Ստեղծման օր') && (

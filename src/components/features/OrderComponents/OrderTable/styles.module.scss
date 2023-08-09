@@ -49,19 +49,9 @@
       }
 
       .driver {
-        div {
-          padding: 5px;
-          padding-right: 32px;
+        input {
           -webkit-text-fill-color: black;
           font-weight: 600;
-
-          &:not([aria-disabled]) {
-            border: 1px solid black;
-
-            &:hover {
-              border: 1px solid black;
-            }
-          }
         }
       }
 

@@ -29,6 +29,7 @@ export interface IOrder {
   status: OrderStatus
   city: string
   address: string
+  address2?: string
   quantity: number
   size?: string
   formattedDate: string
@@ -70,6 +71,7 @@ export enum OrderTableKeysType {
   PHONE = 'phone',
   CITY = 'city',
   ADDRESS = 'address',
+  ADDRESS2 = 'address2',
   CREATED_AT = 'createdAt',
   QUANTITY = 'quantity',
   STATUS = 'status',
