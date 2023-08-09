@@ -15,18 +15,18 @@ code {
 }
 
 .App {
-  background-color: #333232;
+  background-color: #dedede;
   min-width: 100vw;
   min-height: 100vh;
 }
 
 .Toastify__toast-theme--light {
-  background-color: #2b2b29;
-  color: #f6c71e;
+  background-color: white;
+  color: black;
 }
 
 .Toastify__close-button {
-  color: #f6c71e;
+  color: black;
   opacity: 1;
 }
 

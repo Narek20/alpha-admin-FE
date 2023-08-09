@@ -47,14 +47,14 @@ const Chart: FC<IProps> = ({ series, labels, colors, type, height, fills }) => {
     xaxis: {
       labels: {
         style: {
-          colors: '#f6c71e',
+          colors: 'black',
         },
       },
     },
     yaxis: {
       labels: {
         style: {
-          colors: '#f6c71e',
+          colors: 'black',
         },
       },
     },

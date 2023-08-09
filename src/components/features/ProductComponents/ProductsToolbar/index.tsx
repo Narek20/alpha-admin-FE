@@ -43,11 +43,11 @@ const ProductsToolbar: FC<IProps> = ({ isBig, changeDisplay }) => {
     <Box className={styles.toolbar}>
       <Box className={styles.leftBar}>
         <IconButton onClick={() => changeDisplay(true)}>
-          <GridViewOutlinedIcon sx={{ color: isBig ? '#f6c71e' : 'black' }} />
+          <GridViewOutlinedIcon sx={{ color: isBig ? 'black' : 'black' }} />
         </IconButton>
         <IconButton onClick={() => changeDisplay(false)}>
           <ViewCompactOutlinedIcon
-            sx={{ color: isBig ? 'black' : '#f6c71e' }}
+            sx={{ color: isBig ? 'black' : 'black' }}
           />
         </IconButton>
         <FormControl className={styles.form}>

@@ -227,6 +227,7 @@ const OrderTable = () => {
                     padding: 20,
                     border: `1px solid gray`,
                     cursor: 'pointer',
+                    backgroundColor: orderRowColor(order.status),
                   }}
                   className={styles[orderStatusStyles(order.status)]}
                 >
@@ -240,6 +241,11 @@ const OrderTable = () => {
                           component="th"
                           scope="row"
                           align="center"
+                          style={
+                            label === 'Համար'
+                              ? { backgroundColor: 'white' }
+                              : {}
+                          }
                         >
                           {ind === 0 ? (
                             <Typography
@@ -388,7 +394,6 @@ const OrderTable = () => {
                   {tableColumns.find((column) => column === 'Ստատուսը') && (
                     <TableCell
                       className={styles.bodyCell}
-                      style={{ backgroundColor: orderRowColor(order.status) }}
                       component="th"
                       scope="row"
                       align="center"

@@ -7,11 +7,11 @@
     justify-content: space-between;
 
     .addBtn {
-      color: white;
+      color: #f6c71e;
       border-radius: 5px;
       font-size: 16px;
       font-weight: 600;
-      background-color: #f6c71e;
+      border: 1px solid #f6c71e;
     }
   }
 
@@ -24,18 +24,18 @@
       padding: 15px;
       border-bottom: 1px solid #000000;
       border-radius: 0px;
-      color: #f6c71e;
+      color: black;
     }
 
     .button:hover {
-      border-bottom: 1px solid #f6c71e;
+      border-bottom: 1px solid black;
     }
 
     .selectedButton {
       padding: 15px;
       border-radius: 0px;
-      color: #f6c71e;
-      border-bottom: 1px solid #f6c71e;
+      color: black;
+      border-bottom: 1px solid #f6ce71;
     }
   }
 
@@ -56,7 +56,7 @@
 
     .settings {
       border-radius: 5px;
-      border: 1px solid #f6c71e;
+      border: 1px solid black;
       padding: 10px;
     }
   }

@@ -16,6 +16,7 @@ export enum OrderEndpoints {
 
 export enum ProductEndpoints {
   PRODUCTS = 'products/',
+  GET_ONE = 'products/one/',
   SEARCH = 'products/search',
   CREATE_PRODUCT = 'products/create',
   GET_PRODUCTS_HISTORY = 'products/history/',

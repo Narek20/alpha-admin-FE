@@ -69,7 +69,7 @@ const NewProductImages: FC<IProps> = ({ images, changeImages }) => {
         ))}
         <label htmlFor="upload-image" className={styles.imageLabel}>
           <Box className={styles.imageAddContainer}>
-            <AddPhotoAlternateIcon sx={{ color: '#f6c71e' }} />
+            <AddPhotoAlternateIcon sx={{ color: 'black' }} />
             <Typography className={styles.imageTitle}>
               Ընտրեք նկարներ
             </Typography>

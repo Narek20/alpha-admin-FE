@@ -2,7 +2,7 @@
   width: 100%;
   padding: 20px;
   border-radius: 10px;
-  background-color: #2b2b29;
+  background-color: white;
 
   .header {
     display: flex;
@@ -58,8 +58,8 @@
       padding: 0;
       border: 0;
       font-size: 20px;
-      color: #f6c71e;
-      -webkit-text-fill-color: #f6c71e !important;
+      color: black;
+      -webkit-text-fill-color: black !important;
     }
 
     & input:disabled+svg {
@@ -94,7 +94,7 @@
     }
 
     & input:disabled {
-      -webkit-text-fill-color: #f6c71e;
+      -webkit-text-fill-color: black;
     }
 
     & input[type="date"]::-webkit-calendar-picker-indicator {

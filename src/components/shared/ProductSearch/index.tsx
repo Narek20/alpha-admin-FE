@@ -34,7 +34,7 @@ export const ProductSearch: React.FC<IProps> = ({
     <Autocomplete
       disablePortal
       id="combo-box-demo"
-      getOptionLabel={(option) => option.title + '-' + option.color}
+      getOptionLabel={(option) => option.title}
       options={searchedProducts.map((product) => product)}
       onChange={onChange}
       value={null}

@@ -1,7 +1,7 @@
 .settingsPage {
   box-sizing: border-box;
   width: 100%;
-  background-color: #2b2b29;
+  background-color: white;
   border-radius: 10px;
   padding: 15px;
 
@@ -12,7 +12,7 @@
     margin-top: 50px;
 
     .userContainer {
-      border: 1px solid #f6c71e;
+      border: 1px solid black;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -33,7 +33,7 @@
   }
 
   .addBtn {
-    color: #f6c71e;
+    color: black;
     margin-top: 30px;
   }
 }

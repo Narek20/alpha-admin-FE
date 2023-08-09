@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, useContext } from 'react'
+import { FC, useState, useRef, useEffect, useContext } from 'react'
 import {
   Box,
   Typography,
@@ -10,7 +10,6 @@ import {
   Select,
   MenuItem,
   FormControl,
-  FormLabel,
   Radio,
   RadioGroup,
   FormControlLabel,
@@ -24,7 +23,7 @@ import DriverSelect from '@shared/DriverSelect'
 import { useToast } from 'contexts/toast.context'
 import { OrdersContext } from 'contexts/order.context'
 import { placeOrder } from 'services/orders.service'
-import { getAllProducts } from 'services/products.service'
+import { search } from 'services/products.service'
 import { IProduct } from 'types/product.types'
 import { IOrder, OrderTableKeysType, PaymentMethods } from 'types/order.types'
 import {
@@ -49,10 +48,11 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
   const [products, setProducts] = useState<IProduct[]>([])
   const [orderData, setOrderData] = useState<{
     [key: string]: string | number | boolean
-  } | null>({paymentMethod: PaymentMethods.CASH})
+  } | null>({ paymentMethod: PaymentMethods.CASH })
 
   const { orders, filters, setFilters } = useContext(OrdersContext)
   const { showToast } = useToast()
+  const abortControllerRef = useRef<AbortController | null>(null)
 
   const handleChange = (key: OrderTableKeysType, value: string | boolean) => {
     setOrderData({ ...orderData, [key]: value })
@@ -61,7 +61,7 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
   const handleProducts = (values: string[]) => {
     if (values.length > selectedProducts.length) {
       const product = products.find(
-        (product) => product.title === values[values.length - 1]
+        (product) => product.title === values[values.length - 1],
       )
 
       if (product) {
@@ -74,19 +74,22 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
     } else {
       setSelectedTitles(
         selectedTitles.filter((title) =>
-          values.find((value) => value === title)
-        )
+          values.find((value) => value === title),
+        ),
       )
       setSelectedProducts(
         selectedProducts.filter((product) =>
-          values.find((value) => value == product.title)
-        )
+          values.find((value) => value == product.title),
+        ),
       )
     }
   }
 
   const searchProducts = async (searchKey: string) => {
-    const data = await getAllProducts({ title: searchKey, take: '10' })
+    const abortController = new AbortController()
+    abortControllerRef.current = abortController
+
+    const data = await search(searchKey, abortController)
 
     if (data.success) {
       setProducts(data.data)
@@ -109,7 +112,7 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
         }
 
         return product
-      })
+      }),
     )
   }
 
@@ -124,7 +127,7 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
         }
 
         return product
-      })
+      }),
     )
   }
 
@@ -139,7 +142,7 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
         }
 
         return product
-      })
+      }),
     )
   }
 
@@ -164,8 +167,7 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
 
       setFilters({})
       showToast('success', data.message)
-      setOrderData({}),
-      setProducts([])
+      setOrderData({}), setProducts([])
       onClose()
     } else {
       showToast('error', data.message)
@@ -184,7 +186,7 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
         }
 
         return product
-      })
+      }),
     )
   }
 
@@ -249,7 +251,7 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
                         onClick={() =>
                           handleChange(
                             OrderTableKeysType.IS_SPECIAL,
-                            !orderData?.isSpecial
+                            !orderData?.isSpecial,
                           )
                         }
                       />
@@ -264,7 +266,7 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
                   onChange={(evt) =>
                     handleChange(
                       OrderTableKeysType.PAYMENT_METHOD,
-                      evt.target.value as string
+                      evt.target.value as string,
                     )
                   }
                 >

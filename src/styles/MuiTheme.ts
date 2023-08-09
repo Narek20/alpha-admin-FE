@@ -5,36 +5,36 @@ export const THEME = createTheme({
     MuiTypography: {
       styleOverrides: {
         root: {
-          color: '#f6c71e',
+          color: 'black',
         },
       },
     },
     MuiTextField: {
       styleOverrides: {
         root: {
-          color: '#f6c71e',
-          borderColor: '#f6c71e',
+          color: 'black',
+          borderColor: 'black',
           '& .MuiInput-underline': {
-            borderBottomColor: '#f6c71e',
+            borderBottomColor: 'black',
           },
           '& .MuiOutlinedInput-root': {
-            borderColor: '#f6c71e',
+            borderColor: 'black',
 
             '&.Mui-focused fieldset': {
-              borderColor: '#f6c71e',
+              borderColor: 'black',
             },
           },
           '& fieldset': {
-            borderColor: '#f6c71e',
+            borderColor: 'black',
           },
           '& label.Mui-focused': {
-            color: '#f6c71e',
+            color: 'black',
           },
           '& .MuiInput-underline:after': {
-            borderBottomColor: '#f6c71e',
+            borderBottomColor: 'black',
           },
           '& .MuiFilledInput-underline:after': {
-            borderBottomColor: '#f6c71e',
+            borderBottomColor: 'black',
           },
         },
       },
@@ -42,7 +42,7 @@ export const THEME = createTheme({
     MuiFormLabel: {
       styleOverrides: {
         root: {
-          color: '#f6c71e',
+          color: 'black',
         },
       },
     },
@@ -70,7 +70,7 @@ export const THEME = createTheme({
     MuiInputLabel: {
       styleOverrides: {
         root: {
-          color: '#f6c71e',
+          color: 'black',
         },
       },
     },
@@ -78,32 +78,32 @@ export const THEME = createTheme({
       styleOverrides: {
         root: {
           '& .MuiInput-underline': {
-            borderBottomColor: '#f6c71e',
+            borderBottomColor: 'black',
           },
           '& .MuiOutlinedInput-root': {
-            borderColor: '#f6c71e',
+            borderColor: 'black',
 
             '&.Mui-focused fieldset': {
-              borderColor: '#f6c71e',
+              borderColor: 'black',
             },
           },
           '& input': {
-            color: '#f6c71e',
+            color: 'black',
           },
           '& div': {
-            color: '#f6c71e',
+            color: 'black',
           },
           '& fieldset': {
-            borderColor: '#f6c71e',
+            borderColor: 'black',
           },
           '& label.Mui-focused': {
-            color: '#f6c71e',
+            color: 'black',
           },
           '& .MuiInput-underline:after': {
-            borderBottomColor: '#f6c71e',
+            borderBottomColor: 'black',
           },
           '& .MuiFilledInput-underline:after': {
-            borderBottomColor: '#f6c71e',
+            borderBottomColor: 'black',
           },
         },
       },
@@ -111,7 +111,7 @@ export const THEME = createTheme({
     MuiSvgIcon: {
       styleOverrides: {
         root: {
-          color: '#f6c71e',
+          color: 'black',
         },
       },
     },
@@ -119,54 +119,54 @@ export const THEME = createTheme({
       styleOverrides: {
         select: {
           '& fieldset': {
-            borderColor: '#f6c71e',
+            borderColor: 'black',
             backgroundColor: 'transparent',
           },
         },
         iconOutlined: {
           // Change the color of the arrow icon for outlined variant
-          color: '#f6c71e',
+          color: 'black',
         },
       },
     },
     MuiMenuItem: {
       styleOverrides: {
         root: {
-          color: '#f6c71e',
+          color: 'black',
         },
       },
     },
     MuiTablePagination: {
       styleOverrides: {
         root: {
-          color: '#f6c71e',
+          color: 'black',
         },
         displayedRows: {
-          color: '#f6c71e',
+          color: 'black',
         },
         selectIcon: {
-          color: '#f6c71e',
+          color: 'black',
         },
       },
     },
     MuiAutocomplete: {
       styleOverrides: {
         root: {
-          color: '#f6c71e',
+          color: 'black',
         },
         paper: {
-          color: '#f6c71e',
+          color: 'black',
         },
         noOptions: {
-          color: '#f6c71e',
+          color: 'black',
         },
       },
     },
   },
   palette: {
     background: {
-      default: '#2B2B29',
-      paper: '#2B2B29',
+      default: 'white',
+      paper: 'white',
     },
   },
 })

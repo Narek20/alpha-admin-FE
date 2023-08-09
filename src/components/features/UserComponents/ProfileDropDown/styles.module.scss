@@ -1,17 +1,17 @@
 .dropDown {
-  background-color: #2b2b29;
+  background-color: white;
   border-radius: 10px;
   width: auto;
   height: auto;
   position: absolute;
   top: 57px;
   right: 20px;
-  border: 1px solid #f6c71e;
+  border: 1px solid black;
   padding-top: 10px;
   z-index: 1200;
 
   .header {
-    background-color: #2b2b29;
+    background-color: white;
     display: flex;
     width: 300px;
     height: 30px;
@@ -20,12 +20,12 @@
     padding: 10px;
 
     .profileTitle {
-      color: #f6c71e;
+      color: black;
       font-weight: 600;
     }
 
     .settings {
-      color: #f6c71e;
+      color: black;
       font-weight: 500px;
     }
   }
@@ -48,7 +48,7 @@
     }
 
     .exit {
-      color: #f6c71e;
+      color: black;
     }
   }
 

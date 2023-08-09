@@ -38,7 +38,7 @@ const PriceFilter: FC<IProps> = ({ onChange }) => {
       </Box>
       <Slider
         className={styles.slider}
-        sx={{ color: '#f6c71e' }}
+        sx={{ color: 'black' }}
         getAriaLabel={() => 'Temperature range'}
         value={value}
         min={1000}

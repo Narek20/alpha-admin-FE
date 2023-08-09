@@ -17,7 +17,7 @@
     }
 
     .info {
-      color: #f6c71e;
+      color: black;
     }
   }
 }
@@ -93,12 +93,11 @@
           padding: 10px;
           border-radius: 10px;
           width: 100%;
-          opacity: 0.5;
           position: relative;
-          border: 1px solid #f6c71e;
+          border: 1px solid black;
 
           .sizeText {
-            color: #f6c71e;
+            color: black;
           }
 
           .line {
@@ -116,10 +115,10 @@
           width: 100%;
           opacity: 0.5;
           opacity: 1;
-          border: 1px solid #f6c71e;
+          border: 1px solid black;
 
           .sizeText {
-            color: #f6c71e;
+            color: black;
           }
 
           .line {
@@ -135,7 +134,7 @@
           padding: 15px;
           border: 1px solid gray;
           border-radius: 10px;
-          background-color: #2b2b29;
+          background-color: white;
           z-index: 9999;
         }
 
@@ -188,7 +187,7 @@
     .seeMore {
       flex: 1;
       border: 1px solid gray;
-      color: #f6c71e;
+      color: black;
     }
 
     .seeMore:hover {

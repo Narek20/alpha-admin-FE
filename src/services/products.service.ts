@@ -3,13 +3,16 @@ import { ICreateProduct, IProduct } from 'types/product.types'
 import { IResponse } from 'types/response.types'
 import { ProductEndpoints } from 'types/endpoints.types'
 
-export const getAllProducts = async (params?: {
-  [query: string]: string | string[] | number[]
-}, abortController?: AbortController): Promise<IResponse> => {
+export const getAllProducts = async (
+  params?: {
+    [query: string]: string | string[] | number[]
+  },
+  abortController?: AbortController,
+): Promise<IResponse> => {
   try {
     const data = await axiosInstance.get(ProductEndpoints.PRODUCTS, {
       params,
-      signal: abortController?.signal
+      signal: abortController?.signal,
     })
 
     return data.data
@@ -21,10 +24,11 @@ export const getAllProducts = async (params?: {
   }
 }
 
-export const search = async (searchTerm: string): Promise<IResponse> => {
+export const search = async (searchTerm: string, abortController?: AbortController): Promise<IResponse> => {
   try {
     const data = await axiosInstance.get(ProductEndpoints.SEARCH, {
-      params: { searchTerm },
+      params: { search: searchTerm },
+      signal: abortController?.signal,
     })
 
     return data.data
@@ -38,7 +42,7 @@ export const search = async (searchTerm: string): Promise<IResponse> => {
 
 export const getProductById = async (orderId: string): Promise<IResponse> => {
   try {
-    const data = await axiosInstance.get(ProductEndpoints.PRODUCTS + orderId)
+    const data = await axiosInstance.get(ProductEndpoints.GET_ONE + orderId)
 
     return data.data
   } catch (err: any) {
@@ -59,7 +63,7 @@ export const createProduct = async (formData: FormData): Promise<IResponse> => {
           Accept: 'multipart/form-data',
           'Content-Type': 'multipart/form-data',
         },
-      }
+      },
     )
 
     return data.data
@@ -73,7 +77,7 @@ export const createProduct = async (formData: FormData): Promise<IResponse> => {
 
 export const updateProduct = async (
   formData: FormData,
-  id: number
+  id: number,
 ): Promise<IResponse> => {
   try {
     const data = await axiosInstance.put(
@@ -84,7 +88,7 @@ export const updateProduct = async (
           Accept: 'multipart/form-data',
           'Content-Type': 'multipart/form-data',
         },
-      }
+      },
     )
 
     return data.data
@@ -99,7 +103,7 @@ export const updateProduct = async (
 export const removeProduct = async (productId: string): Promise<IResponse> => {
   try {
     const data = await axiosInstance.delete(
-      ProductEndpoints.PRODUCTS + productId
+      ProductEndpoints.PRODUCTS + productId,
     )
 
     return data.data
