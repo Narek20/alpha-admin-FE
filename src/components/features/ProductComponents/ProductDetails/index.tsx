@@ -16,13 +16,13 @@ import ImageCarousel from '@shared/ImageCarousel'
 import ConfirmationModal from '@shared/ConfirmationModal'
 import { useToast } from 'contexts/toast.context'
 import { AuthContext } from 'contexts/auth.context'
+import { ProductsContext } from 'contexts/products.context'
 import { UserStatus } from 'types/user.types'
 import { IProduct, Sizes } from 'types/product.types'
 import { removeProduct, updateProduct } from 'services/products.service'
 import { additionalDetailsKeys } from '@utils/product/constants'
 
 import styles from './styles.module.scss'
-import { ProductsContext } from 'contexts/products.context'
 
 const ProductDetails: FC<{ product: IProduct }> = ({ product }) => {
   const [isOpen, setIsOpen] = useState(false)
