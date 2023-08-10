@@ -1,16 +1,27 @@
 .customerPage {
-  .customerInfo {
-    margin-bottom: 15px;
+  display: flex;
+  gap: 20px;
+
+  .sidebar {
     display: flex;
-    gap: 14px;
+    flex-direction: column;
+    gap: 10px;
+    border: 1px solid black;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: white;
+    flex: 1;
 
-    .label {
-      color: white;
-      font-size: 20px;
-    }
+    .customerInfo {
+      display: flex;
+      gap: 15px;
 
-    .info {
-      font-size: 20px;
+      .label {
+        color: black;
+      }
+
+      .info {
+      }
     }
   }
 }

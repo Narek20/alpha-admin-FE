@@ -29,13 +29,26 @@ const CustomerPage = () => {
 
   return customer ? (
     <Box className={styles.customerPage}>
-      <Box className={styles.customerInfo}>
-        <Typography className={styles.label}>Անուն ազգանուն։</Typography>
-        <Typography className={styles.info}>{customer.fullName}</Typography>
-      </Box>
-      <Box className={styles.customerInfo}>
-        <Typography className={styles.label}>Հեռախոսահամարը։</Typography>
-        <Typography className={styles.info}>{customer.phone}</Typography>
+      <Box className={styles.sidebar}>
+        <Box className={styles.customerInfo}>
+          <Typography className={styles.label}>Անուն ազգանուն։</Typography>
+          <Typography className={styles.info}>{customer.fullName}</Typography>
+        </Box>
+        <Box className={styles.customerInfo}>
+          <Typography className={styles.label}>Հեռախոսահամարը։</Typography>
+          <Typography className={styles.info}>{customer.phone}</Typography>
+        </Box>
+        <Box className={styles.customerInfo}>
+          <Typography className={styles.label}>Հասցե։</Typography>
+          <Typography className={styles.info}>{customer?.orders[0]?.address}</Typography>
+        </Box>
+        <Box className={styles.customerInfo}>
+          <Typography className={styles.label}>Ընհանուր պատվերները։</Typography>
+          <Typography className={styles.info}>
+            {customer.orders?.length}
+          </Typography>
+        </Box>
+       
       </Box>
       <CustomerOrders orders={customer.orders} />
     </Box>
