@@ -81,7 +81,7 @@ export const updateProduct = async (
 ): Promise<IResponse> => {
   try {
     const data = await axiosInstance.put(
-      ProductEndpoints.PRODUCTS + id,
+      ProductEndpoints.GET_ONE + id,
       formData,
       {
         headers: {
@@ -103,7 +103,7 @@ export const updateProduct = async (
 export const removeProduct = async (productId: string): Promise<IResponse> => {
   try {
     const data = await axiosInstance.delete(
-      ProductEndpoints.PRODUCTS + productId,
+      ProductEndpoints.GET_ONE + productId,
     )
 
     return data.data

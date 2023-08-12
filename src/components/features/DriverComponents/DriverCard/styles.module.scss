@@ -19,25 +19,11 @@
       gap: 10px;
 
       .label {
-        color: white;
+        color: black;
       }
     }
   }
-
-  .free {
-    padding: 10px;
-    color: white;
-    border-radius: 10px;
-    background: rgb(102, 229, 102);
-  }
-
-  .busy {
-    padding: 10px;
-    color: white;
-    border-radius: 10px;
-    background: red;
-  }
-
+  
   .actions {
     display: flex;
     gap: 10px;
