@@ -94,16 +94,18 @@
           border-radius: 10px;
           width: 100%;
           position: relative;
-          border: 1px solid black;
+          border: 1px solid gray;
 
           .sizeText {
             color: black;
+            opacity: 0.5;
           }
 
           .line {
             position: absolute;
             rotate: 50deg;
             width: 48px;
+            background: red;
             top: 13px;
             left: -5px;
           }
