@@ -18,9 +18,10 @@ import { useToast } from 'contexts/toast.context'
 import { AuthContext } from 'contexts/auth.context'
 import { ProductsContext } from 'contexts/products.context'
 import { UserStatus } from 'types/user.types'
-import { IProduct, Sizes } from 'types/product.types'
+import { AdditionalDetailsKeys, IProduct, Sizes } from 'types/product.types'
 import { removeProduct, updateProduct } from 'services/products.service'
 import { additionalDetailsKeys } from '@utils/product/constants'
+import { priceFormatter } from '@utils/priceFormatter'
 
 import styles from './styles.module.scss'
 
@@ -112,7 +113,10 @@ const ProductDetails: FC<{ product: IProduct }> = ({ product }) => {
                   <Box className={styles.infoContainer} key={key}>
                     <Typography className={styles.label}>{label}:</Typography>
                     <Typography className={styles.info}>
-                      {product[key]}
+                      {key === AdditionalDetailsKeys.PRICE ||
+                      key === AdditionalDetailsKeys.PURCHASE_PRICE
+                        ? priceFormatter(product[key])
+                        : product[key]}
                     </Typography>
                   </Box>
                 ),

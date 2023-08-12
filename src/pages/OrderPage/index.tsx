@@ -36,6 +36,7 @@ import { ProductSearch } from '@shared/ProductSearch'
 import { useToast } from 'contexts/toast.context'
 import { OrdersContext } from 'contexts/order.context'
 import { DriversContext } from 'contexts/driver.context'
+import { priceFormatter } from '@utils/priceFormatter'
 
 import styles from './styles.module.scss'
 
@@ -54,7 +55,7 @@ const OrderPage = () => {
 
   const { drivers } = useContext(DriversContext)
   const { getOrders } = useContext(OrdersContext)
-  const {showToast} = useToast()
+  const { showToast } = useToast()
 
   const { id } = useParams()
   const navigate = useNavigate()
@@ -368,7 +369,7 @@ const OrderPage = () => {
                 Ընդհանուր Գումար
               </Typography>
               <Typography className={styles.info}>
-                {commonQtyAndPrice.price}
+                {priceFormatter(commonQtyAndPrice.price)}
               </Typography>
             </Box>
           </Box>
@@ -380,7 +381,7 @@ const OrderPage = () => {
                 size="small"
                 onChange={(evt) => editOrder({ notes: evt.target.value })}
                 className={styles.date}
-                style={{margin: '20px 0px'}}
+                style={{ margin: '20px 0px' }}
                 disabled={!isEditing}
               />
             </>

@@ -19,6 +19,7 @@ import { IProduct } from 'types/product.types'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined'
+import { priceFormatter } from '@utils/priceFormatter'
 
 import styles from './styles.module.scss'
 
@@ -189,7 +190,9 @@ const ProductTable: FC<IProps> = ({
                 scope="row"
                 align="left"
               >
-                <Typography className={styles.data}>{product.price}</Typography>
+                <Typography className={styles.data}>
+                  {priceFormatter(product.price)}
+                </Typography>
               </TableCell>
               {isEditing && (
                 <TableCell

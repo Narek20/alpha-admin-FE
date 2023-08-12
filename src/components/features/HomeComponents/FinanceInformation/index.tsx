@@ -7,6 +7,7 @@ import {
   pastDurationsByColors,
 } from '@utils/finances/constants'
 import { Durations } from 'types/finances.types'
+import { priceFormatter } from '@utils/priceFormatter'
 
 import styles from './styles.module.scss'
 
@@ -32,43 +33,49 @@ const FinanceInformation: FC<IProps> = ({
       </Typography>
       <Box className={styles.information}>
         <Box>
-        <Box className={styles.infoContainer}>
-          <Typography className={styles.infoTitle}>Քանակը</Typography>
-          <Typography className={styles.totalInfo}>{amount} հատ</Typography>
-        </Box>
-        <Box className={styles.infoContainer}>
-          <Typography
-            className={
-              amountDifference >= 0
-                ? styles.difference
-                : styles.negativeDifference
-            }
-          >
-            {amountDifference > 0 && '+'}
-            {amountDifference} հատ
-          </Typography>
-          <Typography className={styles.differenceTitle}>
-            {pastDurations[duration]}
-          </Typography>
-        </Box>
+          <Box className={styles.infoContainer}>
+            <Typography className={styles.infoTitle}>Քանակը</Typography>
+            <Typography className={styles.totalInfo}>{amount} հատ</Typography>
+          </Box>
+          <Box className={styles.infoContainer}>
+            <Typography
+              className={
+                amountDifference >= 0
+                  ? styles.difference
+                  : styles.negativeDifference
+              }
+            >
+              {amountDifference > 0 && '+'}
+              {amountDifference} հատ
+            </Typography>
+            <Typography className={styles.differenceTitle}>
+              {pastDurations[duration]}
+            </Typography>
+          </Box>
         </Box>
         <Box>
-        <Box className={styles.infoContainer}>
-          <Typography className={styles.infoTitle}>Գումարը</Typography>
-          <Typography className={styles.totalInfo}>{totalPrice}դր․</Typography>
+          <Box className={styles.infoContainer}>
+            <Typography className={styles.infoTitle}>Գումարը</Typography>
+            <Typography className={styles.totalInfo}>
+              {priceFormatter(totalPrice)}դր․
+            </Typography>
+          </Box>
+          <Box className={styles.infoContainer}>
+            <Typography
+              className={
+                priceDifference >= 0
+                  ? styles.difference
+                  : styles.negativeDifference
+              }
+            >
+              {priceDifference > 0 && '+'}
+              {priceFormatter(priceDifference)}դր․
+            </Typography>
+            <Typography className={styles.differenceTitle}>
+              Երեկվանից
+            </Typography>
+          </Box>
         </Box>
-        <Box className={styles.infoContainer}>
-          <Typography
-            className={
-              priceDifference >= 0 ? styles.difference : styles.negativeDifference
-            }
-          >
-            {priceDifference > 0 && '+'}
-            {priceDifference}դր․
-          </Typography>
-          <Typography className={styles.differenceTitle}>Երեկվանից</Typography>
-        </Box>
-      </Box>
       </Box>
       <Box className={styles.colorContainers}>
         <Box className={styles.colorContainer}>

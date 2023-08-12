@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { Box, Typography } from '@mui/material'
 import { IProduct } from 'types/product.types'
+import { priceFormatter } from '@utils/priceFormatter'
 
 import styles from './styles.module.scss'
 
@@ -29,7 +30,9 @@ const OrderProductCard: FC<IProduct & { quantity: number }> = ({
       </Box>
       <Box className={styles.detailContainer}>
         <Typography className={styles.label}>Գինը</Typography>
-        <Typography className={styles.detail}>{price}</Typography>
+        <Typography className={styles.detail}>
+          {priceFormatter(price)}
+        </Typography>
       </Box>
       <Box className={styles.detailContainer}>
         <Typography className={styles.label}>Բրենդը</Typography>

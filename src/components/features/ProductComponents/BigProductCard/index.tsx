@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router'
 import { Box, Typography } from '@mui/material'
 import Loading from '@shared/Loading'
 import { IProduct } from 'types/product.types'
+import { priceFormatter } from '@utils/priceFormatter'
 
 import styles from './styles.module.scss'
 
@@ -37,7 +38,7 @@ const BigProductCard: FC<IProps> = ({ product }) => {
         <img className={styles.img} src={product.images[0]} alt="Ապրանք" />
       )}
       <Typography className={styles.price}>
-        Արժեքը։ {product.price} դր․
+        Արժեքը։ {priceFormatter(product.price)} դր․
       </Typography>
       <Box className={styles.titleContainer}>
         <Typography className={styles.title}>{product.title} /</Typography>
