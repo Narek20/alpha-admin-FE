@@ -30,13 +30,13 @@ const BigProductCard: FC<IProps> = ({ product }) => {
 
   return (
     <Box className={styles.card} onClick={() => navigate(`${product.id}`)}>
-      {isLoading ? (
-        <Box className={styles.img}>
+      <Box className={styles.img}>
+        {isLoading ? (
           <Loading />
-        </Box>
-      ) : (
-        <img className={styles.img} src={product.images[0]} alt="Ապրանք" />
-      )}
+        ) : (
+          <img className={styles.img} src={product.images[0]} alt="Ապրանք" />
+        )}
+      </Box>
       <Typography className={styles.price}>
         Արժեքը։ {priceFormatter(product.price)} դր․
       </Typography>
