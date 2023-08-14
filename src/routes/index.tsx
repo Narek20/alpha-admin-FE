@@ -1,5 +1,6 @@
 import { useContext } from 'react'
 import { Routes, Route } from 'react-router'
+import CRM from 'pages/CRM'
 import Home from 'pages/Home'
 import Login from 'pages/LoginPage'
 import Drivers from 'pages/Drivers'
@@ -29,6 +30,7 @@ const Routers = () => {
           <Route path="/drivers" element={<Drivers />} />
           <Route path="/orders" element={<OrdersPage />} />
           <Route path="/orders/:id" element={<OrderPage />} />
+          <Route path="/crm" element={<CRM />} />
           <Route path="products" element={<ProductsPage />}>
             <Route path=":id" element={<ProductPage />} />
           </Route>
