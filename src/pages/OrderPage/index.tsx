@@ -138,7 +138,8 @@ const OrderPage = () => {
               (orderProduct) =>
                 orderProduct.product.id === product.id &&
                 orderProduct.size === size.size,
-            ) && size.quantity,
+            ),
+          // && size.quantity
         ),
     )
 
@@ -160,7 +161,8 @@ const OrderPage = () => {
             (orderProduct) =>
               orderProduct.product.id === newData.id &&
               orderProduct.size === size.size,
-          ) && size.quantity,
+          ),
+        // && size.quantity
       )?.size,
     })
     setSearchedProducts([])
@@ -208,6 +210,8 @@ const OrderPage = () => {
       setCommonQtyAndPrice(commonQtyAndPrice)
     }
   }, [order])
+
+  console.log(order)
 
   return (
     <Box className={styles.orderPage}>

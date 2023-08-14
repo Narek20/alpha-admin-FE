@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Autocomplete, TextField } from '@mui/material'
 import { IProduct } from 'types/product.types'
-import { getAllProducts } from 'services/products.service'
+import { search } from 'services/products.service'
 
 interface IProps {
   searchedProducts: IProduct[]
@@ -19,14 +19,15 @@ export const ProductSearch: React.FC<IProps> = ({
   handleFilter,
   onChange,
 }) => {
+  const [isLoading, setIsLoading] = useState(false)
+
   const searchProducts = async (searchKey: string) => {
-    const data = await getAllProducts({
-      title: searchKey,
-      take: '10',
-    })
+    setIsLoading(true)
+    const data = await search(searchKey)
+    setIsLoading(false)
 
     if (data.success) {
-      setSearchedProducts(handleFilter ? handleFilter(data.data) : data.data)
+      setSearchedProducts(data.data)
     }
   }
 
@@ -34,10 +35,15 @@ export const ProductSearch: React.FC<IProps> = ({
     <Autocomplete
       disablePortal
       id="combo-box-demo"
-      getOptionLabel={(option) => option.title}
-      options={searchedProducts.map((product) => product)}
+      getOptionLabel={(option) =>
+        `${option.title}${option.color ? `-${option.color}` : ''}`
+      }
+      filterOptions={(options) =>
+        handleFilter ? handleFilter(options) : options
+      }
+      loading={isLoading}
+      options={searchedProducts}
       onChange={onChange}
-      value={null}
       renderInput={(params) => (
         <TextField
           {...params}
