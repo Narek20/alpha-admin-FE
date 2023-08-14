@@ -24,7 +24,10 @@ export const getAllProducts = async (
   }
 }
 
-export const search = async (searchTerm: string, abortController?: AbortController): Promise<IResponse> => {
+export const search = async (
+  searchTerm: string,
+  abortController?: AbortController,
+): Promise<IResponse> => {
   try {
     const data = await axiosInstance.get(ProductEndpoints.SEARCH, {
       params: { search: searchTerm },

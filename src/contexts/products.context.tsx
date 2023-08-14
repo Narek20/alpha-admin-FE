@@ -43,12 +43,12 @@ export const ProductsProvider = ({ children }: { children: ReactNode }) => {
   const abortControllerRef = useRef<AbortController | null>(null)
 
   const getProducts = async () => {
+    setIsLoading(true)
     if (abortControllerRef.current) {
       // If there's an existing request, abort it before making a new one
       abortControllerRef.current.abort()
     }
 
-    setIsLoading(true)
     const abortController = new AbortController()
     abortControllerRef.current = abortController
 
