@@ -18,12 +18,9 @@ const ImageCarousel: FC<IProps> = ({ slides, size }) => {
       infiniteLoop
     >
       {slides.map((slide) => (
-        <img
-          key={slide}
-          style={{ width: `${size}px`, height: `${size}px` }}
-          src={slide}
-          alt="նկար"
-        />
+        <div style={{ width: `${size}px`, height: `${size}px` }}>
+          <img className={styles.carouselImg} key={slide} src={slide} alt="նկար" />
+        </div>
       ))}
     </Carousel>
   )
