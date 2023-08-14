@@ -11,6 +11,7 @@ import { StorageProvider } from 'contexts/storage.context'
 import { DriversProvider } from 'contexts/driver.context'
 import { CategoryProvider } from 'contexts/category.context'
 import { ProductsProvider } from 'contexts/products.context'
+import { CustomersProvider } from 'contexts/customer.context'
 import '@fontsource/roboto'
 import App from './App'
 import './services/firebase.service'
@@ -24,23 +25,25 @@ root.render(
     <RouterProvider>
       <ToastProvider>
         <AuthProvider>
-          <ProductsProvider>
-            <OrdersProvider>
-              <DriversProvider>
-                <StorageProvider>
-                  <CategoryProvider>
-                    <NotesProvider>
-                      <ThemeProvider theme={THEME}>
-                        <App />
-                      </ThemeProvider>
-                    </NotesProvider>
-                  </CategoryProvider>
-                </StorageProvider>
-              </DriversProvider>
-            </OrdersProvider>
-          </ProductsProvider>
+          <CustomersProvider>
+            <ProductsProvider>
+              <OrdersProvider>
+                <DriversProvider>
+                  <StorageProvider>
+                    <CategoryProvider>
+                      <NotesProvider>
+                        <ThemeProvider theme={THEME}>
+                          <App />
+                        </ThemeProvider>
+                      </NotesProvider>
+                    </CategoryProvider>
+                  </StorageProvider>
+                </DriversProvider>
+              </OrdersProvider>
+            </ProductsProvider>
+          </CustomersProvider>
         </AuthProvider>
       </ToastProvider>
     </RouterProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
 )

@@ -333,8 +333,13 @@ const OrderPage = () => {
                         <Box
                           key={detailsKey.label}
                           className={styles.infoContainer}
+                          sx={
+                            detailsKey.label === 'Հեռախոսահամար' && !isEditing
+                              ? { pointer: 'cursor' }
+                              : {}
+                          }
                           onClick={
-                            detailsKey.label === 'Պատվիրատու' && !isEditing
+                            detailsKey.label === 'Հեռախոսահամար' && !isEditing
                               ? () =>
                                   navigate(
                                     `/customers/${order[detailsKey.key]}`,

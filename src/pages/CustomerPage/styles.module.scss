@@ -10,11 +10,12 @@
     padding: 15px;
     border-radius: 10px;
     background-color: white;
-    flex: 1;
+    flex: 2;
 
     .customerInfo {
       display: flex;
       gap: 15px;
+      justify-content: space-between;
 
       .label {
         color: black;
