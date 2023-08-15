@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react'
-import { renderMatches, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import {
   Box,
   IconButton,
@@ -32,7 +32,7 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined'
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined'
 import ControlPointIcon from '@mui/icons-material/ControlPoint'
-import { ProductSearch } from '@shared/ProductSearch'
+import { OrderProductSearch } from '@shared/OrderProductSearch'
 import { useToast } from 'contexts/toast.context'
 import { OrdersContext } from 'contexts/order.context'
 import { DriversContext } from 'contexts/driver.context'
@@ -51,7 +51,6 @@ const OrderPage = () => {
   })
   const [isEditing, setIsEditing] = useState(false)
   const [isAddActive, setIsAddActive] = useState(false)
-  const [searchedProducts, setSearchedProducts] = useState<IProduct[]>([])
 
   const { drivers } = useContext(DriversContext)
   const { getOrders } = useContext(OrdersContext)
@@ -109,16 +108,6 @@ const OrderPage = () => {
     )
   }
 
-  const addOrderProduct = (newData: orderProductType) => {
-    setOrder(
-      (prev) =>
-        prev && {
-          ...prev,
-          orderProducts: [...prev.orderProducts, { ...newData }],
-        },
-    )
-  }
-
   const removeOrderProduct = (index: number) => {
     setOrder(
       (prev) =>
@@ -143,29 +132,14 @@ const OrderPage = () => {
         ),
     )
 
-  const handleAddProduct: (
-    event: React.SyntheticEvent<Element, Event>,
-    value: IProduct | null,
-  ) => void = (evt, value) => {
-    const newData = searchedProducts.find((product) => product.id === value?.id)
-    if (!newData) {
-      return
-    }
-    addOrderProduct({
-      id: NaN,
-      product: newData,
-      quantity: 1,
-      size: newData.sizes?.find(
-        (size) =>
-          !order?.orderProducts.some(
-            (orderProduct) =>
-              orderProduct.product.id === newData.id &&
-              orderProduct.size === size.size,
-          ),
-        // && size.quantity
-      )?.size,
-    })
-    setSearchedProducts([])
+  const handleAddProduct = (newOrderProduct: orderProductType) => {
+    setOrder(
+      (prev) =>
+        prev && {
+          ...prev,
+          orderProducts: [...prev.orderProducts, newOrderProduct],
+        },
+    )
     setIsAddActive(false)
   }
 
@@ -210,8 +184,6 @@ const OrderPage = () => {
       setCommonQtyAndPrice(commonQtyAndPrice)
     }
   }, [order])
-
-  console.log(order)
 
   return (
     <Box className={styles.orderPage}>
@@ -406,11 +378,9 @@ const OrderPage = () => {
             {isEditing && (
               <Box className={styles.productAddBtn}>
                 {isAddActive ? (
-                  <ProductSearch
-                    searchedProducts={searchedProducts}
-                    setSearchedProducts={setSearchedProducts}
+                  <OrderProductSearch
                     onChange={handleAddProduct}
-                    handleFilter={handleFilterSearch}
+                    orderProducts={order.orderProducts}
                   />
                 ) : (
                   <IconButton onClick={() => setIsAddActive(true)}>
