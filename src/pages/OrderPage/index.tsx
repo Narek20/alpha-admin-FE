@@ -5,7 +5,6 @@ import {
   IconButton,
   TextField,
   Typography,
-  Autocomplete,
   MenuItem,
   Select,
   InputBase,
@@ -132,12 +131,12 @@ const OrderPage = () => {
         ),
     )
 
-  const handleAddProduct = (newOrderProduct: orderProductType) => {
+  const handleAddProduct = (newOrderProduct: orderProductType | orderProductType[]) => {
     setOrder(
       (prev) =>
         prev && {
           ...prev,
-          orderProducts: [...prev.orderProducts, newOrderProduct],
+          orderProducts: [...prev.orderProducts, newOrderProduct as orderProductType],
         },
     )
     setIsAddActive(false)
