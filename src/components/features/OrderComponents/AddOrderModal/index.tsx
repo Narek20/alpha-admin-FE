@@ -103,12 +103,14 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
     )
   }
 
-  const handleSizeChange = (value: string, index: number) => {
+  const handleSizeChange = (value: string, index: number, id: number) => {
     setSelectedProducts(
       selectedProducts.map((product, ind) => {
         if (
           ind === index &&
-          !selectedProducts.some(({ size }) => size === value)
+          !selectedProducts.some(
+            ({ size, product }) => product.id === id && size === value,
+          )
         ) {
           return {
             ...product,
@@ -308,7 +310,11 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
                         className={styles.select}
                         value={size}
                         onChange={(evt) =>
-                          handleSizeChange(evt.target.value as string, index)
+                          handleSizeChange(
+                            evt.target.value as string,
+                            index,
+                            product.id,
+                          )
                         }
                       >
                         {product.sizes?.map(({ size }) => (
