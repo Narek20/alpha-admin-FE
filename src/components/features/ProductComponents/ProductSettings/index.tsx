@@ -11,8 +11,9 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined'
 import { useToast } from 'contexts/toast.context'
 import { CategoriesContext } from 'contexts/category.context'
-import { updateCategory } from 'services/category.service'
+import { createCategory, updateCategory } from 'services/category.service'
 import { ICategory } from 'types/category.types'
+import { IResponse } from 'types/response.types'
 
 import styles from './styles.module.scss'
 
@@ -24,22 +25,23 @@ interface IProps {
 const ProductSettings: FC<IProps> = ({ open, onClose }) => {
   const [category, setCategory] = useState<ICategory[]>([])
   const { showToast } = useToast()
-  const { categories, getCategories } = useContext(CategoriesContext)
+  const { categories, getCategories, setCategories } =
+    useContext(CategoriesContext)
 
   const handleChange = (
     categoryTitle: string,
     value: string,
-    fieldIndex: number
+    fieldIndex: number,
   ) => {
     const changedCategory = category.map((cat) =>
       cat.title === categoryTitle
         ? {
             ...cat,
             fields: cat.fields.map((field, index) =>
-              index === fieldIndex ? { ...field, title: value } : field
+              index === fieldIndex ? { ...field, title: value } : field,
             ),
           }
-        : cat
+        : cat,
     )
 
     setCategory(changedCategory)
@@ -47,14 +49,19 @@ const ProductSettings: FC<IProps> = ({ open, onClose }) => {
 
   const changeCategory = (value: string, categoryIndex: number) => {
     const changedCategory = category.map((cat, index) =>
-      index === categoryIndex ? { ...cat, title: value } : cat
+      index === categoryIndex ? { ...cat, title: value } : cat,
     )
 
     setCategory(changedCategory)
   }
 
   const handleSave = async () => {
-    const data = await updateCategory(category)
+    let data: IResponse
+    if (categories.length >= category.length) {
+      data = await updateCategory(category)
+    } else {
+      data = await createCategory(category.slice(categories.length))
+    }
 
     if (data.success) {
       showToast('success', data.message)
@@ -68,7 +75,7 @@ const ProductSettings: FC<IProps> = ({ open, onClose }) => {
     const updatedCategories = category.map((cat) =>
       cat.title === categoryTitle
         ? { ...cat, fields: [...cat.fields, { title: '', key: '' }] }
-        : cat
+        : cat,
     )
 
     setCategory(updatedCategories)
@@ -80,7 +87,7 @@ const ProductSettings: FC<IProps> = ({ open, onClose }) => {
 
   const removeCategory = (categoryTitle: string) => {
     const updatedCategories = category.filter(
-      (category) => category.title !== categoryTitle
+      (category) => category.title !== categoryTitle,
     )
 
     setCategory(updatedCategories)
@@ -93,7 +100,7 @@ const ProductSettings: FC<IProps> = ({ open, onClose }) => {
             ...cat,
             fields: cat.fields.filter((field) => field.title !== fieldTitle),
           }
-        : cat
+        : cat,
     )
 
     setCategory(updatedCategories)

@@ -17,7 +17,7 @@ export const getAllCategories = async (): Promise<IResponse> => {
 }
 
 export const createCategory = async (
-  CategoryData: ICategory
+  CategoryData: ICategory[]
 ): Promise<IResponse> => {
   try {
     const data = await axiosInstance.post(
@@ -53,11 +53,11 @@ export const updateCategory = async (
 }
 
 export const removeCategory = async (
-  CategoryData: number
+  title: string
 ): Promise<IResponse> => {
   try {
     const data = await axiosInstance.delete(
-      CategoryEndpoints.DELETE_CATEGORY + CategoryData
+      CategoryEndpoints.DELETE_CATEGORY + title
     )
 
     return data.data

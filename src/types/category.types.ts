@@ -12,7 +12,6 @@ interface IField {
 }
 
 export interface ICategory {
-  id?: number
   title: string
   fields: IField[]
 }
