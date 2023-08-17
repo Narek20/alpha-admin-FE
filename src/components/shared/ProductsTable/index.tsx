@@ -25,12 +25,12 @@ import styles from './styles.module.scss'
 
 interface IProps {
   data: Array<{ product: IProduct; quantity: number; size?: string }>
-  isEditing: boolean
-  editProduct: (
+  isEditing?: boolean
+  editProduct?: (
     id: number,
     newData: { size?: string; quantity?: number },
   ) => void
-  handleRemove: (index: number) => void
+  handleRemove?: (index: number) => void
 }
 
 const columns = [
@@ -127,6 +127,7 @@ const ProductTable: FC<IProps> = ({
                     value={size}
                     className={styles.select}
                     onChange={(evt) =>
+                      editProduct &&
                       editProduct(index, { size: evt.target.value })
                     }
                   >
@@ -161,6 +162,7 @@ const ProductTable: FC<IProps> = ({
                           // quantity <
                           //   (product.sizes?.find((el) => el.size === size)
                           //     ?.quantity || 0) &&
+                          editProduct &&
                           editProduct(index, {
                             quantity: quantity + 1,
                           })
@@ -173,6 +175,7 @@ const ProductTable: FC<IProps> = ({
                       </Typography>
                       <IconButton
                         onClick={() =>
+                          editProduct &&
                           editProduct(index, {
                             quantity: quantity - 1,
                           })
@@ -201,7 +204,9 @@ const ProductTable: FC<IProps> = ({
                   scope="row"
                   align="left"
                 >
-                  <IconButton onClick={() => handleRemove(index)}>
+                  <IconButton
+                    onClick={() => handleRemove && handleRemove(index)}
+                  >
                     <DeleteOutlineOutlinedIcon sx={{ color: 'red' }} />
                   </IconButton>
                 </TableCell>

@@ -1,6 +1,7 @@
 .customerPage {
   display: flex;
   gap: 20px;
+  margin-bottom: 50px;
 
   .sidebar {
     display: flex;
@@ -11,6 +12,12 @@
     border-radius: 10px;
     background-color: white;
     flex: 2;
+
+    .edit {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+    }
 
     .customerInfo {
       display: flex;

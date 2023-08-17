@@ -12,7 +12,7 @@ export const OrderTableColumns = [
   'Պատվիրատու',
   'Հեռախոս',
   'Հասցե',
-  'Հասցե2',
+  'Հասցե 2',
   'Նշումներ',
   'Առաքիչ',
   'Ստեղծման օր',
@@ -36,9 +36,10 @@ export const OrderTableKeys = [
   { label: 'Պատվիրատու', key: OrderTableKeysType.FULL_NAME },
   { label: 'Հեռախոս', key: OrderTableKeysType.PHONE },
   { label: 'Հասցե', key: OrderTableKeysType.ADDRESS },
-  { label: 'Հասցե2', key: OrderTableKeysType.ADDRESS2 },
+  { label: 'Հասցե 2', key: OrderTableKeysType.ADDRESS2 },
   { label: 'Նշումներ', key: OrderTableKeysType.NOTES },
 ]
+
 export const CreateOrderKeys = [
   OrderTableKeysType.FULL_NAME,
   OrderTableKeysType.PHONE,
@@ -72,6 +73,10 @@ export const OrderDetailsKeys = [
   {
     label: 'Հասցե',
     key: OrderTableKeysType.ADDRESS,
+  },
+  {
+    label: 'Հասցե 2',
+    key: OrderTableKeysType.ADDRESS2,
   },
   {
     label: 'Առաքիչ',

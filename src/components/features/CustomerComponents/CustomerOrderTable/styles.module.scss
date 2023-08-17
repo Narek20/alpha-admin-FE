@@ -33,25 +33,3 @@
     }
   }
 }
-
-@media only screen and (max-width: 1000px) {
-  .tableContainer {
-    .table {
-      th {
-        .actions {
-          display: none;
-        }
-
-        .headCell {
-          font-size: 10px;
-        }
-
-        .data {
-          & input {
-            font-size: 10px;
-          }
-        }
-      }
-    }
-  }
-}

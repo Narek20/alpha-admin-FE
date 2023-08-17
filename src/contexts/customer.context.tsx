@@ -13,6 +13,7 @@ export const CustomersContext = createContext<ICustomerContext>({
   customers: [],
   isLoading: false,
   getCustomers: () => {},
+  setCustomers: () => {},
 })
 
 // Custom hook to access the DriverContext
@@ -30,7 +31,7 @@ export const CustomersProvider = ({ children }: { children: ReactNode }) => {
     if (data.success) {
       setCustomers([...data.data])
     }
-    
+
     setIsLoading(false)
   }
 
@@ -39,7 +40,9 @@ export const CustomersProvider = ({ children }: { children: ReactNode }) => {
   }, [])
 
   return (
-    <CustomersContext.Provider value={{ customers, isLoading, getCustomers }}>
+    <CustomersContext.Provider
+      value={{ customers, isLoading, getCustomers, setCustomers }}
+    >
       {children}
     </CustomersContext.Provider>
   )

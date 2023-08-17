@@ -16,6 +16,7 @@ import LocalAtmIcon from '@mui/icons-material/LocalAtm'
 import CreditCardIcon from '@mui/icons-material/CreditCard'
 import {
   CustomerOrdersTableColumns,
+  getOrderIcon,
   orderRowColor,
   orderStatusStyles,
 } from '@utils/order/constants'
@@ -66,13 +67,10 @@ const CustomerOrders: FC<IProps> = ({ orders }) => {
                 >
                   №{order.id}
                   {order.isSpecial && <StarsIcon sx={{ color: 'blue' }} />}
-                  {order.paymentMethod === PaymentMethods.CASH ? (
-                    <LocalAtmIcon sx={{ color: 'blue' }} />
-                  ) : order.paymentMethod === PaymentMethods.NON_CASH ? (
-                    <CreditCardIcon sx={{ color: 'blue' }} />
-                  ) : (
-                    <PaidIcon sx={{ color: 'blue' }} />
-                  )}
+                  <img
+                    style={{ width: 20, height: 20 }}
+                    src={getOrderIcon(order.paymentMethod)}
+                  />
                 </Typography>
               </TableCell>
               <TableCell
@@ -105,7 +103,9 @@ const CustomerOrders: FC<IProps> = ({ orders }) => {
                 scope="row"
                 align="center"
               >
-                <Typography className={styles.data}>{order.createdAt}</Typography>
+                <Typography className={styles.data}>
+                  {order.createdAt}
+                </Typography>
               </TableCell>
               <TableCell
                 className={styles.bodyCell}
@@ -113,7 +113,9 @@ const CustomerOrders: FC<IProps> = ({ orders }) => {
                 scope="row"
                 align="center"
               >
-                <Typography className={styles.data}>{order.deliveryDate}</Typography>
+                <Typography className={styles.data}>
+                  {order.deliveryDate}
+                </Typography>
               </TableCell>
               <TableCell
                 className={styles.bodyCell}

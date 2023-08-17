@@ -41,6 +41,7 @@ const PriceFilter: FC<IProps> = ({ onChange }) => {
         sx={{ color: 'black' }}
         getAriaLabel={() => 'Temperature range'}
         value={value}
+        step={100}
         min={1000}
         max={100000}
         onChange={handleChange}

@@ -34,6 +34,7 @@ const Pagination: FC<IProps> = ({
   return (
     <TablePagination
       component="div"
+      labelRowsPerPage=""
       count={count}
       page={page}
       onPageChange={handleChangePage}
