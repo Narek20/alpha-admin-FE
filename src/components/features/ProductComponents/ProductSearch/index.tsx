@@ -4,6 +4,8 @@ import { TextField } from '@mui/material'
 import { getAllProducts, search } from 'services/products.service'
 import { IResponse } from 'types/response.types'
 
+import styles from './styles.module.scss'
+
 const ProductSearch = () => {
   const { setProducts, filters } = useContext(ProductsContext)
   const abortControllerRef = useRef<AbortController>()
@@ -23,7 +25,7 @@ const ProductSearch = () => {
     }
   }
 
-  return <TextField onChange={(e) => handleSearch(e.target.value)} />
+  return <TextField className={styles.search} onChange={(e) => handleSearch(e.target.value)} />
 }
 
 export default ProductSearch
