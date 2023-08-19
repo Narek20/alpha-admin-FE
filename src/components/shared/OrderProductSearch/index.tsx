@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Autocomplete, TextField, Chip } from '@mui/material'
 import { IProduct } from 'types/product.types'
 import { search } from 'services/products.service'
@@ -17,13 +17,17 @@ export const OrderProductSearch: React.FC<IProps> = ({
 }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [searchedProducts, setSearchedProducts] = useState<IProduct[]>([])
+  const abortControllerRef = useRef<AbortController>()
 
   const searchProducts = async (searchKey: string) => {
     if (!searchKey.trim()) {
       return
     }
+    abortControllerRef.current?.abort()
+    abortControllerRef.current = new AbortController()
+
     setIsLoading(true)
-    const data = await search(searchKey)
+    const data = await search(searchKey, abortControllerRef.current)
     setIsLoading(false)
 
     if (data.success) {

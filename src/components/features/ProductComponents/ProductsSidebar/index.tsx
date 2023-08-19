@@ -1,9 +1,10 @@
 import { useContext, useState } from 'react'
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Button, TextField, Typography } from '@mui/material'
 import NameFilter from '@features/Filters/NameFilter'
 import PriceFilter from '@features/Filters/PriceFilter'
 import BrandFilter from '@features/Filters/BrandFilter'
 import CategoryFilter from '@features/Filters/CategoryFilter'
+import ProductSearch from '../ProductSearch'
 import { ProductsContext } from 'contexts/products.context'
 import SidebarFilterSkillet from '../SidebarFiilterSkillet'
 import { ProductKeys } from 'types/product.types'
@@ -34,7 +35,7 @@ const ProductsSidebar = () => {
       </Box>
       <SidebarFilterSkillet
         title="Անունը"
-        children={<NameFilter onChange={handleFilter} />}
+        children={<ProductSearch />}
       />
       <SidebarFilterSkillet
         title="Գինը"
