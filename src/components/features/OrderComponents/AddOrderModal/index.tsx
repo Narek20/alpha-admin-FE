@@ -19,6 +19,7 @@ import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
 import Loading from '@shared/Loading'
 import DriverSelect from '@shared/DriverSelect'
+import { OrderProductSearch } from '@shared/OrderProductSearch'
 import { useToast } from 'contexts/toast.context'
 import { OrdersContext } from 'contexts/order.context'
 import { placeOrder } from 'services/orders.service'
@@ -35,7 +36,6 @@ import {
 } from '@utils/order/constants'
 
 import styles from './styles.module.scss'
-import { OrderProductSearch } from '@shared/OrderProductSearch'
 
 interface IProps {
   open: boolean

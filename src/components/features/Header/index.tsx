@@ -82,7 +82,9 @@ const Header = () => {
         onClose={() => setIsDropDownOpen(false)}
         isTablet={isTablet}
       />
-      <OrderAddModal open={isOpen} onClose={() => setIsOpen(false)} />
+      {isOpen && (
+        <OrderAddModal open={isOpen} onClose={() => setIsOpen(false)} />
+      )}
       <DrawerComponent
         isOpen={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}

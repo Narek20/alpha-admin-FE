@@ -38,12 +38,7 @@ import {
   orderStatusStyles,
   paymentMethods,
 } from '@utils/order/constants'
-import {
-  OrderTableKeysType,
-  IOrder,
-  OrderStatus,
-  PaymentMethods,
-} from 'types/order.types'
+import { OrderTableKeysType, IOrder, OrderStatus } from 'types/order.types'
 
 import styles from './styles.module.scss'
 
