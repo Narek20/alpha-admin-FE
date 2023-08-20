@@ -7,7 +7,7 @@ import {
   useRef,
 } from 'react'
 import { IProduct, IProductsContext } from 'types/product.types'
-import { getAllProducts } from 'services/products.service'
+import { search } from 'services/products.service'
 
 // Create a ProductsContext
 export const ProductsContext = createContext<IProductsContext>({
@@ -52,7 +52,11 @@ export const ProductsProvider = ({ children }: { children: ReactNode }) => {
     const abortController = new AbortController()
     abortControllerRef.current = abortController
 
-    const data = await getAllProducts(filters, abortController)
+    console.log(filters)
+
+    const searchKey = Object.values(filters).join(' ')
+
+    const data = await search(searchKey, abortController)
 
     if (data.success) {
       setProducts(data.data)
@@ -82,7 +86,7 @@ export const ProductsProvider = ({ children }: { children: ReactNode }) => {
         pagination,
         getProducts,
         setFilters,
-        setProducts
+        setProducts,
       }}
     >
       {children}
