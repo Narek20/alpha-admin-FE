@@ -55,27 +55,19 @@ export const analyticsSections = [
     link: 'analytics/region-sales',
     component: RegionSales,
   },
-  {
-    title: 'Ամփոփում վաճառողի կողմից',
-    description:
-      'Ընդհանուր ցուցանիշներ ամիսների և օրերի համար՝ առանց անվանացանկի:',
-    image: analytics_6,
-    link: '/analytics/summary-report',
-    component: SummaryReport,
-  },
+  // {
+  //   title: 'Ամփոփում վաճառողի կողմից',
+  //   description:
+  //     'Ընդհանուր ցուցանիշներ ամիսների և օրերի համար՝ առանց անվանացանկի:',
+  //   image: analytics_6,
+  //   link: '/analytics/summary-report',
+  //   component: SummaryReport,
+  // },
   {
     title: 'Հաշվետվություն բաժնետոմսերի մնացորդների մասին',
     description: 'Ընթացիկ ապրանքային մնացորդներ ըստ պահեստների.',
     image: analytics_7,
     link: '/analytics/warehouse-remains',
     component: WarehouseRemains,
-  },
-  {
-    title: 'Լոգիստիկա և պահեստավորման հարաբերակցության հաշվետվություն',
-    description:
-      'Հետևեք ձեր տուգանքներին, դրանց պատճառներին, քանակներին և չափերին:',
-    image: analytics_8,
-    link: '/analytics/logistics',
-    component: Logistics,
   },
 ]
