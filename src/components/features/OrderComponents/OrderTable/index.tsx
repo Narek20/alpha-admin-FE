@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 import Paper from '@mui/material/Paper'
 import {
@@ -49,6 +49,7 @@ const OrderTable = () => {
   const [isComplete, setIsComplete] = useState(false)
   const [confirmModalText, setConfirmModalText] = useState('')
   const [rowChanges, setRowChanges] = useState<IOrder | undefined>()
+  const [showOrders, setShowOrders] = useState(false)
 
   const { orders, filters, setOrders, setFilters, isLoading, tableColumns } =
     useContext(OrdersContext)
@@ -124,13 +125,14 @@ const OrderTable = () => {
           setOpen(false)
           setIsEdit(false)
           setEditRow(-1)
-          setOrders(
-            orders.map((order, ind) =>
-              ind === editRow
-                ? { ...order, status: value as OrderStatus }
-                : order,
-            ),
-          )
+          // setOrders(
+          //   orders.map((order, ind) =>
+          //     ind === editRow
+          //       ? { ...order, status: value as OrderStatus }
+          //       : order,
+          //   ),
+          // )
+          setOrders(orders.filter((order, ind) => ind !== editRow))
         }
       }
     }
@@ -192,9 +194,19 @@ const OrderTable = () => {
     setFilters({ ...filters, take: `${rows}` })
   }
 
+  useEffect(() => {
+    setOrders([])
+  }, [])
+
+  useEffect(() => {
+    editRow !== -1 && setEditRow(-1)
+    isEdit && setIsEdit(false)
+    !isLoading && filters.status !== 'Բոլորը' && setShowOrders(true)
+  }, [orders])
+
   return (
     <>
-      {isLoading ? (
+      {isLoading || !showOrders ? (
         <Loading />
       ) : (
         <TableContainer className={styles.tableContainer} component={Paper}>
