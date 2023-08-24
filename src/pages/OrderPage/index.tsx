@@ -360,7 +360,7 @@ const OrderPage = () => {
                 value={order.notes}
                 size="small"
                 onChange={(evt) => editOrder({ notes: evt.target.value })}
-                className={styles.date}
+                className={styles.notes}
                 style={{ margin: '20px 0px' }}
                 disabled={!isEditing}
               />
