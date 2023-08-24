@@ -63,3 +63,7 @@ export enum NotesEndpoints {
   NOTES_UPDATE = 'notes/',
   NOTES_DELETE = 'notes/',
 }
+
+export enum CommonEndpoints {
+  SEARCH = 'common/'
+}

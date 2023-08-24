@@ -1,7 +1,9 @@
-import { FC, useState } from 'react'
+import { FC, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Autocomplete, TextField } from '@mui/material'
-import { search } from 'services/products.service'
+import { searchAll } from 'services/common.service'
+import { IOrder } from 'types/order.types'
+import { IProduct } from 'types/product.types'
 
 import styles from './styles.module.scss'
 
@@ -12,14 +14,38 @@ const CommonSearch: FC<IProps> = () => {
   const [results, setResults] = useState<
     Array<{ title: string; link: string }>
   >([])
+
+  const abortControllerRef = useRef<AbortController | null>(null)
+
   const handleSearch = async (value: string | null) => {
     if (value) {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort()
+      }
+
+      const abortController = new AbortController()
+      abortControllerRef.current = abortController
+
       setSearchValue(value)
 
-      const data = await search(value)
+      const data = await searchAll(value, abortController)
 
       if (data.success) {
-        setResults(data.data)
+        const results: Array<{ title: string; link: string }> = []
+        data.data.orders.forEach((order: IOrder) => {
+          results.push({
+            title: `${order.fullName} ${order.phone}`,
+            link: `orders/${order.id}`,
+          })
+        })
+
+        data.data.products.forEach((product: IProduct) => {
+          results.push({
+            title: `${product.title} ${product.brand}`,
+            link: `products/${product.id}`,
+          })
+        })
+        setResults(results)
       }
     }
   }
@@ -27,17 +53,21 @@ const CommonSearch: FC<IProps> = () => {
   return (
     <Autocomplete
       className={styles.search}
-      freeSolo
-      value={searchValue}
-      onChange={(_, newValue) => {
-        handleSearch(newValue)
-      }}
+      getOptionLabel={(option) => option}
       options={results.map((item) => item.title)}
       renderInput={(params) => (
-        <TextField {...params} label="Search" variant="outlined" fullWidth />
+        <TextField
+          {...params}
+          label="Search"
+          variant="outlined"
+          fullWidth
+          onChange={(evt) => handleSearch(evt.target.value)}
+        />
       )}
       renderOption={(option) => (
-        <Link to={`${option.title}`}>{option.title}</Link>
+        <Link key={option.title} to={`${option.title}`}>
+          {option.title}
+        </Link>
       )}
     />
   )
