@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import { Box, Slider, TextField } from '@mui/material'
 import { ProductKeys } from 'types/product.types'
 
@@ -14,13 +14,21 @@ interface IProps {
 
 const PriceFilter: FC<IProps> = ({ onChange }) => {
   const [value, setValue] = useState<number[]>([0, 100000])
+  const timeout = useRef<NodeJS.Timeout>()
 
   const handleChange = (event: Event, newValue: number | number[]) => {
     setValue(newValue as number[])
-    if (onChange) {
-      onChange(ProductKeys.PRICE, value as number[])
-    }
   }
+
+  useEffect(() => {
+    clearTimeout(timeout.current)
+    timeout.current = setTimeout(() => {
+      if (onChange) {
+        onChange(ProductKeys.PRICE, value as number[])
+        console.log('fetching')
+      }
+    }, 1000)
+  }, [value])
 
   return (
     <Box className={styles.priceFilter}>
