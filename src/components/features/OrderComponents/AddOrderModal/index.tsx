@@ -166,6 +166,13 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
     )
   }
 
+  const onCancel = () => {
+    setFilters({})
+    setOrderData({})
+    setSelectedProducts([])
+    onClose()
+  }
+
   useEffect(() => {
     selectedProducts.forEach(({ product }) => {
       const image = new Image()
@@ -207,6 +214,7 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
               label="Նշումներ"
               multiline
               className={styles.input}
+              value={orderData?.[OrderTableKeysType.NOTES]}
               onChange={(evt) =>
                 handleChange(OrderTableKeysType.NOTES, evt.target.value)
               }
@@ -216,6 +224,7 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
               type="date"
               InputLabelProps={{ shrink: true }}
               className={styles.input}
+              value={orderData?.[OrderTableKeysType.DELIVERY_DATE]}
               onChange={(evt) =>
                 handleChange(OrderTableKeysType.DELIVERY_DATE, evt.target.value)
               }
@@ -247,6 +256,7 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
               <FormControl>
                 <Select
                   defaultValue={PaymentMethods.CASH}
+                  value={orderData?.[OrderTableKeysType.PAYMENT_METHOD]}
                   onChange={(evt) =>
                     handleChange(
                       OrderTableKeysType.PAYMENT_METHOD,
@@ -310,7 +320,11 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
                         }
                       >
                         {product.sizes?.map(({ size, quantity }) => (
-                          <MenuItem key={size} value={size} sx={!quantity ? {opacity: 0.5} : {}}>
+                          <MenuItem
+                            key={size}
+                            value={size}
+                            sx={!quantity ? { opacity: 0.5 } : {}}
+                          >
                             {size}
                           </MenuItem>
                         ))}
@@ -348,7 +362,7 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
           <Button
             className={styles.cancelBtn}
             color="inherit"
-            onClick={onClose}
+            onClick={onCancel}
           >
             Չեղարկել
           </Button>

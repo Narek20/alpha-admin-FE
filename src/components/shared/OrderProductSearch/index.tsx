@@ -100,10 +100,10 @@ export const OrderProductSearch: React.FC<IProps> = ({
     onChange(newOrderProducts)
     setSearchedProducts([])
   }
-
+  
   return (
     <Autocomplete
-      disablePortal
+      // disablePortal
       id="combo-box-demo"
       getOptionLabel={(option) =>
         `${option.title}${option.color ? `-${option.color}` : ''}`
@@ -113,6 +113,7 @@ export const OrderProductSearch: React.FC<IProps> = ({
       options={searchedProducts}
       onChange={multiple ? handleMultipleSearch : handleChange}
       multiple={multiple}
+      defaultValue={multiple ? orderProducts.map((op) => op.product) : null}
       renderTags={(_, getTagProps) =>
         orderProducts.map((orderProduct, index) => (
           <Chip
