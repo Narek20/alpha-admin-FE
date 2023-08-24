@@ -1,13 +1,10 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useLayoutEffect } from 'react'
 import {
   Box,
   Button,
   IconButton,
   InputAdornment,
-  MenuItem,
-  Select,
   TextField,
-  FormControl,
 } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import SettingsIcon from '@mui/icons-material/Settings'
@@ -15,7 +12,6 @@ import SectionHeader from '@shared/SectionTitle'
 import OrderAddModal from '@features/OrderComponents/AddOrderModal'
 import OrderSettings from '../OrderSettings'
 import { OrdersContext } from 'contexts/order.context'
-import { productStatuses } from '@utils/product/constants'
 import { OrderStatus } from 'types/order.types'
 
 import styles from './styles.module.scss'
@@ -35,12 +31,16 @@ const OrderToolbar = () => {
       setStatus(value)
     }
 
-    if (key === 'tab' && value === OrderStatus.RECEIVED) {
-      setFilters({ ...filters, status })
-    } else {
-      setFilters({ ...filters, status: value })
-    }
+    // if (key === 'tab' && value === OrderStatus.RECEIVED) {
+    //   setFilters({ ...filters, status })
+    // } else {
+    setFilters({ ...filters, status: value })
+    // }
   }
+
+  useLayoutEffect(() => {
+    setFilters({ ...filters, status: OrderStatus.RECEIVED })
+  }, [])
 
   return (
     <Box className={styles.orderToolbar}>
@@ -60,7 +60,7 @@ const OrderToolbar = () => {
             }
             onClick={() => handleFilter('tab', OrderStatus.RECEIVED)}
           >
-            Պատվերներ
+            Նոր Պատվերներ
           </Button>
           <Button
             className={
@@ -90,6 +90,16 @@ const OrderToolbar = () => {
                 ? styles.selectedButton
                 : styles.button
             }
+            onClick={() => handleFilter('tab', OrderStatus.ISSUE)}
+          >
+            Խնդիր
+          </Button>
+          <Button
+            className={
+              tab === OrderStatus.COMPLETED
+                ? styles.selectedButton
+                : styles.button
+            }
             onClick={() => handleFilter('tab', OrderStatus.COMPLETED)}
           >
             Արխիվ
@@ -109,7 +119,7 @@ const OrderToolbar = () => {
             ),
           }}
         />
-        <FormControl className={styles.select}>
+        {/* <FormControl className={styles.select}>
           <Select
             defaultValue={'Բոլորը'}
             className={styles.select}
@@ -123,7 +133,7 @@ const OrderToolbar = () => {
               </MenuItem>
             ))}
           </Select>
-        </FormControl>
+        </FormControl> */}
         <IconButton
           className={styles.settings}
           onClick={() => setIsSettingsOpen(true)}
