@@ -183,14 +183,6 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
     })
   }, [selectedProducts.length])
 
-  useEffect(() => {
-    if (!open) {
-      setFilters({})
-      setOrderData({})
-      setSelectedProducts([])
-    }
-  }, [open])
-
   return (
     <Modal className={styles.modal} open={open} onClose={onClose}>
       <Box className={styles.modalContent}>
@@ -317,8 +309,8 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
                           )
                         }
                       >
-                        {product.sizes?.map(({ size }) => (
-                          <MenuItem key={size} value={size}>
+                        {product.sizes?.map(({ size, quantity }) => (
+                          <MenuItem key={size} value={size} sx={!quantity ? {opacity: 0.5} : {}}>
                             {size}
                           </MenuItem>
                         ))}

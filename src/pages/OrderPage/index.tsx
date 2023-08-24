@@ -131,12 +131,17 @@ const OrderPage = () => {
         ),
     )
 
-  const handleAddProduct = (newOrderProduct: orderProductType | orderProductType[]) => {
+  const handleAddProduct = (
+    newOrderProduct: orderProductType | orderProductType[],
+  ) => {
     setOrder(
       (prev) =>
         prev && {
           ...prev,
-          orderProducts: [...prev.orderProducts, newOrderProduct as orderProductType],
+          orderProducts: [
+            ...prev.orderProducts,
+            newOrderProduct as orderProductType,
+          ],
         },
     )
     setIsAddActive(false)
@@ -306,7 +311,7 @@ const OrderPage = () => {
                           className={styles.infoContainer}
                           sx={
                             detailsKey.label === 'Հեռախոսահամար' && !isEditing
-                              ? { pointer: 'cursor' }
+                              ? { cursor: 'pointer' }
                               : {}
                           }
                           onClick={
@@ -324,6 +329,19 @@ const OrderPage = () => {
                           <TextField
                             defaultValue={order[detailsKey.key]}
                             value={order[detailsKey.key]}
+                            onClick={
+                              detailsKey.label === 'Հեռախոսահամար' && !isEditing
+                                ? () =>
+                                    navigate(
+                                      `/customers/${order[detailsKey.key]}`,
+                                    )
+                                : undefined
+                            }
+                            sx={
+                              detailsKey.label === 'Հեռախոսահամար' && !isEditing
+                                ? { cursor: 'pointer' }
+                                : {}
+                            }
                             size="small"
                             onChange={(evt) =>
                               editOrder({ [detailsKey.key]: evt.target.value })
