@@ -40,7 +40,8 @@ export enum UsersEndpoints {
 
 export enum CustomerEndpoints {
   CUSTOMER = 'customers/',
-  CUSTOMER_UPDATE = 'customers/'
+  CUSTOMER_UPDATE = 'customers/',
+  CUSTOMER_ADDRESS = '/customers/address/'
 }
 
 export enum CategoryEndpoints {

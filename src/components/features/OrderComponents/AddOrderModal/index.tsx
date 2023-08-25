@@ -34,6 +34,7 @@ import {
   OrderTableColumns,
   paymentMethods,
 } from '@utils/order/constants'
+import { getAddress } from 'services/customer.service'
 
 import styles from './styles.module.scss'
 
@@ -44,6 +45,8 @@ interface IProps {
 
 const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
   const [isCreating, setIsCreating] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [isFetched, setIsFetched] = useState(false)
   const [selectedTitles, setSelectedTitles] = useState<string[]>([])
   const [selectedProducts, setSelectedProducts] = useState<
     Array<orderProductType & { isLoading?: boolean }>
@@ -173,6 +176,32 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
     onClose()
   }
 
+  const getCustomerAddress = async (phone: string, fullName: string) => {
+    if (phone.length === 9 && !isFetched) {
+      setIsLoading(true)
+      const data = await getAddress(phone, fullName)
+
+      if (data.success) {
+        setIsFetched(true)
+        const addresses = {
+          address: '',
+          address2: '',
+        }
+        if (data.data.address) {
+          addresses.address = data.data.address
+        }
+
+        if (data.data.address2) {
+          addresses.address2 = data.data.address2
+        }
+
+        setOrderData({ ...orderData, ...addresses })
+      }
+
+      setIsLoading(false)
+    }
+  }
+
   useEffect(() => {
     selectedProducts.forEach(({ product }) => {
       const image = new Image()
@@ -190,182 +219,211 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
     })
   }, [selectedProducts.length])
 
+  useEffect(() => {
+    if (
+      orderData &&
+      orderData.phone &&
+      orderData.fullName &&
+      !orderData.address &&
+      !orderData.address2
+    ) {
+      getCustomerAddress(
+        orderData.phone as string,
+        orderData.fullName as string,
+      )
+    }
+  }, [orderData])
+
   return (
     <Modal className={styles.modal} open={open} onClose={onClose}>
       <Box className={styles.modalContent}>
-        <Box>
-          <Box className={styles.header}>
-            <Typography className={styles.title}>Ավելացնել պատվեր</Typography>
-            <IconButton onClick={onClose}>
-              <CloseOutlinedIcon />
-            </IconButton>
-          </Box>
-          <Box className={styles.content}>
-            {CreateOrderKeys.map((key, index) => (
-              <TextField
-                key={key}
-                label={OrderTableColumns[index + 1]}
-                className={styles.input}
-                value={orderData?.[key]}
-                onChange={(evt) => handleChange(key, evt.target.value)}
-              />
-            ))}
-            <TextField
-              label="Նշումներ"
-              multiline
-              className={styles.input}
-              value={orderData?.[OrderTableKeysType.NOTES]}
-              onChange={(evt) =>
-                handleChange(OrderTableKeysType.NOTES, evt.target.value)
-              }
-            />
-            <TextField
-              label="Առաքման օրը"
-              type="date"
-              InputLabelProps={{ shrink: true }}
-              className={styles.input}
-              value={orderData?.[OrderTableKeysType.DELIVERY_DATE]}
-              onChange={(evt) =>
-                handleChange(OrderTableKeysType.DELIVERY_DATE, evt.target.value)
-              }
-            />
-            <Box className={styles.flex}>
-              <FormControl>
-                <RadioGroup
-                  aria-labelledby="demo-radio-buttons-group-label"
-                  defaultValue="female"
-                  name="radio-buttons-group"
-                >
-                  <FormControlLabel
-                    value={true}
-                    control={
-                      <Radio
-                        checked={!!orderData?.isSpecial}
-                        onClick={() =>
-                          handleChange(
-                            OrderTableKeysType.IS_SPECIAL,
-                            !orderData?.isSpecial,
-                          )
-                        }
-                      />
-                    }
-                    label="Հատուկ պատվեր"
-                  />
-                </RadioGroup>
-              </FormControl>
-              <FormControl>
-                <Select
-                  defaultValue={PaymentMethods.CASH}
-                  value={orderData?.[OrderTableKeysType.PAYMENT_METHOD]}
-                  onChange={(evt) =>
-                    handleChange(
-                      OrderTableKeysType.PAYMENT_METHOD,
-                      evt.target.value as string,
-                    )
-                  }
-                >
-                  {paymentMethods.map((method) => (
-                    <MenuItem key={method} value={method}>
-                      {method}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+        <Box sx={{ position: 'relative' }}>
+          {isLoading && (
+            <Box className={styles.loading}>
+              <Loading />
             </Box>
-            <DriverSelect
-              driver={orderData?.driver as string}
-              onChange={(driver: string) =>
-                handleChange(OrderTableKeysType.DRIVER, driver)
-              }
-            />
-            <OrderProductSearch
-              orderProducts={selectedProducts as unknown as orderProductType[]}
-              onChange={handleProducts}
-              multiple
-            />
-          </Box>
-          <Box className={styles.products}>
-            {selectedProducts.map(
-              ({ product, isLoading, size, quantity }, index) => (
-                <Box key={product.title + index} className={styles.product}>
-                  <Box>
-                    <Box className={styles.imgContainer}>
-                      {isLoading ? (
-                        <Loading />
-                      ) : (
-                        <img
-                          className={styles.productImg}
-                          src={product.images[0]}
-                          alt="Նկար"
+          )}
+          <Box>
+            <Box className={styles.header}>
+              <Typography className={styles.title}>Ավելացնել պատվեր</Typography>
+              <IconButton onClick={onClose}>
+                <CloseOutlinedIcon />
+              </IconButton>
+            </Box>
+            <Box className={styles.content}>
+              {CreateOrderKeys.map((key, index) => (
+                <TextField
+                  key={key}
+                  label={OrderTableColumns[index + 1]}
+                  className={styles.input}
+                  value={
+                    orderData && orderData[key] ? orderData[key] : undefined
+                  }
+                  onChange={(evt) => handleChange(key, evt.target.value)}
+                />
+              ))}
+              <TextField
+                label="Նշումներ"
+                multiline
+                className={styles.input}
+                value={orderData?.[OrderTableKeysType.NOTES]}
+                onChange={(evt) =>
+                  handleChange(OrderTableKeysType.NOTES, evt.target.value)
+                }
+              />
+              <TextField
+                label="Առաքման օրը"
+                type="date"
+                InputLabelProps={{ shrink: true }}
+                className={styles.input}
+                value={orderData?.[OrderTableKeysType.DELIVERY_DATE]}
+                onChange={(evt) =>
+                  handleChange(
+                    OrderTableKeysType.DELIVERY_DATE,
+                    evt.target.value,
+                  )
+                }
+              />
+              <Box className={styles.flex}>
+                <FormControl>
+                  <RadioGroup
+                    aria-labelledby="demo-radio-buttons-group-label"
+                    defaultValue="female"
+                    name="radio-buttons-group"
+                  >
+                    <FormControlLabel
+                      value={true}
+                      control={
+                        <Radio
+                          checked={!!orderData?.isSpecial}
+                          onClick={() =>
+                            handleChange(
+                              OrderTableKeysType.IS_SPECIAL,
+                              !orderData?.isSpecial,
+                            )
+                          }
                         />
-                      )}
+                      }
+                      label="Հատուկ պատվեր"
+                    />
+                  </RadioGroup>
+                </FormControl>
+                <FormControl>
+                  <Select
+                    defaultValue={PaymentMethods.CASH}
+                    value={orderData?.[OrderTableKeysType.PAYMENT_METHOD]}
+                    onChange={(evt) =>
+                      handleChange(
+                        OrderTableKeysType.PAYMENT_METHOD,
+                        evt.target.value as string,
+                      )
+                    }
+                  >
+                    {paymentMethods.map((method) => (
+                      <MenuItem key={method} value={method}>
+                        {method}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
+              <DriverSelect
+                driver={orderData?.driver as string}
+                onChange={(driver: string) =>
+                  handleChange(OrderTableKeysType.DRIVER, driver)
+                }
+              />
+              <OrderProductSearch
+                orderProducts={
+                  selectedProducts as unknown as orderProductType[]
+                }
+                onChange={handleProducts}
+                multiple
+              />
+            </Box>
+            <Box className={styles.products}>
+              {selectedProducts.map(
+                ({ product, isLoading, size, quantity }, index) => (
+                  <Box key={product.title + index} className={styles.product}>
+                    <Box>
+                      <Box className={styles.imgContainer}>
+                        {isLoading ? (
+                          <Loading />
+                        ) : (
+                          <img
+                            className={styles.productImg}
+                            src={product.images[0]}
+                            alt="Նկար"
+                          />
+                        )}
 
+                        <IconButton
+                          className={styles.removeBtn}
+                          onClick={() => removeImage(index)}
+                        >
+                          <DeleteOutlineOutlinedIcon sx={{ color: 'red' }} />
+                        </IconButton>
+                      </Box>
+                      <FormControl>
+                        <Select
+                          className={styles.select}
+                          value={size}
+                          onChange={(evt) =>
+                            handleSizeChange(
+                              evt.target.value as string,
+                              index,
+                              product.id,
+                            )
+                          }
+                        >
+                          {product.sizes?.map(({ size, quantity }) => (
+                            <MenuItem
+                              key={size}
+                              value={size}
+                              sx={!quantity ? { opacity: 0.5 } : {}}
+                            >
+                              {size}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </Box>
+                    <Box className={styles.actions}>
                       <IconButton
-                        className={styles.removeBtn}
-                        onClick={() => removeImage(index)}
+                        className={styles.plusBtn}
+                        onClick={() => addQty(index)}
                       >
-                        <DeleteOutlineOutlinedIcon sx={{ color: 'red' }} />
+                        <AddIcon sx={{ color: 'green' }} />
+                      </IconButton>
+                      <Typography>{quantity}</Typography>
+                      <IconButton
+                        className={styles.minusBtn}
+                        onClick={() => subQty(index)}
+                      >
+                        <RemoveIcon sx={{ color: 'red' }} />
                       </IconButton>
                     </Box>
-                    <FormControl>
-                      <Select
-                        className={styles.select}
-                        value={size}
-                        onChange={(evt) =>
-                          handleSizeChange(
-                            evt.target.value as string,
-                            index,
-                            product.id,
-                          )
-                        }
-                      >
-                        {product.sizes?.map(({ size, quantity }) => (
-                          <MenuItem
-                            key={size}
-                            value={size}
-                            sx={!quantity ? { opacity: 0.5 } : {}}
-                          >
-                            {size}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
                   </Box>
-                  <Box className={styles.actions}>
-                    <IconButton
-                      className={styles.plusBtn}
-                      onClick={() => addQty(index)}
-                    >
-                      <AddIcon sx={{ color: 'green' }} />
-                    </IconButton>
-                    <Typography>{quantity}</Typography>
-                    <IconButton
-                      className={styles.minusBtn}
-                      onClick={() => subQty(index)}
-                    >
-                      <RemoveIcon sx={{ color: 'red' }} />
-                    </IconButton>
-                  </Box>
-                </Box>
-              ),
-            )}
+                ),
+              )}
+            </Box>
           </Box>
-        </Box>
-        <Box className={styles.actions}>
-          <Button
-            className={styles.addBtn}
-            color={'success'}
-            onClick={handleAdd}
-          >
-            Ավելացնել
-          </Button>
-          <Button
-            className={styles.cancelBtn}
-            color="inherit"
-            onClick={onCancel}
-          >
-            Չեղարկել
-          </Button>
+          <Box className={styles.actions}>
+            <Button
+              className={styles.addBtn}
+              color={'success'}
+              onClick={handleAdd}
+            >
+              Ավելացնել
+            </Button>
+            <Button
+              className={styles.cancelBtn}
+              color="inherit"
+              onClick={onCancel}
+            >
+              Չեղարկել
+            </Button>
+          </Box>
         </Box>
       </Box>
     </Modal>
