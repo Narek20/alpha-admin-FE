@@ -6,7 +6,7 @@ import {
   useEffect,
   useRef,
 } from 'react'
-import { IProduct, IProductsContext } from 'types/product.types'
+import { IPagination, IProduct, IProductsContext } from 'types/product.types'
 import { search } from 'services/products.service'
 
 // Create a ProductsContext
@@ -30,11 +30,11 @@ export const useProducts = () => useContext(ProductsContext)
 export const ProductsProvider = ({ children }: { children: ReactNode }) => {
   const [products, setProducts] = useState<IProduct[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [pagination, setPagination] = useState<{
-    count: number
-    skip: number
-    take: number
-  }>({ count: 20, skip: 0, take: 10 })
+  const pagination = useRef<IPagination>({
+    count: 0,
+    skip: 0,
+    take: 10,
+  })
   const [filters, setFilters] = useState<{
     [param: string]: string | string[] | number[]
   }>({})
@@ -58,11 +58,14 @@ export const ProductsProvider = ({ children }: { children: ReactNode }) => {
       searchKey,
       abortController,
       filters.category as string,
+      pagination.current,
     )
 
     if (data.success) {
       setProducts(data.data)
-      setPagination(data.pagination || pagination)
+      if (data.pagination) {
+        pagination.current = data.pagination
+      }
     }
 
     setIsLoading(false)
@@ -85,7 +88,7 @@ export const ProductsProvider = ({ children }: { children: ReactNode }) => {
         products,
         isLoading,
         filters,
-        pagination,
+        pagination: pagination.current,
         getProducts,
         setFilters,
         setProducts,

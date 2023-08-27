@@ -1,5 +1,5 @@
 import { axiosInstance } from './axios.service'
-import { ICreateProduct, IProduct } from 'types/product.types'
+import { ICreateProduct, IPagination, IProduct } from 'types/product.types'
 import { IResponse } from 'types/response.types'
 import { ProductEndpoints } from 'types/endpoints.types'
 
@@ -28,13 +28,20 @@ export const search = async (
   searchTerm: string,
   abortController?: AbortController,
   categories?: string,
+  pagination?: IPagination,
 ): Promise<IResponse> => {
   try {
-    const data = await axiosInstance.post(ProductEndpoints.SEARCH, {
-      params: { search: searchTerm },
-      signal: abortController?.signal,
-      categories
-    })
+    const data = await axiosInstance.post(
+      ProductEndpoints.SEARCH,
+      {
+        params: { search: searchTerm },
+        signal: abortController?.signal,
+        categories,
+      },
+      {
+        params: pagination,
+      },
+    )
 
     return data.data
   } catch (err: any) {

@@ -19,6 +19,12 @@ export interface IProductsContext {
   >
 }
 
+export interface IPagination {
+  count: number
+  skip: number
+  take: number
+}
+
 export type Sizes = {
   size: string
   smSize?: string

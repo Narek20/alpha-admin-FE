@@ -13,7 +13,7 @@ import styles from './styles.module.scss'
 const Products = () => {
   const [page, setPage] = useState<null | number>(null)
   const [isBig, setIsBig] = useState(true)
-  const { products, isLoading, filters, pagination, setFilters } =
+  const { products, isLoading, pagination, getProducts } =
     useContext(ProductsContext)
 
   const onPageChange = (page: number) => {
@@ -21,8 +21,11 @@ const Products = () => {
   }
 
   useEffect(() => {
+    console.log(pagination)
+
     if (page) {
-      setFilters({ ...filters, skip: `${page - 1}` })
+      pagination.skip = page - 1
+      getProducts()
     }
   }, [page])
 
@@ -38,13 +41,13 @@ const Products = () => {
               <BigProductCard key={product.title + index} product={product} />
             ) : (
               <SmallProductCard key={product.title + index} product={product} />
-            )
+            ),
           )
         ) : (
           <EmptyResults />
         )}
       </Box>
-      {!!products.length && (
+      {!!products.length && pagination.count > pagination.take && (
         <Stack spacing={2}>
           <Pagination
             page={page || 1}
