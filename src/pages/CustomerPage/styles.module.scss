@@ -26,10 +26,14 @@
 
       .label {
         color: black;
+        display: flex;
+
+        svg {
+          margin-right: 5px;
+        }
       }
 
-      .info {
-      }
+      .info {}
     }
   }
 }
