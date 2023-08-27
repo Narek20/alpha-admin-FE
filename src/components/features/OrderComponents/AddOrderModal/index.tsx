@@ -196,7 +196,7 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
           customerData.address2 = data.data.address2
         }
 
-        if(data.data.fullName) {
+        if (data.data.fullName) {
           customerData.fullName = data.data.fullName
         }
 
@@ -257,9 +257,7 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
                   key={key}
                   label={OrderTableColumns[index + 1]}
                   className={styles.input}
-                  value={
-                    orderData && orderData[key] ? orderData[key] : undefined
-                  }
+                  value={orderData && orderData[key] ? orderData[key] : ''}
                   onChange={(evt) => handleChange(key, evt.target.value)}
                 />
               ))}

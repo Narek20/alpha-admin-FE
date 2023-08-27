@@ -337,16 +337,15 @@ const OrderPage = () => {
                                     )
                                 : undefined
                             }
-                            sx={
-                              detailsKey.label === 'Հեռախոսահամար' && !isEditing
-                                ? { cursor: 'pointer' }
-                                : {}
-                            }
                             size="small"
                             onChange={(evt) =>
                               editOrder({ [detailsKey.key]: evt.target.value })
                             }
-                            className={styles.date}
+                            className={`${styles.date} ${
+                              detailsKey.label === 'Հեռախոսահամար' && !isEditing
+                                ? styles.phone
+                                : ''
+                            }`}
                             disabled={!isEditing}
                           />
                         </Box>

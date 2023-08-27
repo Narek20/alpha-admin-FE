@@ -48,7 +48,7 @@
     font-size: 20px;
     width: 100%;
 
-    
+
     & input {
       font-size: 20px;
       padding: 0;
@@ -61,6 +61,14 @@
 
     & input:disabled {
       -webkit-text-fill-color: black;
+    }
+  }
+
+  .phone {
+    cursor: pointer;
+
+    >div {
+      pointer-events: none;
     }
   }
 
@@ -125,6 +133,6 @@
   }
 
   .productAddBtn {
-    margin-top: 15px;   
+    margin-top: 15px;
   }
 }
