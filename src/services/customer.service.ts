@@ -47,9 +47,22 @@ export const updateCustomer = async (
   }
 }
 
-export const getAddress = async (
-  phone: string,
-): Promise<IResponse> => {
+export const removeCustomer = async (id: number): Promise<IResponse> => {
+  try {
+    const data = await axiosInstance.delete(
+      CustomerEndpoints.CUSTOMER_UPDATE + id,
+    )
+
+    return data.data
+  } catch (err: any) {
+    return {
+      success: false,
+      message: err.message,
+    }
+  }
+}
+
+export const getAddress = async (phone: string): Promise<IResponse> => {
   try {
     const data = await axiosInstance.get(
       CustomerEndpoints.CUSTOMER_ADDRESS + phone,
