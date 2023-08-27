@@ -52,11 +52,13 @@ export const ProductsProvider = ({ children }: { children: ReactNode }) => {
     const abortController = new AbortController()
     abortControllerRef.current = abortController
 
-    console.log(filters)
-
     const searchKey = Object.values(filters).join(' ')
 
-    const data = await search(searchKey, abortController)
+    const data = await search(
+      searchKey,
+      abortController,
+      filters.category as string,
+    )
 
     if (data.success) {
       setProducts(data.data)

@@ -174,7 +174,9 @@ const ProductEditPage = () => {
       <Box className={styles.categoryContainer}>
         <CategorySelect
           category={productData.category}
-          onChange={(category) => handleChange(ProductKeys.CATEGORY, category)}
+          onCategoryChange={(category) =>
+            handleChange(ProductKeys.CATEGORY, category)
+          }
         />
       </Box>
       <Box className={styles.productData}>

@@ -25,7 +25,6 @@ const PriceFilter: FC<IProps> = ({ onChange }) => {
     timeout.current = setTimeout(() => {
       if (onChange) {
         onChange(ProductKeys.PRICE, value as number[])
-        console.log('fetching')
       }
     }, 1000)
   }, [value])

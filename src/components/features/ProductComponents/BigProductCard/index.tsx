@@ -37,9 +37,6 @@ const BigProductCard: FC<IProps> = ({ product }) => {
           <img className={styles.img} src={product.images[0]} alt="Ապրանք" />
         )}
       </Box>
-      <Typography className={styles.price}>
-        Արժեքը։ {priceFormatter(product.price)} դր․
-      </Typography>
       <Box className={styles.titleContainer}>
         <Typography className={styles.title}>{product.title} /</Typography>
         <Typography className={styles.category}>
@@ -47,6 +44,9 @@ const BigProductCard: FC<IProps> = ({ product }) => {
         </Typography>
         <Typography className={styles.category}>{product.brand}</Typography>
       </Box>
+      <Typography className={styles.price}>
+        Արժեքը։ {priceFormatter(product.price)} դր․
+      </Typography>
     </Box>
   )
 }

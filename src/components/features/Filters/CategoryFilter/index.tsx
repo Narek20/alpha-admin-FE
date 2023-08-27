@@ -10,16 +10,20 @@ interface IProps {
 }
 
 const CategoryFilter: FC<IProps> = ({ onChange }) => {
-  const [category, setCategory] = useState('')
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([])
 
-  const handleChange = (value: string) => {
-    if (onChange) onChange(ProductKeys.CATEGORY, value)
-    setCategory(value)
+  const handleChange = (value: string[]) => {
+    if (onChange) onChange(ProductKeys.CATEGORY, value.join(' '))
+    setSelectedCategories(value)
   }
 
   return (
     <Box className={styles.categoryFilter}>
-      <CategorySelect category={category} onChange={handleChange} />
+      <CategorySelect
+        selectedCategories={selectedCategories}
+        onCategoriesChange={handleChange}
+        multiple={true}
+      />
     </Box>
   )
 }

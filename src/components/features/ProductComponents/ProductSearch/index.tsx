@@ -25,7 +25,12 @@ const ProductSearch = () => {
     }
   }
 
-  return <TextField className={styles.search} onChange={(e) => handleSearch(e.target.value)} />
+  return (
+    <TextField
+      className={styles.search}
+      onChange={(e) => handleSearch(e.target.value)}
+    />
+  )
 }
 
 export default ProductSearch

@@ -27,11 +27,13 @@ export const getAllProducts = async (
 export const search = async (
   searchTerm: string,
   abortController?: AbortController,
+  categories?: string,
 ): Promise<IResponse> => {
   try {
-    const data = await axiosInstance.get(ProductEndpoints.SEARCH, {
+    const data = await axiosInstance.post(ProductEndpoints.SEARCH, {
       params: { search: searchTerm },
       signal: abortController?.signal,
+      categories
     })
 
     return data.data
