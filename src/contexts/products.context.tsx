@@ -20,6 +20,12 @@ export const ProductsContext = createContext<IProductsContext>({
   setFilters: () => {},
 })
 
+const initialPagination = {
+  count: 0,
+  skip: 0,
+  take: 2,
+}
+
 // Custom hook to access the ProductsContext
 export const useProducts = () => useContext(ProductsContext)
 
@@ -30,11 +36,7 @@ export const useProducts = () => useContext(ProductsContext)
 export const ProductsProvider = ({ children }: { children: ReactNode }) => {
   const [products, setProducts] = useState<IProduct[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const pagination = useRef<IPagination>({
-    count: 0,
-    skip: 0,
-    take: 10,
-  })
+  const pagination = useRef<IPagination>(initialPagination)
   const [filters, setFilters] = useState<{
     [param: string]: string | string[] | number[]
   }>({})
@@ -72,6 +74,7 @@ export const ProductsProvider = ({ children }: { children: ReactNode }) => {
   }
 
   useEffect(() => {
+    pagination.current = initialPagination
     getProducts()
 
     // Cleanup function to abort the request if the component unmounts or the filters change

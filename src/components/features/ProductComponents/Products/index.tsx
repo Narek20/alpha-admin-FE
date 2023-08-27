@@ -13,7 +13,7 @@ import styles from './styles.module.scss'
 const Products = () => {
   const [page, setPage] = useState<null | number>(null)
   const [isBig, setIsBig] = useState(true)
-  const { products, isLoading, pagination, getProducts } =
+  const { products, isLoading, pagination, getProducts, filters } =
     useContext(ProductsContext)
 
   const onPageChange = (page: number) => {
@@ -21,13 +21,15 @@ const Products = () => {
   }
 
   useEffect(() => {
-    console.log(pagination)
-
     if (page) {
       pagination.skip = page - 1
       getProducts()
     }
   }, [page])
+
+  useEffect(() => {
+    setPage(1)
+  }, [filters])
 
   return (
     <Box className={styles.productsContainer}>
