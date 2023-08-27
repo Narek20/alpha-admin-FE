@@ -176,26 +176,31 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
     onClose()
   }
 
-  const getCustomerAddress = async (phone: string, fullName: string) => {
+  const getCustomerAddress = async (phone: string) => {
     if (phone.length === 9 && !isFetched) {
       setIsLoading(true)
-      const data = await getAddress(phone, fullName)
+      const data = await getAddress(phone)
 
       if (data.success) {
         setIsFetched(true)
-        const addresses = {
+        const customerData = {
+          fullName: '',
           address: '',
           address2: '',
         }
         if (data.data.address) {
-          addresses.address = data.data.address
+          customerData.address = data.data.address
         }
 
         if (data.data.address2) {
-          addresses.address2 = data.data.address2
+          customerData.address2 = data.data.address2
         }
 
-        setOrderData({ ...orderData, ...addresses })
+        if(data.data.fullName) {
+          customerData.fullName = data.data.fullName
+        }
+
+        setOrderData({ ...orderData, ...customerData })
       }
 
       setIsLoading(false)
@@ -223,14 +228,10 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
     if (
       orderData &&
       orderData.phone &&
-      orderData.fullName &&
       !orderData.address &&
       !orderData.address2
     ) {
-      getCustomerAddress(
-        orderData.phone as string,
-        orderData.fullName as string,
-      )
+      getCustomerAddress(orderData.phone as string)
     }
   }, [orderData])
 

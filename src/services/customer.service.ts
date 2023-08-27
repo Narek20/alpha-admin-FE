@@ -49,11 +49,10 @@ export const updateCustomer = async (
 
 export const getAddress = async (
   phone: string,
-  fullName: string,
 ): Promise<IResponse> => {
   try {
     const data = await axiosInstance.get(
-      CustomerEndpoints.CUSTOMER_ADDRESS + `${phone}/${fullName}`,
+      CustomerEndpoints.CUSTOMER_ADDRESS + phone,
     )
 
     return data.data
