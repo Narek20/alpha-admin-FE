@@ -45,7 +45,7 @@ const BigProductCard: FC<IProps> = ({ product }) => {
         <Typography className={styles.category}>{product.brand}</Typography>
       </Box>
       <Typography className={styles.price}>
-        Արժեքը։ {priceFormatter(product.price)} դր․
+        Արժեքը։ {priceFormatter(product.price)} ֏
       </Typography>
     </Box>
   )

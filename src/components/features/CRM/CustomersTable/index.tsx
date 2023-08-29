@@ -101,7 +101,7 @@ const CustomersTable = () => {
                   scope="row"
                   align="left"
                 >
-                  {priceFormatter(totalPrice)}
+                  {priceFormatter(totalPrice)} ֏
                 </TableCell>
                 <TableCell
                   className={styles.bodyCell}

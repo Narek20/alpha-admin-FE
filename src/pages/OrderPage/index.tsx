@@ -366,7 +366,7 @@ const OrderPage = () => {
                 Ընդհանուր Գումար
               </Typography>
               <Typography className={styles.info}>
-                {priceFormatter(commonQtyAndPrice.price)}
+                {priceFormatter(commonQtyAndPrice.price)} ֏
               </Typography>
             </Box>
           </Box>

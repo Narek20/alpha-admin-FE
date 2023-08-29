@@ -57,7 +57,7 @@ const FinanceInformation: FC<IProps> = ({
           <Box className={styles.infoContainer}>
             <Typography className={styles.infoTitle}>Գումարը</Typography>
             <Typography className={styles.totalInfo}>
-              {priceFormatter(totalPrice)}դր․
+              {priceFormatter(totalPrice)} ֏
             </Typography>
           </Box>
           <Box className={styles.infoContainer}>
@@ -69,7 +69,7 @@ const FinanceInformation: FC<IProps> = ({
               }
             >
               {priceDifference > 0 && '+'}
-              {priceFormatter(priceDifference)}դր․
+              {priceFormatter(priceDifference)} ֏
             </Typography>
             <Typography className={styles.differenceTitle}>
               Երեկվանից

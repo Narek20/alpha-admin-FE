@@ -115,7 +115,7 @@ const ProductDetails: FC<{ product: IProduct }> = ({ product }) => {
                     <Typography className={styles.info}>
                       {key === AdditionalDetailsKeys.PRICE ||
                       key === AdditionalDetailsKeys.PURCHASE_PRICE
-                        ? priceFormatter(product[key])
+                        ? `${priceFormatter(product[key])} ֏`
                         : product[key]}
                     </Typography>
                   </Box>

@@ -194,7 +194,7 @@ const ProductTable: FC<IProps> = ({
                 align="left"
               >
                 <Typography className={styles.data}>
-                  {priceFormatter(product.price)}
+                  {priceFormatter(product.price)} ֏
                 </Typography>
               </TableCell>
               {isEditing && (

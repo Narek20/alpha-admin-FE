@@ -31,7 +31,7 @@ const OrderProductCard: FC<IProduct & { quantity: number }> = ({
       <Box className={styles.detailContainer}>
         <Typography className={styles.label}>Գինը</Typography>
         <Typography className={styles.detail}>
-          {priceFormatter(price)}
+          {priceFormatter(price)} ֏
         </Typography>
       </Box>
       <Box className={styles.detailContainer}>
