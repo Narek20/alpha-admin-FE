@@ -15,7 +15,10 @@ const Supplies: FC<IProps> = () => {
     <Box className={styles.supplies}>
       <SectionHeader title="Պահեստ" />
       <Box className={styles.tableContainer}>
-        <StorageTable data={storageImports} columns={['Ամսաթիվ', 'Պահեստ']} />
+        <StorageTable
+          data={storageImports}
+          columns={['Պահեստ', 'Ապրանք', 'Ամսաթիվ']}
+        />
       </Box>
     </Box>
   )

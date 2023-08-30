@@ -16,10 +16,11 @@ import { priceFormatter } from '@utils/priceFormatter'
 import { CRMTableColumns } from '@utils/CRM/constants'
 import { CustomersContext } from 'contexts/customer.context'
 
-import styles from './styles.module.scss'
 import ConfirmationModal from '@shared/ConfirmationModal'
 import { removeCustomer } from 'services/customer.service'
 import { useToast } from 'contexts/toast.context'
+
+import styles from './styles.module.scss'
 
 const CustomersTable = () => {
   const [customerId, setCustomerId] = useState(0)

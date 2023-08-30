@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import {
   Box,
@@ -254,12 +254,9 @@ const OrderPage = () => {
             {OrderDetailsKeys.map(
               (detailsKey) =>
                 originalOrder[detailsKey.key] && (
-                  <>
+                  <React.Fragment key={detailsKey.label}>
                     {detailsKey.key === 'driver' && (
-                      <Box
-                        key={detailsKey.label}
-                        className={styles.infoContainer}
-                      >
+                      <Box className={styles.infoContainer}>
                         <Typography className={styles.infoLabel}>
                           {detailsKey.label}
                         </Typography>
@@ -350,7 +347,7 @@ const OrderPage = () => {
                           />
                         </Box>
                       )}
-                  </>
+                  </React.Fragment>
                 ),
             )}
             <Box className={styles.infoContainer}>

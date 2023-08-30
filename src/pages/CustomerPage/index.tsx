@@ -10,6 +10,7 @@ import CustomerEditModal from '@features/CustomerComponents/CustomerEditModal'
 import ProductTable from '@shared/ProductsTable'
 import { orderProductType } from 'types/order.types'
 import { customerInformation } from '@utils/customer/constants'
+import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined'
 
 import styles from './styles.module.scss'
 
@@ -50,10 +51,13 @@ const CustomerPage = () => {
       <Box className={styles.customerPage}>
         <Box className={styles.sidebar}>
           {customerInformation.map(
-            ({ label, key }) =>
-              customer[key] && (
+            ({ label, key, icon }) =>
+              !!customer[key] && (
                 <Box key={label} className={styles.customerInfo}>
-                  <Typography className={styles.label}>{label}</Typography>
+                  <Typography className={styles.label}>
+                    {icon}
+                    {label}
+                  </Typography>
                   <Typography className={styles.info}>
                     {customer[key]}
                   </Typography>
@@ -62,6 +66,7 @@ const CustomerPage = () => {
           )}
           <Box className={styles.customerInfo}>
             <Typography className={styles.label}>
+              <Inventory2OutlinedIcon />
               Ընհանուր պատվերները:
             </Typography>
             <Typography className={styles.info}>
