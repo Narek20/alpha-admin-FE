@@ -14,6 +14,8 @@ interface IProps {
 
 const PriceFilter: FC<IProps> = ({ onChange }) => {
   const [value, setValue] = useState<number[]>([0, 100000])
+  const [isFirstRender, setIsFirstRender] = useState(true)
+
   const timeout = useRef<NodeJS.Timeout>()
 
   const handleChange = (event: Event, newValue: number | number[]) => {
@@ -21,12 +23,16 @@ const PriceFilter: FC<IProps> = ({ onChange }) => {
   }
 
   useEffect(() => {
-    clearTimeout(timeout.current)
-    timeout.current = setTimeout(() => {
-      if (onChange) {
-        onChange(ProductKeys.PRICE, value as number[])
-      }
-    }, 1000)
+    if (!isFirstRender) {
+      clearTimeout(timeout.current)
+      timeout.current = setTimeout(() => {
+        if (onChange) {
+          onChange(ProductKeys.PRICE, value as number[])
+        }
+      }, 1000)
+    } else {
+      setIsFirstRender(false)
+    }
   }, [value])
 
   return (
