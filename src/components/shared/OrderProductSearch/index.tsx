@@ -6,6 +6,7 @@ import { orderProductType } from 'types/order.types'
 
 interface IProps {
   orderProducts: orderProductType[]
+  setOrderProducts?: React.Dispatch<React.SetStateAction<orderProductType[]>>
   onChange: (value: orderProductType | orderProductType[]) => void
   multiple?: boolean
 }
@@ -14,6 +15,7 @@ export const OrderProductSearch: React.FC<IProps> = ({
   orderProducts,
   onChange,
   multiple,
+  setOrderProducts,
 }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [searchedProducts, setSearchedProducts] = useState<IProduct[]>([])
@@ -100,10 +102,10 @@ export const OrderProductSearch: React.FC<IProps> = ({
     onChange(newOrderProducts)
     setSearchedProducts([])
   }
-  
+
   return (
     <Autocomplete
-      // disablePortal
+      disablePortal
       id="combo-box-demo"
       getOptionLabel={(option) =>
         `${option.title}${option.color ? `-${option.color}` : ''}`
@@ -119,7 +121,11 @@ export const OrderProductSearch: React.FC<IProps> = ({
           <Chip
             variant="outlined"
             label={orderProduct.product.title}
-            {...getTagProps({ index })}
+            // {...getTagProps({ index })}
+            onDelete={() =>
+              setOrderProducts &&
+              setOrderProducts((prev) => prev.filter((_, ind) => ind !== index))
+            }
           />
         ))
       }

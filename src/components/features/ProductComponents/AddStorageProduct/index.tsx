@@ -6,7 +6,6 @@ import {
   Button,
   Modal,
   TextField,
-  Autocomplete,
   Select,
   MenuItem,
   FormControl,
@@ -18,10 +17,10 @@ import RemoveIcon from '@mui/icons-material/Remove'
 import Loading from '@shared/Loading'
 import { useToast } from 'contexts/toast.context'
 import { OrdersContext } from 'contexts/order.context'
-import { getAllProducts } from 'services/products.service'
-import { IProduct } from 'types/product.types'
 import { IStorage, StorageKeys } from 'types/storage.types'
+import { orderProductType } from 'types/order.types'
 import { createStorageImports } from 'services/storage.service'
+import { OrderProductSearch } from '@shared/OrderProductSearch'
 
 import styles from './styles.module.scss'
 
@@ -32,18 +31,9 @@ interface IProps {
 
 const AddStorageProduct: FC<IProps> = ({ open, onClose }) => {
   const [isCreating, setIsCreating] = useState(false)
-  const [selectedTitles, setSelectedTitles] = useState<string[]>([])
   const [selectedProducts, setSelectedProducts] = useState<
-    Array<
-      IProduct & {
-        quantity: number
-        size?: string
-        smSize?: string
-        isLoading?: boolean
-      }
-    >
+    (orderProductType & { isLoading?: boolean })[]
   >([])
-  const [products, setProducts] = useState<IProduct[]>([])
   const [storageData, setStorageData] = useState<{
     [key: string]: string | number | boolean
   } | null>(null)
@@ -55,96 +45,11 @@ const AddStorageProduct: FC<IProps> = ({ open, onClose }) => {
     setStorageData({ ...storageData, [key]: value })
   }
 
-  const handleProducts = (values: string[]) => {
-    if (values.length > selectedProducts.length) {
-      const product = products.find(
-        (product) => product.title === values[values.length - 1]
-      )
-
-      if (product) {
-        setSelectedTitles([...selectedTitles, product.title])
-        setSelectedProducts([
-          ...selectedProducts,
-          { ...product, quantity: 1, isLoading: true },
-        ])
-      }
-    } else {
-      setSelectedTitles(
-        selectedTitles.filter((title) =>
-          values.find((value) => value === title)
-        )
-      )
-      setSelectedProducts(
-        selectedProducts.filter((product) =>
-          values.find((value) => value == product.title)
-        )
-      )
-    }
-  }
-
-  const searchProducts = async (searchKey: string) => {
-    const data = await getAllProducts({ title: searchKey, take: '10' })
-
-    if (data.success) {
-      setProducts(data.data)
-    }
-  }
-
-  const removeImage = (index: number) => {
-    setSelectedProducts(selectedProducts.filter((_, ind) => ind !== index))
-    setSelectedTitles(selectedTitles.filter((_, ind) => ind !== index))
-  }
-
-  const addQty = (index: number) => {
-    setSelectedProducts(
-      selectedProducts.map((product, ind) => {
-        if (ind === index) {
-          return {
-            ...product,
-            quantity: product.quantity + 1,
-          }
-        }
-
-        return product
-      })
-    )
-  }
-
-  const subQty = (index: number) => {
-    setSelectedProducts(
-      selectedProducts.map((product, ind) => {
-        if (ind === index && product.quantity > 1) {
-          return {
-            ...product,
-            quantity: product.quantity - 1,
-          }
-        }
-
-        return product
-      })
-    )
-  }
-
-  const handleSizeChange = (value: string, index: number) => {
-    setSelectedProducts(
-      selectedProducts.map((product, ind) => {
-        if (ind === index) {
-          return {
-            ...product,
-            size: value,
-          }
-        }
-
-        return product
-      })
-    )
-  }
-
   const handleAdd = async () => {
-    const productIDs = selectedProducts.map((product) => ({
+    const productIDs = selectedProducts.map(({ product, quantity, size }) => ({
       id: product.id,
-      quantity: product.quantity,
-      size: product.size,
+      quantity,
+      size,
     }))
 
     if (isCreating) return
@@ -171,28 +76,88 @@ const AddStorageProduct: FC<IProps> = ({ open, onClose }) => {
     setIsCreating(false)
   }
 
-  const handleImageLoad = () => {
+  const handleImageLoad = (id: number) => {
+    setSelectedProducts((prev) =>
+      prev.map((orderProduct) =>
+        id === orderProduct.product.id
+          ? {
+              ...orderProduct,
+              isLoading: false,
+            }
+          : orderProduct,
+      ),
+    )
+  }
+
+  const handleSizeChange = (value: string, index: number, id: number) => {
     setSelectedProducts(
-      selectedProducts.map((product, index) => {
-        if (index === selectedProducts.length - 1) {
+      selectedProducts.map((product, ind) => {
+        if (
+          ind === index &&
+          !selectedProducts.some(
+            ({ size, product }) => product.id === id && size === value,
+          )
+        ) {
           return {
             ...product,
-            isLoading: false,
+            size: value,
           }
         }
 
         return product
-      })
+      }),
     )
   }
 
+  const addQty = (index: number) => {
+    setSelectedProducts(
+      selectedProducts.map((product, ind) => {
+        if (ind === index) {
+          return {
+            ...product,
+            quantity: product.quantity + 1,
+          }
+        }
+
+        return product
+      }),
+    )
+  }
+
+  const subQty = (index: number) => {
+    setSelectedProducts(
+      selectedProducts.map((product, ind) => {
+        if (ind === index && product.quantity > 1) {
+          return {
+            ...product,
+            quantity: product.quantity - 1,
+          }
+        }
+
+        return product
+      }),
+    )
+  }
+
+  const removeImage = (index: number) => {
+    setSelectedProducts(prev => prev.filter((_, ind) => ind !== index))
+  }
+
   useEffect(() => {
-    const image = new Image()
-    image.src = selectedProducts[selectedProducts.length - 1]?.images[0]
-    image.addEventListener('load', handleImageLoad)
-    return () => {
-      image.removeEventListener('load', handleImageLoad)
-    }
+    selectedProducts.forEach(({ product }) => {
+      const image = new Image()
+      image.src = product.images[0]
+      let listener = () => {
+        handleImageLoad(product.id)
+        image.removeEventListener('load', listener)
+      }
+
+      if (image.complete) {
+        handleImageLoad(product.id)
+      } else {
+        image.addEventListener('load', listener)
+      }
+    })
   }, [selectedProducts.length])
 
   return (
@@ -223,78 +188,77 @@ const AddStorageProduct: FC<IProps> = ({ open, onClose }) => {
                 handleChange(StorageKeys.IMPORT_DATE, evt.target.value)
               }
             />
-            <Autocomplete
-              disablePortal
-              id="combo-box-demo"
-              className={styles.search}
-              options={products.map((product) => product.title)}
-              onChange={(_, values) => handleProducts(values)}
-              value={selectedTitles}
+            <OrderProductSearch
+              orderProducts={selectedProducts}
+              setOrderProducts={setSelectedProducts}
               multiple
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Ապրանքի Որոնում"
-                  onChange={(evt) => searchProducts(evt.target.value)}
-                />
-              )}
+              onChange={(values) =>
+                setSelectedProducts(
+                  (values as orderProductType[]).map((value) => ({
+                    ...value,
+                    isLoading: true,
+                  })),
+                )
+              }
             />
           </Box>
           <Box className={styles.products}>
-            {selectedProducts.map((product, index) => (
-              <Box key={product.title + index} className={styles.product}>
-                <Box>
-                  <Box className={styles.imgContainer}>
-                    {product.isLoading ? (
-                      <Loading />
-                    ) : (
-                      <img
-                        className={styles.productImg}
-                        src={product.images[0]}
-                        alt="Նկար"
-                      />
-                    )}
+            {selectedProducts.map(
+              ({ product, isLoading, size, quantity }, index) => (
+                <Box key={product.title + index} className={styles.product}>
+                  <Box>
+                    <Box className={styles.imgContainer}>
+                      {isLoading ? (
+                        <Loading />
+                      ) : (
+                        <img
+                          className={styles.productImg}
+                          src={product.images[0]}
+                          alt="Նկար"
+                        />
+                      )}
 
+                      <IconButton
+                        className={styles.removeBtn}
+                        onClick={() => removeImage(index)}
+                      >
+                        <DeleteOutlineOutlinedIcon sx={{ color: 'red' }} />
+                      </IconButton>
+                    </Box>
+                    <FormControl>
+                      <Select
+                        className={styles.select}
+                        value={size}
+                        onChange={(evt) =>
+                          handleSizeChange(evt.target.value, index, product.id)
+                        }
+                      >
+                        {product.sizes?.map(({ size }) => (
+                          <MenuItem key={size} value={size}>
+                            {size}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Box>
+                  <Box className={styles.actions}>
                     <IconButton
-                      className={styles.removeBtn}
-                      onClick={() => removeImage(index)}
+                      className={styles.plusBtn}
+                      onClick={() => addQty(index)}
                     >
-                      <DeleteOutlineOutlinedIcon sx={{ color: 'red' }} />
+                      <AddIcon sx={{ color: 'green' }} />
+                    </IconButton>
+                    <Typography>{quantity}</Typography>
+                    <IconButton
+                      className={styles.minusBtn}
+                      onClick={() => subQty(index)}
+                    >
+                      <RemoveIcon sx={{ color: 'red' }} />
                     </IconButton>
                   </Box>
-                  <FormControl>
-                    <Select
-                      className={styles.select}
-                      value={product.size}
-                      onChange={(evt) =>
-                        handleSizeChange(evt.target.value as string, index)
-                      }
-                    >
-                      {product.sizes?.map(({ size }) => (
-                        <MenuItem key={size} value={size}>
-                          {size}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
                 </Box>
-                <Box className={styles.actions}>
-                  <IconButton
-                    className={styles.plusBtn}
-                    onClick={() => addQty(index)}
-                  >
-                    <AddIcon sx={{ color: 'green' }} />
-                  </IconButton>
-                  <Typography>{product.quantity}</Typography>
-                  <IconButton
-                    className={styles.minusBtn}
-                    onClick={() => subQty(index)}
-                  >
-                    <RemoveIcon sx={{ color: 'red' }} />
-                  </IconButton>
-                </Box>
-              </Box>
-            ))}
+              ),
+            )}
           </Box>
         </Box>
         <Box className={styles.actions}>

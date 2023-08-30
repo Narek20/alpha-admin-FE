@@ -47,7 +47,6 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
   const [isCreating, setIsCreating] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [isFetched, setIsFetched] = useState(false)
-  const [selectedTitles, setSelectedTitles] = useState<string[]>([])
   const [selectedProducts, setSelectedProducts] = useState<
     Array<orderProductType & { isLoading?: boolean }>
   >([])
@@ -72,8 +71,7 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
   }
 
   const removeImage = (index: number) => {
-    setSelectedProducts(selectedProducts.filter((_, ind) => ind !== index))
-    setSelectedTitles(selectedTitles.filter((_, ind) => ind !== index))
+    setSelectedProducts((prev) => prev.filter((_, ind) => ind !== index))
   }
 
   const addQty = (index: number) => {
@@ -336,6 +334,7 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
                 orderProducts={
                   selectedProducts as unknown as orderProductType[]
                 }
+                setOrderProducts={setSelectedProducts}
                 onChange={handleProducts}
                 multiple
               />
