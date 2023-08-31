@@ -35,7 +35,7 @@ export const customerInformation = [
     icon: <LocalOfferIcon />,
   },
   {
-    label: 'Զեղծված գումարը:',
+    label: 'Կուտակված գումարը:',
     key: CustomerInfoKeys.CASHBACK_MONEY,
     icon: <PercentIcon />,
   },
