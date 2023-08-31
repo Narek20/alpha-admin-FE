@@ -103,7 +103,7 @@ export const OrderProductSearch: React.FC<IProps> = ({
   
   return (
     <Autocomplete
-      // disablePortal
+      noOptionsText="Ոչինչ չի գտնվել"
       id="combo-box-demo"
       getOptionLabel={(option) =>
         `${option.title}${option.color ? `-${option.color}` : ''}`

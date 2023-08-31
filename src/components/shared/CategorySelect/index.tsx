@@ -23,6 +23,7 @@ const CategorySelect: FC<IProps> = ({
 
   return (
     <Autocomplete
+      noOptionsText="Ոչինչ չի գտնվել"
       disablePortal
       id="combo-box-demo"
       multiple={multiple}

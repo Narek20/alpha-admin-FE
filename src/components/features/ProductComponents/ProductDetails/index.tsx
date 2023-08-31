@@ -28,7 +28,9 @@ import styles from './styles.module.scss'
 const ProductDetails: FC<{ product: IProduct }> = ({ product }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
+  const [isProductExist, setIsProductExist] = useState(false)
   const [productSizes, setProductSizes] = useState<Sizes[]>([])
+
   const navigate = useNavigate()
   const { showToast } = useToast()
   const { userData } = useContext(AuthContext)
@@ -81,13 +83,48 @@ const ProductDetails: FC<{ product: IProduct }> = ({ product }) => {
   useEffect(() => {
     if (product.sizes?.length) {
       setProductSizes(product.sizes)
+
+      product.sizes.forEach((size) => {
+        if (size.quantity) {
+          setIsProductExist(true)
+        }
+      })
+    } else {
+      setIsProductExist(false)
     }
   }, [product.sizes])
 
+  useEffect(() => {
+    if (productSizes.length) {
+      if(isProductExist) {
+        let isExist = false
+        productSizes.forEach((size) => {
+          if(size.quantity) {
+            isExist = true
+          }
+        })
+
+        if(!isExist) {
+          setIsProductExist(false)
+        }
+      } else {
+        productSizes.forEach((size) => {
+          if (size.quantity) {
+            setIsProductExist(true)
+          }
+        })
+      }
+    }
+  }, [productSizes])
+
   return (
     <>
-      <Box className={styles.carousel}>
+      <Box
+        className={styles.carousel}
+        sx={{ opacity: isProductExist ? 1 : 0.5 }}
+      >
         <ImageCarousel slides={product.images} size={isTablet ? 200 : 500} />
+        {!isProductExist && <hr className={styles.line} />}
       </Box>
       <Box className={styles.productDetails}>
         <Box className={styles.details}>

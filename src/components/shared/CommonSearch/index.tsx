@@ -52,6 +52,7 @@ const CommonSearch: FC<IProps> = () => {
 
   return (
     <Autocomplete
+      noOptionsText="Ոչինչ չի գտնվել"
       className={styles.search}
       getOptionLabel={(option) => option}
       options={results.map((item) => item.title)}

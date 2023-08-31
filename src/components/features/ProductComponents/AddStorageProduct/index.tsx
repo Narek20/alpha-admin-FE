@@ -224,6 +224,7 @@ const AddStorageProduct: FC<IProps> = ({ open, onClose }) => {
               }
             />
             <Autocomplete
+              noOptionsText="Ոչինչ չի գտնվել"
               disablePortal
               id="combo-box-demo"
               className={styles.search}

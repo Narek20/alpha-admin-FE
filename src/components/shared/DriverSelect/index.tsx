@@ -14,6 +14,7 @@ const DriverSelect: FC<IProps> = ({ driver, onChange }) => {
   
   return (
     <Autocomplete
+      noOptionsText="Ոչինչ չի գտնվել"
       disablePortal
       id="combo-box-demo"
       className={styles.driver}
