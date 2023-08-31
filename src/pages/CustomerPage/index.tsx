@@ -4,7 +4,7 @@ import { Box, Typography, IconButton } from '@mui/material'
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined'
 import Loading from '@shared/Loading'
 import CustomerOrders from '@features/CustomerComponents/CustomerOrderTable'
-import { ICustomer } from 'types/customer.types'
+import { CustomerInfoKeys, ICustomer } from 'types/customer.types'
 import { getOneCustomer } from 'services/customer.service'
 import CustomerEditModal from '@features/CustomerComponents/CustomerEditModal'
 import ProductTable from '@shared/ProductsTable'
@@ -60,6 +60,10 @@ const CustomerPage = () => {
                   </Typography>
                   <Typography className={styles.info}>
                     {customer[key]}
+                    {(key === CustomerInfoKeys.CASHBACK_MONEY ||
+                      key === CustomerInfoKeys.TOTAL_PRICE) &&
+                      ' ֏'}
+                    {key === CustomerInfoKeys.TOTAL_QTY && ' Հատ'}
                   </Typography>
                 </Box>
               ),
@@ -70,7 +74,7 @@ const CustomerPage = () => {
               Ընհանուր պատվերները:
             </Typography>
             <Typography className={styles.info}>
-              {customer?.orders?.length}
+              {customer?.orders?.length} Հատ
             </Typography>
           </Box>
           <Box className={styles.edit}>
@@ -81,7 +85,9 @@ const CustomerPage = () => {
         </Box>
         <CustomerOrders orders={customer.orders} />
       </Box>
-      {customer.orders && <ProductTable data={orderProducts} />}
+      {customer.orders && (
+        <ProductTable data={orderProducts} displayOrderNumber={true} />
+      )}
       <CustomerEditModal
         open={isOpen}
         onClose={() => setIsOpen(false)}

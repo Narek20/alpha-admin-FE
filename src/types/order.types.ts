@@ -49,6 +49,7 @@ export type orderProductType = {
   quantity: number
   product: IProduct
   size?: string
+  orderId?: number
 }
 
 export enum OrderStatus {

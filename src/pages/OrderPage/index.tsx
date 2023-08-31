@@ -383,6 +383,7 @@ const OrderPage = () => {
           <SectionHeader title="Պատվիրված ապրանքները" />
           <Box className={styles.products}>
             <ProductTable
+              displayOrderNumber={false}
               data={order.orderProducts}
               isEditing={isEditing}
               editProduct={editProduct}

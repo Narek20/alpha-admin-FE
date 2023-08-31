@@ -24,7 +24,13 @@ import { priceFormatter } from '@utils/priceFormatter'
 import styles from './styles.module.scss'
 
 interface IProps {
-  data: Array<{ product: IProduct; quantity: number; size?: string }>
+  data: Array<{
+    product: IProduct
+    quantity: number
+    size?: string
+    orderId?: number
+  }>
+  displayOrderNumber?: boolean
   isEditing?: boolean
   editProduct?: (
     id: number,
@@ -34,6 +40,7 @@ interface IProps {
 }
 
 const columns = [
+  'Պատվեր N',
   'Նկար',
   'Կատեգորիա',
   'Բրենդ',
@@ -46,6 +53,7 @@ const columns = [
 const ProductTable: FC<IProps> = ({
   data,
   isEditing,
+  displayOrderNumber,
   editProduct,
   handleRemove,
 }) => {
@@ -56,21 +64,39 @@ const ProductTable: FC<IProps> = ({
       <Table className={styles.table} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
-            {columns.map((key) => (
-              <TableCell key={key} align="left">
-                {key}
-              </TableCell>
-            ))}
+            {columns.map((key, index) =>
+              index === 0 ? (
+                displayOrderNumber && (
+                  <TableCell key={key} align="left">
+                    {key}
+                  </TableCell>
+                )
+              ) : (
+                <TableCell key={key} align="left">
+                  {key}
+                </TableCell>
+              ),
+            )}
             {isEditing && <TableCell key="actions" align="left"></TableCell>}
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map(({ quantity, product, size }, index) => (
+          {data.map(({ quantity, product, size, orderId }, index) => (
             <TableRow
               key={`${product.id} ${size ? size : ''}`}
               sx={{ padding: 20 }}
               className={styles.bodyRow}
             >
+              {displayOrderNumber && (
+                <TableCell
+                  className={styles.bodyCell}
+                  component="th"
+                  scope="row"
+                  align="left"
+                >
+                  {orderId}
+                </TableCell>
+              )}
               <TableCell
                 className={styles.imgBodyCell}
                 component="th"
