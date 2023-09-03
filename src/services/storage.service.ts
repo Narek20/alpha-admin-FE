@@ -21,11 +21,11 @@ export const getAllStorageImports = async (params?: {
 }
 
 export const getStorageImportById = async (
-  storageId: string
+  storageId: string,
 ): Promise<IResponse> => {
   try {
     const data = await axiosInstance.get(
-      StorageEndpoints.STORAGE_IMPORTS + storageId
+      StorageEndpoints.STORAGE_IMPORTS + storageId,
     )
 
     return data.data
@@ -37,13 +37,26 @@ export const getStorageImportById = async (
   }
 }
 
+export const getAllStorages = async () => {
+  try {
+    const data = await axiosInstance.get(StorageEndpoints.STORAGES)
+
+    return data.data
+  } catch (err: any) {
+    return {
+      success: false,
+      message: err.message,
+    }
+  }
+}
+
 export const createStorageImports = async (
-  storageData: IStorage
+  storageData: IStorage,
 ): Promise<IResponse> => {
   try {
     const data = await axiosInstance.post(
       StorageEndpoints.ADD_STORAGE_IMPORTS,
-      storageData
+      storageData,
     )
 
     return data.data
@@ -56,12 +69,12 @@ export const createStorageImports = async (
 }
 
 export const updateStorageImports = async (
-  storageData: IStorage
+  storageData: IStorage,
 ): Promise<IResponse> => {
   try {
     const data = await axiosInstance.put(
       StorageEndpoints.UPDATE_STORAGE_IMPORT + storageData.id,
-      storageData
+      storageData,
     )
 
     return data.data
@@ -74,11 +87,11 @@ export const updateStorageImports = async (
 }
 
 export const removeStorageImports = async (
-  storageId: number
+  storageId: number,
 ): Promise<IResponse> => {
   try {
     const data = await axiosInstance.delete(
-      StorageEndpoints.DELETE_STORAGE_IMPORTS + storageId
+      StorageEndpoints.DELETE_STORAGE_IMPORTS + storageId,
     )
 
     return data.data

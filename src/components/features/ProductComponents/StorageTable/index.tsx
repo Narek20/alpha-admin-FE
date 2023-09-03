@@ -10,12 +10,12 @@ import {
   Typography,
 } from '@mui/material'
 import { StorageTableKeys } from '@utils/storage/constants'
-import { IStorage, StorageKeys } from 'types/storage.types'
+import { IStorageImport, StorageKeys } from 'types/storage.types'
 
 import styles from './styles.module.scss'
 
 interface IProps {
-  data: IStorage[]
+  data: IStorageImport[]
   columns: string[]
 }
 
@@ -33,7 +33,7 @@ const StorageTable: FC<IProps> = ({ data, columns }) => {
         <TableBody>
           {data.map((data) => (
             <TableRow
-              key={data.storage}
+              key={data.title}
               sx={{ padding: 20 }}
               className={styles.bodyRow}
             >
