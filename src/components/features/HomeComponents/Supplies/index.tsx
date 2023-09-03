@@ -17,7 +17,7 @@ const Supplies: FC<IProps> = () => {
       <Box className={styles.tableContainer}>
         <StorageTable
           data={storageImports}
-          columns={['Պահեստ', 'Ապրանք', 'Ամսաթիվ']}
+          columns={['N', 'Պահեստ', 'Ապրանք', 'Ամսաթիվ']}
         />
       </Box>
     </Box>

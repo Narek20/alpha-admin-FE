@@ -42,7 +42,7 @@ export enum CustomerEndpoints {
   CUSTOMER = 'customers/',
   CUSTOMER_UPDATE = 'customers/',
   CUSTOMER_DELETE = 'customers/',
-  CUSTOMER_ADDRESS = '/customers/address/'
+  CUSTOMER_ADDRESS = '/customers/address/',
 }
 
 export enum CategoryEndpoints {
@@ -53,7 +53,8 @@ export enum CategoryEndpoints {
 }
 
 export enum StorageEndpoints {
-  STORAGE_IMPORTS = 'storages/',
+  STORAGES = 'storages',
+  STORAGE_IMPORTS = 'storages/imports',
   ADD_STORAGE_IMPORTS = 'storages/create',
   UPDATE_STORAGE_IMPORT = 'storages/',
   DELETE_STORAGE_IMPORTS = 'storages/',
@@ -67,5 +68,5 @@ export enum NotesEndpoints {
 }
 
 export enum CommonEndpoints {
-  SEARCH = 'common/'
+  SEARCH = 'common/',
 }

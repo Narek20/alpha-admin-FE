@@ -18,7 +18,8 @@ import Loading from '@shared/Loading'
 import { useToast } from 'contexts/toast.context'
 import useOnEnter from '@utils/hooks/useOnEnter'
 import { OrdersContext } from 'contexts/order.context'
-import { IStorage, StorageKeys } from 'types/storage.types'
+import { StorageContext } from 'contexts/storage.context'
+import { IStorageImport, StorageKeys } from 'types/storage.types'
 import { orderProductType } from 'types/order.types'
 import { createStorageImports } from 'services/storage.service'
 import { OrderProductSearch } from '@shared/OrderProductSearch'
@@ -38,6 +39,7 @@ const AddStorageProduct: FC<IProps> = ({ onClose }) => {
     [key: string]: string | number | boolean
   } | null>(null)
 
+  const { storages } = useContext(StorageContext)
   const { setOrders, orders, filters } = useContext(OrdersContext)
   const { showToast } = useToast()
 
@@ -59,7 +61,7 @@ const AddStorageProduct: FC<IProps> = ({ onClose }) => {
     const data = await createStorageImports({
       ...storageData,
       productIDs,
-    } as IStorage)
+    } as IStorageImport)
 
     if (data.success) {
       const limit = filters.take ? +filters.take : 10
@@ -178,7 +180,7 @@ const AddStorageProduct: FC<IProps> = ({ onClose }) => {
               multiline
               className={styles.input}
               onChange={(evt) =>
-                handleChange(StorageKeys.STORAGE, evt.target.value)
+                handleChange(StorageKeys.TITLE, evt.target.value)
               }
             />
             <TextField

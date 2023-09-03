@@ -5,17 +5,16 @@ import {
   useState,
   useEffect,
 } from 'react'
-import { getAllStorageImports } from 'services/storage.service'
-import { IStorage, IStorageContext } from 'types/storage.types'
+import { getAllStorageImports, getAllStorages } from 'services/storage.service'
+import { IStorage, IStorageContext, IStorageImport } from 'types/storage.types'
 
 // Create a StorageContext
 export const StorageContext = createContext<IStorageContext>({
   storageImports: [],
-  filters: {},
+  storages: [],
   isLoading: false,
   pagination: { count: 20, skip: 0, take: 10 },
   getStorageImports: () => {},
-  setFilters: () => {},
   setStorageImports: () => {},
 })
 
@@ -24,20 +23,18 @@ export const useStorage = () => useContext(StorageContext)
 
 // StorageProvider component that wraps your app
 export const StorageProvider = ({ children }: { children: ReactNode }) => {
-  const [storageImports, setStorageImports] = useState<IStorage[] | []>([])
+  const [storageImports, setStorageImports] = useState<IStorageImport[]>([])
+  const [storages, setStorages] = useState<IStorage[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [pagination, setPagination] = useState<{
     count: number
     skip: number
     take: number
   }>({ count: 20, skip: 0, take: 10 })
-  const [filters, setFilters] = useState<{
-    [param: string]: string | string[] | number[]
-  }>({ status: 'Նոր պատվեր' })
 
   const getStorageImports = async () => {
     setIsLoading(true)
-    const data = await getAllStorageImports(filters)
+    const data = await getAllStorageImports()
 
     if (data.success) {
       setStorageImports([...data.data])
@@ -45,18 +42,26 @@ export const StorageProvider = ({ children }: { children: ReactNode }) => {
     setIsLoading(false)
   }
 
+  const getStorages = async () => {
+    const data = await getAllStorages()
+
+    if (data.success) {
+      setStorages(data.data)
+    }
+  }
+
   useEffect(() => {
     getStorageImports()
-  }, [filters])
+    getStorages()
+  }, [])
 
   return (
     <StorageContext.Provider
       value={{
         storageImports,
         isLoading,
+        storages,
         pagination,
-        filters,
-        setFilters,
         getStorageImports,
         setStorageImports,
       }}
