@@ -35,7 +35,8 @@ import {
   OrderTableColumns,
   paymentMethods,
 } from '@utils/order/constants'
-import { getAddress } from 'services/customer.service'
+import { getAddress, updateCustomer } from 'services/customer.service'
+import { ICustomer } from 'types/customer.types'
 
 import styles from './styles.module.scss'
 
@@ -47,7 +48,8 @@ interface IProps {
 const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
   const [isCreating, setIsCreating] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [isFetched, setIsFetched] = useState(false)
+  const [cashbackMoney, setCashbackMoney] = useState('')
+  const [customerData, setCustomerData] = useState<ICustomer | null>(null)
   const [selectedProducts, setSelectedProducts] = useState<
     Array<orderProductType & { isLoading?: boolean }>
   >([])
@@ -138,6 +140,7 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
     if (isCreating) return
 
     setIsCreating(true)
+    if (customerData) await updateCustomer(customerData)
 
     const data = await placeOrder({ ...orderData, productIDs } as IOrder)
 
@@ -184,7 +187,7 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
       const data = await getAddress(phone)
 
       if (data.success) {
-        setIsFetched(true)
+        setCustomerData(data.data)
         const customerData = {
           fullName: '',
           address: '',
@@ -329,6 +332,24 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
                     ))}
                   </Select>
                 </FormControl>
+                {customerData && (
+                  <>
+                    <Box>
+                      <Typography>Cashback</Typography>
+                      <Typography>{customerData?.cashback}%</Typography>
+                    </Box>
+                    <TextField
+                      label="Կուտակված գումար"
+                      value={customerData.cashback_money}
+                      onChange={(evt) =>
+                        setCustomerData({
+                          ...customerData,
+                          cashback_money: evt.target.value,
+                        })
+                      }
+                    />
+                  </>
+                )}
               </Box>
               <DriverSelect
                 driver={orderData?.driver as string}
