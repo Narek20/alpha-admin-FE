@@ -16,6 +16,7 @@ import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
 import Loading from '@shared/Loading'
 import { useToast } from 'contexts/toast.context'
+import useOnEnter from '@utils/hooks/useOnEnter'
 import { OrdersContext } from 'contexts/order.context'
 import { IStorage, StorageKeys } from 'types/storage.types'
 import { orderProductType } from 'types/order.types'
@@ -25,11 +26,10 @@ import { OrderProductSearch } from '@shared/OrderProductSearch'
 import styles from './styles.module.scss'
 
 interface IProps {
-  open: boolean
   onClose: () => void
 }
 
-const AddStorageProduct: FC<IProps> = ({ open, onClose }) => {
+const AddStorageProduct: FC<IProps> = ({ onClose }) => {
   const [isCreating, setIsCreating] = useState(false)
   const [selectedProducts, setSelectedProducts] = useState<
     (orderProductType & { isLoading?: boolean })[]
@@ -140,8 +140,10 @@ const AddStorageProduct: FC<IProps> = ({ open, onClose }) => {
   }
 
   const removeImage = (index: number) => {
-    setSelectedProducts(prev => prev.filter((_, ind) => ind !== index))
+    setSelectedProducts((prev) => prev.filter((_, ind) => ind !== index))
   }
+
+  useOnEnter(handleAdd)
 
   useEffect(() => {
     selectedProducts.forEach(({ product }) => {
@@ -161,7 +163,7 @@ const AddStorageProduct: FC<IProps> = ({ open, onClose }) => {
   }, [selectedProducts.length])
 
   return (
-    <Modal className={styles.modal} open={open} onClose={onClose}>
+    <Modal className={styles.modal} open onClose={onClose}>
       <Box className={styles.modalContent}>
         <Box>
           <Box className={styles.header}>

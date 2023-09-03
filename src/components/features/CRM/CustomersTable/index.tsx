@@ -124,13 +124,14 @@ const CustomersTable = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      <ConfirmationModal
-        open={isOpen}
-        onClose={handleClose}
-        onConfirm={handleRemove}
-        btnText="Հեռացնել"
-        text="Հաճախորդի հեռացում"
-      />
+      {isOpen && (
+        <ConfirmationModal
+          onClose={handleClose}
+          onConfirm={handleRemove}
+          btnText="Հեռացնել"
+          text="Հաճախորդի հեռացում"
+        />
+      )}
     </>
   )
 }

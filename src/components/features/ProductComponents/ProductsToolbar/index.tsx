@@ -46,9 +46,7 @@ const ProductsToolbar: FC<IProps> = ({ isBig, changeDisplay }) => {
           <GridViewOutlinedIcon sx={{ color: isBig ? 'black' : 'black' }} />
         </IconButton>
         <IconButton onClick={() => changeDisplay(false)}>
-          <ViewCompactOutlinedIcon
-            sx={{ color: isBig ? 'black' : 'black' }}
-          />
+          <ViewCompactOutlinedIcon sx={{ color: isBig ? 'black' : 'black' }} />
         </IconButton>
         <FormControl className={styles.form}>
           <Select
@@ -78,11 +76,10 @@ const ProductsToolbar: FC<IProps> = ({ isBig, changeDisplay }) => {
           </Button>
         </Box>
       )}
-      <AddStorageProduct open={isOpen} onClose={() => setIsOpen(false)} />
-      <ProductSettings
-        open={isSettingsOpen}
-        onClose={() => setIsSettingsOpen(false)}
-      />
+      {isOpen && <AddStorageProduct onClose={() => setIsOpen(false)} />}
+      {isSettingsOpen && (
+        <ProductSettings onClose={() => setIsSettingsOpen(false)} />
+      )}
     </Box>
   )
 }

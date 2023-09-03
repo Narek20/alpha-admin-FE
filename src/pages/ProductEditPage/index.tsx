@@ -17,6 +17,7 @@ import { getProductById, updateProduct } from 'services/products.service'
 import { ICreateProduct, ProductKeys, Sizes } from 'types/product.types'
 
 import styles from './styles.module.scss'
+import useOnEnter from '@utils/hooks/useOnEnter'
 
 const max = 1000000
 const min = 0
@@ -137,6 +138,8 @@ const ProductEditPage = () => {
       }
     }
   }
+
+  useOnEnter(handleEdit)
 
   useEffect(() => {
     getProduct()

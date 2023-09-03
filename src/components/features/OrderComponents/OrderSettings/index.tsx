@@ -11,6 +11,7 @@ import {
   FormControlLabel,
 } from '@mui/material'
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
+import useOnEnter from '@utils/hooks/useOnEnter'
 import { OrdersContext } from 'contexts/order.context'
 import localStorageKeys from '@utils/localStorageKeys'
 import { OrderTableColumns } from '@utils/order/constants'
@@ -18,11 +19,10 @@ import { OrderTableColumns } from '@utils/order/constants'
 import styles from './styles.module.scss'
 
 interface IProps {
-  open: boolean
   onClose: () => void
 }
 
-const OrderSettings: FC<IProps> = ({ open, onClose }) => {
+const OrderSettings: FC<IProps> = ({ onClose }) => {
   const [columns, setColumns] = useState<
     { column: string; isChecked: boolean }[]
   >([])
@@ -35,7 +35,7 @@ const OrderSettings: FC<IProps> = ({ open, onClose }) => {
     setTableColumns(tableColumns)
     localStorage.setItem(
       localStorageKeys.TABLE_COLUMNS,
-      JSON.stringify(tableColumns)
+      JSON.stringify(tableColumns),
     )
     onClose()
   }
@@ -55,6 +55,8 @@ const OrderSettings: FC<IProps> = ({ open, onClose }) => {
     setColumns([...updatedColumns])
   }
 
+  useOnEnter(handleSave)
+
   useEffect(() => {
     const columns: { column: string; isChecked: boolean }[] = []
     OrderTableColumns.forEach((tableColumn) => {
@@ -66,7 +68,7 @@ const OrderSettings: FC<IProps> = ({ open, onClose }) => {
   }, [tableColumns])
 
   return (
-    <Modal className={styles.modal} open={open} onClose={onClose}>
+    <Modal className={styles.modal} open onClose={onClose}>
       <Box className={styles.modalContent}>
         <Box className={styles.header}>
           <Typography className={styles.title}>Պատվերի սյունները</Typography>

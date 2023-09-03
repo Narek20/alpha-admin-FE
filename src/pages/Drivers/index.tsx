@@ -31,7 +31,7 @@ const Drivers = () => {
           <DriverCard key={driver.phone} {...driver} />
         ))}
       </Box>
-      <DriverAddModal open={isOpen} onClose={() => setIsOpen(false)} />
+      {isOpen && <DriverAddModal onClose={() => setIsOpen(false)} />}
     </Box>
   )
 }

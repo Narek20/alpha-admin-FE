@@ -10,27 +10,22 @@ import {
 } from '@mui/material'
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import { useToast } from 'contexts/toast.context'
+import useOnEnter from '@utils/hooks/useOnEnter'
 import { CustomersContext } from 'contexts/customer.context'
+import { OrdersContext } from 'contexts/order.context'
 import { CustomerInfoKeys, ICustomer } from 'types/customer.types'
 import { customerInformation } from '@utils/customer/constants'
 import { updateCustomer } from 'services/customer.service'
 
 import styles from './styles.module.scss'
-import { OrdersContext } from 'contexts/order.context'
 
 interface IProps {
-  open: boolean
   customer: ICustomer
   onClose: () => void
   setCustomer: Dispatch<SetStateAction<ICustomer | null>>
 }
 
-const CustomerEditModal: FC<IProps> = ({
-  open,
-  customer,
-  setCustomer,
-  onClose,
-}) => {
+const CustomerEditModal: FC<IProps> = ({ customer, setCustomer, onClose }) => {
   const [customerData, setCustomerData] = useState<ICustomer>(customer)
 
   const { customers, setCustomers } = useContext(CustomersContext)
@@ -60,8 +55,10 @@ const CustomerEditModal: FC<IProps> = ({
     }
   }
 
+  useOnEnter(handleAdd)
+
   return (
-    <Modal className={styles.modal} open={open} onClose={onClose}>
+    <Modal className={styles.modal} open onClose={onClose}>
       <Box className={styles.modalContent}>
         <Box>
           <Box className={styles.header}>
