@@ -83,28 +83,29 @@ const UserSettingsPage = () => {
       <Button className={styles.addBtn} onClick={() => setIsAdd(true)}>
         Ավելացնել
       </Button>
-      <ConfirmationModal
-        open={isOpen}
-        btnText="Հեռացնել"
-        onClose={() => setIsOpen(false)}
-        text="Օգտատերի հեռացում"
-        onConfirm={handleRemove}
-      />
-      {editUser && (
+      {isOpen && (
+        <ConfirmationModal
+          btnText="Հեռացնել"
+          onClose={() => setIsOpen(false)}
+          text="Օգտատերի հեռացում"
+          onConfirm={handleRemove}
+        />
+      )}
+      {editUser && isEdit && (
         <UserEditModal
-          open={isEdit}
           users={users}
           onClose={() => setIsEdit(false)}
           userData={editUser}
           setUsers={setUsers}
         />
       )}
-      <UserAddModal
-        open={isAdd}
-        onClose={() => setIsAdd(false)}
-        users={users}
-        setUsers={setUsers}
-      />
+      {isAdd && (
+        <UserAddModal
+          onClose={() => setIsAdd(false)}
+          users={users}
+          setUsers={setUsers}
+        />
+      )}
     </Box>
   )
 }

@@ -18,6 +18,7 @@ import { CategoriesContext } from 'contexts/category.context'
 import { ICreateProduct, ProductKeys, Sizes } from 'types/product.types'
 
 import styles from './styles.module.scss'
+import useOnEnter from '@utils/hooks/useOnEnter'
 
 const min = 0
 const max = 1000000
@@ -117,6 +118,8 @@ const NewProductData = () => {
     }
     setIsCreating(false)
   }
+
+  useOnEnter(() => !isCreating && handleCreate())
 
   useEffect(() => {
     if (productData.category) {

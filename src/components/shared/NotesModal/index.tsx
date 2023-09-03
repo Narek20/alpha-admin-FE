@@ -11,6 +11,7 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import { createNotes, removeNotes, updateNotes } from 'services/notes.service'
 import { INotes } from 'types/notes.types'
 import { useToast } from 'contexts/toast.context'
+import useOnEnter from '@utils/hooks/useOnEnter'
 import { NotesContext } from 'contexts/notes.context'
 
 import styles from './styles.module.scss'
@@ -18,12 +19,11 @@ import styles from './styles.module.scss'
 interface IProps {
   isEdit: boolean
   isAdd?: boolean
-  open: boolean
   onClose: () => void
   noteData?: INotes
 }
 
-const NotesModal: FC<IProps> = ({ open, isAdd, isEdit, onClose, noteData }) => {
+const NotesModal: FC<IProps> = ({ isAdd, isEdit, onClose, noteData }) => {
   const [title, setTitle] = useState(noteData?.title || '')
   const [note, setNote] = useState(noteData?.note || '')
 
@@ -39,8 +39,8 @@ const NotesModal: FC<IProps> = ({ open, isAdd, isEdit, onClose, noteData }) => {
 
         setNotes(
           notes.map((noteData) =>
-            noteData.id === data.data.id ? data.data : noteData
-          )
+            noteData.id === data.data.id ? data.data : noteData,
+          ),
         )
       }
     } else if (isAdd) {
@@ -91,8 +91,10 @@ const NotesModal: FC<IProps> = ({ open, isAdd, isEdit, onClose, noteData }) => {
     return <></>
   }
 
+  useOnEnter(handleConfirm)
+
   return (
-    <Modal className={styles.modal} open={open} onClose={onClose}>
+    <Modal className={styles.modal} open onClose={onClose}>
       <Box className={styles.modalContent}>
         <Box className={styles.header}>
           <Typography className={styles.title}>Հեռացնել նշումը</Typography>

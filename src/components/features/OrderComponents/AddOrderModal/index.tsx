@@ -21,6 +21,7 @@ import Loading from '@shared/Loading'
 import DriverSelect from '@shared/DriverSelect'
 import { OrderProductSearch } from '@shared/OrderProductSearch'
 import { useToast } from 'contexts/toast.context'
+import useOnEnter from '@utils/hooks/useOnEnter'
 import { OrdersContext } from 'contexts/order.context'
 import { placeOrder } from 'services/orders.service'
 import {
@@ -125,6 +126,9 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
   }
 
   const handleAdd = async () => {
+    if (!open) {
+      return
+    }
     const productIDs = selectedProducts.map(({ product, quantity, size }) => ({
       id: product.id,
       quantity,
@@ -204,6 +208,8 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
       setIsLoading(false)
     }
   }
+
+  useOnEnter(handleAdd)
 
   useEffect(() => {
     selectedProducts.forEach(({ product }) => {

@@ -11,7 +11,7 @@ interface IProps {
   noteData: INotes
 }
 
-const Note: FC<IProps> = ({ noteData}) => {
+const Note: FC<IProps> = ({ noteData }) => {
   const [isEdit, setIsEdit] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
 
@@ -38,12 +38,13 @@ const Note: FC<IProps> = ({ noteData}) => {
           <DeleteOutlineOutlinedIcon sx={{ color: '#f96666' }} />
         </IconButton>
       </Box>
-      <NotesModal
-        open={isOpen}
-        isEdit={isEdit}
-        onClose={() => setIsOpen(false)}
-        noteData={noteData}
-      />
+      {isOpen && (
+        <NotesModal
+          isEdit={isEdit}
+          onClose={() => setIsOpen(false)}
+          noteData={noteData}
+        />
+      )}
     </Box>
   )
 }

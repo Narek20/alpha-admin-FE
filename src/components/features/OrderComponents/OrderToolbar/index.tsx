@@ -142,10 +142,9 @@ const OrderToolbar = () => {
         </IconButton>
       </Box>
       <OrderAddModal open={isOpen} onClose={() => setIsOpen(false)} />
-      <OrderSettings
-        open={isSettingsOpen}
-        onClose={() => setIsSettingsOpen(false)}
-      />
+      {isSettingsOpen && (
+        <OrderSettings onClose={() => setIsSettingsOpen(false)} />
+      )}
     </Box>
   )
 }

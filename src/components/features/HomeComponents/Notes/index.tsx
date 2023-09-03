@@ -26,12 +26,13 @@ const Notes = () => {
           <Typography className={styles.addText}>Ավելացնել</Typography>
         </IconButton>
       </Box>
-      <NotesModal
-        open={isOpen}
-        isEdit={false}
-        isAdd={true}
-        onClose={() => setIsOpen(false)}
-      />
+      {isOpen && (
+        <NotesModal
+          isEdit={false}
+          isAdd={true}
+          onClose={() => setIsOpen(false)}
+        />
+      )}
     </Box>
   )
 }

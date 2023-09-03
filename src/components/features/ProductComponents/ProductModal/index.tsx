@@ -15,11 +15,7 @@ const ProductModal: FC<IProps> = ({ product }) => {
   const navigate = useNavigate()
 
   return (
-    <Modal
-      className={styles.modal}
-      open={true}
-      onClose={() => navigate('/products')}
-    >
+    <Modal className={styles.modal} open onClose={() => navigate('/products')}>
       <Box className={styles.modalContent}>
         {product ? (
           <Box className={styles.content}>

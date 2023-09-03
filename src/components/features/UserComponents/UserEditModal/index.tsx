@@ -14,26 +14,20 @@ import {
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import { IUser } from 'types/user.types'
 import { useToast } from 'contexts/toast.context'
+import useOnEnter from '@utils/hooks/useOnEnter'
 import { updateUser } from 'services/users.service'
 import { TranslatedUserStatuses, getUserStatusKey } from '@utils/User/constants'
 
 import styles from './styles.module.scss'
 
 interface IProps {
-  open: boolean
   onClose: () => void
   userData: IUser
   users: IUser[]
   setUsers: Dispatch<SetStateAction<IUser[]>>
 }
 
-const UserEditModal: FC<IProps> = ({
-  open,
-  userData,
-  users,
-  setUsers,
-  onClose,
-}) => {
+const UserEditModal: FC<IProps> = ({ userData, users, setUsers, onClose }) => {
   const [login, setLogin] = useState(userData.login)
   const [password, setPassword] = useState(userData.password)
   const [fullName, setFullName] = useState(userData.fullName)
@@ -59,8 +53,10 @@ const UserEditModal: FC<IProps> = ({
     }
   }
 
+  useOnEnter(handleConfirm)
+
   return (
-    <Modal className={styles.modal} open={open} onClose={onClose}>
+    <Modal className={styles.modal} open onClose={onClose}>
       <Box className={styles.modalContent}>
         <Box className={styles.header}>
           <Typography className={styles.title}>Օգտատերի փոփոխում</Typography>

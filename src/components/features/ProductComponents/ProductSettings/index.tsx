@@ -10,6 +10,7 @@ import {
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined'
 import { useToast } from 'contexts/toast.context'
+import useOnEnter from '@utils/hooks/useOnEnter'
 import { CategoriesContext } from 'contexts/category.context'
 import { createCategory, updateCategory } from 'services/category.service'
 import { ICategory } from 'types/category.types'
@@ -18,11 +19,10 @@ import { IResponse } from 'types/response.types'
 import styles from './styles.module.scss'
 
 interface IProps {
-  open: boolean
   onClose: () => void
 }
 
-const ProductSettings: FC<IProps> = ({ open, onClose }) => {
+const ProductSettings: FC<IProps> = ({ onClose }) => {
   const [category, setCategory] = useState<ICategory[]>([])
   const { showToast } = useToast()
   const { categories, getCategories, setCategories } =
@@ -106,12 +106,14 @@ const ProductSettings: FC<IProps> = ({ open, onClose }) => {
     setCategory(updatedCategories)
   }
 
+  useOnEnter(handleSave)
+
   useEffect(() => {
     setCategory(categories)
   }, [categories])
 
   return (
-    <Modal className={styles.modal} open={open} onClose={onClose}>
+    <Modal className={styles.modal} open onClose={onClose}>
       <Box className={styles.modalContent}>
         <Box className={styles.header}>
           <Typography className={styles.title}>Կարգավորումներ</Typography>

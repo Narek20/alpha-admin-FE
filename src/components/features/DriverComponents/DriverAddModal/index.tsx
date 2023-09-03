@@ -9,6 +9,7 @@ import {
 } from '@mui/material'
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import { useToast } from 'contexts/toast.context'
+import useOnEnter from '@utils/hooks/useOnEnter'
 import { DriversContext } from 'contexts/driver.context'
 import { createDriver } from 'services/drivers.service'
 import { DriverKeys, ICreateDriver } from 'types/driver.types'
@@ -16,11 +17,10 @@ import { DriverKeys, ICreateDriver } from 'types/driver.types'
 import styles from './styles.module.scss'
 
 interface IProps {
-  open: boolean
   onClose: () => void
 }
 
-const DriverAddModal: FC<IProps> = ({ open, onClose }) => {
+const DriverAddModal: FC<IProps> = ({ onClose }) => {
   const [driverData, setDriverData] = useState<ICreateDriver>({
     fullName: '',
     phone: '',
@@ -44,8 +44,10 @@ const DriverAddModal: FC<IProps> = ({ open, onClose }) => {
     }
   }
 
+  useOnEnter(handleAdd)
+
   return (
-    <Modal className={styles.modal} open={open} onClose={onClose}>
+    <Modal className={styles.modal} open onClose={onClose}>
       <Box className={styles.modalContent}>
         <Box>
           <Box className={styles.header}>

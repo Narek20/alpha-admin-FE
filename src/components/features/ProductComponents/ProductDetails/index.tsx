@@ -96,15 +96,15 @@ const ProductDetails: FC<{ product: IProduct }> = ({ product }) => {
 
   useEffect(() => {
     if (productSizes.length) {
-      if(isProductExist) {
+      if (isProductExist) {
         let isExist = false
         productSizes.forEach((size) => {
-          if(size.quantity) {
+          if (size.quantity) {
             isExist = true
           }
         })
 
-        if(!isExist) {
+        if (!isExist) {
           setIsProductExist(false)
         }
       } else {
@@ -249,13 +249,14 @@ const ProductDetails: FC<{ product: IProduct }> = ({ product }) => {
             </Button>
           </Box>
         )}
-        <ConfirmationModal
-          btnText={'Հեռացնել Ապրանքը'}
-          onClose={() => setIsOpen(false)}
-          open={isOpen}
-          text="Հեռացնել Ապրանքը"
-          onConfirm={handleConfirm}
-        />
+        {isOpen && (
+          <ConfirmationModal
+            btnText={'Հեռացնել Ապրանքը'}
+            onClose={() => setIsOpen(false)}
+            text="Հեռացնել Ապրանքը"
+            onConfirm={handleConfirm}
+          />
+        )}
       </Box>
     </>
   )

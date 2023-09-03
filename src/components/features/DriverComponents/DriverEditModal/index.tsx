@@ -10,18 +10,17 @@ import {
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import { useToast } from 'contexts/toast.context'
 import { DriversContext } from 'contexts/driver.context'
-import { createDriver, updateDriver } from 'services/drivers.service'
-import { DriverKeys, ICreateDriver, IDriver } from 'types/driver.types'
+import { updateDriver } from 'services/drivers.service'
+import { DriverKeys, IDriver } from 'types/driver.types'
 
 import styles from './styles.module.scss'
 
 interface IProps {
-  open: boolean
   onClose: () => void
   diver: IDriver
 }
 
-const DriverEditModal: FC<IProps> = ({ diver, open, onClose }) => {
+const DriverEditModal: FC<IProps> = ({ diver, onClose }) => {
   const [driverData, setDriverData] = useState<IDriver>(diver)
 
   const { drivers, setDrivers } = useContext(DriversContext)
@@ -46,7 +45,7 @@ const DriverEditModal: FC<IProps> = ({ diver, open, onClose }) => {
   }
 
   return (
-    <Modal className={styles.modal} open={open} onClose={onClose}>
+    <Modal className={styles.modal} open onClose={onClose}>
       <Box className={styles.modalContent}>
         <Box>
           <Box className={styles.header}>

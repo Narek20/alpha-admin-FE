@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { Box, Typography, IconButton, Button, Modal } from '@mui/material'
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
+import useOnEnter from '@utils/hooks/useOnEnter'
 
 import styles from './styles.module.scss'
 
@@ -9,13 +10,11 @@ interface IProps {
   isComplete?: boolean
   text: string
   btnText: string
-  open: boolean
   onClose: () => void
   onConfirm?: () => void
 }
 
 const ConfirmationModal: FC<IProps> = ({
-  open,
   text,
   btnText,
   isComplete,
@@ -23,8 +22,10 @@ const ConfirmationModal: FC<IProps> = ({
   onClose,
   onConfirm,
 }) => {
+  useOnEnter(() => onConfirm && onConfirm())
+
   return (
-    <Modal className={styles.modal} open={open} onClose={onClose}>
+    <Modal className={styles.modal} open onClose={onClose}>
       <Box className={styles.modalContent}>
         <Box className={styles.header}>
           <Typography className={styles.title}>{text}</Typography>

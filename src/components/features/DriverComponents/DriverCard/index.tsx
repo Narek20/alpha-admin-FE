@@ -75,18 +75,20 @@ const DriverCard: FC<IProps> = ({ id, fullName, phone, direction }) => {
           </IconButton>
         </Box>
       </Box>
-      <DriverEditModal
-        open={isEdit}
-        onClose={() => setIsEdit(false)}
-        diver={{ id, fullName, phone, direction }}
-      />
-      <ConfirmationModal
-        open={isRemove}
-        text="Առաքչի հեռացում"
-        onConfirm={handleRemove}
-        btnText="Հեռացնել"
-        onClose={() => setIsRemove(false)}
-      />
+      {isEdit && (
+        <DriverEditModal
+          onClose={() => setIsEdit(false)}
+          diver={{ id, fullName, phone, direction }}
+        />
+      )}
+      {isRemove && (
+        <ConfirmationModal
+          text="Առաքչի հեռացում"
+          onConfirm={handleRemove}
+          btnText="Հեռացնել"
+          onClose={() => setIsRemove(false)}
+        />
+      )}
     </Box>
   )
 }

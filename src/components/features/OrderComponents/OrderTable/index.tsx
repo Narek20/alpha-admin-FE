@@ -482,15 +482,16 @@ const OrderTable = () => {
         onPageChange={onPageChange}
         onRowsPerPageChange={onRowsPerPageChange}
       />
-      <ConfirmationModal
-        open={open}
-        onClose={() => setOpen(false)}
-        text={confirmModalText + !isEdit ? 'Պատվերը' : ''}
-        btnText={confirmModalText}
-        isEdit={isEdit}
-        isComplete={isComplete}
-        onConfirm={handleConfirm}
-      />
+      {open && (
+        <ConfirmationModal
+          onClose={() => setOpen(false)}
+          text={confirmModalText + !isEdit ? 'Պատվերը' : ''}
+          btnText={confirmModalText}
+          isEdit={isEdit}
+          isComplete={isComplete}
+          onConfirm={handleConfirm}
+        />
+      )}
     </>
   )
 }

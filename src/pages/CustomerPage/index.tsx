@@ -88,12 +88,11 @@ const CustomerPage = () => {
       {customer.orders && (
         <ProductTable data={orderProducts} displayOrderNumber={true} />
       )}
-      <CustomerEditModal
-        open={isOpen}
+      {isOpen && <CustomerEditModal
         onClose={() => setIsOpen(false)}
         customer={customer}
         setCustomer={setCustomer}
-      />
+      />}
     </Box>
   ) : (
     <Loading />
