@@ -27,7 +27,7 @@ const PriceFilter: FC<IProps> = ({ onChange }) => {
       clearTimeout(timeout.current)
       timeout.current = setTimeout(() => {
         if (onChange) {
-          onChange(ProductKeys.PRICE, value as number[])
+          onChange(ProductKeys.PRICE, value.sort((a, b) => a - b) as number[])
         }
       }, 1000)
     } else {
@@ -40,11 +40,13 @@ const PriceFilter: FC<IProps> = ({ onChange }) => {
       <Box className={styles.priceInputs}>
         <TextField
           label="Սկսած"
+          type="number"
           className={styles.priceInput}
           onChange={(evt) => setValue([+evt.target.value, value[1]])}
         />
         <TextField
           label="Մինչև"
+          type="number"
           className={styles.priceInput}
           onChange={(evt) => setValue([value[0], +evt.target.value])}
         />
