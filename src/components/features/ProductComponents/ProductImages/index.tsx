@@ -13,6 +13,7 @@ interface IProps {
 
 const NewProductImages: FC<IProps> = ({ images, changeImages }) => {
   const [imageUrls, setImageUrls] = useState<string[]>([])
+  const [isEdited, setIsEdited] = useState(false)
   const imgRef = useRef<HTMLDivElement>(null)
 
   const handleImageUpload = (event: ChangeEvent<HTMLInputElement>) => {
@@ -20,6 +21,7 @@ const NewProductImages: FC<IProps> = ({ images, changeImages }) => {
       const file = event.target.files[0]
       changeImages([...images, file])
       setImageUrls([...imageUrls, URL.createObjectURL(file)])
+      setIsEdited(true)
     }
   }
 
@@ -39,7 +41,9 @@ const NewProductImages: FC<IProps> = ({ images, changeImages }) => {
       }
     })
 
-    images.length && imgRef.current?.scrollIntoView({ behavior: 'smooth' })
+    isEdited &&
+      images.length &&
+      imgRef.current?.scrollIntoView({ behavior: 'smooth' })
     setImageUrls(imageUrls)
   }, [images])
 
