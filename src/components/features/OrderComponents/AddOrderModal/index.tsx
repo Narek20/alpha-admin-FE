@@ -179,7 +179,7 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
   }
 
   const getCustomerAddress = async (phone: string) => {
-    if (phone.length === 9 && !isFetched) {
+    if (phone.length === 9) {
       setIsLoading(true)
       const data = await getAddress(phone)
 
