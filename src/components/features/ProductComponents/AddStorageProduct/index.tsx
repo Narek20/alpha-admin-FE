@@ -9,6 +9,7 @@ import {
   Select,
   MenuItem,
   FormControl,
+  Autocomplete,
 } from '@mui/material'
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined'
@@ -175,13 +176,28 @@ const AddStorageProduct: FC<IProps> = ({ onClose }) => {
             </IconButton>
           </Box>
           <Box className={styles.content}>
-            <TextField
-              label="Պահեստ"
-              multiline
+            <Autocomplete
               className={styles.input}
-              onChange={(evt) =>
-                handleChange(StorageKeys.TITLE, evt.target.value)
+              options={storages.map(({ title }) => title)}
+              value={
+                storageData &&
+                typeof storageData[StorageKeys.TITLE] === 'string'
+                  ? (storageData[StorageKeys.TITLE] as string)
+                  : storages[0].title || ''
               }
+              onChange={(_, value) =>
+                handleChange(StorageKeys.TITLE, value || '')
+              }
+              freeSolo
+              renderInput={(params) => (
+                <TextField
+                  label="Պահեստ"
+                  {...params}
+                  onChange={(evt) =>
+                    handleChange(StorageKeys.TITLE, evt.target.value)
+                  }
+                />
+              )}
             />
             <TextField
               label="Ներկման օրը"
