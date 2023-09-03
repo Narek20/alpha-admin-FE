@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, ChangeEvent } from 'react'
+import { FC, useState, useEffect, ChangeEvent, useRef } from 'react'
 import { IconButton, Typography, Box } from '@mui/material'
 import SectionHeader from '@shared/SectionTitle'
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate'
@@ -13,6 +13,7 @@ interface IProps {
 
 const NewProductImages: FC<IProps> = ({ images, changeImages }) => {
   const [imageUrls, setImageUrls] = useState<string[]>([])
+  const imgRef = useRef<HTMLDivElement>(null)
 
   const handleImageUpload = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
@@ -38,6 +39,7 @@ const NewProductImages: FC<IProps> = ({ images, changeImages }) => {
       }
     })
 
+    images.length && imgRef.current?.scrollIntoView({ behavior: 'smooth' })
     setImageUrls(imageUrls)
   }, [images])
 
@@ -68,7 +70,7 @@ const NewProductImages: FC<IProps> = ({ images, changeImages }) => {
           </Box>
         ))}
         <label htmlFor="upload-image" className={styles.imageLabel}>
-          <Box className={styles.imageAddContainer}>
+          <Box className={styles.imageAddContainer} ref={imgRef}>
             <AddPhotoAlternateIcon sx={{ color: 'black' }} />
             <Typography className={styles.imageTitle}>
               Ընտրեք նկարներ

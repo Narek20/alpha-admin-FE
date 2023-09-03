@@ -59,7 +59,13 @@ const NewProductSizes: FC<IProps> = ({ sizes, addSize, handleSizeChange }) => {
             </IconButton>
           </Box>
         ))}
-        <Button className={styles.addBtn} onClick={() => addSize()}>
+        <Button
+          className={styles.addBtn}
+          onClick={(e) => {
+            e.currentTarget.scrollIntoView({ behavior: 'smooth' })
+            addSize()
+          }}
+        >
           Ավելացնել չափս
         </Button>
       </Box>
