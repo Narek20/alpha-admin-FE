@@ -9,22 +9,22 @@ import {
 import { IPagination, IProduct, IProductsContext } from 'types/product.types'
 import { search } from 'services/products.service'
 
+const initialPagination = {
+  count: 0,
+  skip: 0,
+  take: 10,
+}
+
 // Create a ProductsContext
 export const ProductsContext = createContext<IProductsContext>({
   products: [],
   isLoading: false,
-  pagination: { count: 20, skip: 0, take: 10 },
+  pagination: initialPagination,
   getProducts: () => {},
   setProducts: () => {},
   filters: {},
   setFilters: () => {},
 })
-
-const initialPagination = {
-  count: 0,
-  skip: 0,
-  take: 2,
-}
 
 // Custom hook to access the ProductsContext
 export const useProducts = () => useContext(ProductsContext)
