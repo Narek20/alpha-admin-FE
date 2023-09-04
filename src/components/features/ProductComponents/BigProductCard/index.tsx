@@ -63,11 +63,15 @@ const BigProductCard: FC<IProps> = ({ product }) => {
         {!isProductExist && <hr className={styles.line} />}
       </Box>
       <Box className={styles.titleContainer}>
-        <Typography className={styles.title}>{product.title} /</Typography>
-        <Typography className={styles.category}>
-          {product.category.title} /
+        <Typography className={styles.title} sx={{ overflowWrap: 'anywhere' }}>
+          {product.title} /{' '}
+          <span
+            className={styles.category}
+            style={{ overflowWrap: 'anywhere' }}
+          >
+            {product.category.title} / {product.brand}
+          </span>
         </Typography>
-        <Typography className={styles.category}>{product.brand}</Typography>
       </Box>
       <Typography className={styles.price}>
         Արժեքը։ {priceFormatter(product.price)} ֏

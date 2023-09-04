@@ -134,11 +134,18 @@ const ProductDetails: FC<{ product: IProduct }> = ({ product }) => {
       <Box className={styles.productDetails}>
         <Box className={styles.details}>
           <Box className={styles.titleContainer}>
-            <Typography className={styles.title}>{product.title} /</Typography>
-            <Typography className={styles.category}>
-              {product.category.title} /
+            <Typography
+              className={styles.title}
+              sx={{ overflowWrap: 'anywhere' }}
+            >
+              {product.title} /{' '}
+              <span
+                className={styles.category}
+                style={{ overflowWrap: 'anywhere' }}
+              >
+                {product.category.title} / {product.brand}
+              </span>
             </Typography>
-            <Typography className={styles.category}>{product.brand}</Typography>
           </Box>
           <Box className={styles.ratingContainer}>
             <StarOutlinedIcon

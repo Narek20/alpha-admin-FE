@@ -41,15 +41,16 @@
 
   .titleContainer {
     display: flex;
-
-    .category {
-      color: rgb(149, 149, 149);
-      margin-left: 2px;
-      font-weight: 600;
-    }
+    flex-wrap: wrap;
 
     .title {
       font-weight: 600;
+
+      .category {
+        color: rgb(149, 149, 149);
+        margin-left: 2px;
+        font-weight: 600;
+      }
     }
   }
 

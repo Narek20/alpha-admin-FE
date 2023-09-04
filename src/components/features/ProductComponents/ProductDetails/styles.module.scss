@@ -49,16 +49,16 @@
       display: flex;
       flex-wrap: wrap;
 
-      .category {
-        color: rgb(149, 149, 149);
-        font-size: 25px;
-        margin-left: 2px;
-        font-weight: 600;
-      }
-
       .title {
         font-weight: 600;
         font-size: 25px;
+
+        .category {
+          color: rgb(149, 149, 149);
+          margin-left: 2px;
+          font-weight: 600;
+          font-size: 25px;
+        }
       }
     }
 
