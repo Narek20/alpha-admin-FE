@@ -47,6 +47,11 @@ const ProductDetails: FC<{ product: IProduct }> = ({ product }) => {
 
     if (data.success) {
       showToast('success', data.message)
+      setProducts(
+        products.map((elem) =>
+          elem.id === product.id ? { ...elem, sizes: data.data.sizes } : elem,
+        ),
+      )
       setIsEdit(false)
     }
   }

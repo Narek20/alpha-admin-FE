@@ -13,6 +13,7 @@ interface IProps {
 
 const BigProductCard: FC<IProps> = ({ product }) => {
   const [isLoading, setIsLoading] = useState(true)
+  const [isProductExist, setIsProductExist] = useState(true)
   const navigate = useNavigate()
 
   const handleImageLoad = () => {
@@ -28,14 +29,38 @@ const BigProductCard: FC<IProps> = ({ product }) => {
     }
   }, [product.images[0]])
 
+  useEffect(() => {
+    if (product.sizes && product.sizes.length) {
+      if (isProductExist) {
+        let isExist = false
+        product.sizes.forEach((size) => {
+          if (size.quantity) {
+            isExist = true
+          }
+        })
+
+        if (!isExist) {
+          setIsProductExist(false)
+        }
+      } else {
+        product.sizes.forEach((size) => {
+          if (size.quantity) {
+            setIsProductExist(true)
+          }
+        })
+      }
+    }
+  }, [product.sizes])
+
   return (
     <Box className={styles.card} onClick={() => navigate(`${product.id}`)}>
-      <Box className={styles.img}>
+      <Box className={styles.img} sx={{ opacity: isProductExist ? 1 : 0.5 }}>
         {isLoading ? (
           <Loading />
         ) : (
           <img className={styles.img} src={product.images[0]} alt="Ապրանք" />
         )}
+        {!isProductExist && <hr className={styles.line} />}
       </Box>
       <Box className={styles.titleContainer}>
         <Typography className={styles.title}>{product.title} /</Typography>
