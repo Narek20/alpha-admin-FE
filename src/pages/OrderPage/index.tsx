@@ -367,19 +367,17 @@ const OrderPage = () => {
               </Typography>
             </Box>
           </Box>
-          {originalOrder.notes && (
-            <>
-              <SectionHeader title="Նշումներ" />
-              <TextField
-                value={order.notes}
-                size="small"
-                onChange={(evt) => editOrder({ notes: evt.target.value })}
-                className={styles.notes}
-                style={{ margin: '20px 0px' }}
-                disabled={!isEditing}
-              />
-            </>
-          )}
+          <>
+            <SectionHeader title="Նշումներ" />
+            <TextField
+              value={order.notes || ''}
+              size="small"
+              onChange={(evt) => editOrder({ notes: evt.target.value })}
+              className={styles.notes}
+              style={{ margin: '20px 0px' }}
+              disabled={!isEditing}
+            />
+          </>
           <SectionHeader title="Պատվիրված ապրանքները" />
           <Box className={styles.products}>
             <ProductTable
