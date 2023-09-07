@@ -13,6 +13,7 @@ export interface IOrdersContext {
     [param: string]: string | string[] | number[]
   }
   tableColumns: string[]
+  statusCounts: StatusCounts
   getOrders: () => void
   searchOrders: (search: string) => void
   setOrders: Dispatch<SetStateAction<IOrder[]>>
@@ -43,6 +44,11 @@ export interface IOrder {
   isSpecial?: boolean
   paymentMethod: PaymentMethods
 }
+
+export type StatusCounts = Array<{
+  status: OrderStatus
+  count: number
+}>
 
 export type orderProductType = {
   id: number

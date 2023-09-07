@@ -26,6 +26,12 @@
       border-bottom: 1px solid #000000;
       border-radius: 0px;
       color: black;
+
+      .count {
+        color: gray;
+        margin-left: 10px;
+        font-size: 12px;
+      }
     }
 
     .button:hover {
@@ -37,6 +43,12 @@
       border-radius: 0px;
       color: black;
       border-bottom: 1px solid #f6ce71;
+
+      .count {
+        color: gray;
+        margin-left: 10px;
+        font-size: 12px;
+      }
     }
   }
 

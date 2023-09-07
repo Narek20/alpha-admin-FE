@@ -1,5 +1,5 @@
 import { axiosInstance } from './axios.service'
-import { IOrder } from 'types/order.types'
+import { IOrder, StatusCounts } from 'types/order.types'
 import { IResponse } from 'types/response.types'
 import { OrderEndpoints } from 'types/endpoints.types'
 
@@ -7,7 +7,7 @@ export const getAllOrders = async (
   params?: {
     [query: string]: string | string[] | number[]
   },
-  abortController?: AbortController
+  abortController?: AbortController,
 ): Promise<IResponse> => {
   try {
     const data = await axiosInstance.get(OrderEndpoints.GET_ORDERS, {
@@ -25,12 +25,16 @@ export const getAllOrders = async (
 }
 
 export const searchAllOrders = async (
-  searchTerms: string,
-  abortController?: AbortController
-): Promise<IResponse> => {
+  searchTerms?: string,
+  params?: {
+    [query: string]: string | string[] | number[]
+  },
+  abortController?: AbortController,
+): Promise<IResponse & { statusCounts?: StatusCounts }> => {
   try {
     const data = await axiosInstance.get(OrderEndpoints.SEARCH_ORDERS, {
       params: {
+        ...params,
         search: searchTerms,
       },
       signal: abortController?.signal,
@@ -48,7 +52,7 @@ export const searchAllOrders = async (
 export const getOrderById = async (orderId: string): Promise<IResponse> => {
   try {
     const data = await axiosInstance.get(
-      OrderEndpoints.GET_ORDER_BY_ID + orderId
+      OrderEndpoints.GET_ORDER_BY_ID + orderId,
     )
 
     return data.data
@@ -77,7 +81,7 @@ export const updateOrder = async (orderData: IOrder): Promise<IResponse> => {
   try {
     const data = await axiosInstance.put(
       OrderEndpoints.GET_ORDERS + orderData.id,
-      orderData
+      orderData,
     )
 
     return data.data
@@ -92,7 +96,7 @@ export const updateOrder = async (orderData: IOrder): Promise<IResponse> => {
 export const removeOrder = async (orderId: number): Promise<IResponse> => {
   try {
     const data = await axiosInstance.delete(
-      OrderEndpoints.DELETE_ORDER + orderId
+      OrderEndpoints.DELETE_ORDER + orderId,
     )
 
     return data.data

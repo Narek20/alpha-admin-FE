@@ -6,7 +6,11 @@ import {
   useEffect,
   useRef,
 } from 'react'
-import { IOrdersContext, IOrder } from 'types/order.types'
+import {
+  IOrdersContext,
+  IOrder,
+  StatusCounts,
+} from 'types/order.types'
 import { getAllOrders, searchAllOrders } from 'services/orders.service'
 import localStorageKeys from '@utils/localStorageKeys'
 import { OrderTableColumns } from '@utils/order/constants'
@@ -18,6 +22,7 @@ export const OrdersContext = createContext<IOrdersContext>({
   isLoading: false,
   pagination: { count: 20, skip: 0, take: 10 },
   tableColumns: [],
+  statusCounts: [],
   getOrders: () => {},
   searchOrders: (search) => {},
   setFilters: () => {},
@@ -38,6 +43,7 @@ export const OrdersProvider = ({ children }: { children: ReactNode }) => {
     skip: number
     take: number
   }>({ count: 20, skip: 0, take: 10 })
+  const [statusCounts, setStatusCounts] = useState<StatusCounts>([])
   const [filters, setFilters] = useState<{
     [param: string]: string | string[] | number[]
   }>({ status: 'Բոլորը' })
@@ -58,22 +64,25 @@ export const OrdersProvider = ({ children }: { children: ReactNode }) => {
     setIsLoading(false)
   }
 
-  const searchOrders = async (searchTerms: string) => {
+  const searchOrders = async (searchTerms?: string) => {
     const abortController = new AbortController()
     abortControllerRef.current = abortController
 
-
     setIsLoading(true)
-    const data = await searchAllOrders(searchTerms, abortController)
+    const data = await searchAllOrders(searchTerms, filters, abortController)
 
     if (data.success) {
       setOrders([...data.data])
+
+      if (data.statusCounts) {
+        setStatusCounts(data.statusCounts)
+      }
     }
     setIsLoading(false)
   }
 
   useEffect(() => {
-    getOrders()
+    searchOrders()
   }, [filters])
 
   useEffect(() => {
@@ -94,6 +103,7 @@ export const OrdersProvider = ({ children }: { children: ReactNode }) => {
         isLoading,
         pagination,
         filters,
+        statusCounts,
         setFilters,
         getOrders,
         searchOrders,

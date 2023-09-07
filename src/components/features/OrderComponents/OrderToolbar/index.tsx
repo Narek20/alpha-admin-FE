@@ -1,10 +1,11 @@
-import { useState, useContext, useLayoutEffect } from 'react'
+import { useState, useContext, useLayoutEffect, useEffect } from 'react'
 import {
   Box,
   Button,
   IconButton,
   InputAdornment,
   TextField,
+  Typography,
 } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import SettingsIcon from '@mui/icons-material/Settings'
@@ -13,16 +14,19 @@ import OrderAddModal from '@features/OrderComponents/AddOrderModal'
 import OrderSettings from '../OrderSettings'
 import { OrdersContext } from 'contexts/order.context'
 import { OrderStatus } from 'types/order.types'
+import { OrderStatuses } from '@utils/order/constants'
 
 import styles from './styles.module.scss'
 
 const OrderToolbar = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const [counts, setCounts] = useState<{ [key: string]: number }>()
   const [isSettingsOpen, setIsSettingsOpen] = useState(false)
   const [tab, setTab] = useState<OrderStatus>(OrderStatus.RECEIVED)
   const [status, setStatus] = useState('Բոլորը')
 
-  const { filters, setFilters, searchOrders } = useContext(OrdersContext)
+  const { filters, statusCounts, setFilters, searchOrders } =
+    useContext(OrdersContext)
 
   const handleFilter = (key: string, value: OrderStatus) => {
     if (key === 'tab') {
@@ -42,6 +46,12 @@ const OrderToolbar = () => {
     setFilters({ ...filters, status: OrderStatus.RECEIVED })
   }, [])
 
+  useEffect(() => {
+    statusCounts.forEach(({ status, count }) =>
+      setCounts((prev) => ({ ...prev, [status]: count })),
+    )
+  }, [statusCounts])
+
   return (
     <Box className={styles.orderToolbar}>
       <Box className={styles.header}>
@@ -51,60 +61,18 @@ const OrderToolbar = () => {
         </Button>
       </Box>
       <Box className={styles.topBar}>
-        <Box>
+        {OrderStatuses.map((status) => (
           <Button
-            className={
-              tab === OrderStatus.RECEIVED
-                ? styles.selectedButton
-                : styles.button
-            }
-            onClick={() => handleFilter('tab', OrderStatus.RECEIVED)}
+            key={status}
+            className={tab === status ? styles.selectedButton : styles.button}
+            onClick={() => handleFilter('tab', status)}
           >
-            Նոր Պատվերներ
+            {status}
+            <Typography className={styles.count}>
+              {counts ? counts[status] : 0}
+            </Typography>
           </Button>
-          <Button
-            className={
-              tab === OrderStatus.PACKING
-                ? styles.selectedButton
-                : styles.button
-            }
-            onClick={() => handleFilter('tab', OrderStatus.PACKING)}
-          >
-            Փաթեթավորվում է
-          </Button>
-        </Box>
-        <Box>
-          <Button
-            className={
-              tab === OrderStatus.DELIVERY
-                ? styles.selectedButton
-                : styles.button
-            }
-            onClick={() => handleFilter('tab', OrderStatus.DELIVERY)}
-          >
-            Առաքվում է
-          </Button>
-          <Button
-            className={
-              tab === OrderStatus.COMPLETED
-                ? styles.selectedButton
-                : styles.button
-            }
-            onClick={() => handleFilter('tab', OrderStatus.ISSUE)}
-          >
-            Խնդիր
-          </Button>
-          <Button
-            className={
-              tab === OrderStatus.COMPLETED
-                ? styles.selectedButton
-                : styles.button
-            }
-            onClick={() => handleFilter('tab', OrderStatus.COMPLETED)}
-          >
-            Արխիվ
-          </Button>
-        </Box>
+        ))}
       </Box>
       <Box className={styles.bottomBar}>
         <TextField
