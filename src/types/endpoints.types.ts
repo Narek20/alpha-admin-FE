@@ -13,6 +13,7 @@ export enum OrderEndpoints {
   GET_COUNTS = 'orders/status/counts',
   PLACE_ORDER = 'orders/create',
   DELETE_ORDER = 'orders/',
+  CHANGE_STATUS = 'orders/status',
 }
 
 export enum ProductEndpoints {
