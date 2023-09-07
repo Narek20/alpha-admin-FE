@@ -51,8 +51,15 @@ const OrderTable = () => {
   const [rowChanges, setRowChanges] = useState<IOrder | undefined>()
   const [showOrders, setShowOrders] = useState(false)
 
-  const { orders, filters, setOrders, setFilters, isLoading, tableColumns } =
-    useContext(OrdersContext)
+  const {
+    orders,
+    filters,
+    setOrders,
+    setFilters,
+    getCounts,
+    isLoading,
+    tableColumns,
+  } = useContext(OrdersContext)
 
   const { drivers } = useContext(DriversContext)
 
@@ -125,13 +132,7 @@ const OrderTable = () => {
           setOpen(false)
           setIsEdit(false)
           setEditRow(-1)
-          // setOrders(
-          //   orders.map((order, ind) =>
-          //     ind === editRow
-          //       ? { ...order, status: value as OrderStatus }
-          //       : order,
-          //   ),
-          // )
+          getCounts()
           setOrders(orders.filter((order, ind) => ind !== editRow))
         }
       }

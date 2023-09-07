@@ -14,13 +14,15 @@ import OrderAddModal from '@features/OrderComponents/AddOrderModal'
 import OrderSettings from '../OrderSettings'
 import { OrdersContext } from 'contexts/order.context'
 import { OrderStatus } from 'types/order.types'
-import { OrderStatuses } from '@utils/order/constants'
+import { OrderStatuses, initialStatusCounts } from '@utils/order/constants'
 
 import styles from './styles.module.scss'
 
 const OrderToolbar = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const [counts, setCounts] = useState<{ [key: string]: number }>()
+  const [counts, setCounts] = useState<{ [key: string]: number }>(
+    initialStatusCounts,
+  )
   const [isSettingsOpen, setIsSettingsOpen] = useState(false)
   const [tab, setTab] = useState<OrderStatus>(OrderStatus.RECEIVED)
   const [status, setStatus] = useState('Բոլորը')
@@ -47,6 +49,7 @@ const OrderToolbar = () => {
   }, [])
 
   useEffect(() => {
+    setCounts(initialStatusCounts)
     statusCounts.forEach(({ status, count }) =>
       setCounts((prev) => ({ ...prev, [status]: count })),
     )

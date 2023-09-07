@@ -15,6 +15,7 @@ export interface IOrdersContext {
   tableColumns: string[]
   statusCounts: StatusCounts
   getOrders: () => void
+  getCounts: () => void
   searchOrders: (search: string) => void
   setOrders: Dispatch<SetStateAction<IOrder[]>>
   setTableColumns: Dispatch<SetStateAction<string[]>>

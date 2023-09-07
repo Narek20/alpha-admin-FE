@@ -64,6 +64,19 @@ export const getOrderById = async (orderId: string): Promise<IResponse> => {
   }
 }
 
+export const getOrderCounts = async (): Promise<IResponse> => {
+  try {
+    const data = await axiosInstance.get(OrderEndpoints.GET_COUNTS)
+
+    return data.data
+  } catch (err: any) {
+    return {
+      success: false,
+      message: err.message,
+    }
+  }
+}
+
 export const placeOrder = async (orderData: IOrder): Promise<IResponse> => {
   try {
     const data = await axiosInstance.post(OrderEndpoints.PLACE_ORDER, orderData)

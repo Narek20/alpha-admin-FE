@@ -92,6 +92,14 @@ export const OrderDetailsKeys = [
   },
 ]
 
+export const initialStatusCounts = {
+  [OrderStatus.RECEIVED]: 0,
+  [OrderStatus.PACKING]: 0,
+  [OrderStatus.DELIVERY]: 0,
+  [OrderStatus.COMPLETED]: 0,
+  [OrderStatus.ISSUE]: 0,
+}
+
 export const orderStatusStyles = (status: OrderStatus): string => {
   switch (status) {
     case OrderStatus.ISSUE:

@@ -6,12 +6,12 @@ import {
   useEffect,
   useRef,
 } from 'react'
+import { IOrdersContext, IOrder, StatusCounts } from 'types/order.types'
 import {
-  IOrdersContext,
-  IOrder,
-  StatusCounts,
-} from 'types/order.types'
-import { getAllOrders, searchAllOrders } from 'services/orders.service'
+  getAllOrders,
+  getOrderCounts,
+  searchAllOrders,
+} from 'services/orders.service'
 import localStorageKeys from '@utils/localStorageKeys'
 import { OrderTableColumns } from '@utils/order/constants'
 
@@ -24,6 +24,7 @@ export const OrdersContext = createContext<IOrdersContext>({
   tableColumns: [],
   statusCounts: [],
   getOrders: () => {},
+  getCounts: () => {},
   searchOrders: (search) => {},
   setFilters: () => {},
   setTableColumns: () => {},
@@ -73,16 +74,21 @@ export const OrdersProvider = ({ children }: { children: ReactNode }) => {
 
     if (data.success) {
       setOrders([...data.data])
-
-      if (data.statusCounts) {
-        setStatusCounts(data.statusCounts)
-      }
     }
     setIsLoading(false)
   }
 
+  const getCounts = async () => {
+    const data = await getOrderCounts()
+
+    if (data.success) {
+      setStatusCounts(data.data)
+    }
+  }
+
   useEffect(() => {
     searchOrders()
+    getCounts()
   }, [filters])
 
   useEffect(() => {
@@ -106,6 +112,7 @@ export const OrdersProvider = ({ children }: { children: ReactNode }) => {
         statusCounts,
         setFilters,
         getOrders,
+        getCounts,
         searchOrders,
         setOrders,
         setTableColumns,

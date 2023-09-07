@@ -10,6 +10,7 @@ export enum OrderEndpoints {
   GET_ORDERS = 'orders/',
   SEARCH_ORDERS = 'orders/search',
   GET_ORDER_BY_ID = 'orders/',
+  GET_COUNTS = 'orders/status/counts',
   PLACE_ORDER = 'orders/create',
   DELETE_ORDER = 'orders/',
 }
