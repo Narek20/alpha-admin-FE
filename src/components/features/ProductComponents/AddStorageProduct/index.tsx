@@ -24,6 +24,7 @@ import { IStorageImport, StorageKeys } from 'types/storage.types'
 import { orderProductType } from 'types/order.types'
 import { createStorageImports } from 'services/storage.service'
 import { OrderProductSearch } from '@shared/OrderProductSearch'
+import { ProductsContext } from 'contexts/products.context'
 
 import styles from './styles.module.scss'
 
@@ -41,6 +42,7 @@ const AddStorageProduct: FC<IProps> = ({ onClose }) => {
   } | null>(null)
 
   const { storages } = useContext(StorageContext)
+  const { products, setProducts } = useContext(ProductsContext)
   const { setOrders, orders, filters } = useContext(OrdersContext)
   const { showToast } = useToast()
 
@@ -69,6 +71,30 @@ const AddStorageProduct: FC<IProps> = ({ onClose }) => {
       if (orders.length > limit) {
         orders.pop()
       }
+
+      setProducts(
+        products.map((product) => {
+          const productId = productIDs.find(({ id }) => id === product.id)
+          if (productId) {
+            return {
+              ...product,
+              sizes: product.sizes?.map(({ size, smSize, quantity }) =>
+                size === productId.size
+                  ? {
+                      size,
+                      smSize,
+                      quantity: quantity
+                        ? productId.quantity + quantity
+                        : productId.quantity,
+                    }
+                  : { size, smSize, quantity },
+              ),
+            }
+          }
+
+          return product
+        }),
+      )
 
       setOrders([data.data, ...orders])
       showToast('success', data.message)
