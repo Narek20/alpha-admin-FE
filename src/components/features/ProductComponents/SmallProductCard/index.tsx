@@ -5,39 +5,48 @@ import Loading from '@shared/Loading'
 import { IProduct } from 'types/product.types'
 
 import styles from './styles.module.scss'
+import LazyImage from '@shared/LazyImage'
 
 interface IProps {
   product: IProduct
 }
 
 const SmallProductCard: FC<IProps> = ({ product }) => {
-  const [isLoading, setIsLoading] = useState(true)
-
+  const [isProductExist, setIsProductExist] = useState(true)
   const navigate = useNavigate()
 
-  const handleImageLoad = () => {
-    setIsLoading(false)
-  }
-
   useEffect(() => {
-    const image = new Image()
-    image.src = product.images[0]
-    image.addEventListener('load', handleImageLoad)
-    return () => {
-      image.removeEventListener('load', handleImageLoad)
+    if (product.sizes && product.sizes.length) {
+      if (isProductExist) {
+        let isExist = false
+        product.sizes.forEach((size) => {
+          if (size.quantity) {
+            isExist = true
+          }
+        })
+
+        if (!isExist) {
+          setIsProductExist(false)
+        }
+      } else {
+        product.sizes.forEach((size) => {
+          if (size.quantity) {
+            setIsProductExist(true)
+          }
+        })
+      }
     }
-  }, [product.images[0]])
+  }, [product.sizes])
 
   return (
     <Box className={styles.card} onClick={() => navigate(`${product.id}`)}>
-      {isLoading ? (
-        <Box className={styles.img}>
-          <Loading />
-        </Box>
-      ) : (
-        <img className={styles.img} src={product.images[0]} alt="Ապրանք" />
-      )}
-      <Typography className={styles.title}>{product.title}</Typography>
+      <Box className={styles.img} sx={{ opacity: isProductExist ? 1 : 0.5 }}>
+        <LazyImage src={product.images[0]} alt="Ապրանք" />
+        {!isProductExist && <hr className={styles.line} />}
+      </Box>
+      <Typography className={styles.title} style={{ overflowWrap: 'anywhere' }}>
+        {product.title}
+      </Typography>
       <Typography className={styles.brand}>{product.brand}</Typography>
     </Box>
   )

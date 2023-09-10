@@ -1,34 +1,19 @@
 import { FC, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { Box, Typography } from '@mui/material'
-import Loading from '@shared/Loading'
+import LazyImage from '@shared/LazyImage'
 import { IProduct } from 'types/product.types'
 import { priceFormatter } from '@utils/priceFormatter'
 
 import styles from './styles.module.scss'
-import LazyImage from '@shared/LazyImage'
 
 interface IProps {
   product: IProduct
 }
 
 const BigProductCard: FC<IProps> = ({ product }) => {
-  // const [isLoading, setIsLoading] = useState(true)
   const [isProductExist, setIsProductExist] = useState(true)
   const navigate = useNavigate()
-
-  // const handleImageLoad = () => {
-  //   setIsLoading(false)
-  // }
-
-  // useEffect(() => {
-  //   const image = new Image()
-  //   image.src = product.images[0]
-  //   image.addEventListener('load', handleImageLoad)
-  //   return () => {
-  //     image.removeEventListener('load', handleImageLoad)
-  //   }
-  // }, [product.images[0]])
 
   useEffect(() => {
     if (product.sizes && product.sizes.length) {
