@@ -375,6 +375,10 @@ const OrderTable = () => {
                               onChange={(evt) =>
                                 handleChange(key, evt.target.value)
                               }
+                              multiline={
+                                isEdit && index === editRow && ind === 5
+                              }
+                              maxRows={2}
                             />
                           )}
                         </TableCell>
