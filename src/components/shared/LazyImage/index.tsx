@@ -1,4 +1,4 @@
-import { CSSProperties, FC, useEffect, useRef } from 'react';
+import { CSSProperties, FC, useEffect, useState, useRef } from 'react';
 
 interface IProps {
   src: string
@@ -8,12 +8,13 @@ interface IProps {
 
 const  LazyImage:FC<IProps> = ({ src, alt, styles }) => {
   const imgRef = useRef<HTMLImageElement>(null);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting && imgRef.current) {
-          // Load the higher-quality image when it becomes visible
+          // Load the image when it becomes visible
           imgRef.current.src = src;
           observer.unobserve(imgRef.current);
         }
@@ -25,12 +26,23 @@ const  LazyImage:FC<IProps> = ({ src, alt, styles }) => {
       observer.observe(imgRef.current);
     }
 
+    // Handle image load event
+    const handleImageLoad = () => {
+      setImageLoaded(true);
+    };
+
+    if (imgRef.current) {
+      imgRef.current.addEventListener('load', handleImageLoad);
+    }
+
     return () => {
       if (imgRef.current) {
         observer.unobserve(imgRef.current);
+        imgRef.current.removeEventListener('load', handleImageLoad);
       }
     };
   }, [src]);
+
 
   return (
     <img
