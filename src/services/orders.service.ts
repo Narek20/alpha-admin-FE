@@ -1,5 +1,5 @@
 import { axiosInstance } from './axios.service'
-import { IOrder, StatusCounts } from 'types/order.types'
+import { IOrder, OrderStatus, StatusCounts } from 'types/order.types'
 import { IResponse } from 'types/response.types'
 import { OrderEndpoints } from 'types/endpoints.types'
 
@@ -111,6 +111,25 @@ export const removeOrder = async (orderId: number): Promise<IResponse> => {
     const data = await axiosInstance.delete(
       OrderEndpoints.DELETE_ORDER + orderId,
     )
+
+    return data.data
+  } catch (err: any) {
+    return {
+      success: false,
+      message: err.message,
+    }
+  }
+}
+
+export const changeStatus = async (
+  orderIds: number[],
+  newStatus: OrderStatus,
+): Promise<IResponse> => {
+  try {
+    const data = await axiosInstance.patch(OrderEndpoints.CHANGE_STATUS, {
+      orderIds,
+      newStatus,
+    })
 
     return data.data
   } catch (err: any) {
