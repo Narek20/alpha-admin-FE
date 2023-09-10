@@ -1,0 +1,8 @@
+.lazy-image {
+  filter: blur(10px); /* Apply a blur filter for initial loading */
+  transition: filter 0.3s ease-in-out;
+}
+
+.lazy-image.loaded {
+  filter: none; /* Remove the blur filter after image is loaded */
+}
