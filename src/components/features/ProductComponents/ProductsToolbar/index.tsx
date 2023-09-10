@@ -28,7 +28,7 @@ const ProductsToolbar: FC<IProps> = ({ isBig, changeDisplay }) => {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false)
 
   const navigate = useNavigate()
-  const { setFilters, filters } = useContext(ProductsContext)
+  const { pagination, getProducts } = useContext(ProductsContext)
   const { userData } = useContext(AuthContext)
 
   const handleAdd = () => {
@@ -36,7 +36,8 @@ const ProductsToolbar: FC<IProps> = ({ isBig, changeDisplay }) => {
   }
 
   const changeItemsCount = (count: string) => {
-    setFilters({ ...filters, take: count, skip: '0' })
+    pagination.take = +count
+    getProducts()
   }
 
   return (
@@ -50,7 +51,7 @@ const ProductsToolbar: FC<IProps> = ({ isBig, changeDisplay }) => {
         </IconButton>
         <FormControl className={styles.form}>
           <Select
-            value={filters.take || 10}
+            value={pagination.take || 10}
             onChange={(evt) => changeItemsCount(evt.target.value as string)}
           >
             <MenuItem value="10">10</MenuItem>
