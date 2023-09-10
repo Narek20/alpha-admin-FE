@@ -6,51 +6,57 @@ interface IProps {
   styles?: CSSProperties
 }
 
-const LazyImage: FC<IProps> = ({ src, alt, styles }) => {
-  const imgRef = useRef<HTMLImageElement>(null)
+const LazyImage: FC<IProps> = ({ src, alt }) => {
+  const containerRef = useRef<HTMLDivElement>(null)
   const [imageLoaded, setImageLoaded] = useState(false)
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting && imgRef.current) {
+        if (entry.isIntersecting && containerRef.current) {
           // Load the image when it becomes visible
-          imgRef.current.src = src
-          observer.unobserve(imgRef.current)
+          const image = new Image()
+          image.src = src
+          image.onload = () => {
+            if (containerRef.current) {
+              containerRef.current.style.backgroundImage = `url(${src})`
+              setImageLoaded(true)
+            }
+          }
+          observer.unobserve(containerRef.current)
         }
       })
     })
 
-    // Start observing the image element
-    if (imgRef.current) {
-      observer.observe(imgRef.current)
-    }
-
-    // Handle image load event
-    const handleImageLoad = () => {
-      setImageLoaded(true)
-    }
-
-    if (imgRef.current) {
-      imgRef.current.addEventListener('load', handleImageLoad)
+    // Start observing the container element
+    if (containerRef.current) {
+      observer.observe(containerRef.current)
     }
 
     return () => {
-      if (imgRef.current) {
-        observer.unobserve(imgRef.current)
-        imgRef.current.removeEventListener('load', handleImageLoad)
+      if (containerRef.current) {
+        observer.unobserve(containerRef.current)
       }
     }
   }, [src])
 
   return (
-    <img
-      ref={imgRef}
-      className={imageLoaded ? classes.lazyImageLoaded : classes.lazyImage}
-      style={styles}
-      src={src}
-      alt={alt}
-    />
+    <div
+      ref={containerRef}
+      className={
+        imageLoaded
+          ? classes['lazy-image-container-loaded']
+          : classes['lazy-image-container']
+      }
+    >
+      <img
+        className={
+          imageLoaded ? classes['lazy-image-visible'] : classes['lazy-image']
+        }
+        src={src}
+        alt={alt}
+      />
+    </div>
   )
 }
 

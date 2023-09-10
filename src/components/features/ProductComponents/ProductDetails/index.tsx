@@ -187,45 +187,49 @@ const ProductDetails: FC<{ product: IProduct }> = ({ product }) => {
             )}
           </Box>
           <Box className={styles.sizes}>
-            {productSizes.map(({ size, smSize, quantity }, index) => (
-              <Box key={size} className={styles.sizeContainer}>
-                <Box
-                  className={
-                    quantity && quantity > 0 ? styles.selectedSize : styles.size
-                  }
-                >
-                  <Typography className={styles.sizeText}>{size}</Typography>
-                  <hr className={styles.line} />
-                </Box>
-                <Box className={styles.sizeDetails}>
-                  <Typography>Քանակը։ {quantity || 0} հատ</Typography>
-                  <Typography>Երկարությունը: {smSize}սմ․</Typography>
-                </Box>
-                {isEdit && (
-                  <Box className={styles.sizeActions}>
-                    <IconButton
-                      className={styles.plusBtn}
-                      onClick={() =>
-                        handleChange(index, quantity ? ++quantity : 1)
-                      }
-                    >
-                      <AddIcon />
-                    </IconButton>
-                    <IconButton
-                      className={styles.minusBtn}
-                      onClick={() =>
-                        handleChange(
-                          index,
-                          quantity && quantity > 0 ? --quantity : 0,
-                        )
-                      }
-                    >
-                      <RemoveIcon />
-                    </IconButton>
+            {productSizes
+              .sort((a, b) => +a.size - +b.size)
+              .map(({ size, smSize, quantity }, index) => (
+                <Box key={size} className={styles.sizeContainer}>
+                  <Box
+                    className={
+                      quantity && quantity > 0
+                        ? styles.selectedSize
+                        : styles.size
+                    }
+                  >
+                    <Typography className={styles.sizeText}>{size}</Typography>
+                    <hr className={styles.line} />
                   </Box>
-                )}
-              </Box>
-            ))}
+                  <Box className={styles.sizeDetails}>
+                    <Typography>Քանակը։ {quantity || 0} հատ</Typography>
+                    <Typography>Երկարությունը: {smSize}սմ․</Typography>
+                  </Box>
+                  {isEdit && (
+                    <Box className={styles.sizeActions}>
+                      <IconButton
+                        className={styles.plusBtn}
+                        onClick={() =>
+                          handleChange(index, quantity ? ++quantity : 1)
+                        }
+                      >
+                        <AddIcon />
+                      </IconButton>
+                      <IconButton
+                        className={styles.minusBtn}
+                        onClick={() =>
+                          handleChange(
+                            index,
+                            quantity && quantity > 0 ? --quantity : 0,
+                          )
+                        }
+                      >
+                        <RemoveIcon />
+                      </IconButton>
+                    </Box>
+                  )}
+                </Box>
+              ))}
           </Box>
           <Box className={styles.actions}>
             {isEdit && (
