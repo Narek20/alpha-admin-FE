@@ -1,5 +1,5 @@
 import { CSSProperties, FC, useEffect, useState, useRef } from 'react'
-import styles from './styles.module.scss'
+import classes from './styles.module.scss'
 interface IProps {
   src: string
   alt?: string
@@ -46,7 +46,7 @@ const LazyImage: FC<IProps> = ({ src, alt, styles }) => {
   return (
     <img
       ref={imgRef}
-      className={`lazy-image ${imageLoaded ? 'loaded' : ''}`}
+      className={imageLoaded ? classes.lazyImageLoaded : classes.lazyImage}
       style={styles}
       src={src}
       alt={alt}
