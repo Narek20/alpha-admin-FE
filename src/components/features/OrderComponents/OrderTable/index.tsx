@@ -255,7 +255,18 @@ const OrderTable = () => {
           >
             <TableHead>
               <TableRow>
-                <TableCell align="center"></TableCell>
+                {nextStatus && orders.length > 0 && (
+                  <TableCell align="center" sx={{ padding: 0 }}>
+                    <Checkbox
+                      checked={checkedOrders.length === orders.length}
+                      onChange={(evt) =>
+                        setCheckedOrders(
+                          evt.target.checked ? orders.map(({ id }) => id) : [],
+                        )
+                      }
+                    />
+                  </TableCell>
+                )}
                 {tableColumns.map((key) => (
                   <TableCell key={key} align="center">
                     <Typography className={styles.headCell}>{key}</Typography>
@@ -275,22 +286,24 @@ const OrderTable = () => {
                   }}
                   className={styles[orderStatusStyles(order.status)]}
                 >
-                  <TableCell
-                    key={'checkbox'}
-                    className={styles.bodyCell}
-                    sx={{ bgcolor: 'white', padding: 0 }}
-                  >
-                    <Checkbox
-                      checked={checkedOrders.includes(order.id)}
-                      onChange={(evt) =>
-                        setCheckedOrders((prev) =>
-                          evt.target.checked
-                            ? [...prev, order.id]
-                            : prev.filter((id) => id !== order.id),
-                        )
-                      }
-                    />
-                  </TableCell>
+                  {nextStatus && (
+                    <TableCell
+                      key={'checkbox'}
+                      className={styles.bodyCell}
+                      sx={{ bgcolor: 'white', padding: 0 }}
+                    >
+                      <Checkbox
+                        checked={checkedOrders.includes(order.id)}
+                        onChange={(evt) =>
+                          setCheckedOrders((prev) =>
+                            evt.target.checked
+                              ? [...prev, order.id]
+                              : prev.filter((id) => id !== order.id),
+                          )
+                        }
+                      />
+                    </TableCell>
+                  )}
                   {OrderTableKeys.map(
                     ({ key, label }, ind) =>
                       (tableColumns.find((column) => column === label) ||
@@ -537,7 +550,7 @@ const OrderTable = () => {
         onPageChange={onPageChange}
         onRowsPerPageChange={onRowsPerPageChange}
       />
-      {nextStatus && (
+      {nextStatus && checkedOrders.length > 0 && (
         <Button onClick={changeStatuses} variant="contained">
           Տեղափոխել {nextStatus}
         </Button>

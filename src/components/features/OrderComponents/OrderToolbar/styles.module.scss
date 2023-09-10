@@ -28,9 +28,10 @@
       color: black;
 
       .count {
-        color: gray;
+        color: orange;
+        font-weight: bold;
         margin-left: 10px;
-        font-size: 12px;
+        font-size: 14px;
       }
     }
 
@@ -45,9 +46,18 @@
       border-bottom: 1px solid #f6ce71;
 
       .count {
-        color: gray;
+        color: orange;
+        font-weight: bold;
         margin-left: 10px;
-        font-size: 12px;
+        font-size: 14px;
+      }
+    }
+
+    .button:nth-last-child(2),
+    .selectedButton:nth-last-child(2) {
+      .count {
+        color: gray;
+        font-weight: normal;
       }
     }
   }
@@ -79,6 +89,7 @@
   .orderToolbar {
     .header {
       gap: 5px;
+
       .addBtn {
         font-size: 10px;
       }
