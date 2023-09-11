@@ -53,6 +53,10 @@
       }
     }
 
+    .gray {
+      color: gray !important;
+    }
+
     .button:nth-last-child(2),
     .selectedButton:nth-last-child(2) {
       .count {
