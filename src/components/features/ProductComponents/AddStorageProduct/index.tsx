@@ -191,6 +191,8 @@ const AddStorageProduct: FC<IProps> = ({ onClose }) => {
     })
   }, [selectedProducts.length])
 
+  console.log(storages)
+
   return (
     <Modal className={styles.modal} open onClose={onClose}>
       <Box className={styles.modalContent}>
@@ -209,7 +211,7 @@ const AddStorageProduct: FC<IProps> = ({ onClose }) => {
                 storageData &&
                 typeof storageData[StorageKeys.TITLE] === 'string'
                   ? (storageData[StorageKeys.TITLE] as string)
-                  : storages[0].title || ''
+                  : storages[0]?.title || ''
               }
               onChange={(_, value) =>
                 handleChange(StorageKeys.TITLE, value || '')
