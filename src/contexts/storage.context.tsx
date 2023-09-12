@@ -52,7 +52,6 @@ export const StorageProvider = ({ children }: { children: ReactNode }) => {
             title !== null && title !== '',
         ),
       )
-      setStorages(data.data)
     }
   }
 
