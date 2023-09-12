@@ -191,14 +191,12 @@ const AddStorageProduct: FC<IProps> = ({ onClose }) => {
     })
   }, [selectedProducts.length])
 
-  console.log(storages)
-
   return (
     <Modal className={styles.modal} open onClose={onClose}>
       <Box className={styles.modalContent}>
         <Box>
           <Box className={styles.header}>
-            <Typography className={styles.title}>Ապրանքի ներկրում</Typography>
+            <Typography className={styles.title}>Ապրանքի ընդունում</Typography>
             <IconButton onClick={onClose}>
               <CloseOutlinedIcon />
             </IconButton>

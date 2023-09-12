@@ -37,7 +37,11 @@ export const StorageProvider = ({ children }: { children: ReactNode }) => {
     const data = await getAllStorageImports()
 
     if (data.success) {
-      setStorageImports([...data.data])
+      setStorageImports([
+        ...data.data.filter(
+          ({ title }: { title: string | null }) => title !== null,
+        ),
+      ])
     }
     setIsLoading(false)
   }
