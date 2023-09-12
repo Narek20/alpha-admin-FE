@@ -36,12 +36,10 @@ export const StorageProvider = ({ children }: { children: ReactNode }) => {
     setIsLoading(true)
     const data = await getAllStorageImports()
 
+    console.log(data.data)
+
     if (data.success) {
-      setStorageImports([
-        ...data.data.filter(
-          ({ title }: { title: string | null }) => title !== null,
-        ),
-      ])
+      setStorageImports([...data.data])
     }
     setIsLoading(false)
   }
@@ -50,7 +48,11 @@ export const StorageProvider = ({ children }: { children: ReactNode }) => {
     const data = await getAllStorages()
 
     if (data.success) {
-      setStorages(data.data)
+      setStorages(
+        data.data.filter(
+          ({ title }: { title: string | null }) => title !== null,
+        ),
+      )
     }
   }
 
