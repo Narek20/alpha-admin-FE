@@ -13,7 +13,7 @@ const CategoryFilter: FC<IProps> = ({ onChange }) => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
 
   const handleChange = (value: string[]) => {
-    if (onChange) onChange(ProductKeys.CATEGORY, value.join(' '))
+    if (onChange) onChange(ProductKeys.CATEGORY, value.join(','))
     setSelectedCategories(value)
   }
 
