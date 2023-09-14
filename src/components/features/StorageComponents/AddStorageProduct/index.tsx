@@ -35,7 +35,7 @@ interface IProps {
 }
 
 enum UserId {
-  USER_ID = 'userId'
+  USER_ID = 'userId',
 }
 
 const AddStorageProduct: FC<IProps> = ({ onClose }) => {
@@ -44,16 +44,19 @@ const AddStorageProduct: FC<IProps> = ({ onClose }) => {
     (orderProductType & { isLoading?: boolean })[]
   >([])
   const [storageData, setStorageData] = useState<{
-    [key: string]: string | number | boolean,
+    [key: string]: string | number | boolean
   } | null>(null)
 
   const { storages } = useContext(StorageContext)
   const { products, setProducts } = useContext(ProductsContext)
   const { setOrders, orders, filters } = useContext(OrdersContext)
-  const {userData} = useContext(AuthContext)
+  const { userData } = useContext(AuthContext)
   const { showToast } = useToast()
 
-  const handleChange = (key: StorageKeys | UserId, value: string | boolean | number) => {
+  const handleChange = (
+    key: StorageKeys | UserId,
+    value: string | boolean | number,
+  ) => {
     setStorageData({ ...storageData, [key]: value })
   }
 
@@ -199,10 +202,16 @@ const AddStorageProduct: FC<IProps> = ({ onClose }) => {
   }, [selectedProducts.length])
 
   useEffect(() => {
-    if(userData?.id) {
+    if (userData?.id) {
       handleChange(UserId.USER_ID, userData.id)
     }
   }, [userData])
+
+  useEffect(() => {
+    if (storages.length) {
+      handleChange(StorageKeys.TITLE, storages[0].title)
+    }
+  }, [storages])
 
   return (
     <Modal className={styles.modal} open onClose={onClose}>
