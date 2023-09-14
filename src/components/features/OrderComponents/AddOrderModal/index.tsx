@@ -408,6 +408,19 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
                               sx={!quantity ? { opacity: 0.5 } : {}}
                             >
                               {size}
+                              {!quantity && (
+                                <div
+                                  // className={styles.line}
+                                  style={{
+                                    position: 'absolute',
+                                    left: 0,
+                                    width: 64,
+                                    height: 2,
+                                    backgroundColor: 'red',
+                                    opacity: 0.4,
+                                  }}
+                                ></div>
+                              )}
                             </MenuItem>
                           ))}
                         </Select>

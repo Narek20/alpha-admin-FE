@@ -209,7 +209,7 @@ const AddStorageProduct: FC<IProps> = ({ onClose }) => {
       <Box className={styles.modalContent}>
         <Box>
           <Box className={styles.header}>
-            <Typography className={styles.title}>Ապրանքի ներկրում</Typography>
+            <Typography className={styles.title}>Ապրանքի ընդունում</Typography>
             <IconButton onClick={onClose}>
               <CloseOutlinedIcon />
             </IconButton>
@@ -222,7 +222,7 @@ const AddStorageProduct: FC<IProps> = ({ onClose }) => {
                 storageData &&
                 typeof storageData[StorageKeys.TITLE] === 'string'
                   ? (storageData[StorageKeys.TITLE] as string)
-                  : storages[0].title || ''
+                  : storages[0]?.title || ''
               }
               onChange={(_, value) =>
                 handleChange(StorageKeys.TITLE, value || '')

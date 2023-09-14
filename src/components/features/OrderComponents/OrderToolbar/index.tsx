@@ -71,7 +71,11 @@ const OrderToolbar = () => {
             onClick={() => handleFilter('tab', status)}
           >
             {status}
-            <Typography className={styles.count}>
+            <Typography
+              className={`${styles.count} ${
+                counts[status] > 0 ? '' : styles.gray
+              }`}
+            >
               {counts ? counts[status] : 0}
             </Typography>
           </Button>
