@@ -11,7 +11,7 @@ import {
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined'
 import ViewCompactOutlinedIcon from '@mui/icons-material/ViewCompactOutlined'
 import ProductSettings from '../ProductSettings'
-import AddStorageProduct from '../AddStorageProduct'
+import AddStorageProduct from '../../StorageComponents/AddStorageProduct'
 import { AuthContext } from 'contexts/auth.context'
 import { ProductsContext } from 'contexts/products.context'
 import { UserStatus } from 'types/user.types'

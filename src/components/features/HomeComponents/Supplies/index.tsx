@@ -1,6 +1,6 @@
 import { FC, useContext } from 'react'
 import { Box } from '@mui/material'
-import StorageTable from '@features/ProductComponents/StorageTable'
+import StorageTable from '@features/StorageComponents/StorageTable'
 import SectionHeader from '@shared/SectionTitle'
 import { StorageContext } from 'contexts/storage.context'
 
@@ -17,7 +17,15 @@ const Supplies: FC<IProps> = () => {
       <Box className={styles.tableContainer}>
         <StorageTable
           data={storageImports}
-          columns={['N', 'Պահեստ', 'Ապրանք', 'Ամսաթիվ']}
+          columns={[
+            'N',
+            'Պահեստ',
+            'Ապրանք',
+            'Չափսը',
+            'Քանակը',
+            'Ամսաթիվ',
+            'Ներկրող',
+          ]}
         />
       </Box>
     </Box>

@@ -18,18 +18,24 @@ import RemoveIcon from '@mui/icons-material/Remove'
 import Loading from '@shared/Loading'
 import { useToast } from 'contexts/toast.context'
 import useOnEnter from '@utils/hooks/useOnEnter'
+import { AuthContext } from 'contexts/auth.context'
 import { OrdersContext } from 'contexts/order.context'
 import { StorageContext } from 'contexts/storage.context'
-import { IStorageImport, StorageKeys } from 'types/storage.types'
+import { ProductsContext } from 'contexts/products.context'
+import { IUser } from 'types/user.types'
 import { orderProductType } from 'types/order.types'
+import { IStorageImport, StorageKeys } from 'types/storage.types'
 import { createStorageImports } from 'services/storage.service'
 import { OrderProductSearch } from '@shared/OrderProductSearch'
-import { ProductsContext } from 'contexts/products.context'
 
 import styles from './styles.module.scss'
 
 interface IProps {
   onClose: () => void
+}
+
+enum UserId {
+  USER_ID = 'userId'
 }
 
 const AddStorageProduct: FC<IProps> = ({ onClose }) => {
@@ -38,15 +44,16 @@ const AddStorageProduct: FC<IProps> = ({ onClose }) => {
     (orderProductType & { isLoading?: boolean })[]
   >([])
   const [storageData, setStorageData] = useState<{
-    [key: string]: string | number | boolean
+    [key: string]: string | number | boolean,
   } | null>(null)
 
   const { storages } = useContext(StorageContext)
   const { products, setProducts } = useContext(ProductsContext)
   const { setOrders, orders, filters } = useContext(OrdersContext)
+  const {userData} = useContext(AuthContext)
   const { showToast } = useToast()
 
-  const handleChange = (key: StorageKeys, value: string | boolean) => {
+  const handleChange = (key: StorageKeys | UserId, value: string | boolean | number) => {
     setStorageData({ ...storageData, [key]: value })
   }
 
@@ -190,6 +197,12 @@ const AddStorageProduct: FC<IProps> = ({ onClose }) => {
       }
     })
   }, [selectedProducts.length])
+
+  useEffect(() => {
+    if(userData?.id) {
+      handleChange(UserId.USER_ID, userData.id)
+    }
+  }, [userData])
 
   return (
     <Modal className={styles.modal} open onClose={onClose}>

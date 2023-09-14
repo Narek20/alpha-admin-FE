@@ -1,5 +1,6 @@
 import { SetStateAction, Dispatch } from 'react'
 import { IProduct } from './product.types'
+import { IUser } from './user.types'
 
 export interface IStorageContext {
   storageImports: IStorageImport[]
@@ -22,7 +23,10 @@ export interface IStorage {
 export interface IStorageImport {
   id: number
   title: string
+  user: IUser,
   importDate: string
+  quantity: number,
+  size: string,
   product: string
   products: IProduct[]
   productIDs: Array<{ quantity: number; id: number; size?: string }>
@@ -33,4 +37,7 @@ export enum StorageKeys {
   TITLE = 'title',
   PRODUCT = 'product',
   IMPORT_DATE = 'importDate',
+  USER = 'user',
+  SIZE = 'size',
+  QUANTITY = 'quantity'
 }
