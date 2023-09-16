@@ -57,7 +57,8 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
     [key: string]: string | number | boolean
   } | null>({ paymentMethod: PaymentMethods.CASH })
 
-  const { orders, filters, setFilters } = useContext(OrdersContext)
+  const { orders, filters, setFilters, getCounts, getOrders } =
+    useContext(OrdersContext)
   const { showToast } = useToast()
 
   const handleChange = (key: OrderTableKeysType, value: string | boolean) => {
@@ -150,7 +151,8 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
         orders.pop()
       }
 
-      setFilters({})
+      getCounts()
+      getOrders()
       showToast('success', data.message)
       setOrderData({})
       setSelectedProducts([])
@@ -175,7 +177,7 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
   }
 
   const onCancel = () => {
-    setFilters({})
+    // setFilters({})
     setOrderData({})
     setSelectedProducts([])
     onClose()

@@ -57,9 +57,10 @@ const OrderTable = () => {
   const {
     orders,
     filters,
+    pagination,
     setOrders,
-    setFilters,
     getCounts,
+    getOrders,
     isLoading,
     tableColumns,
   } = useContext(OrdersContext)
@@ -95,7 +96,7 @@ const OrderTable = () => {
       setEditRow(-1)
       setCheckedOrders([])
       getCounts()
-      setOrders(orders.filter(({ id }) => !checkedOrders.includes(id)))
+      getOrders()
     }
   }
 
@@ -166,7 +167,7 @@ const OrderTable = () => {
           setIsEdit(false)
           setEditRow(-1)
           getCounts()
-          setOrders(orders.filter((order, ind) => ind !== editRow))
+          getOrders()
         }
       }
     }
@@ -213,7 +214,8 @@ const OrderTable = () => {
 
         if (data.success) {
           showToast('success', data.message)
-          setOrders(orders.filter((_, index) => index !== editRow))
+          getCounts()
+          getOrders()
           setOpen(false)
         }
       }
@@ -221,16 +223,14 @@ const OrderTable = () => {
   }
 
   const onPageChange = (page: number) => {
-    setFilters({ ...filters, skip: `${page - 1}` })
+    pagination.skip = page
+    getOrders()
   }
 
   const onRowsPerPageChange = (rows: number) => {
-    setFilters({ ...filters, take: `${rows}` })
+    pagination.take = rows
+    getOrders()
   }
-
-  useEffect(() => {
-    setOrders([])
-  }, [])
 
   useEffect(() => {
     editRow !== -1 && setEditRow(-1)
@@ -550,7 +550,8 @@ const OrderTable = () => {
         </TableContainer>
       )}
       <Pagination
-        count={50}
+        count={pagination.count}
+        take={pagination.take}
         onPageChange={onPageChange}
         onRowsPerPageChange={onRowsPerPageChange}
       />

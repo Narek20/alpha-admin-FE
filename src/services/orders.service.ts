@@ -3,40 +3,36 @@ import { IOrder, OrderStatus, StatusCounts } from 'types/order.types'
 import { IResponse } from 'types/response.types'
 import { OrderEndpoints } from 'types/endpoints.types'
 
-export const getAllOrders = async (
-  params?: {
-    [query: string]: string | string[] | number[]
-  },
-  abortController?: AbortController,
-): Promise<IResponse> => {
-  try {
-    const data = await axiosInstance.get(OrderEndpoints.GET_ORDERS, {
-      params,
-      signal: abortController?.signal,
-    })
+// export const getAllOrders = async (
+//   params?: {
+//     [query: string]: string | number | string[] | number[]
+//   },
+//   abortController?: AbortController,
+// ): Promise<IResponse> => {
+//   try {
+//     const data = await axiosInstance.get(OrderEndpoints.GET_ORDERS, {
+//       params,
+//       signal: abortController?.signal,
+//     })
 
-    return data.data
-  } catch (err: any) {
-    return {
-      success: false,
-      message: err.message,
-    }
-  }
-}
+//     return data.data
+//   } catch (err: any) {
+//     return {
+//       success: false,
+//       message: err.message,
+//     }
+//   }
+// }
 
 export const searchAllOrders = async (
-  searchTerms?: string,
   params?: {
-    [query: string]: string | string[] | number[]
+    [query: string]: string | number | string[] | number[]
   },
   abortController?: AbortController,
 ): Promise<IResponse & { statusCounts?: StatusCounts }> => {
   try {
     const data = await axiosInstance.get(OrderEndpoints.SEARCH_ORDERS, {
-      params: {
-        ...params,
-        search: searchTerms,
-      },
+      params,
       signal: abortController?.signal,
     })
 

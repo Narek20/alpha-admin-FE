@@ -8,24 +8,29 @@ import {
 } from 'react'
 import { IOrdersContext, IOrder, StatusCounts } from 'types/order.types'
 import {
-  getAllOrders,
   getOrderCounts,
   searchAllOrders,
 } from 'services/orders.service'
 import localStorageKeys from '@utils/localStorageKeys'
 import { OrderTableColumns } from '@utils/order/constants'
+import { IPagination } from 'types/product.types'
+
+const initialPagination: IPagination = {
+  count: 0,
+  skip: 0,
+  take: 10,
+}
 
 // Create a OrdersContext
 export const OrdersContext = createContext<IOrdersContext>({
   orders: [],
   filters: {},
   isLoading: false,
-  pagination: { count: 20, skip: 0, take: 10 },
+  pagination: initialPagination,
   tableColumns: [],
   statusCounts: [],
   getOrders: () => {},
   getCounts: () => {},
-  searchOrders: (search) => {},
   setFilters: () => {},
   setTableColumns: () => {},
   setOrders: () => {},
@@ -39,15 +44,11 @@ export const OrdersProvider = ({ children }: { children: ReactNode }) => {
   const [orders, setOrders] = useState<IOrder[] | []>([])
   const [tableColumns, setTableColumns] = useState<string[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [pagination, setPagination] = useState<{
-    count: number
-    skip: number
-    take: number
-  }>({ count: 20, skip: 0, take: 10 })
   const [statusCounts, setStatusCounts] = useState<StatusCounts>([])
   const [filters, setFilters] = useState<{
     [param: string]: string | string[] | number[]
   }>({ status: 'Բոլորը' })
+  const pagination = useRef<IPagination>(initialPagination)
 
   // Use an AbortController to cancel previous requests
   const abortControllerRef = useRef<AbortController | null>(null)
@@ -57,22 +58,15 @@ export const OrdersProvider = ({ children }: { children: ReactNode }) => {
     abortControllerRef.current = abortController
 
     setIsLoading(true)
-    const data = await getAllOrders(filters, abortController)
+    const data = await searchAllOrders(
+      { ...filters, ...pagination.current },
+      abortController,
+    )
 
     if (data.success) {
-      setOrders([...data.data])
-    }
-    setIsLoading(false)
-  }
-
-  const searchOrders = async (searchTerms?: string) => {
-    const abortController = new AbortController()
-    abortControllerRef.current = abortController
-
-    setIsLoading(true)
-    const data = await searchAllOrders(searchTerms, filters, abortController)
-
-    if (data.success) {
+      if (data.pagination) {
+        pagination.current = data.pagination
+      }
       setOrders([...data.data])
     }
     setIsLoading(false)
@@ -87,9 +81,15 @@ export const OrdersProvider = ({ children }: { children: ReactNode }) => {
   }
 
   useEffect(() => {
-    searchOrders()
+    pagination.current.skip = 0
+    pagination.current.count = 0
+    getOrders()
     getCounts()
   }, [filters])
+
+  useEffect(() => {
+    getOrders()
+  }, [pagination])
 
   useEffect(() => {
     const tableColumns = localStorage.getItem(localStorageKeys.TABLE_COLUMNS)
@@ -107,13 +107,12 @@ export const OrdersProvider = ({ children }: { children: ReactNode }) => {
       value={{
         orders,
         isLoading,
-        pagination,
+        pagination: pagination.current,
         filters,
         statusCounts,
         setFilters,
         getOrders,
         getCounts,
-        searchOrders,
         setOrders,
         setTableColumns,
         tableColumns,

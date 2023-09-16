@@ -12,7 +12,6 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import { useToast } from 'contexts/toast.context'
 import useOnEnter from '@utils/hooks/useOnEnter'
 import { CustomersContext } from 'contexts/customer.context'
-import { OrdersContext } from 'contexts/order.context'
 import { CustomerInfoKeys, ICustomer } from 'types/customer.types'
 import { customerInformation } from '@utils/customer/constants'
 import { updateCustomer } from 'services/customer.service'
@@ -29,7 +28,6 @@ const CustomerEditModal: FC<IProps> = ({ customer, setCustomer, onClose }) => {
   const [customerData, setCustomerData] = useState<ICustomer>(customer)
 
   const { customers, setCustomers } = useContext(CustomersContext)
-  const { getOrders } = useContext(OrdersContext)
   const { showToast } = useToast()
 
   const navigate = useNavigate()
@@ -49,7 +47,6 @@ const CustomerEditModal: FC<IProps> = ({ customer, setCustomer, onClose }) => {
         ),
       )
       setCustomer(data.data)
-      getOrders()
       navigate(`/customers/${data.data.phone}`)
       onClose()
     }

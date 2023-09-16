@@ -1,14 +1,10 @@
 import { SetStateAction, Dispatch } from 'react'
-import { IProduct } from './product.types'
+import { IPagination, IProduct } from './product.types'
 
 export interface IOrdersContext {
   orders: IOrder[] | []
   isLoading: boolean
-  pagination: {
-    count: number
-    take: number
-    skip: number
-  }
+  pagination: IPagination
   filters: {
     [param: string]: string | string[] | number[]
   }
@@ -16,7 +12,6 @@ export interface IOrdersContext {
   statusCounts: StatusCounts
   getOrders: () => void
   getCounts: () => void
-  searchOrders: (search: string) => void
   setOrders: Dispatch<SetStateAction<IOrder[]>>
   setTableColumns: Dispatch<SetStateAction<string[]>>
   setFilters: Dispatch<

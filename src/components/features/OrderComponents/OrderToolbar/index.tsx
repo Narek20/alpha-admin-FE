@@ -25,17 +25,17 @@ const OrderToolbar = () => {
   )
   const [isSettingsOpen, setIsSettingsOpen] = useState(false)
   const [tab, setTab] = useState<OrderStatus>(OrderStatus.RECEIVED)
-  const [status, setStatus] = useState('Բոլորը')
+  // const [status, setStatus] = useState('Բոլորը')
 
-  const { filters, statusCounts, setFilters, searchOrders } =
-    useContext(OrdersContext)
+  const { filters, statusCounts, setFilters } = useContext(OrdersContext)
 
   const handleFilter = (key: string, value: OrderStatus) => {
     if (key === 'tab') {
       setTab(value)
-    } else {
-      setStatus(value)
     }
+    // else {
+    //   setStatus(value)
+    // }
 
     // if (key === 'tab' && value === OrderStatus.RECEIVED) {
     //   setFilters({ ...filters, status })
@@ -85,7 +85,9 @@ const OrderToolbar = () => {
         <TextField
           className={styles.search}
           label="Որոնում"
-          onChange={(evt) => searchOrders(evt.target.value)}
+          onChange={(evt) =>
+            setFilters({ ...filters, search: evt.target.value })
+          }
           InputProps={{
             endAdornment: (
               <InputAdornment position="start">

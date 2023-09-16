@@ -52,7 +52,6 @@ const OrderPage = () => {
   const [isAddActive, setIsAddActive] = useState(false)
 
   const { drivers } = useContext(DriversContext)
-  const { getOrders } = useContext(OrdersContext)
   const { showToast } = useToast()
 
   const { id } = useParams()
@@ -157,7 +156,6 @@ const OrderPage = () => {
         setDefaultOrder(data.data)
         setOrder(data.data)
         setIsLoading(false)
-        getOrders()
         showToast('success', data.message)
       }
     }
