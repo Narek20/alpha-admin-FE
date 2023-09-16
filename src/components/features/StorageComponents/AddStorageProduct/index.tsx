@@ -301,9 +301,22 @@ const AddStorageProduct: FC<IProps> = ({ onClose }) => {
                           handleSizeChange(evt.target.value, index, product.id)
                         }
                       >
-                        {product.sizes?.map(({ size }) => (
+                        {product.sizes?.map(({ size, quantity }) => (
                           <MenuItem key={size} value={size}>
                             {size}
+                            {!quantity && (
+                              <div
+                                // className={styles.line}
+                                style={{
+                                  position: 'absolute',
+                                  left: 0,
+                                  width: 100,
+                                  height: 2,
+                                  backgroundColor: 'red',
+                                  opacity: 0.4,
+                                }}
+                              ></div>
+                            )}
                           </MenuItem>
                         ))}
                       </Select>
