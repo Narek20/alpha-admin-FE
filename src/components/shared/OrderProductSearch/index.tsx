@@ -81,25 +81,26 @@ export const OrderProductSearch: React.FC<IProps> = ({
     event: React.SyntheticEvent<Element, Event>,
     values: IProduct | IProduct[] | null,
   ) => {
-    const newOrderProducts: orderProductType[] = []
-    ;(values as IProduct[]).forEach((product) => {
-      const newProduct = {
-        id: NaN,
-        product,
-        quantity: 1,
-        size: product.sizes?.find(
-          (size) =>
-            !newOrderProducts.some(
-              (orderProduct) =>
-                orderProduct.product.id === product.id &&
-                orderProduct.size === size.size,
-            ),
-          // && size.quantity
-        )?.size,
-      }
-      newOrderProducts.push(newProduct)
-    })
-    onChange(newOrderProducts)
+    const product = (values as IProduct[]).at(-1)
+    if (!product) {
+      return
+    }
+    const newProduct = {
+      id: NaN,
+      product,
+      quantity: 1,
+      size: product.sizes?.find(
+        (size) =>
+          !orderProducts.some(
+            (orderProduct) =>
+              orderProduct.product.id === product.id &&
+              orderProduct.size === size.size,
+          ),
+        // && size.quantity
+      )?.size,
+    }
+
+    onChange([...orderProducts, newProduct])
     setSearchedProducts([])
   }
 
@@ -117,12 +118,13 @@ export const OrderProductSearch: React.FC<IProps> = ({
       onChange={multiple ? handleMultipleSearch : handleChange}
       multiple={multiple}
       defaultValue={multiple ? orderProducts.map((op) => op.product) : null}
-      renderTags={(_, getTagProps) =>
+      renderTags={() =>
         orderProducts.map((orderProduct, index) => (
           <Chip
             variant="outlined"
+            key={orderProduct.product.title + orderProduct.size}
             label={orderProduct.product.title}
-            // {...getTagProps({ index })}
+            sx={{ marginRight: 0.5 }}
             onDelete={() =>
               setOrderProducts &&
               setOrderProducts((prev) => prev.filter((_, ind) => ind !== index))
@@ -130,12 +132,9 @@ export const OrderProductSearch: React.FC<IProps> = ({
           />
         ))
       }
+      onInputChange={(_, value) => searchProducts(value)}
       renderInput={(params) => (
-        <TextField
-          {...params}
-          label="Ապրանքի Որոնում"
-          onChange={(evt) => searchProducts(evt.target.value)}
-        />
+        <TextField {...params} label="Ապրանքի Որոնում" />
       )}
     />
   )
