@@ -143,7 +143,7 @@ const ProductDetails: FC<{ product: IProduct }> = ({ product }) => {
                 className={styles.category}
                 style={{ overflowWrap: 'anywhere' }}
               >
-                {product.category.title} / {product.brand}
+                {product.category} / {product.brand}
               </span>
             </Typography>
           </Box>

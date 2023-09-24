@@ -47,7 +47,7 @@ export type ProductAdditionalInfo = {
 export interface IProduct {
   id: number
   title: string
-  category: ICategory
+  category: string
   brand: string
   images: string[]
   rating?: number

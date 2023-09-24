@@ -123,7 +123,7 @@ const ProductTable: FC<IProps> = ({
                 align="left"
               >
                 <Typography className={styles.data}>
-                  {product.category.title}
+                  {product.category}
                 </Typography>
               </TableCell>
               <TableCell
