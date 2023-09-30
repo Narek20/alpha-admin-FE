@@ -133,7 +133,7 @@ const ProductEditPage = () => {
       const data = await getProductById(id)
 
       if (data.success) {
-        setProductData({ ...data.data, category: data.data.category.title })
+        setProductData({ ...data.data, category: data.data.category })
         setIsLoading(false)
       }
     }
