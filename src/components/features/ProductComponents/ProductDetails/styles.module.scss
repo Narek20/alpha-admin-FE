@@ -2,6 +2,9 @@
   width: 500px;
   position: relative;
   height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   .line {
     position: absolute;
@@ -220,6 +223,8 @@
 @media only screen and (max-width: 1000px) {
   .carousel {
     width: auto;
+    height: 60vh;
+    max-height: 500px;
   }
 
   .productDetails {
@@ -235,9 +240,7 @@
       }
     }
   }
-}
 
-@media only screen and (max-width: 1000px) {
   .productDetails {
     .details {
       .titleContainer {

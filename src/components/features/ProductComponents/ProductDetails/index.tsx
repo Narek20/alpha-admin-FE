@@ -37,7 +37,6 @@ const ProductDetails: FC<{ product: IProduct }> = ({ product }) => {
   const { products, setProducts } = useContext(ProductsContext)
 
   const theme = useTheme()
-  const isTablet = useMediaQuery(theme.breakpoints.down(1000))
 
   const handleSave = async () => {
     const formData = new FormData()
@@ -128,7 +127,7 @@ const ProductDetails: FC<{ product: IProduct }> = ({ product }) => {
         className={styles.carousel}
         sx={{ opacity: isProductExist ? 1 : 0.5 }}
       >
-        <ImageCarousel slides={product.images} size={isTablet ? 200 : 500} />
+        <ImageCarousel slides={product.images} />
         {!isProductExist && <hr className={styles.line} />}
       </Box>
       <Box className={styles.productDetails}>

@@ -1,10 +1,20 @@
 .carousel {
   display: flex;
   justify-content: center;
+  align-items: center;
+  aspect-ratio: 1;
+  width: 40vw;
+  max-width: 500px;
 }
 
 .carouselImg {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+@media only screen and (max-width: 1000px) {
+  .carousel {
+    width: 100%;
+  }
 }

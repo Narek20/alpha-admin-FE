@@ -6,10 +6,9 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css'
 
 interface IProps {
   slides: string[]
-  size?: number
 }
 
-const ImageCarousel: FC<IProps> = ({ slides, size }) => {
+const ImageCarousel: FC<IProps> = ({ slides }) => {
   return (
     <Carousel
       className={styles.carousel}
@@ -18,7 +17,7 @@ const ImageCarousel: FC<IProps> = ({ slides, size }) => {
       infiniteLoop
     >
       {slides.map((slide) => (
-        <div style={{ width: `${size}px`, height: `${size}px` }}>
+        <div style={{ aspectRatio: 1 }}>
           <img className={styles.carouselImg} key={slide} src={slide} alt="նկար" />
         </div>
       ))}
