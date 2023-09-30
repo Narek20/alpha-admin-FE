@@ -1,5 +1,6 @@
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Box, Button, Typography } from '@mui/material'
+import useTablet from '@utils/hooks/useTablet'
 import NameFilter from '@features/Filters/NameFilter'
 import PriceFilter from '@features/Filters/PriceFilter'
 import BrandFilter from '@features/Filters/BrandFilter'
@@ -12,16 +13,25 @@ import styles from './styles.module.scss'
 
 const ProductsSidebar = () => {
   const { filters, setFilters } = useContext(ProductsContext)
+  const [tabletFilters, setTabletFilters] = useState<{
+    [param: string]: string | string[] | number[]
+  }>({})
+
+  const isTablet = useTablet()
+
+  useEffect(() => {
+    isTablet && setTabletFilters(filters)
+  }, [isTablet])
 
   const handleFilter = (
     param: ProductKeys,
     filter: string | string[] | number[],
   ) => {
-    if (Array.isArray(filter)) {
-      return setFilters({ ...filters, [param]: filter.join(',') })
-    }
+    const newFilters = Array.isArray(filter)
+      ? { ...filters, [param]: filter.join(',') }
+      : { ...filters, [param]: filter }
 
-    setFilters({ ...filters, [param]: filter })
+    isTablet ? setTabletFilters(newFilters) : setFilters(newFilters)
   }
 
   return (
@@ -48,6 +58,11 @@ const ProductsSidebar = () => {
         title="Բրենդը"
         children={<BrandFilter onChange={handleFilter} />}
       />
+      {isTablet && (
+        <Button onClick={() => setFilters(tabletFilters)}>
+          <Typography>Փնտրել</Typography>
+        </Button>
+      )}
     </Box>
   )
 }

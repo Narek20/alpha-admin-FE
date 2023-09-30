@@ -8,7 +8,9 @@ const ProductsPage = () => {
   return (
     <Box className={styles.productsPage}>
       <Box className={styles.content}>
-        <ProductsSidebar />
+        <Box className={styles.sidebar}>
+          <ProductsSidebar />
+        </Box>
         <Products />
       </Box>
     </Box>
