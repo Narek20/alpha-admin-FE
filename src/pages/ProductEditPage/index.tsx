@@ -56,7 +56,8 @@ const ProductEditPage = () => {
 
     if (key === ProductKeys.PRICE || key === ProductKeys.PURCHASE_PRICE) {
       if (+changedValue > max) changedValue = max
-      if (+changedValue <= min) changedValue = ''
+      if (+changedValue < min) changedValue = min
+      if (changedValue !== '') changedValue = +changedValue
     }
 
     setProductData({ ...productData, [key]: changedValue })
@@ -198,20 +199,36 @@ const ProductEditPage = () => {
             <Box className={styles.prices}>
               <TextField
                 className={styles.purchase}
-                value={productData.purchasePrice}
+                value={productData.purchasePrice.toString()}
                 label="Առք"
                 type="number"
                 onChange={(evt) =>
-                  handleChange(ProductKeys.PURCHASE_PRICE, +evt.target.value)
+                  handleChange(ProductKeys.PURCHASE_PRICE, evt.target.value)
+                }
+                onFocus={() =>
+                  !productData.purchasePrice &&
+                  handleChange(ProductKeys.PURCHASE_PRICE, '')
+                }
+                onBlur={() =>
+                  !productData.purchasePrice &&
+                  handleChange(ProductKeys.PURCHASE_PRICE, 0)
                 }
               />
               <TextField
                 className={styles.price}
-                value={productData.price}
+                value={productData.price.toString()}
                 label="Վաճառք"
                 type="number"
                 onChange={(evt) =>
-                  handleChange(ProductKeys.PRICE, +evt.target.value)
+                  handleChange(ProductKeys.PRICE, evt.target.value)
+                }
+                onFocus={() =>
+                  !productData.price &&
+                  handleChange(ProductKeys.PRICE, '')
+                }
+                onBlur={() =>
+                  !productData.price &&
+                  handleChange(ProductKeys.PRICE, 0)
                 }
               />
             </Box>
