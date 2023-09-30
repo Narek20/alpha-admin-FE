@@ -56,7 +56,7 @@ const ProductEditPage = () => {
 
     if (key === ProductKeys.PRICE || key === ProductKeys.PURCHASE_PRICE) {
       if (+changedValue > max) changedValue = max
-      if (+changedValue < min) changedValue = min
+      if (+changedValue <= min) changedValue = ''
     }
 
     setProductData({ ...productData, [key]: changedValue })
