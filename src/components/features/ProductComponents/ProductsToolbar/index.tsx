@@ -37,6 +37,7 @@ const ProductsToolbar: FC<IProps> = ({ isBig, changeDisplay }) => {
 
   const changeItemsCount = (count: string) => {
     pagination.take = +count
+    pagination.skip = 0
     getProducts()
   }
 
