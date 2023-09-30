@@ -41,24 +41,19 @@ export const ProductsProvider = ({ children }: { children: ReactNode }) => {
     [param: string]: string | string[] | number[]
   }>({})
 
-  // Use an AbortController to cancel previous requests
   const abortControllerRef = useRef<AbortController | null>(null)
 
   const getProducts = async () => {
     setIsLoading(true)
-    if (abortControllerRef.current) {
-      // If there's an existing request, abort it before making a new one
-      abortControllerRef.current.abort()
-    }
-
-    const abortController = new AbortController()
-    abortControllerRef.current = abortController
+      
+    abortControllerRef.current?.abort()
+    abortControllerRef.current = new AbortController()
 
     const searchKey = Object.values(filters).join(' ')
 
     const data = await search(
       searchKey,
-      abortController,
+      abortControllerRef.current,
       filters.category as string,
       pagination.current,
     )

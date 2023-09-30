@@ -35,11 +35,11 @@ export const search = async (
       ProductEndpoints.SEARCH,
       {
         params: { search: searchTerm },
-        signal: abortController?.signal,
         categories,
       },
       {
         params: pagination,
+        signal: abortController?.signal,
       },
     )
 
