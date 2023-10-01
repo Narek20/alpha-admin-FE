@@ -229,6 +229,7 @@ const OrderTable = () => {
 
   const onRowsPerPageChange = (rows: number) => {
     pagination.take = rows
+    pagination.skip = 0
     getOrders()
   }
 
@@ -550,8 +551,9 @@ const OrderTable = () => {
         </TableContainer>
       )}
       <Pagination
-        count={pagination.count}
-        take={pagination.take}
+        // count={pagination.count}
+        // take={pagination.take}
+        pagination={pagination}
         onPageChange={onPageChange}
         onRowsPerPageChange={onRowsPerPageChange}
       />
