@@ -1,5 +1,6 @@
 .toolbar {
   display: flex;
+  flex-wrap: wrap;
   width: 100%;
   justify-content: space-between;
 
@@ -12,6 +13,7 @@
 
   .rightBar {
     display: flex;
+    flex-wrap: wrap;
 
     .button {
       color: black;

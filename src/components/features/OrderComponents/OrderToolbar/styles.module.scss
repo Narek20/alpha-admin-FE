@@ -100,7 +100,8 @@
     }
 
     .topBar {
-      display: none;
+      // display: none;
+      flex-wrap: wrap;
     }
 
     .bottomBar {
