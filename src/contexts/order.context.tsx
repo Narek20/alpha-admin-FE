@@ -7,10 +7,7 @@ import {
   useRef,
 } from 'react'
 import { IOrdersContext, IOrder, StatusCounts } from 'types/order.types'
-import {
-  getOrderCounts,
-  searchAllOrders,
-} from 'services/orders.service'
+import { getOrderCounts, searchAllOrders } from 'services/orders.service'
 import localStorageKeys from '@utils/localStorageKeys'
 import { OrderTableColumns } from '@utils/order/constants'
 import { IPagination } from 'types/product.types'
@@ -54,13 +51,13 @@ export const OrdersProvider = ({ children }: { children: ReactNode }) => {
   const abortControllerRef = useRef<AbortController | null>(null)
 
   const getOrders = async () => {
-    const abortController = new AbortController()
-    abortControllerRef.current = abortController
+    abortControllerRef.current?.abort()
+    abortControllerRef.current = new AbortController()
 
     setIsLoading(true)
     const data = await searchAllOrders(
       { ...filters, ...pagination.current },
-      abortController,
+      abortControllerRef.current,
     )
 
     if (data.success) {
@@ -81,10 +78,14 @@ export const OrdersProvider = ({ children }: { children: ReactNode }) => {
   }
 
   useEffect(() => {
+    getCounts()
+  }, [])
+
+  useEffect(() => {
     pagination.current.skip = 0
     pagination.current.count = 0
     getOrders()
-    getCounts()
+    // getCounts()
   }, [filters])
 
   useEffect(() => {
