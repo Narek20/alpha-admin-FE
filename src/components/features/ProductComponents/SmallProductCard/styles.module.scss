@@ -43,6 +43,12 @@
 
   .title {
     margin-top: 10px;
+    display: -webkit-box;
+    max-width: 100px;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
