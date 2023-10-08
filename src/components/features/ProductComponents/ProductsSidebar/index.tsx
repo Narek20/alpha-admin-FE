@@ -42,10 +42,12 @@ const ProductsSidebar = () => {
           Բոլոր ապրանքները
         </Button>
       </Box>
-      <SidebarFilterSkillet
-        title="Անունը"
-        children={<NameFilter onChange={handleFilter} />}
-      />
+      {!isTablet && (
+        <SidebarFilterSkillet
+          title="Անունը"
+          children={<NameFilter onChange={handleFilter} />}
+        />
+      )}
       <SidebarFilterSkillet
         title="Գինը"
         children={<PriceFilter onChange={handleFilter} />}

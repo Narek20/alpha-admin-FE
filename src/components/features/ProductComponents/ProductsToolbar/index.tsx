@@ -8,10 +8,14 @@ import {
   Select,
   FormControl,
   Drawer,
+  TextField,
+  ButtonGroup,
+  InputAdornment,
 } from '@mui/material'
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined'
 import ViewCompactOutlinedIcon from '@mui/icons-material/ViewCompactOutlined'
 import FilterAltIcon from '@mui/icons-material/FilterAlt'
+import ClearIcon from '@mui/icons-material/Clear'
 import useTablet from '@utils/hooks/useTablet'
 import ProductSettings from '../ProductSettings'
 import ProductsSidebar from '../ProductsSidebar'
@@ -19,12 +23,53 @@ import AddStorageProduct from '../../StorageComponents/AddStorageProduct'
 import { AuthContext } from 'contexts/auth.context'
 import { ProductsContext } from 'contexts/products.context'
 import { UserStatus } from 'types/user.types'
+import { ProductKeys } from 'types/product.types'
 
 import styles from './styles.module.scss'
 
 interface IProps {
   isBig: boolean
   changeDisplay: (isBig: boolean) => void
+}
+
+const NameSearch = () => {
+  const [value, setValue] = useState('')
+  const { setFilters } = useContext(ProductsContext)
+
+  const onSubmit = () => {
+    setFilters((filters) => ({ ...filters, [ProductKeys.TITLE]: value }))
+  }
+
+  const handleRollBack = () => {
+    setFilters({})
+    setValue('')
+  }
+
+  return (
+    <Box width="100%">
+      <ButtonGroup fullWidth sx={{ marginBottom: 2, gap: 1 }}>
+        <TextField
+          fullWidth
+          label="Անուն"
+          value={value}
+          InputProps={{
+            endAdornment: value ? (
+              <InputAdornment position="end">
+                <IconButton onClick={handleRollBack}>
+                  <ClearIcon />
+                </IconButton>
+              </InputAdornment>
+            ) : undefined,
+          }}
+          onChange={(evt) => setValue(evt.target.value)}
+          onKeyDown={(evt) => evt.key === 'Enter' && onSubmit()}
+        />
+        {/* <Button fullWidth={false} color="inherit" onClick={onSubmit}>
+          Search
+        </Button> */}
+      </ButtonGroup>
+    </Box>
+  )
 }
 
 const ProductsToolbar: FC<IProps> = ({ isBig, changeDisplay }) => {
@@ -67,6 +112,7 @@ const ProductsToolbar: FC<IProps> = ({ isBig, changeDisplay }) => {
           <ProductsSidebar />
         </Drawer>
       )}
+      {isTablet && <NameSearch />}
       <Box className={styles.toolbar}>
         <Box className={styles.leftBar}>
           {isTablet && (
