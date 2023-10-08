@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect, useState } from 'react'
+import { FC, useContext, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   Box,
@@ -35,6 +35,7 @@ interface IProps {
 const NameSearch = () => {
   const [value, setValue] = useState('')
   const { setFilters } = useContext(ProductsContext)
+  const inputRef = useRef<HTMLDivElement>(null)
 
   const onSubmit = () => {
     setFilters((filters) => ({ ...filters, [ProductKeys.TITLE]: value }))
@@ -52,6 +53,7 @@ const NameSearch = () => {
           fullWidth
           label="Անուն"
           value={value}
+          inputRef={inputRef}
           InputProps={{
             endAdornment: value ? (
               <InputAdornment position="end">
@@ -62,7 +64,12 @@ const NameSearch = () => {
             ) : undefined,
           }}
           onChange={(evt) => setValue(evt.target.value)}
-          onKeyDown={(evt) => evt.key === 'Enter' && onSubmit()}
+          onKeyDown={(evt) => {
+            if (evt.key === 'Enter') {
+              onSubmit()
+              inputRef.current?.blur()
+            }
+          }}
         />
         {/* <Button fullWidth={false} color="inherit" onClick={onSubmit}>
           Search
