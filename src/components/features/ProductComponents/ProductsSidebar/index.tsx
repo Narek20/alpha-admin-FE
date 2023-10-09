@@ -1,6 +1,5 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext } from 'react'
 import { Box, Button, Typography } from '@mui/material'
-import useTablet from '@utils/hooks/useTablet'
 import NameFilter from '@features/Filters/NameFilter'
 import PriceFilter from '@features/Filters/PriceFilter'
 import BrandFilter from '@features/Filters/BrandFilter'
@@ -13,15 +12,6 @@ import styles from './styles.module.scss'
 
 const ProductsSidebar = () => {
   const { filters, setFilters } = useContext(ProductsContext)
-  const [tabletFilters, setTabletFilters] = useState<{
-    [param: string]: string | string[] | number[]
-  }>({})
-
-  const isTablet = useTablet()
-
-  useEffect(() => {
-    isTablet && setTabletFilters(filters)
-  }, [isTablet])
 
   const handleFilter = (
     param: ProductKeys,
@@ -31,7 +21,7 @@ const ProductsSidebar = () => {
       ? { ...filters, [param]: filter.join(',') }
       : { ...filters, [param]: filter }
 
-    isTablet ? setTabletFilters(newFilters) : setFilters(newFilters)
+    setFilters(newFilters)
   }
 
   return (
@@ -42,12 +32,10 @@ const ProductsSidebar = () => {
           Բոլոր ապրանքները
         </Button>
       </Box>
-      {!isTablet && (
-        <SidebarFilterSkillet
-          title="Անունը"
-          children={<NameFilter onChange={handleFilter} />}
-        />
-      )}
+      <SidebarFilterSkillet
+        title="Անունը"
+        children={<NameFilter onChange={handleFilter} />}
+      />
       <SidebarFilterSkillet
         title="Գինը"
         children={<PriceFilter onChange={handleFilter} />}
@@ -60,11 +48,6 @@ const ProductsSidebar = () => {
         title="Բրենդը"
         children={<BrandFilter onChange={handleFilter} />}
       />
-      {isTablet && (
-        <Button onClick={() => setFilters(tabletFilters)}>
-          <Typography>Փնտրել</Typography>
-        </Button>
-      )}
     </Box>
   )
 }

@@ -7,7 +7,6 @@ import {
   MenuItem,
   Select,
   FormControl,
-  Drawer,
   TextField,
   ButtonGroup,
   InputAdornment,
@@ -18,7 +17,7 @@ import FilterAltIcon from '@mui/icons-material/FilterAlt'
 import ClearIcon from '@mui/icons-material/Clear'
 import useTablet from '@utils/hooks/useTablet'
 import ProductSettings from '../ProductSettings'
-import ProductsSidebar from '../ProductsSidebar'
+import ProductTabletSidebar from '../ProductTabletSidebar'
 import AddStorageProduct from '../../StorageComponents/AddStorageProduct'
 import { AuthContext } from 'contexts/auth.context'
 import { ProductsContext } from 'contexts/products.context'
@@ -109,15 +108,10 @@ const ProductsToolbar: FC<IProps> = ({ isBig, changeDisplay }) => {
   return (
     <>
       {isTablet && (
-        <Drawer
+        <ProductTabletSidebar
           open={showTabletFilter}
           onClose={() => setShowTabletFilter(false)}
-          anchor="left"
-          variant="temporary"
-          keepMounted
-        >
-          <ProductsSidebar />
-        </Drawer>
+        />
       )}
       {isTablet && <NameSearch />}
       <Box className={styles.toolbar}>
