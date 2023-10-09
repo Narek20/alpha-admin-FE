@@ -42,6 +42,19 @@ const ProductTabletSidebar: React.FC<IProps> = ({ open, onClose }) => {
       keepMounted
     >
       <Box className={styles.sidebar}>
+        <Box className={styles.header}>
+          <Typography>Ֆիլտր</Typography>
+          <Button
+            className={styles.allOrders}
+            onClick={() => {
+              setTabletFilters({})
+              setFilters({})
+              onClose()
+            }}
+          >
+            Բոլոր ապրանքները
+          </Button>
+        </Box>
         <SidebarFilterSkillet
           title="Գինը"
           children={<PriceFilter onChange={handleFilter} />}

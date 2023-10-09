@@ -7,4 +7,15 @@
   width: 300px;
   background-color: white;
   border-radius: 10px;
+
+  .header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    .allOrders {
+      color: black;
+      font-size: 12px;
+    }
+  }
 }
