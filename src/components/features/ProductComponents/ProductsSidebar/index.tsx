@@ -17,9 +17,10 @@ const ProductsSidebar = () => {
     param: ProductKeys,
     filter: string | string[] | number[],
   ) => {
-    const newFilters = Array.isArray(filter)
-      ? { ...filters, [param]: filter.join(',') }
-      : { ...filters, [param]: filter }
+    const newFilters = {
+      ...filters,
+      [param]: Array.isArray(filter) ? filter.join(',') : filter,
+    }
 
     setFilters(newFilters)
   }
