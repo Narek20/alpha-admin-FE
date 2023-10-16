@@ -281,7 +281,9 @@ const AddStorageProduct: FC<IProps> = ({ onClose }) => {
                       ) : (
                         <img
                           className={styles.productImg}
-                          src={product.images[0]}
+                          src={
+                            process.env.REACT_APP_BASE_URL + product.images[0]
+                          }
                           alt="Նկար"
                         />
                       )}
