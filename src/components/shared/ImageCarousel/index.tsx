@@ -18,12 +18,7 @@ const ImageCarousel: FC<IProps> = ({ slides }) => {
     >
       {slides.map((slide) => (
         <div style={{ aspectRatio: 1 }}>
-          <img
-            className={styles.carouselImg}
-            key={slide}
-            src={process.env.REACT_APP_BASE_URL + slide}
-            alt="նկար"
-          />
+          <img className={styles.carouselImg} key={slide} src={slide} alt="նկար" />
         </div>
       ))}
     </Carousel>
