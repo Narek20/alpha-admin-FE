@@ -412,9 +412,8 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
                               sx={!quantity ? { opacity: 0.5 } : {}}
                             >
                               {size}
-                              {!quantity && (
+                              {(!quantity || +quantity <= 0) && (
                                 <div
-                                  // className={styles.line}
                                   style={{
                                     position: 'absolute',
                                     top: '50%',

@@ -306,9 +306,8 @@ const AddStorageProduct: FC<IProps> = ({ onClose }) => {
                         {product.sizes?.map(({ size, quantity }) => (
                           <MenuItem key={size} value={size}>
                             {size}
-                            {!quantity && (
+                            {(!quantity || +quantity <= 0) && (
                               <div
-                                // className={styles.line}
                                 style={{
                                   position: 'absolute',
                                   top: '50%',
