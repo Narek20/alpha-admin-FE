@@ -187,7 +187,7 @@ const AddStorageProduct: FC<IProps> = ({ onClose }) => {
   useEffect(() => {
     selectedProducts.forEach(({ product }) => {
       const image = new Image()
-      image.src = product.images[0]
+      image.src = process.env.REACT_APP_BASE_URL + product.images[0]
       let listener = () => {
         handleImageLoad(product.id)
         image.removeEventListener('load', listener)
@@ -311,8 +311,9 @@ const AddStorageProduct: FC<IProps> = ({ onClose }) => {
                                 // className={styles.line}
                                 style={{
                                   position: 'absolute',
+                                  top: '50%',
                                   left: 0,
-                                  width: 100,
+                                  width: 64,
                                   height: 2,
                                   backgroundColor: 'red',
                                   opacity: 0.4,
