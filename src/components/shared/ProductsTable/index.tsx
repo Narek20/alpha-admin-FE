@@ -168,6 +168,19 @@ const ProductTable: FC<IProps> = ({
                         // el.quantity ? (
                         <MenuItem key={el.size} value={el.size}>
                           {el.size}
+                          {(!el.quantity || el.quantity <= 0) && (
+                            <div
+                              style={{
+                                position: 'absolute',
+                                top: '50%',
+                                left: 0,
+                                width: 64,
+                                height: 2,
+                                backgroundColor: 'red',
+                                opacity: 0.4,
+                              }}
+                            ></div>
+                          )}
                         </MenuItem>
                       ),
                       // ) : null,
