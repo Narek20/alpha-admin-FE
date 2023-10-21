@@ -15,7 +15,11 @@ const OrderProductCard: FC<IProduct & { quantity: number }> = ({
 }) => {
   return (
     <Box className={styles.productCard}>
-      <img src={images[0]} className={styles.img} alt="նկար" />
+      <img
+        src={process.env.REACT_APP_BASE_URL + images[0]}
+        className={styles.img}
+        alt="նկար"
+      />
       <Box className={styles.detailContainer}>
         <Typography className={styles.label}>Կատեգորիան</Typography>
         <Typography className={styles.detail}>{category}</Typography>

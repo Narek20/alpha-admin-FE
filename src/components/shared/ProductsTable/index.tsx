@@ -104,9 +104,15 @@ const ProductTable: FC<IProps> = ({
                 align="left"
               >
                 <Box className={styles.imgContainer}>
-                  <img src={product.images[0]} className={styles.img} />
+                  <img
+                    src={process.env.REACT_APP_BASE_URL + product.images[0]}
+                    className={styles.img}
+                  />
                   <Box className={styles.zoomedContainer}>
-                    <img src={product.images[0]} className={styles.zoomedImg} />
+                    <img
+                      src={process.env.REACT_APP_BASE_URL + product.images[0]}
+                      className={styles.zoomedImg}
+                    />
                     <Button
                       className={styles.seeMoreBtn}
                       onClick={() => navigate(`/products/${product.id}`)}
