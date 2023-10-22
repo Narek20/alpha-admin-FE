@@ -21,7 +21,7 @@ const ImageCarousel: FC<IProps> = ({ slides }) => {
           <img
             className={styles.carouselImg}
             key={slide}
-            src={process.env.REACT_APP_BASE_URL + slide}
+            src={slide}
             alt="նկար"
           />
         </div>
