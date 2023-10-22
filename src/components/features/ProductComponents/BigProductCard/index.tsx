@@ -42,7 +42,7 @@ const BigProductCard: FC<IProps> = ({ product }) => {
     <Box className={styles.card} onClick={() => navigate(`${product.id}`)}>
       <Box className={styles.img} sx={{ opacity: isProductExist ? 1 : 0.5 }}>
         <LazyImage
-          src={process.env.REACT_APP_BASE_URL + product.images[0]}
+          src={product.images[0]}
           alt="Ապրանք"
         />
         {!isProductExist && <hr className={styles.line} />}
