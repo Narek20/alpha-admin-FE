@@ -1,12 +1,6 @@
 import { FC, useContext, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router'
-import {
-  Box,
-  Button,
-  IconButton,
-  Typography,
-  useTheme,
-} from '@mui/material'
+import { Box, Button, IconButton, Typography, useTheme } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
 import StarOutlinedIcon from '@mui/icons-material/StarOutlined'
@@ -88,7 +82,7 @@ const ProductDetails: FC<{ product: IProduct }> = ({ product }) => {
       setProductSizes(product.sizes)
 
       product.sizes.forEach((size) => {
-        if (size.quantity) {
+        if (size.quantity && size.quantity > 0) {
           setIsProductExist(true)
         }
       })
@@ -102,7 +96,7 @@ const ProductDetails: FC<{ product: IProduct }> = ({ product }) => {
       if (isProductExist) {
         let isExist = false
         productSizes.forEach((size) => {
-          if (size.quantity) {
+          if (size.quantity && size.quantity > 0) {
             isExist = true
           }
         })
@@ -112,7 +106,7 @@ const ProductDetails: FC<{ product: IProduct }> = ({ product }) => {
         }
       } else {
         productSizes.forEach((size) => {
-          if (size.quantity) {
+          if (size.quantity && size.quantity > 0) {
             setIsProductExist(true)
           }
         })

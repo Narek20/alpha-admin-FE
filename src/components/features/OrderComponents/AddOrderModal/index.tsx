@@ -409,7 +409,11 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
                             <MenuItem
                               key={size}
                               value={size}
-                              sx={!quantity ? { opacity: 0.5 } : {}}
+                              sx={
+                                !quantity || +quantity <= 0
+                                  ? { opacity: 0.5 }
+                                  : {}
+                              }
                             >
                               {size}
                               {(!quantity || +quantity <= 0) && (

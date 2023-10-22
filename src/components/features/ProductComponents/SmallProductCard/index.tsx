@@ -20,7 +20,7 @@ const SmallProductCard: FC<IProps> = ({ product }) => {
       if (isProductExist) {
         let isExist = false
         product.sizes.forEach((size) => {
-          if (size.quantity) {
+          if (size.quantity && size.quantity > 0) {
             isExist = true
           }
         })
@@ -30,7 +30,7 @@ const SmallProductCard: FC<IProps> = ({ product }) => {
         }
       } else {
         product.sizes.forEach((size) => {
-          if (size.quantity) {
+          if (size.quantity && size.quantity > 0) {
             setIsProductExist(true)
           }
         })
