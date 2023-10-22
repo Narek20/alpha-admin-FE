@@ -66,7 +66,7 @@ const ProfileDropDown: FC<IProps> = ({ isOpen, isTablet, onClose }) => {
       </Box>
       <Box className={styles.content}>
         <hr />
-        <Select
+        {/* <Select
           className={styles.select}
           sx={{ display: isOpen || isHovered ? 'flex' : 'none' }}
           value={language}
@@ -80,8 +80,8 @@ const ProfileDropDown: FC<IProps> = ({ isOpen, isTablet, onClose }) => {
             <img style={iconStyles} src={russianIcon} alt="icon" />
             <Typography>RU</Typography>
           </MenuItem>
-        </Select>
-        <hr />
+        </Select> */}
+        {/* <hr /> */}
         <Button className={styles.exit} onClick={handleExit}>
           Ելք
         </Button>
