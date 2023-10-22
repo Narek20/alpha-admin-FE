@@ -45,7 +45,11 @@ const OrderToolbar = () => {
   }
 
   useLayoutEffect(() => {
-    setFilters({ ...filters, status: OrderStatus.RECEIVED })
+    if (!filters.status) {
+      setFilters({ ...filters, status: OrderStatus.RECEIVED })
+    } else {
+      setTab(filters.status as OrderStatus)
+    }
   }, [])
 
   useEffect(() => {

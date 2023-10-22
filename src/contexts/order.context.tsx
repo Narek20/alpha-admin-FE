@@ -44,7 +44,7 @@ export const OrdersProvider = ({ children }: { children: ReactNode }) => {
   const [statusCounts, setStatusCounts] = useState<StatusCounts>([])
   const [filters, setFilters] = useState<{
     [param: string]: string | string[] | number[]
-  }>({ status: 'Բոլորը' })
+  }>({})
   const pagination = useRef<IPagination>(initialPagination)
 
   // Use an AbortController to cancel previous requests
