@@ -61,7 +61,10 @@ const NewProductImages: FC<IProps> = ({ images, changeImages }) => {
         {imageUrls.map((image, index) => (
           <Box key={image} className={styles.imageContainer}>
             <img
-              src={image
+              src={
+                image.includes('blob')
+                  ? image
+                  : process.env.REACT_APP_BASE_URL + image
               }
               className={styles.image}
               alt={'ապրանք նկար' + index}
