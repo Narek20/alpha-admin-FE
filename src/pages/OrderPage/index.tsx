@@ -369,7 +369,10 @@ const OrderPage = () => {
             <SectionHeader title="Նշումներ" />
             <TextField
               value={order.notes || ''}
+              multiline
               size="small"
+              variant={isEditing ? 'standard' : 'outlined'}
+              inputProps={{ maxLength: 255 }}
               onChange={(evt) => editOrder({ notes: evt.target.value })}
               className={styles.notes}
               style={{ margin: '20px 0px' }}
