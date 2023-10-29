@@ -1,8 +1,10 @@
 import { useRef, useState } from 'react'
-import { Autocomplete, TextField, Chip } from '@mui/material'
+import { Autocomplete, TextField, Chip, MenuItem, Box } from '@mui/material'
+import LazyImage from '@shared/LazyImage'
 import { IProduct } from 'types/product.types'
 import { search } from 'services/products.service'
 import { orderProductType } from 'types/order.types'
+import styles from './styles.module.scss'
 
 interface IProps {
   orderProducts: orderProductType[]
@@ -109,15 +111,24 @@ export const OrderProductSearch: React.FC<IProps> = ({
       noOptionsText="Ոչինչ չի գտնվել"
       disablePortal
       id="combo-box-demo"
-      getOptionLabel={(option) =>
-        `${option.title}${option.color ? `-${option.color}` : ''}`
-      }
       filterOptions={(options) => handleFilter(options)}
       loading={isLoading}
       options={searchedProducts}
       onChange={multiple ? handleMultipleSearch : handleChange}
       multiple={multiple}
       defaultValue={multiple ? orderProducts.map((op) => op.product) : null}
+      onInputChange={(_, value) => searchProducts(value)}
+      renderOption={(props, option) => (
+        <MenuItem {...props}>
+          <Box className={styles.img}>
+            <LazyImage
+              src={process.env.REACT_APP_BASE_URL + option.images[0]}
+              alt=""
+            />
+          </Box>
+          {option.title}/{option.category}/{option.brand}
+        </MenuItem>
+      )}
       renderTags={() =>
         orderProducts.map((orderProduct, index) => (
           <Chip
@@ -132,7 +143,6 @@ export const OrderProductSearch: React.FC<IProps> = ({
           />
         ))
       }
-      onInputChange={(_, value) => searchProducts(value)}
       renderInput={(params) => (
         <TextField {...params} label="Ապրանքի Որոնում" />
       )}
