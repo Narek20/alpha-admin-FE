@@ -120,11 +120,11 @@ export const orderRowColor = (status: OrderStatus): string => {
     case OrderStatus.ISSUE:
       return '#FF0000'
     case OrderStatus.PACKING:
-      return '#FF00FE'
+      return '#B7B7B7'
     case OrderStatus.DELIVERY:
       return '#FFFD02'
     case OrderStatus.COMPLETED:
-      return '#B7B7B7'
+      return 'rgba(0,0,0,0)'
     default:
       return '#FE9901'
   }
