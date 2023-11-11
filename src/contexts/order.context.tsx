@@ -15,7 +15,7 @@ import { IPagination } from 'types/product.types'
 export const initialPagination: IPagination = {
   count: 0,
   skip: 0,
-  take: 2,
+  take: 10,
 }
 
 // Create a OrdersContext
