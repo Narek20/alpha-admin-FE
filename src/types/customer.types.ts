@@ -1,9 +1,13 @@
 import { Dispatch, SetStateAction } from 'react'
 import { IOrder } from './order.types'
+import { IPagination } from './product.types'
 
 export interface ICustomerContext {
   customers: ICustomer[] | []
   isLoading: boolean
+  pagination: IPagination
+  searchKey: string
+  setSearchKey: Dispatch<SetStateAction<string>>
   getCustomers: () => void
   setCustomers: Dispatch<SetStateAction<ICustomer[]>>
 }

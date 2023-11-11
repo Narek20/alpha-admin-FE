@@ -12,10 +12,10 @@ import localStorageKeys from '@utils/localStorageKeys'
 import { OrderTableColumns } from '@utils/order/constants'
 import { IPagination } from 'types/product.types'
 
-const initialPagination: IPagination = {
+export const initialPagination: IPagination = {
   count: 0,
   skip: 0,
-  take: 10,
+  take: 2,
 }
 
 // Create a OrdersContext

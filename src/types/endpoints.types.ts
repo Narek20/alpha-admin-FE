@@ -42,6 +42,7 @@ export enum UsersEndpoints {
 
 export enum CustomerEndpoints {
   CUSTOMER = 'customers/',
+  SEARCH = 'customers/search/',
   CUSTOMER_UPDATE = 'customers/',
   CUSTOMER_DELETE = 'customers/',
   CUSTOMER_ADDRESS = '/customers/address/',

@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 import Paper from '@mui/material/Paper'
 import {
@@ -10,7 +10,12 @@ import {
   TableHead,
   TableCell,
   TableContainer,
+  TextField,
+  InputAdornment,
+  Stack,
+  Pagination,
 } from '@mui/material'
+import ClearIcon from '@mui/icons-material/Clear'
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined'
 import { priceFormatter } from '@utils/priceFormatter'
 import { CRMTableColumns } from '@utils/CRM/constants'
@@ -23,12 +28,20 @@ import { useToast } from 'contexts/toast.context'
 import styles from './styles.module.scss'
 
 const CustomersTable = () => {
+  const [page, setPage] = useState<null | number>(null)
   const [customerId, setCustomerId] = useState(0)
   const [isOpen, setIsOpen] = useState(false)
 
   const navigate = useNavigate()
   const { showToast } = useToast()
-  const { customers, setCustomers } = useContext(CustomersContext)
+  const {
+    customers,
+    setCustomers,
+    searchKey,
+    setSearchKey,
+    pagination,
+    getCustomers,
+  } = useContext(CustomersContext)
 
   const handleClick = (evt: React.MouseEvent, id: number) => {
     evt.stopPropagation()
@@ -53,8 +66,35 @@ const CustomersTable = () => {
     }
   }
 
+  useEffect(() => {
+    setPage(1)
+  }, [searchKey])
+
+  useEffect(() => {
+    if (page) {
+      pagination.skip = page - 1
+      getCustomers()
+    }
+  }, [page])
+
   return (
     <>
+      <TextField
+        fullWidth
+        label="Փնտրել"
+        value={searchKey}
+        sx={{ mb: 2 }}
+        InputProps={{
+          endAdornment: searchKey ? (
+            <InputAdornment position="end">
+              <IconButton onClick={() => setSearchKey('')}>
+                <ClearIcon />
+              </IconButton>
+            </InputAdornment>
+          ) : undefined,
+        }}
+        onChange={(evt) => setSearchKey(evt.target.value)}
+      />
       <TableContainer className={styles.tableContainer} component={Paper}>
         <Table className={styles.table} size="small" aria-label="a dense table">
           <TableHead>
@@ -124,6 +164,17 @@ const CustomersTable = () => {
           </TableBody>
         </Table>
       </TableContainer>
+      {!!customers.length && pagination.count > pagination.take && (
+        <Stack spacing={2} sx={{ mt: 2 }}>
+          <Pagination
+            sx={{ ml: 'auto' }}
+            page={page || 1}
+            count={Math.ceil(pagination.count / pagination.take)}
+            variant="outlined"
+            onChange={(_, page) => setPage(page)}
+          />
+        </Stack>
+      )}
       {isOpen && (
         <ConfirmationModal
           onClose={handleClose}
