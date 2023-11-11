@@ -21,6 +21,7 @@ import { priceFormatter } from '@utils/priceFormatter'
 import { CRMTableColumns } from '@utils/CRM/constants'
 import { CustomersContext } from 'contexts/customer.context'
 
+import Loading from '@shared/Loading'
 import ConfirmationModal from '@shared/ConfirmationModal'
 import { removeCustomer } from 'services/customer.service'
 import { useToast } from 'contexts/toast.context'
@@ -41,6 +42,7 @@ const CustomersTable = () => {
     setSearchKey,
     pagination,
     getCustomers,
+    isLoading,
   } = useContext(CustomersContext)
 
   const handleClick = (evt: React.MouseEvent, id: number) => {
@@ -112,58 +114,65 @@ const CustomersTable = () => {
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>
-            {customers.map(({ id, fullName, phone, totalPrice, totalQty }) => (
-              <TableRow
-                key={fullName + phone}
-                sx={{ padding: 20 }}
-                className={styles.bodyRow}
-                onClick={() => navigate(`/customers/${phone}`)}
-              >
-                <TableCell
-                  className={styles.bodyCell}
-                  component="th"
-                  scope="row"
-                  align="left"
-                >
-                  {fullName}
-                </TableCell>
-                <TableCell
-                  className={styles.bodyCell}
-                  component="th"
-                  scope="row"
-                  align="left"
-                >
-                  {phone}
-                </TableCell>
-                <TableCell
-                  className={styles.bodyCell}
-                  component="th"
-                  scope="row"
-                  align="left"
-                >
-                  {priceFormatter(totalPrice)} ֏
-                </TableCell>
-                <TableCell
-                  className={styles.bodyCell}
-                  component="th"
-                  scope="row"
-                  align="left"
-                >
-                  {totalQty}
-                </TableCell>
-                <TableCell>
-                  <Button>
-                    <IconButton onClick={(evt) => handleClick(evt, id)}>
-                      <DeleteOutlineOutlinedIcon sx={{ color: '#f96666' }} />
-                    </IconButton>
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
+          {!isLoading && (
+            <TableBody>
+              {customers.map(
+                ({ id, fullName, phone, totalPrice, totalQty }) => (
+                  <TableRow
+                    key={fullName + phone}
+                    sx={{ padding: 20 }}
+                    className={styles.bodyRow}
+                    onClick={() => navigate(`/customers/${phone}`)}
+                  >
+                    <TableCell
+                      className={styles.bodyCell}
+                      component="th"
+                      scope="row"
+                      align="left"
+                    >
+                      {fullName}
+                    </TableCell>
+                    <TableCell
+                      className={styles.bodyCell}
+                      component="th"
+                      scope="row"
+                      align="left"
+                    >
+                      {phone}
+                    </TableCell>
+                    <TableCell
+                      className={styles.bodyCell}
+                      component="th"
+                      scope="row"
+                      align="left"
+                    >
+                      {priceFormatter(totalPrice)} ֏
+                    </TableCell>
+                    <TableCell
+                      className={styles.bodyCell}
+                      component="th"
+                      scope="row"
+                      align="left"
+                    >
+                      {totalQty}
+                    </TableCell>
+                    <TableCell>
+                      <Button>
+                        <IconButton onClick={(evt) => handleClick(evt, id)}>
+                          <DeleteOutlineOutlinedIcon
+                            sx={{ color: '#f96666' }}
+                          />
+                        </IconButton>
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ),
+              )}
+            </TableBody>
+          )}
         </Table>
       </TableContainer>
+      {isLoading && <Loading />}
       {!!customers.length && pagination.count > pagination.take && (
         <Stack spacing={2} sx={{ mt: 2 }}>
           <Pagination
