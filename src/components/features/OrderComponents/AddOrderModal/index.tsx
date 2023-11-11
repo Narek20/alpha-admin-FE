@@ -48,7 +48,7 @@ interface IProps {
 const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
   const [isCreating, setIsCreating] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [cashbackMoney, setCashbackMoney] = useState('')
+  const [cashbackMoneyUse, setCashbackMoneyUse] = useState(false)
   const [customerData, setCustomerData] = useState<ICustomer | null>(null)
   const [selectedProducts, setSelectedProducts] = useState<
     Array<orderProductType & { isLoading?: boolean }>
@@ -340,16 +340,38 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
                       <Typography>Cashback</Typography>
                       <Typography>{customerData?.cashback}%</Typography>
                     </Box>
-                    <TextField
-                      label="Կուտակված գումար"
-                      value={customerData.cashback_money}
-                      onChange={(evt) =>
-                        setCustomerData({
-                          ...customerData,
-                          cashback_money: evt.target.value,
-                        })
-                      }
-                    />
+                    <FormControl>
+                      <RadioGroup
+                        aria-labelledby="demo-radio-buttons-group-label"
+                        defaultValue="cashback_money"
+                        name="radio-buttons-group"
+                      >
+                        <FormControlLabel
+                          value={true}
+                          control={
+                            <Radio
+                              checked={!!cashbackMoneyUse}
+                              onClick={() =>
+                                setCashbackMoneyUse(!cashbackMoneyUse)
+                              }
+                            />
+                          }
+                          label="Կուտակված գումար"
+                        />
+                      </RadioGroup>
+                    </FormControl>
+                    {cashbackMoneyUse && (
+                      <TextField
+                        label="Կուտակված գումար"
+                        placeholder={customerData.cashback_money}
+                        onChange={(evt) =>
+                          setOrderData({
+                            ...orderData,
+                            usedCashback: evt.target.value,
+                          })
+                        }
+                      />
+                    )}
                   </>
                 )}
               </Box>
