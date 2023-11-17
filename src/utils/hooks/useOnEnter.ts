@@ -1,14 +1,19 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 const useOnEnter = (callback: () => void) => {
+  const [lastKey, setLastKey] = useState('')
+
   useEffect(() => {
     const onEnter = (evt: KeyboardEvent) => {
       if (evt.key === 'Enter') {
-        console.log('Enter')
-
-        callback()
+        if (lastKey !== 'Shift') {
+          callback()
+        }
       }
+
+      setLastKey(evt.key)
     }
+
     document.addEventListener('keydown', onEnter)
 
     return () => {
