@@ -30,10 +30,10 @@ import {
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined'
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined'
+import StarsIcon from '@mui/icons-material/Stars'
 import ControlPointIcon from '@mui/icons-material/ControlPoint'
 import { OrderProductSearch } from '@shared/OrderProductSearch'
 import { useToast } from 'contexts/toast.context'
-import { OrdersContext } from 'contexts/order.context'
 import { DriversContext } from 'contexts/driver.context'
 import { priceFormatter } from '@utils/priceFormatter'
 
@@ -212,6 +212,7 @@ const OrderPage = () => {
                 </MenuItem>
               ))}
             </Select>
+            {order.isSpecial && <StarsIcon sx={{ color: 'blue' }} />}
             <Select
               defaultValue={order.paymentMethod}
               value={order.paymentMethod}
@@ -224,7 +225,7 @@ const OrderPage = () => {
               {paymentMethods.map((method) => (
                 <MenuItem key={method} value={method}>
                   <img
-                    style={{ width: 20, height: 20 }}
+                    style={{ width: 25, height: 25 }}
                     src={getOrderIcon(method)}
                   />
                 </MenuItem>
@@ -361,7 +362,10 @@ const OrderPage = () => {
                 Ընդհանուր Գումար
               </Typography>
               <Typography className={styles.info}>
-                {priceFormatter(commonQtyAndPrice.price)} ֏
+                {order.isSpecial && order.specialPrice
+                  ? priceFormatter(order.specialPrice)
+                  : priceFormatter(commonQtyAndPrice.price)}{' '}
+                ֏
               </Typography>
             </Box>
           </Box>

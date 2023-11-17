@@ -177,7 +177,6 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
   }
 
   const onCancel = () => {
-    // setFilters({})
     setOrderData({})
     setSelectedProducts([])
     onClose()
@@ -316,6 +315,17 @@ const OrderAddModal: FC<IProps> = ({ open, onClose }) => {
                     />
                   </RadioGroup>
                 </FormControl>
+                {!!orderData?.isSpecial && (
+                  <TextField
+                    placeholder="Հատուկ պատվերի արժեքը"
+                    onChange={(evt) =>
+                      setOrderData({
+                        ...orderData,
+                        specialPrice: +evt.target.value,
+                      })
+                    }
+                  />
+                )}
                 <FormControl>
                   <Select
                     defaultValue={PaymentMethods.CASH}

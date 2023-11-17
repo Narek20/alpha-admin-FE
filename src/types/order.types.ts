@@ -29,6 +29,7 @@ export interface IOrder {
   address2?: string
   quantity: number
   size?: string
+  specialPrice?: number
   formattedDate: string
   orderProducts: orderProductType[]
   updatedAt: string

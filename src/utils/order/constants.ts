@@ -3,8 +3,8 @@ import {
   OrderTableKeysType,
   PaymentMethods,
 } from 'types/order.types'
-import POSSvg from '@assets/SVG/POS.svg'
-import cashSvg from '@assets/SVG/cash.svg'
+import POSPNG from '@assets/SVG/POS.png'
+import cashPng from '@assets/SVG/cash.png'
 import paidPng from '@assets/SVG/paid.png'
 
 export const OrderTableColumns = [
@@ -133,9 +133,9 @@ export const orderRowColor = (status: OrderStatus): string => {
 export const getOrderIcon = (paymentMethods: PaymentMethods) => {
   switch (paymentMethods) {
     case PaymentMethods.CASH:
-      return cashSvg
+      return cashPng
     case PaymentMethods.NON_CASH:
-      return POSSvg
+      return POSPNG
     default:
       return paidPng
   }
