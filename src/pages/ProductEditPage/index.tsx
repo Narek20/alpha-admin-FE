@@ -75,7 +75,7 @@ const ProductEditPage = () => {
   }
 
   const handleSizeChange = (sizes: Sizes[]) => {
-    setProductData({ ...productData, sizes })
+    setProductData((prev) => ({ ...prev, sizes }))
   }
 
   const handleChangeInfo = (title: string, value: string) => {
@@ -223,12 +223,10 @@ const ProductEditPage = () => {
                   handleChange(ProductKeys.PRICE, evt.target.value)
                 }
                 onFocus={() =>
-                  !productData.price &&
-                  handleChange(ProductKeys.PRICE, '')
+                  !productData.price && handleChange(ProductKeys.PRICE, '')
                 }
                 onBlur={() =>
-                  !productData.price &&
-                  handleChange(ProductKeys.PRICE, 0)
+                  !productData.price && handleChange(ProductKeys.PRICE, 0)
                 }
               />
             </Box>
