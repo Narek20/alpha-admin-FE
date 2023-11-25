@@ -357,13 +357,34 @@ const OrderPage = () => {
                 {commonQtyAndPrice.qty}
               </Typography>
             </Box>
+            {order.isSpecial && order.specialPrice && (
+              <Box className={styles.infoContainer}>
+                <Typography className={styles.infoLabel}>
+                  Հատուկ ապրանքի գումարը
+                </Typography>
+                <TextField
+                  defaultValue={order.specialPrice}
+                  className={styles.date}
+                  disabled={!isEditing}
+                  onChange={(evt) =>
+                    editOrder({ specialPrice: +evt.target.value })
+                  }
+                >
+                  {priceFormatter(order.specialPrice)}֏
+                </TextField>
+              </Box>
+            )}
             <Box className={styles.infoContainer}>
               <Typography className={styles.infoLabel}>
                 Ընդհանուր Գումար
               </Typography>
               <Typography className={styles.info}>
                 {order.isSpecial && order.specialPrice
-                  ? priceFormatter(order.specialPrice)
+                  ? priceFormatter(
+                      commonQtyAndPrice.price
+                        ? commonQtyAndPrice.price + order.specialPrice
+                        : order.specialPrice,
+                    )
                   : priceFormatter(commonQtyAndPrice.price)}{' '}
                 ֏
               </Typography>
