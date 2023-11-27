@@ -63,13 +63,6 @@ const ProductEditPage = () => {
     setProductData({ ...productData, [key]: changedValue })
   }
 
-  const addSize = () => {
-    setProductData({
-      ...productData,
-      sizes: [...productData.sizes, { size: '' }],
-    })
-  }
-
   const handleChangeImages = (images: File[]) => {
     setProductData({ ...productData, images: images })
   }
@@ -223,12 +216,10 @@ const ProductEditPage = () => {
                   handleChange(ProductKeys.PRICE, evt.target.value)
                 }
                 onFocus={() =>
-                  !productData.price &&
-                  handleChange(ProductKeys.PRICE, '')
+                  !productData.price && handleChange(ProductKeys.PRICE, '')
                 }
                 onBlur={() =>
-                  !productData.price &&
-                  handleChange(ProductKeys.PRICE, 0)
+                  !productData.price && handleChange(ProductKeys.PRICE, 0)
                 }
               />
             </Box>
@@ -262,7 +253,6 @@ const ProductEditPage = () => {
             <NewProductSizes
               sizes={productData.sizes}
               handleSizeChange={handleSizeChange}
-              addSize={addSize}
             />
             <NewProductImages
               images={productData.images}

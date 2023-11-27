@@ -92,13 +92,6 @@ const NewProductData = () => {
     setProductData({ ...productData, sizes })
   }
 
-  const addSize = () => {
-    setProductData({
-      ...productData,
-      sizes: [...productData.sizes, { size: '', smSize: '' }],
-    })
-  }
-
   const handleChangeImages = (images: File[]) => {
     setProductData({ ...productData, images: images })
   }
@@ -210,7 +203,6 @@ const NewProductData = () => {
           <NewProductSizes
             sizes={productData.sizes}
             handleSizeChange={handleSizeChange}
-            addSize={addSize}
           />
           <NewProductImages
             images={productData.images}
