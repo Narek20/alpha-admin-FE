@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 import Paper from '@mui/material/Paper'
 import {
@@ -57,7 +57,25 @@ const ProductTable: FC<IProps> = ({
   editProduct,
   handleRemove,
 }) => {
+  const [sizeQuantities, setSizeQuantities] = useState<any[]>([])
+
   const navigate = useNavigate()
+
+  useEffect(() => {
+    if (data) {
+      const sizeQuantities = data.map((item) => {
+        if (item.product.sizes) {
+          const sizes = item.product.sizes.reduce((acc, size) => {
+            return { ...acc, [size.size]: size.quantity }
+          }, {})
+
+          return sizes
+        }
+      })
+
+      setSizeQuantities(sizeQuantities)
+    }
+  }, [data])
 
   return (
     <TableContainer className={styles.tableContainer} component={Paper}>
@@ -187,7 +205,19 @@ const ProductTable: FC<IProps> = ({
                     )}
                   </Select>
                 ) : (
-                  <Typography className={styles.data}>{size}</Typography>
+                  <Typography className={styles.data} style={{color: size &&
+                    sizeQuantities[index] &&
+                    sizeQuantities[index][size] !== undefined
+                      && sizeQuantities[index][size] < quantity ? 'orangered' : 'black'}}>
+                    {size +
+                      `(${
+                        size &&
+                        sizeQuantities[index] &&
+                        sizeQuantities[index][size] !== undefined
+                          ? sizeQuantities[index][size]
+                          : 'Անորոշ'
+                      })`}
+                  </Typography>
                 )}
               </TableCell>
               <TableCell
