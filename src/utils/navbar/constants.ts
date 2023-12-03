@@ -1,3 +1,4 @@
+import StoreIcon from '@mui/icons-material/Store';
 import BorderColorIcon from '@mui/icons-material/BorderColor'
 import LeaderboardIcon from '@mui/icons-material/Leaderboard'
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
@@ -14,6 +15,11 @@ export const navlinks = [
     title: 'Ապրանքներ',
     link: '/products',
     icon: LocalGroceryStoreIcon,
+  },
+  {
+    title: 'Խանութ',
+    link: '/store',
+    icon: StoreIcon,
   },
   {
     title: 'Անալիտիկա',

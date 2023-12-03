@@ -6,6 +6,7 @@ import { ToastProvider } from 'contexts/toast.context'
 import { ThemeProvider } from '@mui/material/styles'
 import { AuthProvider } from 'contexts/auth.context'
 import { NotesProvider } from 'contexts/notes.context'
+import { StoresProvider } from 'contexts/store.context'
 import { OrdersProvider } from 'contexts/order.context'
 import { StorageProvider } from 'contexts/storage.context'
 import { DriversProvider } from 'contexts/driver.context'
@@ -27,19 +28,21 @@ root.render(
         <AuthProvider>
           <CustomersProvider>
             <ProductsProvider>
-              <OrdersProvider>
-                <DriversProvider>
-                  <StorageProvider>
-                    <CategoryProvider>
-                      <NotesProvider>
-                        <ThemeProvider theme={THEME}>
-                          <App />
-                        </ThemeProvider>
-                      </NotesProvider>
-                    </CategoryProvider>
-                  </StorageProvider>
-                </DriversProvider>
-              </OrdersProvider>
+              <StoresProvider>
+                <OrdersProvider>
+                  <DriversProvider>
+                    <StorageProvider>
+                      <CategoryProvider>
+                        <NotesProvider>
+                          <ThemeProvider theme={THEME}>
+                            <App />
+                          </ThemeProvider>
+                        </NotesProvider>
+                      </CategoryProvider>
+                    </StorageProvider>
+                  </DriversProvider>
+                </OrdersProvider>
+              </StoresProvider>
             </ProductsProvider>
           </CustomersProvider>
         </AuthProvider>

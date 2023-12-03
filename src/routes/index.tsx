@@ -17,6 +17,7 @@ import UserSettingsPage from 'pages/UserSettingsPage'
 import { analyticsSections } from '@utils/analytics/constants'
 import { AuthContext } from 'contexts/auth.context'
 import { UserStatus } from 'types/user.types'
+import Store from 'pages/StorePage'
 
 const Routers = () => {
   const { userData, isLoading } = useContext(AuthContext)
@@ -29,6 +30,7 @@ const Routers = () => {
         <>
           <Route path="/drivers" element={<Drivers />} />
           <Route path="/orders" element={<OrdersPage />} />
+          <Route path="/store" element={<Store />} />
           <Route path="/orders/:id" element={<OrderPage />} />
           <Route path="/crm" element={<CRM />} />
           <Route path="products" element={<ProductsPage />}>

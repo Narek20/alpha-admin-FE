@@ -1,0 +1,42 @@
+.storePage {
+  box-sizing: border-box;
+  width: 100%;
+  background-color: white;
+  border-radius: 10px;
+  padding: 15px;
+
+  .header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    .tools {
+      display: flex;
+      gap: 20px;
+
+      .settings {
+        border-radius: 5px;
+        border: 1px solid black;
+        padding: 10px;
+        background-color: #f6c71e;
+      }
+
+      .addBtn {
+        background-color: #f6c71e;
+        color: white;
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: 600;
+        border: 1px solid #f6c71e;
+      }
+    }
+
+
+  }
+
+
+
+  .table {
+    margin-top: 50px;
+  }
+}

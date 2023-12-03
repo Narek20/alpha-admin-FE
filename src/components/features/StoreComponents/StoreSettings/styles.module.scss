@@ -1,0 +1,75 @@
+.modal {
+  width: 100%;
+  height: 100%;
+
+  .modalContent {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    width: 400px;
+    height: auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: scroll;
+
+    .header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .title {
+        font-size: 25px;
+        color: black;
+        font-weight: 600;
+      }
+    }
+
+    .content {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+
+    }
+
+    .actions {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 30px;
+
+      .addBtn {
+        font-weight: 600;
+      }
+
+      .cancelBtn {
+        margin-left: 10px;
+        font-weight: 600;
+        color: rgb(136, 136, 136);
+      }
+    }
+  }
+}
+
+
+@media only screen and (max-width: 1000px) {
+  .modal {
+    .modalContent {
+      width: 80%;
+
+      .header {
+        .title {
+          font-size: 18px;
+        }
+      }
+    }
+  }
+}

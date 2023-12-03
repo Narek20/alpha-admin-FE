@@ -73,3 +73,11 @@ export enum NotesEndpoints {
 export enum CommonEndpoints {
   SEARCH = 'common/',
 }
+
+export enum StoreEndpoints {
+  GET_ITEMS = 'store/',
+  SEARCH_ITEMS = 'store/search',
+  GET_ITEM_BY_ID = 'store/',
+  PLACE_ORDER = 'store/create',
+  DELETE_ORDER = 'store/',
+}
